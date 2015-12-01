@@ -1,0 +1,7 @@
+<xml>
+
+	<process language="java" class="Agent-Core.jar" cwd="..\..\Agent-Core\bin" name="Dialogue Manager">
+		<parameter>-dmonly</parameter>
+	</process>
+	
+</xml>

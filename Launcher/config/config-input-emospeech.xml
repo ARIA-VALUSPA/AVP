@@ -1,0 +1,9 @@
+<xml>
+
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\emospeech" name="Emotions Audio">
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>emospeech</parameter>
+	</process>
+	
+</xml>

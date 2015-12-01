@@ -1,0 +1,27 @@
+<xml>
+
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\agender" name="Age Gender Audio">
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>agender</parameter>
+	</process>
+	
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\asrkaldi" name="ASR">
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>asrkaldi</parameter>
+	</process>
+	
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\emax" name="EMax - Emotions Video">
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>emax</parameter>
+	</process>
+	
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\emospeech" name="Emotions Audio">
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>emospeech</parameter>
+	</process>
+	
+</xml>

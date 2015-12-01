@@ -1,0 +1,12 @@
+Traceback (most recent call last):
+  File "launcher.py", line 184, in <module>
+  File "launcher.py", line 181, in main
+  File "launcher.py", line 32, in __init__
+  File "launcher.py", line 122, in getXMLFromFile
+  File "launcher.py", line 126, in startAllProcsFromXML
+  File "xml\sax\__init__.pyc", line 49, in parseString
+  File "xml\sax\expatreader.pyc", line 110, in parse
+  File "xml\sax\xmlreader.pyc", line 123, in parse
+  File "xml\sax\expatreader.pyc", line 217, in feed
+  File "xml\sax\handler.pyc", line 38, in fatalError
+xml.sax._exceptions.SAXParseException: <unknown>:1:0: not well-formed (invalid token)

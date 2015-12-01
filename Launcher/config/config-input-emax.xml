@@ -1,0 +1,9 @@
+<xml>
+
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\emax" name="EMax - Emotions Video">
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>emax</parameter>
+	</process>
+	
+</xml>

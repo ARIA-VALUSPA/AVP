@@ -1,0 +1,1 @@
+External\apache-activemq-5.12.1\bin\activemq start
