@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<asr>
+		<voice active="$(stream=0)">		
+			<speech>$(event=asr@audio;select=0)</speech>		
+		</voice>
+	</asr>
+</ssi>

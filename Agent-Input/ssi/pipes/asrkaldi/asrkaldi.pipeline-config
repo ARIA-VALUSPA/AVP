@@ -1,0 +1,8 @@
+rootdir = E:\tools\kaldi\demo-4-11-2015				# root dir
+
+# activemq
+
+activemq:use = false								# share results through activemq
+activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
+activemq:id = SSI									# activemq id
+activemq:topic= ASR									# activemq topic

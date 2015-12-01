@@ -1,0 +1,50 @@
+-------------------------------------------------------------
+Johannes Wagner, <wagner@hcm-lab.de>, 13.11.2015
+-------------------------------------------------------------
+
+This pipeline uses KALDI for speech recognition.
+
+1. Set up Cygwin
+
+	* download Cygwin (32-bit) 
+		> https://www.cygwin.com/setup-x86.exe
+	* install to 'C:\Cygwin' (if you want to use a different target directory contact us ;)
+	* use the Search field to search for the following entries and click on 'Default' next to the label given below (you don't need to expand the tree)
+		> make->Devel
+		> automake->Devel
+		> autoconf->Devel
+		> zlib->Libs
+		> libtool->Devel	
+		> fortran->Devel
+		> gcc->Devel
+		> diffutils->Utils
+		> liblapack->Libs
+		> dos2unix->Utils
+
+2. Set up Kaldi
+
+	* create a folder <kaldi-root>
+	* download and unzip to <kaldi-root>
+		> https://megastore.uni-augsburg.de/get/NnIUnXoNUh/
+	* convert files to unix format (in case file encoding is screwed up)
+		> find . -type f -exec dos2unix {} \;
+	
+3. Set up model 	
+
+	* download and unzip to <demo-root>
+		> https://drive.google.com/file/d/0B35hOOQwr7zWbDNJb09rM2cwNEk/view?usp=drive_web
+	* convert files to unix format (in case file encoding is screwed up)
+		> find . -type f -exec dos2unix {} \;		
+	* set kaldi root
+		> <demo-root>\s5\path.sh -> export KALDI_ROOT=/cygdrive/<kaldi-root> (NOTE: do not use windows drive notation 'C:')
+	* rename net folder
+		> <demo-root>\s5\exp\nnet7a_960_gpu -> <demo-root>s5\exp\nnet7a_960
+	* copy/replace script files
+		> script\step-0900-decode-mytest.cmd -> <demo-root>\s5\
+		> script\step-0900-decode-mytest.sh -> <demo-root>\s5\
+	* make backup if you want to keep the original test file (will be overwritten when running the pipeline)
+		> <demo-root>\data\TestSpeech\mytest2\a-01_c01_s0003.wav
+			
+4. Change path in asrkaldi.pipeline-config to <demo-root>
+
+-------------------------------------------------------------
