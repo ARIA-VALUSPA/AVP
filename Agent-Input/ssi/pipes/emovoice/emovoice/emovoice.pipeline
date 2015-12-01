@@ -1,0 +1,47 @@
+<?xml version="1.0" ?>
+<pipeline ssi-v="1">
+	
+	<register>
+		<load name="ssimlpxml.dll"/>		
+		<load name="ssiaudio.dll"/>
+		<load name="ssiemovoice.dll"/>
+		<load name="ssisignal.dll"/>
+		<load name="ssimodel.dll"/>
+		<load name="ssiioput.dll"/>
+		<load name="ssigraphic.dll"/>
+		<load name="ssiemovoice.dll" />
+		<load name="ssilibsoxfilter.dll" />
+		<load name="ssiopensmile.dll" />
+	</register>
+	
+	<sensor create="ssi_sensor_Audio" sr="44100" scale="true" option="opts/audio">
+		<provider channel="audio" pin="audio"/>		
+	</sensor>	
+	
+	<!-- noise gate -->
+	<transformer create="ssi_filter_LibsoxFilter" ssi_sample_block_offset="4" sox_global_buffer="1024" sox_signal_length="1024" sox_effect_chain_str="gain -1 compand 0.1,0.3 -60,-60,-30,-15,-20,-12,-4,-8,-2,-7 -2">
+		<input pin="audio" frame="1024"/>
+		<output pin="audio_filtered"/>
+	</transformer>	
+	
+	<!-- intensity -->
+	<transformer create="ssi_feature_OSIntensity">
+		<input pin="audio_filtered" frame="0.01s"/>
+		<output pin="audio_intensity"/>
+	</transformer>
+	
+	<!-- vad -->
+	<transformer create="ssi_filter_Gate" thres="0.001" replace="0.0" thresid="thres">
+		<input pin="audio_intensity" frame="5"/>
+		<output pin="audio_vad"/>
+	</transformer>
+	
+	<consumer create="ssi_consumer_MlpXml" type="1">
+		<input pin="audio_filtered;audio_vad" frame="0.2s" delta="0"/>		
+	</consumer>
+	
+	<consumer create="ssi_consumer_SignalPainter" name="audio" type="2" size="10" arrange="1,1,1,0,0,200,200">
+		<input pin="audio_vad" frame="0.2s"/>
+	</consumer>	
+	
+</pipeline>

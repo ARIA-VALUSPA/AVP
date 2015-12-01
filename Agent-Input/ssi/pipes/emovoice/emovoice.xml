@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<agender>
+		<voice active="$(event=vad@audio;field=state;span=-1)">		
+			<emotion>		
+				<negative>$(event=emotion@audio;select=0)</negative>
+				<positive>$(event=emotion@audio;select=1)</positive>
+			</emotion>
+		</voice>
+	</agender>
+</ssi>
