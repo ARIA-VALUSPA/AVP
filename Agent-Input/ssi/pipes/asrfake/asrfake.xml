@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<asr>
+		<voice active="$(event=vad@audio;field=state;span=-1)">		
+			<speech>$(event=asr@audio;select=0)</speech>		
+		</voice>
+	</asr>
+</ssi>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+
+	<register>
+		<load name="ssibrowser.dll" />		
+		<load name="ssiioput.dll" />	
+		<load name="ssiaudio.dll" />	
+		<load name="ssigraphic.dll" />	
+		<load name="ssiasrfake.dll" />	
+		<load name="ssiactivemq.dll" />	
+		<load name="ssicamera.dll"/>
+		<load name="ssiffmpeg.dll"/>		
+	</register>	
+	
+	<!-- set framework options -->
+	<framework console="true" cpos="0,300,400,300"/>
+
+	<!-- audio sensor -->
+	<sensor create="ssi_sensor_Audio" option="options/audio" scale="true" blockInSamples="512">
+		<provider channel="audio" pin="audio"/>
+	</sensor>
+	
+	<!-- activity detection -->
+	<transformer create="ssi_feature_AudioActivity" method="0" threshold="0.05">
+		<input pin="audio" frame="0.03s" delta="0.015s"/>
+		<output pin="vad"/>
+	</transformer>
+	<consumer create="ssi_consumer_ZeroEventSender" mindur="0.3" maxdur="5.0" eager="true" hangin="3" hangout="30" sname="audio" ename="vad">
+		<input pin="vad" frame="0.1s"/>
+	</consumer>
+	
+	<!-- send asr string -->
+	<object create="ssi_object_AsrFake" ename="asr" sname="audio" path="$(file)">
+		<listen address="vad@audio" state="completed"/>
+	</object>
+	<object create="ssi_consumer_XMLEventSender" ename="asr" sname="xml" path="asrfake.xml" monitor="true" mname="RESULT" mpos="800,0,400,600" console="false" update="100" coldelim=" ">
+		<listen address="vad,asr@audio"/>
+	</object>
+	<gate open="$(activemq:use)">
+		<object create="ssi_listener_ActiveMQEvent" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+			<listen address="asr@xml"/>
+		</object>
+	</gate>
+		
+	<!-- send stimuli -->
+	<object create="ssi_object_Stimuli" ename="url" sname="stimuli" extension="*.html" startName="questions/001_question.html" folder="answers">
+		<listen address="vad@audio" state="completed"/>
+	</object>
+	
+	<!-- diplay audio -->
+	<consumer create="ssi_consumer_SignalPainter" type="2" size="10" move="1,0,0,0,400,300" name="AUDIO" autoscale="false" fix="-1.0,1.0">
+		<input pin="audio" frame="0.01s"/>
+	</consumer>
+	
+	<!-- play back -->
+	<object create="ssi_object_SoundPlayer">
+		<listen address="url@stimuli"/>
+	</object>
+	
+	<!-- display stimuli -->
+	<object create="ssi_object_Browser" pos="400,0,400,600" name="BROWSER">
+		<listen address="url@stimuli"/>
+	</object>
+	
+	<!-- capture user -->
+	<gate open="$(capture:use)">
+	
+		<!-- capture user -->
+		<gate open="$(capture:user)">
+		
+			<sensor create="ssi_sensor_Camera" option="options/camera" flip="true" >
+				<provider channel="video" pin="camera" size="2.0"/>
+			</sensor>	
+			<consumer create="ssi_consumer_FFMPEGWriter" url="$(capture:dir)/$(date)_user.mp4">
+				<input pin="camera;audio" frame="1"/>				
+			</consumer>	
+			<consumer create="ssi_consumer_VideoPainter" name="CAMERA" flip="false" move="1,0,20,620,320,240">
+				<input pin="camera" frame="1" delta="0"/>
+			</consumer>			
+			
+		</gate>
+		
+		<!-- capture screen -->
+		<gate open="$(capture:screen)">
+		
+			<!-- audio sensor -->
+			<sensor create="ssi_sensor_Audio" option="options/audio_mix" scale="true" blockInSamples="512">
+				<provider channel="audio" pin="audio_mix"/>
+			</sensor>
+			<sensor create="ssi_sensor_CameraScreen" full="false" region="400,0,800,600" fps="25">
+				<provider channel="video" pin="screen" size="2.0"/>
+			</sensor>			
+			<consumer create="ssi_consumer_FFMPEGWriter" url="$(capture:dir)/$(date)_screen.mp4">
+				<input pin="screen;audio_mix" frame="1"/>				
+			</consumer>				
+			<consumer create="ssi_consumer_VideoPainter" name="SCREEN" flip="false" move="1,0,340,620,320,240">
+				<input pin="screen" frame="1" delta="0"/>
+			</consumer>			
+		
+		</gate>
+		
+	</gate>
+		
+</pipeline>

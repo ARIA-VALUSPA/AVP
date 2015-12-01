@@ -1,0 +1,15 @@
+file = questions/question.txt						# file with asr strings
+
+# activemq
+
+activemq:use = true									# share results through activemq
+activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
+activemq:id = SSI									# activemq id
+activemq:topic= ASR									# activemq topic
+
+# capture
+
+capture:use = false									# capture user interaction
+capture:dir = capture								# folder where media is stored
+capture:user = true									# capture camera and audio
+capture:screen = true								# capture screen
