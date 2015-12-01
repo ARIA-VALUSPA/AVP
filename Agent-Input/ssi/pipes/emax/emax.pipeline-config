@@ -1,0 +1,12 @@
+# number of faces
+faces:multiple = true   # detect multiple faces (2 at the moment)
+
+# models
+# model:face = models/haarcascade_frontalface_alt.xml     # face detection model path
+# model:eyes = models/haarcascade_eye_tree_eyeglasses.xml # eyes detection model path
+model:aus  = models/aus.cfg                             # action units detection model path
+
+# activemq
+activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
+activemq:id = SSI									# activemq id
+activemq:topic= EMAX								# activemq topic

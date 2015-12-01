@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>
+		<load name="ssiemax.dll" />
+		<load name="ssigraphic.dll" />
+		<load name="ssicamera.dll" />
+	</register>
+	
+	<!-- set framework options -->		
+	<framework console="true" cpos="400,0,400,600"/> 
+	
+	<!-- camera sensor -->
+	<sensor create="ssi_sensor_Camera" option="camera">
+		<provider channel="video" pin="video" size="2.0"/>
+	</sensor>	
+	
+	<!-- intraface tracker -->
+	<transformer create="ssi_filter_EMaxTransformer" faceDetectionModelPath="models/haarcascade_frontalface_alt.xml" eyesDetectionModelPath="models/haarcascade_eye_tree_eyeglasses.xml" ausPath="models/aus.cfg" maxFaces="2" runMultiple="true">
+		<input pin="video" frame="1" delta="0"/>
+		<output pin="emaxtracker"/>
+	</transformer>
+	
+	
+	<transformer create="ssi_filter_Selector" indices="6-12, 18-24">
+		<input pin="emaxtracker" frame="1"/>
+		<output pin="emotion"/>
+	</transformer>
+	<transformer create="ssi_filter_Selector" indices="2, 3, 4, 3, 4, 5, 2, 5">
+		<input pin="emaxtracker" frame="1"/>
+		<output pin="face_1"/>
+	</transformer>
+	<transformer create="ssi_filter_Selector" indices="14, 15, 16, 15, 16, 17, 14, 17">
+		<input pin="emaxtracker" frame="1"/>
+		<output pin="face_2"/>
+	</transformer>	
+	
+	
+	<consumer create="ssi_consumer_TupleEventSender" tnames="neutral#1,anger#1,disgust#1,fear#1,happiness#1,sadness#1,surpised#1,neutral#2,anger#2,disgust#2,fear#2,happiness#2,sadness#2,surpised#2" sname="emotionsender">
+		<input pin="emotion" frame="1" />		
+	</consumer>	
+	
+	
+	<consumer create="ssi_consumer_VideoPainter" move="1,0,0,0,400,300" flip="true"  type="1" relative="true" swap="false">
+		<input pin="video;face_1;face_2" frame="1"/>		
+	</consumer>
+	
+	<object create="ssi_object_EventPainter" type="1" autoscale="false" reset="false" fix="9.0f" move="1,0,0,300,400,300" >
+		<listen address="@emotionsender" />		
+	</object>	
+	
+		
+	<!-- show video -->
+	
+
+	
+</pipeline>

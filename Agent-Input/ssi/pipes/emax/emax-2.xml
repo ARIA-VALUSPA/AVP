@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<face-1 id="$(stream=0;select=0)">				
+		<emotion>
+			<neutral>$(event=emotion@emax;select=0)</neutral>		
+			<anger>$(event=emotion@emax;select=1)</anger>		
+			<disgust>$(event=emotion@emax;select=2)</disgust>
+			<fear>$(event=emotion@emax;select=3)</fear>
+			<happiness>$(event=emotion@emax;select=4)</happiness>
+			<sadness>$(event=emotion@emax;select=5)</sadness>		
+			<surprised>$(event=emotion@emax;select=6)</surprised>		
+		</emotion>
+	</face-1>		
+	<face-2 id="$(stream=0;select=13)">				
+		<emotion>
+			<neutral>$(event=emotion@emax;select=7)</neutral>		
+			<anger>$(event=emotion@emax;select=8)</anger>		
+			<disgust>$(event=emotion@emax;select=9)</disgust>
+			<fear>$(event=emotion@emax;select=10)</fear>
+			<happiness>$(event=emotion@emax;select=11)</happiness>
+			<sadness>$(event=emotion@emax;select=12)</sadness>		
+			<surprised>$(event=emotion@emax;select=13)</surprised>		
+		</emotion>
+	</face-2>		
+</ssi>
+
+
