@@ -1,0 +1,19 @@
+-------------------------------------------------
+Johannes Wagner, <wagner@hcm-lab.de>, 12.11.2015
+-------------------------------------------------
+
+Emotional speech recognition either from a microphone or using input from a file
+
+To configure the pipeline open 'emospeech.pipeline-config' in a text editor
+
+To change the output format of the pipeline open 'emospeech.xml' in a text editor
+
+To run the pipeline execute EMOSPEECH.bat
+
+To test ActiveMQ connection run EMOSPEECH_RECV.bat
+
+-------------------------------------------------------------
+
+To record videos of screen/user execute AGENDER_RECORD.bat, recorded files will be stored in capture/ (see camera.png how to set up camera)
+
+-------------------------------------------------

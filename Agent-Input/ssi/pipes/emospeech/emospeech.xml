@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<agender>
+		<voice active="$(event=vad@audio;field=state;span=-1)">		
+			<emotion>		
+				<anger>$(event=emotion@audio;select=0)</anger>
+				<disgust>$(event=emotion@audio;select=1)</disgust>
+				<fear>$(event=emotion@audio;select=2)</fear>
+				<happiness>$(event=emotion@audio;select=3)</happiness>
+				<neutral>$(event=emotion@audio;select=4)</neutral>
+				<sadness>$(event=emotion@audio;select=5)</sadness>
+				<surprise>$(event=emotion@audio;select=6)</surprise>
+				<fear>$(event=emotion@audio;select=7)</fear>
+			</emotion>
+		</voice>
+	</agender>
+</ssi>
