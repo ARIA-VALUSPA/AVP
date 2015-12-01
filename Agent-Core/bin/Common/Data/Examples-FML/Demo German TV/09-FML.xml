@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml>
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+				
+			<tm id="tm1"/>
+				Sure. 
+			<tm id="tm2"/>	
+				It was the Mouse. 
+			<tm id="tm3"/>	
+				Shall I read you a passage?
+			<tm id="tm4"/>	
+			<pitchaccent start="s1:tm1" id="pa1" importance="1" level="medium" end="s1:tm2" type="HStar" />
+			<pitchaccent start="s1:tm2" id="pa3" importance="1" level="medium" end="s1:tm3" type="HStar" />
+			<boundary start="s1:tm3" id="b1" end="s1:tm3+1.0" type="LL" />
+		</speech>
+	</bml>
+	<fml>
+		<performative id="p1" type="propose" start="s1:tm3" end="s1:tm3+2"  importance="1" />
+	</fml>
+</fml-apml>

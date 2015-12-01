@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bml xmlns="http://www.mindmakers.org/projects/BML" character="Camille"
+    composition="REPLACE" id="bml1">
+    <gesture id="g01" lexeme="performative=refuse_Ges_L" start="2" end="5">
+        <description priority="1" type="gretabml">
+            <reference>performative=refuse_Ges_L</reference>
+            <intensity>1.000</intensity>
+            <SPC.value>0.646</SPC.value>
+            <TMP.value>-0.400</TMP.value>
+            <FLD.value>0.000</FLD.value>
+            <PWR.value>0.000</PWR.value>
+            <REP.value>0.000</REP.value>
+            <OPN.value>0.000</OPN.value>
+            <TEN.value>0.000</TEN.value>
+        </description>
+    </gesture>
+</bml>

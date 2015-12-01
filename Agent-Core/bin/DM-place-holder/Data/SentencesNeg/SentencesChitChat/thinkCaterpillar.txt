@@ -1,0 +1,4 @@
+0.5 0
+opinion caterpillar
+caterpillar favouriteCharacter 
+What do you think about the Caterpillar ? Do you like him ? 

@@ -1,0 +1,5 @@
+<!ELEMENT TorsoGestures (TorsoGesture)*>
+<!ELEMENT TorsoGesture (X, Y, Z)>
+<!ATTLIST TorsoGesture id CDATA "id" min CDATA "1" max CDATA "2" trajectory CDATA "linear">
+<!ELEMENT HipPitch (#PCDATA)>
+

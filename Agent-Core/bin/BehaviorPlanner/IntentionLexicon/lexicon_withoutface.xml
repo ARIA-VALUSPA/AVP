@@ -1,0 +1,1150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<behaviorsets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Common/Data/xml/behaviorsets.xsd">
+	<behaviorset name="performative-complication">
+		<signals>
+			<signal id="1" name="iconic=complication" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="2" name="head=Downward" modality="head"/>
+			<signal id="3" name="torso=forward_lean" modality="torso"/>
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>			
+			<item id="2"/>			
+			<item id="3"/>			
+		  </core>
+		</constraints>
+	</behaviorset>	
+
+	<behaviorset name="performative-solution">
+		<signals>
+			<signal id="1" name="iconic=solution" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="2" name="head=Downward" modality="head"/>
+			<signal id="3" name="torso=backward_lean" modality="torso"/>
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>			
+			<item id="2"/>			
+			<item id="3"/>			
+		  </core>
+		</constraints>
+	</behaviorset>		
+
+	<behaviorset name="performative-wakeup">
+		<signals>
+			<signal id="1" name="iconic=wakeup" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="2" name="head=Upward" modality="head"/>
+			<signal id="3" name="torso=backward_lean" modality="torso"/>
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>			
+			<item id="2"/>			
+			<item id="3"/>						
+		  </core>
+		</constraints>
+	</behaviorset>	
+
+	<behaviorset name="performative-eat">
+		<signals>
+			<signal id="1" name="iconic=eat1" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="2" name="head=Upward" modality="head"/>
+			<signal id="3" name="torso=backward_lean" modality="torso"/>
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>			
+			<item id="2"/>			
+			<item id="3"/>						
+		  </core>
+		</constraints>
+	</behaviorset>	
+
+	<behaviorset name="performative-sitdown">
+		<signals>
+			<signal id="1" name="iconic=sitdown" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="2" name="head=Downward" modality="head"/>
+			<signal id="3" name="torso=forward_lean" modality="torso"/>
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>			
+			<item id="2"/>			
+			<item id="3"/>			
+		  </core>
+		</constraints>
+	</behaviorset>	
+
+	<behaviorset name="performative-sleep">
+		<signals>
+			<signal id="1" name="iconic=sleep" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="2" name="head=Downward" modality="head"/>
+			<signal id="3" name="torso=backward_lean" modality="torso"/>
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>			
+			<item id="2"/>			
+			<item id="3"/>			
+		  </core>
+		</constraints>
+	</behaviorset>		
+	
+  <behaviorset name="performative-maybe">
+    <signals>		
+      <signal id="1" name="iconic=maybe_Pos_B" modality="gesture" min="1.0" max="10.0">
+		<alternative name="iconic=maybe_Pos_R" probability="0.33" min="1.0" max="10.0"/>
+		<alternative name="iconic=maybe_Pos_L" probability="0.33" min="1.0" max="10.0"/>
+	  </signal>		
+		<signal id="2" name="head=Upward" modality="head"/>		
+		<signal id="4" name="torso=backward_lean" modality="torso"/>		
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>					
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>
+
+  <behaviorset name="performative-fly">
+    <signals>
+		<signal id="1" name="deictic=fly" modality="gesture" min="1.0" max="10.0"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>
+  
+  <behaviorset name="performative-stomach1">
+    <signals>
+		<signal id="1" name="iconic=stomach1" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="2" name="torso=forward_lean" modality="torso"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>
+  
+  <behaviorset name="performative-you">
+    <signals>
+		<signal id="1" name="deictic=you_Ges_R_Center" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="4" name="torso=backward_lean" modality="torso"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  <behaviorset name="performative-happy">
+    <signals>
+		<signal id="1" name="iconic=happy" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="4" name="torso=backward_lean" modality="torso"/>
+		
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  <behaviorset name="performative-hide">
+    <signals>
+		<signal id="1" name="iconic=hide" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="4" name="torso=forward_lean" modality="torso"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  
+  <behaviorset name="performative-stomach">
+    <signals>
+		<signal id="1" name="iconic=stomach" modality="gesture" min="1.0" max="10.0"/>	
+		<signal id="2" name="head=Downward" modality="head"/>		
+	    <signal id="4" name="torso=forward_lean" modality="torso"/>		
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>	
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  
+  <behaviorset name="performative-small">
+    <signals>
+		<signal id="1" name="iconic=small" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="4" name="torso=forward_lean" modality="torso"/>	
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  <behaviorset name="performative-complex">
+    <signals>
+		<signal id="1" name="iconic=complex" modality="gesture" min="1.0" max="10.0"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  <behaviorset name="performative-relax">
+    <signals>
+		<signal id="1" name="iconic=relax" modality="gesture" min="1.0" max="10.0"/>	
+		<signal id="2" name="head=NodUpDown" modality="head"/>
+		<signal id="4" name="torso=forward_lean" modality="torso"/>			
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>	
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  <behaviorset name="performative-wing">
+    <signals>
+		<signal id="1" name="iconic=wing" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="2" name="head=Downward" modality="head"/>
+		<signal id="4" name="torso=backward_lean" modality="torso"/>			
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>			
+		<item id="4"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+
+  <behaviorset name="performative-know_nothing">
+    <signals>
+		<signal id="1" name="iconic=unknown" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="2" name="head=ShakeLeftRight" modality="head"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+  <behaviorset name="performative-inform_Ges_B_Spread">
+    <signals>
+		<signal id="1" name="performative=inform_Ges_B_Spread" modality="gesture" min="1.0" max="10.0"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+  <behaviorset name="performative-hungry">
+    <signals>
+      <signal id="1" name="iconic=hungry" modality="gesture" min="1.0" max="10.0"/>
+	  <signal id="2" name="head=Downward" modality="head"/>
+	  <signal id="4" name="torso=forward_lean" modality="torso"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>	
+		<item id="2"/>	
+		<item id="4"/>	
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+ <behaviorset name="performative-exist">
+    <signals>
+      <signal id="1" name="iconic=exist" modality="gesture" min="1.0" max="10.0"/>
+	  <signal id="2" name="head=ShakeLeftUpRight" modality="head"/>
+	  <signal id="4" name="torso=forward_lean" modality="torso"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>	
+		<item id="2"/>	
+		<item id="4"/>	
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+  <behaviorset name="performative-where">
+    <signals>
+	  <signal id="1" name="iconic=where" modality="gesture" min="0.1" max="10.0"/>
+	  <signal id="2" name="head=ShakeLeftUpRight" modality="head"/>
+	  <signal id="4" name="torso=backward_lean" modality="torso"/>	  
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>				
+		<item id="2"/>				
+		<item id="4"/>		
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>
+  
+    <behaviorset name="performative-all">
+    <signals>
+      <signal id="1" name="iconic=all" modality="gesture" min="1.0" max="10.0"/>
+    </signals>	 	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+  <behaviorset name="performative-baby">
+    <signals>
+      <signal id="1" name="deictic=baby" modality="gesture"/>
+	  <signal id="2" name="head=Upward" modality="head"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>		
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+	<behaviorset name="performative-falldown">
+    <signals>
+      <signal id="1" name="deictic=falldown" modality="gesture" min="1.0" max="10.0"/>
+	  <signal id="2" name="head=Upward" modality="head"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>		
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+  <behaviorset name="performative-upsky">
+    <signals>
+      <signal id="1" name="deictic=upsky" modality="gesture" min="1.0" max="10.0"/>
+	  <signal id="2" name="head=Upward" modality="head"/>
+    </signals>	 	
+    <constraints>
+      <core>		
+        <item id="1"/>	
+		<item id="2"/>	
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+  <behaviorset name="performative-beat">
+    <signals>
+      <signal id="1" name="beat=beat_both" modality="gesture" min="1.0" max="10.0"/>
+	  <signal id="2" name="head=Downward" modality="head"/>	  
+    </signals>	 	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+		<item id="2"/>		
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+
+  <behaviorset name="performative-request_exp">
+    <signals>
+		<signal id="1" name="iconic=unknown" modality="gesture" min="1.0" max="10.0"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+
+
+  
+  <behaviorset name="performative-bebe">
+    <signals>
+		<signal id="1" name="iconic=bebe" modality="gesture" min="1.0" max="10.0"/>
+    </signals>	 
+	
+    <constraints>
+      <core>		
+        <item id="1"/>			
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+
+  
+	
+  
+
+
+
+  
+  
+  
+
+  
+
+  
+ 
+
+  
+  <behaviorset name="performative-request">
+    <signals>
+      <signal id="1" name="iconic=request3" modality="gesture" min="1.0" max="10.0">
+		<alternative name="iconic=request2" probability="0.33" min="1.0" max="10.0"/>
+		<alternative name="iconic=request1" probability="0.33" min="1.0" max="10.0"/>
+	  </signal>
+	  <signal id="2" name="head=Downward" modality="head"/>	  
+	  <signal id="4" name="torso=backward_lean" modality="torso"/>
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>	
+		<item id="2"/>			
+		<item id="4"/>	
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	
+  
+  <behaviorset name="performative-inform">
+    <signals>
+      <signal id="1" name="performative=inform_Ges_B_Up" modality="gesture" min="1.0" max="10.0">
+		<alternative name="performative=inform_Ges_B_Drop" probability="0.33" min="1.0" max="10.0"/>
+		<alternative name="performative=inform_Ges_B_Spread" probability="0.33" min="1.0" max="10.0"/>	  
+	  </signal>
+	  <signal id="2" name="head=Upward" modality="head"/>			  
+	  <signal id="4" name="torso=forward_lean" modality="torso"/>
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>			
+		<item id="4"/>	
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+
+  <behaviorset name="emotion-signs-exclamation1">
+    <signals>
+      <signal id="1" name="affect=exclamation1" modality="gesture" min="0.5" max="10.0"/>
+	  <signal id="2" name="head=Upward" modality="head"/>		
+	  <signal id="4" name="torso=backward_lean" modality="torso"/>	  
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>		
+		<item id="4"/>		
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+  
+ 
+  <behaviorset name="emotion-signs-exclamation">
+    <signals>
+      <signal id="1" name="affect=exclamation1" modality="gesture" min="0.5" max="10.0">
+		<alternative name="affect=exclamation2" probability="0.25" min="0.5" max="10.0"/>
+		<alternative name="affect=exclamation3" probability="0.25" min="0.5" max="10.0"/>
+		<alternative name="affect=exclamation4" probability="0.25" min="0.5" max="10.0"/>
+	  </signal>
+	  <signal id="2" name="head=Upward" modality="head"/>		
+	  <signal id="4" name="torso=backward_lean" modality="torso"/>
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>		
+		<item id="4"/>		
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+   
+    <behaviorset name="emotion-happy">
+    <signals>
+      <signal id="1" name="affect=happy1" modality="gesture" min="0.5" max="10.0">
+		<alternative name="affect=happy2" probability="0.33" min="0.5" max="10.0"/>
+		<alternative name="affect=happy3" probability="0.33" min="0.5" max="10.0"/>
+	  </signal>
+	  <signal id="2" name="head=Upward" modality="head"/>	  
+	  <signal id="4" name="torso=backward_lean" modality="torso"/>
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>		
+		<item id="4"/>
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+
+    <behaviorset name="performative-tell">
+    <signals>
+      <signal id="1" name="beat=tell1" modality="gesture" min="0.5" max="10.0">
+		<alternative name="beat=tell2" probability="0.33" min="0.5" max="10.0"/>
+		<alternative name="beat=tell3" probability="0.33" min="0.5" max="10.0"/>
+	  </signal>
+	  <signal id="2" name="head=Downward" modality="head"/>	  
+	   <signal id="4" name="torso=forward_lean" modality="torso"/>
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>		
+		<item id="4"/>	
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+  
+    <behaviorset name="emotion-sad">
+    <signals>
+      <signal id="1" name="affect=sad1" modality="gesture" min="0.2" max="34243.0">
+		<alternative name="affect=sad2" probability="0.33" min="0.5" max="10.0"/>
+		<alternative name="affect=sad3" probability="0.33" min="0.5" max="10.0"/>
+	  </signal>
+	  <signal id="2" name="head=Downward" modality="head"/>
+	  <signal id="4" name="torso=forward_lean" modality="torso"/>	  
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>		
+		<item id="4"/>
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+
+    <behaviorset name="emotion-upclose"> <!--  -->
+    <signals>
+      <signal id="1" name="affect=upclose1" modality="gesture" min="0.5" max="10.0">
+		<alternative name="affect=upclose2" probability="0.33" min="0.5" max="10.0"/>
+		<alternative name="affect=upclose3" probability="0.33" min="0.5" max="10.0"/>
+	  </signal>
+	  <signal id="2" name="head=Downward" modality="head"/>	  
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>		
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+  
+    <behaviorset name="performative-believe"> <!--  -->
+    <signals>
+      <signal id="1" name="metaphoric=believe1" modality="gesture" min="0.5" max="10.0">
+		<alternative name="metaphoric=believe2" probability="0.33" min="0.5" max="10.0"/>
+		<alternative name="metaphoric=believe3" probability="0.33" min="0.5" max="10.0"/>
+	  </signal>
+	  <signal id="2" name="head=Upward" modality="head"/>
+	  <signal id="4" name="torso=backward_lean" modality="torso"/>
+    </signals>	 
+    <constraints>
+      <core>		
+        <item id="1"/>
+		<item id="2"/>		
+		<item id="4"/>
+      </core>
+      <rules>
+	  </rules>
+    </constraints>
+  </behaviorset>	  
+  
+	<behaviorset name="performative-order">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+  
+  	<behaviorset name="performative-neg-inform">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="emotion-signs-laugh">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="emotion-signs-scream">
+    <signals>
+		  <signal id="1" name="affect=scream1" modality="gesture" min="0.5" max="10.0">
+		  </signal>
+		  <signal id="2" name="head=Downward" modality="head">			
+		  </signal>		  
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>
+			<item id="2"/>
+			
+		  </core>
+		  <rules>
+		  </rules>
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="emotion-signs-cry">
+		<signals>
+		  <signal id="1" name="affect=cry" modality="gesture" min="0.5" max="10.0"/>
+		  <signal id="2" name="head=Downward" modality="head"/>		
+		  <signal id="4" name="torso=forward_lean" modality="torso"/>		  
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>
+			<item id="2"/>			
+			<item id="4"/>
+		  </core>
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="emotion-signs-surprise">
+		<signals>
+			 <signal id="1" name="affect=surprise" modality="gesture" min="0.5" max="10.0"/>
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>
+		  </core>	
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-assert">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="performative-deny">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="performative-contradict">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="emotion-signs-recall">
+		<signals>
+		  <signal id="1" name="beat=recall1" modality="gesture" min="0.5" max="10.0">
+			<alternative name="beat=recall2" probability="0.33" min="0.5" max="10.0"/>
+			<alternative name="beat=recall3" probability="0.33" min="0.5" max="10.0"/>
+		  </signal>
+		  <signal id="2" name="head=head_down_low" modality="head">
+			<alternative name="head=head_down_high" probability="0.5" min="0.5" max="10.0"/>
+		  </signal>		  
+		</signals>	 
+		<constraints>
+		  <core>		
+			<item id="1"/>
+			<item id="2"/>			
+		  </core>
+		  <rules>
+		  </rules>
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="performative-accept">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="performative-ensure">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="performative-offer">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>		
+	
+	<behaviorset name="performative-promise">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-refuse">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-giveUp">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-advice">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-ask">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-require">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-suggest">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-adhere">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-agree">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-laud">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-blame">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-askForForgiveness">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-disagree">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-congratulate">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-cry">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-protest">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-thank">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-reproach">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-regret">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-greet">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-excuse">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-beProud">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-whine">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>
+
+	<behaviorset name="performative-complain">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-rejoice">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-apologize">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-beSatisfied">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	<behaviorset name="performative-pbackward_lean">
+		<signals>
+  
+		</signals>	 
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+  <!-- boundary -->
+  <behaviorset name="boundary-L">
+    <signals>
+      <signal id="1" name="head=LeftTurnDownward" modality="head">
+	<alternative name="head=RightTurnDownward" probability="0.2"/>
+	<alternative name="head=head_down_aside_l" probability="0.2"/>
+	<alternative name="head=LeftTurnRightTilt" probability="0.2"/>
+	<alternative name="NeutralPosition" probability="0.2"/>
+      </signal>
+    </signals>
+    <constraints>
+      <rules>
+
+			</rules>
+    </constraints>
+  </behaviorset>
+  <behaviorset name="boundary-HL">
+    <signals>
+      <signal id="1" name="head=LeftTurnDownward" modality="head">
+		<alternative name="head=RightTurnDownward" probability="0.2"/>
+		<alternative name="head=Downward" probability="0.2"/>
+		<alternative name="head=LeftTurnDownward" probability="0.2"/>
+		<alternative name="head=RightTurnDownward" probability="0.2"/>
+		<alternative name="head=NeutralPosition" probability="0.2"/>
+      </signal>
+    </signals>
+    <constraints>
+      <rules>
+			</rules>
+    </constraints>
+  </behaviorset>
+  <behaviorset name="boundary-H">
+    <signals>
+      <signal id="1" name="head=RightTurnUpward" modality="head">
+        <alternative name="head=LeftTurnUpward" probability="0.2"/>
+		<alternative name="head=LeftTurnUpward" probability="0.2"/>
+		<alternative name="head=RightTurnUpward" probability="0.2"/>
+		<alternative name="head=NeutralPosition" probability="0.2"/>
+      </signal>
+    </signals>
+    <constraints>
+      <rules>
+			</rules>
+    </constraints>
+  </behaviorset>
+  <behaviorset name="boundary-HH">
+    <signals>
+       <signal id="1" name="head=RightTurnUpward" modality="head">
+        <alternative name="head=LeftTurnUpward" probability="0.2"/>
+		<alternative name="head=LeftTurnUpward" probability="0.2"/>
+		<alternative name="head=RightTurnUpward" probability="0.2"/>
+		<alternative name="head=NeutralPosition" probability="0.2"/>
+      </signal>
+    </signals>
+    <constraints>
+      <rules>
+			</rules>
+    </constraints>
+  </behaviorset>
+  <behaviorset name="boundary-LL">
+    <signals>
+      <signal id="1" name="head=Downward" modality="head">
+		<alternative name="head=RightTurnDownward" probability="0.2"/>
+		<alternative name="head=LeftTurnDownward" probability="0.2"/>
+		<alternative name="head=RightTurnDownward" probability="0.2"/>
+		<alternative name="head=NeutralPosition" probability="0.2"/>
+      </signal>
+    </signals>
+    <constraints>
+      <rules>
+			</rules>
+    </constraints>
+  </behaviorset>
+  
+  <behaviorset name="boundary-LH">
+    <signals>
+      <signal id="1" name="head=RightTurnUpward" modality="head">
+        <alternative name="head=LeftTurnUpward" probability="0.20"/>
+		<alternative name="head=LeftTurnUpward" probability="0.20"/>
+		<alternative name="head=RightTurnUpward" probability="0.20"/>
+		<alternative name="head=NeutralPosition" probability="0.20"/>
+      </signal>      
+    </signals>
+    <constraints>
+      <rules>
+			</rules>
+    </constraints>
+  </behaviorset>
+  	
+</behaviorsets>

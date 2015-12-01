@@ -1,0 +1,4 @@
+0.5 0
+talk cheshire cat
+cheshire
+Do you want information about Cheshire ?

@@ -1,0 +1,6 @@
+0.5 0
+march hare march-hare information
+hare
+I see that you are not in a great mood. Shall I tell you a story about the March Hare to cheer you up?
+The March Hare appears in the tea party scene.
+Like the character's friend, the Hatter, the March Hare feels compelled to always behave as though it is tea-time because the Hatter supposedly "murdered the time" whilst singing for the Queen of Hearts. 

@@ -1,0 +1,4 @@
+0.5 0
+alice tale
+alice
+That is the Mouse !

@@ -1,0 +1,6 @@
+<!ELEMENT HeadGestures (HeadGesture)*>
+<!ELEMENT HeadGesture (HeadPitch, HeadYaw)>
+<!ATTLIST HeadGesture id CDATA "id" min CDATA "1" max CDATA "2" trajectory CDATA "linear">
+<!ELEMENT HeadPitch (#PCDATA)>
+<!ELEMENT HeadYaw (#PCDATA)>
+

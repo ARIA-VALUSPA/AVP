@@ -1,0 +1,4 @@
+0.5 0
+information ?
+information
+What do you want to know ? I did not get what you said.

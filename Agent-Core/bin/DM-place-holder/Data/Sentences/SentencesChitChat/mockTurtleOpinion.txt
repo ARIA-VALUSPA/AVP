@@ -1,0 +1,4 @@
+0.5 0
+opinion mock turtle mock-turtle ?
+turtle
+Even if Mock the Turtle is friendly with Alice, I think he is only using her to achieve his personal goal. I don't like that... 

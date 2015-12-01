@@ -1,0 +1,4 @@
+0.5 0
+date book author ?
+date
+It was published in 1865, but written between 1962 and 1863.

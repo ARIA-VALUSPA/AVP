@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<behaviorsets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Common/Data/xml/behaviorsets.xsd">
+	
+	
+	<!-- REGULATOR -->
+	<behaviorset name="regulator-touchSelf">
+		<signals>
+			<signal id="1" name="adaptor=belly_Ges_R" modality="gesture">
+				<alternative name="adaptor=head_Ges_L" probability="0.20"/>
+				<alternative name="adaptor=head_Ges_R" probability="0.20"/>
+			</signal>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<!-- GREET -->
+	
+	<behaviorset name="performative-greet">
+		<signals>
+			<signal id="1" name="faceexp=Liking" modality="face">
+				<alternative name="faceexp=Disliking" probability="0.5"/>
+			</signal>
+			<signal id="2" name="performative=greet_Ges_L" modality="gesture"/>
+			<signal id="3" name="gaze=look_right" modality="gaze"/>
+			<signal id="4" name="Shake_Middle" modality="head">
+				<alternative name="Up" probability="0.30"/>
+			</signal>
+			
+			
+		</signals>
+		<constraints>
+			
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-beatsocial">
+		<signals>
+			<signal id="1" name="faceexp=AU59" modality="face">
+				<alternative name="faceexp=anger" probability="0.5"/>
+			</signal>
+			<signal id="2" name="beat=beat_Ges_B_Social" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="3" name="gaze=look_right" modality="gaze">
+				<alternative name="gaze=look_up" probability="0.25"/>
+				<alternative name="gaze=look_down" probability="0.25"/>
+			</signal>
+			<signal id="4" name="Shake_Middle" modality="head">
+				<alternative name="Nod_Middle" probability="0.30"/>
+			</signal>
+			<signal id="5" name="Up" modality="head">
+				<alternative name="Down" probability="0.30"/>
+				<alternative name="Aside_Right" probability="0.30"/>
+			</signal>
+		</signals>
+		<constraints>
+			
+		</constraints>
+	</behaviorset>
+	
+	<!-- ASSERTIVES -->
+  
+  <behaviorset name="performative-inform">
+    <signals>
+		<signal id="1" name="faceexp=Liking" modality="face">
+			<alternative name="faceexp=Disliking" probability="0.5"/>
+		</signal>
+		<signal id="2" name="performative=inform_Ges_B_Up" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="3" name="gaze=look_right" modality="gaze"/>
+		<signal id="4" name="Shake_Middle" modality="head">
+			<alternative name="Up" probability="0.30"/>
+		</signal>
+	  
+    </signals>	 
+    <constraints>
+      
+    </constraints>
+  </behaviorset>	
+<!-- DIRECTIVES -->
+	
+	<behaviorset name="performative-ask">
+		<signals>
+			<signal id="1" name="faceexp=Liking" modality="face">
+				<alternative name="faceexp=Disliking" probability="0.5"/>
+			</signal>
+			<signal id="2" name="performative=ask_Pos_B" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="3" name="gaze=look_right" modality="gaze"/>
+			<signal id="4" name="Shake_Middle" modality="head">
+				<alternative name="Up" probability="0.30"/>
+			</signal>
+			
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	<!-- COMMISSIVES -->
+	
+	<behaviorset name="performative-accept">
+	<signals>
+		<signal id="1" name="faceexp=Liking" modality="face">
+			<alternative name="faceexp=Disliking" probability="0.5"/>
+		</signal>
+		<signal id="2" name="performative=accept_Ges_B" modality="gesture" min="1.0" max="10.0"/>
+		<signal id="3" name="gaze=look_right" modality="gaze"/>
+		<signal id="4" name="Shake_Middle" modality="head">
+			<alternative name="Up" probability="0.30"/>
+		</signal>
+	</signals>			
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	
+	
+	<!-- DECLARATIVES -->
+	
+	<behaviorset name="performative-deny">
+		<signals>
+			<signal id="1" name="faceexp=Eyebrows_Frown" modality="face">
+				<alternative name="faceexp=Liking" probability="0.25"/>
+				<alternative name="faceexp=Disliking" probability="0.25"/>
+			</signal>
+			<signal id="2" name="performative=deny_Ges_B" modality="gesture" min="1.0" max="10.0"/>
+			<signal id="3" name="gaze=look_right" modality="gaze">
+				<alternative name="gaze=eyes_closed" probability="0.5"/>
+			</signal>
+			<signal id="4" name="Shake_Middle" modality="head">
+				<alternative name="Up" probability="0.30"/>
+			</signal>
+		</signals>
+		<constraints>
+			
+		</constraints>
+	</behaviorset>
+	
+	<!-- EXPRESSIVES -->
+	<behaviorset name="performative-agree">
+	<signals>
+		<signal id="1" name="faceexp=Liking" modality="face">
+			<alternative name="faceexp=Disliking" probability="0.5"/>
+		</signal>
+			<signal id="2" name="performative=agree_Ges_B" modality="gesture" min="1.0" max="10.0"/>
+		
+			<signal id="3" name="gaze=look_right" modality="gaze">
+				<alternative name="gaze=eyes_closed" probability="0.5"/>
+			</signal>
+			<signal id="4" name="Shake_Middle" modality="head">
+				<alternative name="Up" probability="0.30"/>
+			</signal>		
+	</signals>			
+		<constraints>
+
+		</constraints>
+	</behaviorset>	
+	<behaviorset name="performative-disagree">
+	<signals>
+	<signal id="1" name="faceexp=Liking" modality="face">
+			<alternative name="faceexp=Disliking" probability="0.5"/>
+		</signal>
+			<signal id="2" name="performative=disagree_Ges_B" modality="gesture" min="1.0" max="10.0"/>
+		
+			<signal id="3" name="gaze=look_right" modality="gaze">
+				<alternative name="gaze=eyes_closed" probability="0.5"/>
+			</signal>
+			<signal id="4" name="Shake_Middle" modality="head">
+				<alternative name="Up" probability="0.30"/>
+			</signal>
+					
+</signals>			
+		<constraints>
+
+		</constraints>
+	</behaviorset>
+	
+	
+
+</behaviorsets>

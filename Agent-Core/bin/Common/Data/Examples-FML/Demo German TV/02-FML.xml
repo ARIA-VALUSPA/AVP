@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml>
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+				
+			<tm id="tm1"/>
+				Hi! 
+			<tm id="tm2"/>				
+				My name is Alice.
+			<tm id="tm3"/>
+			<pitchaccent start="s1:tm1" id="pa1" importance="1" level="medium" end="s1:tm2" type="HStar" />
+			<boundary start="s1:tm2" id="b1" end="s1:tm2+0.5" type="HH" />
+			<boundary start="s1:tm3" id="b2" end="s1:tm3+0.5" type="HH" />
+		</speech>
+	</bml>
+	<fml>
+		<deictic id="p1" type="selftouch" start="s1:tm2" end="s1:tm3" importance="1.0"/>
+	</fml>
+</fml-apml>

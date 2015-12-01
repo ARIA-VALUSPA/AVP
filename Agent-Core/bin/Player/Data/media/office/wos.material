@@ -1,0 +1,10 @@
+import * from "base.material"
+
+material wos_border : base {
+	set_texture_alias celShadingMap office/border.png
+}
+
+material wos001 : base {
+	set_texture_alias diffuseMap office/alice-bg.png
+	set_texture_alias celShadingMap office/alice-bg.png
+}

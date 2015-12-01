@@ -1,0 +1,4 @@
+0.5 0
+opinion alice
+alice favouriteCharacter 
+What do you think about me ? Do you like me ? 

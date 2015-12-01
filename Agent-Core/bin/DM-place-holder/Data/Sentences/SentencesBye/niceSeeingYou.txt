@@ -1,0 +1,4 @@
+0.5 1
+bye byebye transitionToB
+bye
+It was nice seeing you ! 

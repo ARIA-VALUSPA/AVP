@@ -1,0 +1,4 @@
+0.5 0
+notfound
+whatTalk badSeeYou
+Sorry. I don't understand what you said. I maybe don't have any information on that subject. Could you please rephrase it?

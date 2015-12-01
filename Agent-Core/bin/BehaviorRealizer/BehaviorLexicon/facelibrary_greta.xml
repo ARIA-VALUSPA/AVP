@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE facelibrary SYSTEM "facelibrary.dtd">
+<facelibrary>
+
+    <expression class="faceexp" instance="raise_mouth_corner">
+       <action name="AU12"/>
+    </expression>
+
+    <expression class="faceexp" instance="joy">
+       <action name="AU6"/>
+       <action name="AU12"/>
+    </expression>
+
+    <expression class="faceexp" instance="sadness">
+       <action name="AU1"/>
+       <action name="AU4"/>
+       <action name="AU15"/>
+    </expression>
+
+    <expression class="faceexp" instance="surprise">
+       <action name="AU1"/>
+       <action name="AU2"/>
+       <action name="AU5"/>
+       <action name="AU26"/>
+    </expression>
+
+    <expression class="faceexp" instance="fear">
+       <action name="AU1"/>
+       <action name="AU2"/>
+       <action name="AU4"/>
+       <action name="AU5"/>
+       <action name="AU20"/>
+       <action name="AU26"/>
+    </expression>
+
+    <expression class="faceexp" instance="anger">
+       <action name="AU4"/>
+       <action name="AU5"/>
+       <action name="AU7"/>
+       <action name="AU23"/>
+    </expression>
+
+    <expression class="faceexp" instance="disgust">
+       <action name="AU9"/>
+       <action name="AU15"/>
+       <action name="AU16"/>
+    </expression>
+    
+    <expression class="faceexp" instance="AU1">
+       <action name="AU1"/>
+    </expression>
+ 
+   <expression class="faceexp" instance="AU2">
+       <action name="AU2"/>
+    </expression>
+
+<expression class="faceexp" instance="AU3">
+       <action name="AU3"/>
+    </expression>
+
+<expression class="faceexp" instance="AU4">
+       <action name="AU4"/>
+    </expression>
+
+<expression class="faceexp" instance="AU5">
+       <action name="AU5"/>
+    </expression>
+
+<expression class="faceexp" instance="AU6">
+       <action name="AU6"/>
+    </expression>
+
+<expression class="faceexp" instance="AU7">
+       <action name="AU7"/>
+    </expression>
+
+<expression class="faceexp" instance="AU8">
+       <action name="AU8"/>
+    </expression>
+
+<expression class="faceexp" instance="AU9">
+       <action name="AU9"/>
+    </expression>
+
+<expression class="faceexp" instance="AU10">
+       <action name="AU10"/>
+    </expression>
+
+
+    <expression class="faceexp" instance="AU11">
+       <action name="AU11"/>
+    </expression>
+ 
+   <expression class="faceexp" instance="AU12">
+       <action name="AU12"/>
+    </expression>
+
+<expression class="faceexp" instance="AU13">
+       <action name="AU13"/>
+    </expression>
+
+<expression class="faceexp" instance="AU14">
+       <action name="AU14"/>
+    </expression>
+
+<expression class="faceexp" instance="AU15">
+       <action name="AU15"/>
+    </expression>
+
+<expression class="faceexp" instance="AU16">
+       <action name="AU16"/>
+    </expression>
+
+<expression class="faceexp" instance="AU17">
+       <action name="AU17"/>
+    </expression>
+
+<expression class="faceexp" instance="AU18">
+       <action name="AU18"/>
+    </expression>
+
+<expression class="faceexp" instance="AU19">
+       <action name="AU19"/>
+    </expression>
+
+<expression class="faceexp" instance="AU20">
+       <action name="AU20"/>
+    </expression>
+
+    <expression class="faceexp" instance="AU21">
+       <action name="AU21"/>
+    </expression>
+ 
+   <expression class="faceexp" instance="AU22">
+       <action name="AU22"/>
+    </expression>
+
+<expression class="faceexp" instance="AU23">
+       <action name="AU23"/>
+    </expression>
+
+<expression class="faceexp" instance="AU24">
+       <action name="AU24"/>
+    </expression>
+
+<expression class="faceexp" instance="AU25">
+       <action name="AU25"/>
+    </expression>
+
+<expression class="faceexp" instance="AU26">
+       <action name="AU26"/>
+    </expression>
+
+<expression class="faceexp" instance="AU27">
+       <action name="AU27"/>
+    </expression>
+
+<expression class="faceexp" instance="AU28">
+       <action name="AU28"/>
+    </expression>
+
+<expression class="faceexp" instance="AU29">
+       <action name="AU29"/>
+    </expression>
+
+<expression class="faceexp" instance="AU30">
+       <action name="AU30"/>
+    </expression>
+
+    <expression class="faceexp" instance="AU31">
+       <action name="AU31"/>
+    </expression>
+ 
+   <expression class="faceexp" instance="AU32">
+       <action name="AU32"/>
+    </expression>
+
+<expression class="faceexp" instance="AU33">
+       <action name="AU33"/>
+    </expression>
+
+<expression class="faceexp" instance="AU34">
+       <action name="AU34"/>
+    </expression>
+
+<expression class="faceexp" instance="AU35">
+       <action name="AU35"/>
+    </expression>
+
+<expression class="faceexp" instance="AU36">
+       <action name="AU36"/>
+    </expression>
+
+<expression class="faceexp" instance="AU37">
+       <action name="AU37"/>
+    </expression>
+
+<expression class="faceexp" instance="AU38">
+       <action name="AU38"/>
+    </expression>
+
+<expression class="faceexp" instance="AU39">
+       <action name="AU39"/>
+    </expression>
+
+<expression class="faceexp" instance="AU40">
+       <action name="AU40"/>
+    </expression>
+
+    <expression class="faceexp" instance="AU41">
+       <action name="AU41"/>
+    </expression>
+ 
+   <expression class="faceexp" instance="AU42">
+       <action name="AU42"/>
+    </expression>
+
+<expression class="faceexp" instance="AU43">
+       <action name="AU43"/>
+    </expression>
+
+<expression class="faceexp" instance="AU44">
+       <action name="AU44"/>
+    </expression>
+
+<expression class="faceexp" instance="AU45">
+       <action name="AU45"/>
+    </expression>
+
+<expression class="faceexp" instance="AU46">
+       <action name="AU46"/>
+    </expression>
+
+<expression class="faceexp" instance="AU47">
+       <action name="AU47"/>
+    </expression>
+
+<expression class="faceexp" instance="AU48">
+       <action name="AU48"/>
+    </expression>
+
+<expression class="faceexp" instance="AU49">
+       <action name="AU49"/>
+    </expression>
+
+<expression class="faceexp" instance="AU50">
+       <action name="AU50"/>
+    </expression>
+
+    <expression class="faceexp" instance="AU61">
+       <action name="AU61"/>
+    </expression>
+ 
+   <expression class="faceexp" instance="AU62">
+       <action name="AU62"/>
+    </expression>
+
+<expression class="faceexp" instance="AU63">
+       <action name="AU63"/>
+    </expression>
+
+<expression class="faceexp" instance="AU64">
+       <action name="AU64"/>
+    </expression>
+
+<expression class="faceexp" instance="AU65">
+       <action name="AU65"/>
+    </expression>
+
+<expression class="faceexp" instance="AU66">
+       <action name="AU66"/>
+    </expression>
+
+<expression class="faceexp" instance="AU67">
+       <action name="AU67"/>
+    </expression>
+
+<expression class="faceexp" instance="AU68">
+       <action name="AU68"/>
+    </expression>
+
+</facelibrary>

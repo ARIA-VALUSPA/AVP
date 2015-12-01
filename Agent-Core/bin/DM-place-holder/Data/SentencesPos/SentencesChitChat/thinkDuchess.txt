@@ -1,0 +1,4 @@
+0.5 0
+opinion duchess
+duchess favouriteCharacter 
+What do you think about the Duchess ? Do you like her ? 

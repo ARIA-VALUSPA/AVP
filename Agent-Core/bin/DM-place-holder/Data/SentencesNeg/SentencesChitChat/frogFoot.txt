@@ -1,0 +1,6 @@
+0.5 0
+information frog footman frog-footman 
+footman
+I see that you are not in a great mood. Shall I tell you a story about the Footman to cheer you up?
+He is the Duchess's footman. 
+The Frog-footman is stupid and accustomed to the fact that nothing makes sense in Wonderland.

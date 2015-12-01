@@ -1,0 +1,4 @@
+0.5 0
+opinion cheshire cat
+cheshire favouriteCharacter 
+What do you think about Cheshire ? Do you like him ? 

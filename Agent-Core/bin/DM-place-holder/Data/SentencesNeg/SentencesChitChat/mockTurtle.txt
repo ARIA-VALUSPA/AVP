@@ -1,0 +1,6 @@
+0.5 0
+information mock turtle mock-turtle 
+turtle
+I see that you are not in a great mood. Shall I tell you a story about the Mock Turtle to cheer you up?
+He is a turtle with the head of a calf. 
+The Mock Turtle is friendly to Alice but is exceedingly sentimental and self-absorbed.

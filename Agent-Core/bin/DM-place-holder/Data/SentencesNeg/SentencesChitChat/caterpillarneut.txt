@@ -1,0 +1,6 @@
+0.5 0
+information caterpillar 
+caterpillar
+I see that you are not in a great mood. Shall I tell you a story about The Caterpillar to cheer you up?
+The Caterpillar sits on a mushroom, smokes a hookah, and treats Alice with contempt. 
+He directs Alice to the magic mushroom that allows her to shrink and grow.

@@ -1,0 +1,4 @@
+0.5 0
+opinion march hare march-hare
+hare favouriteCharacter 
+What do you think about the March Hare ? Do you like him ? 

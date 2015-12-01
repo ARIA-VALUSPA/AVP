@@ -1,0 +1,4 @@
+0.5 0
+fish footman chapter introduced fish-footman 1
+fish
+The Fish Footman is mentioned in chapter 6

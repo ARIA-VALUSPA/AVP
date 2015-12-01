@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml>
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+				
+			<tm id="tm1"/>
+				Yes, 
+			<tm id="tm2"/>
+				he did.
+			<tm id="tm3"/>	
+			<pitchaccent start="s1:tm1" id="pa1" importance="1" level="medium" end="s1:tm2" type="HStar" />
+			<boundary start="s1:tm1" id="b2" end="s1:tm2" type="H" />
+		</speech>
+	</bml>
+	<fml>
+		<deictic id="b1" type="down" start="s1:tm2" end="s1:tm3+1"  importance="1" />
+	</fml>
+</fml-apml>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml>
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+				
+			<tm id="tm1"/>
+				Well, 
+			<tm id="tm2"/>	
+			I know the story by heart ...
+			<tm id="tm3"/>
+			and some curiosities about the book as well.
+			<tm id="tm4"/>
+		</speech>
+	</bml>
+	<fml>
+		<certainity id="c1" type="certitude" start="s1:tm1" end="s1:tm3" importance="1.0"/>
+		<emotion id="e1" type="joyStrong" start="s1:tm1" end="s1:tm3" importance="1.0"/>
+		<pitchaccent start="s1:tm3" id="pa1" importance="1" level="medium" end="s1:tm4" type="Lstar" />
+		<deictic id="d1" type="selftouch" start="s1:tm2" end="s1:tm3" importance="1.0"/>
+		<beat id="b1" type="left" start="s1:tm3" end="s1:tm4" importance="1.0"/>
+	</fml>
+</fml-apml>

@@ -1,0 +1,790 @@
+<skeleton>
+    <bones>
+        <bone id="0" name="HumanoidRoot">
+            <position x="0" y="0" z="0" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="1" name="sacroiliac">
+            <position x="9.376635E-8" y="0.023139954" z="-1.6747221" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="2" name="r_hip">
+            <position x="-4.90362" y="-3.7513123" z="1.5813063" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="3" name="r_knee">
+            <position x="-1.9018679" y="-22.705498" z="2.4346614" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="4" name="r_ankle">
+            <position x="-1.5214882" y="-18.164703" z="-0.9178591" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="5" name="r_subtalar">
+            <position x="-9.536743E-7" y="-3.1006012" z="-3.2651148" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="6" name="r_midtarsal">
+            <position x="-0.14899921" y="-0.2417984" z="5.3773303" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="7" name="r_metatarsal">
+            <position x="-0.47533035" y="-0.040397644" z="7.558622" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="8" name="r_ankleORIENT">
+            <position x="2.3937225E-4" y="-2.59507" z="-7.8813173E-7" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="9" name="r_ankleTwist">
+            <position x="-0.76074505" y="-9.082367" z="-0.45893028" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="10" name="l_hip">
+            <position x="4.903623" y="-3.7508621" z="1.581309" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="11" name="l_knee">
+            <position x="1.9018679" y="-22.70591" z="2.434658" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="12" name="l_ankle">
+            <position x="1.5214944" y="-18.164719" z="-0.9178596" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="13" name="l_subtalar">
+            <position x="-9.536743E-7" y="-3.1006165" z="-3.2651188" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="14" name="l_midtarsal">
+            <position x="0.1489973" y="-0.241745" z="5.3773355" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="15" name="l_metatarsal">
+            <position x="0.47532558" y="-0.040473938" z="7.5586176" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="16" name="l_ankleORIENT">
+            <position x="2.4414062E-4" y="-2.594986" z="-5.6417193E-6" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="17" name="l_ankleTwist">
+            <position x="0.7607465" y="-9.082367" z="-0.45893" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="18" name="vl5">
+            <position x="0.04988648" y="0.06435394" z="-1.6518785" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="19" name="vl4">
+            <position x="-0.048704732" y="2.143753" z="0.15302253" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="20" name="vl3">
+            <position x="0.011723286" y="1.9814606" z="0.051931143" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="21" name="vl2">
+            <position x="-0.00715291" y="1.7850647" z="-0.08876705" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="22" name="vl1">
+            <position x="3.938144E-5" y="1.7790527" z="-0.15660882" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="23" name="vt12">
+            <position x="0.04268931" y="1.6954651" z="-0.29852724" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="24" name="vt11">
+            <position x="2.1219626E-4" y="1.4380798" z="-0.32192206" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="25" name="vt10">
+            <position x="-0.020510882" y="1.5566711" z="-0.4182241" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="26" name="vt9">
+            <position x="-0.0047828257" y="1.6559753" z="-0.4565606" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="27" name="vt8">
+            <position x="0.012263823" y="1.3988647" z="-0.29691792" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="28" name="vt7">
+            <position x="0.00787377" y="1.3253784" z="-0.19618082" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="29" name="vt6">
+            <position x="0.0037909746" y="1.2909241" z="-0.019881248" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="30" name="vt5">
+            <position x="0.014525734" y="1.4780579" z="0.01376009" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="31" name="vt4">
+            <position x="-0.005499035" y="1.4612122" z="0.2339468" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="32" name="vt3">
+            <position x="0.022236556" y="1.8136292" z="0.35894966" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="33" name="vt2">
+            <position x="-0.016381435" y="1.6920166" z="0.3559637" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="34" name="vt1">
+            <position x="-0.019589119" y="1.4040527" z="0.5422354" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="35" name="vc7">
+            <position x="0.005718887" y="1.3715668" z="0.97630477" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="36" name="vc6">
+            <position x="0.011525705" y="1.1910553" z="0.43543077" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="37" name="vc5">
+            <position x="-0.008184977" y="0.95910645" z="0.52309346" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="38" name="vc4">
+            <position x="0.009728111" y="0.9449768" z="0.29740775" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="39" name="vc3">
+            <position x="0.009471662" y="0.77775574" z="0.17075622" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="40" name="vc2">
+            <position x="-0.010138892" y="0.7218323" z="0.12390542" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="41" name="vc1">
+            <position x="-0.00782083" y="0.5391998" z="-0.005518794" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="42" name="skullbase">
+            <position x="-0.0028819405" y="0.5330353" z="0.069556355" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="43" name="l_sternoclavicular">
+            <position x="1.2595891" y="0.44670105" z="1.3342261" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="44" name="l_acromioclavicular">
+            <position x="6.262063" y="0.2238617" z="-0.721406" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="45" name="l_shoulder">
+            <position x="2.6162176" y="-1.7714844" z="-0.8501344" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="46" name="l_elbow">
+            <position x="0.13148403" y="-15.055756" z="1.165667" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="47" name="l_wrist">
+            <position x="0.009554863" y="-11.9902725" z="0.25303245" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="48" name="l_thumb1">
+            <position x="-0.544055" y="-1.3743286" z="1.3436934" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="49" name="l_thumb2">
+            <position x="0.015265465" y="-1.3089523" z="1.5805078" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="50" name="l_thumb3">
+            <position x="0.197258" y="-0.66941833" z="1.0546328" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="51" name="l_index0">
+            <position x="0.03138733" y="-1.9222183" z="1.0253569" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="52" name="l_index1">
+            <position x="0.11478996" y="-3.0064697" z="0.10658014" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="53" name="l_index2">
+            <position x="0.07555103" y="-1.6441116" z="0.13601589" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="54" name="l_index3">
+            <position x="-0.075722694" y="-1.1911545" z="-0.03926897" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="55" name="l_middle0">
+            <position x="0.15991592" y="-1.9615479" z="0.18490887" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="56" name="l_middle1">
+            <position x="0.20279598" y="-2.9270096" z="-0.15654111" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="57" name="l_middle2">
+            <position x="0.09902859" y="-1.9173431" z="-0.1305883" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="58" name="l_middle3">
+            <position x="-0.027807236" y="-1.2981339" z="-0.033171415" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="59" name="l_pinky0">
+            <position x="-0.13600826" y="-1.7293777" z="-1.458226" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="60" name="l_pinky1">
+            <position x="-0.010604858" y="-2.557022" z="-0.5264802" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="61" name="l_pinky2">
+            <position x="0.094347954" y="-0.999382" z="-0.16724777" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="62" name="l_pinky3">
+            <position x="-0.0158844" y="-0.75657654" z="0.047798157" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="63" name="l_ring0">
+            <position x="0.03001976" y="-1.9352798" z="-0.72586083" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="64" name="l_ring1">
+            <position x="0.18879128" y="-2.702919" z="-0.30208445" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="65" name="l_ring2">
+            <position x="0.058124542" y="-1.7124557" z="-0.18370128" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="66" name="l_ring3">
+            <position x="0.041955948" y="-1.1743164" z="-0.035047054" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="67" name="l_wristORIENT">
+            <position x="-0.10799885" y="-1.9698792" z="-0.3682933" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="68" name="l_wristTwist1">
+            <position x="0.0047779083" y="-5.9951324" z="0.12651801" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="69" name="l_wristTwist2">
+            <position x="0.008047104" y="-10.09774" z="0.21309614" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="70" name="r_sternoclavicular">
+            <position x="-1.259593" y="0.44677734" z="1.3342261" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="71" name="r_acromioclavicular">
+            <position x="-6.26206" y="0.22401428" z="-0.7214105" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="72" name="r_shoulder">
+            <position x="-2.616271" y="-1.7720184" z="-0.8501415" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="73" name="r_elbow">
+            <position x="-0.13668537" y="-15.033096" z="1.42051" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="74" name="r_wrist">
+            <position x="-0.010797501" y="-11.984871" z="0.45631444" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="75" name="r_pinky0">
+            <position x="0.14163303" y="-1.7535782" z="-1.4279736" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="76" name="r_pinky1">
+            <position x="0.012564659" y="-2.5656433" z="-0.48297644" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="77" name="r_pinky2">
+            <position x="-0.09365082" y="-1.0020294" z="-0.15059328" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="78" name="r_pinky3">
+            <position x="0.0152692795" y="-0.75606537" z="0.06047201" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="79" name="r_middle0">
+            <position x="-0.16077995" y="-1.9576187" z="0.21780741" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="80" name="r_middle1">
+            <position x="-0.20226955" y="-2.9292526" z="-0.10762906" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="81" name="r_middle2">
+            <position x="-0.09855175" y="-1.9193268" z="-0.09843886" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="82" name="r_middle3">
+            <position x="0.027812004" y="-1.2985153" z="-0.0110247135" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="83" name="r_ring0">
+            <position x="-0.027327538" y="-1.9469833" z="-0.6928421" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="84" name="r_ring1">
+            <position x="-0.18751335" y="-2.708168" z="-0.25718832" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="85" name="r_ring2">
+            <position x="-0.05744362" y="-1.71492" z="-0.15461993" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="86" name="r_ring3">
+            <position x="-0.042139053" y="-1.1749344" z="-0.015361071" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="87" name="r_thumb1">
+            <position x="0.5386963" y="-1.3508148" z="1.3691849" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="88" name="r_thumb2">
+            <position x="-0.02170086" y="-1.2827148" z="1.6025568" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="89" name="r_thumb3">
+            <position x="-0.2011652" y="-0.65091705" z="1.0646998" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="90" name="r_index0">
+            <position x="-0.03546238" y="-1.9046326" z="1.0576664" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="91" name="r_index1">
+            <position x="-0.11531544" y="-3.0041351" z="0.15718603" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="92" name="r_index2">
+            <position x="-0.07615471" y="-1.6411362" z="0.16375953" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="93" name="r_index3">
+            <position x="0.07581806" y="-1.1915283" z="-0.018714666" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="94" name="r_wristORIENT">
+            <position x="0.10940361" y="-1.9754105" z="-0.33438003" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="95" name="r_wristTwist1">
+            <position x="-0.0053272247" y="-5.992447" z="0.22806764" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+        <bone id="96" name="r_wristTwist2">
+            <position x="-0.009157181" y="-10.192612" z="0.3880489" />
+            <rotation angle="0">
+                <axis x="1" y="0" z="0" />
+            </rotation>
+        </bone>
+    </bones>
+    <bonehierarchy>
+        <boneparent bone="sacroiliac" parent="HumanoidRoot" />
+        <boneparent bone="r_hip" parent="sacroiliac" />
+        <boneparent bone="r_knee" parent="r_hip" />
+        <boneparent bone="r_ankle" parent="r_knee" />
+        <boneparent bone="r_subtalar" parent="r_ankle" />
+        <boneparent bone="r_midtarsal" parent="r_subtalar" />
+        <boneparent bone="r_metatarsal" parent="r_midtarsal" />
+        <boneparent bone="r_ankleORIENT" parent="r_ankle" />
+        <boneparent bone="r_ankleTwist" parent="r_knee" />
+        <boneparent bone="l_hip" parent="sacroiliac" />
+        <boneparent bone="l_knee" parent="l_hip" />
+        <boneparent bone="l_ankle" parent="l_knee" />
+        <boneparent bone="l_subtalar" parent="l_ankle" />
+        <boneparent bone="l_midtarsal" parent="l_subtalar" />
+        <boneparent bone="l_metatarsal" parent="l_midtarsal" />
+        <boneparent bone="l_ankleORIENT" parent="l_ankle" />
+        <boneparent bone="l_ankleTwist" parent="l_knee" />
+        <boneparent bone="vl5" parent="HumanoidRoot" />
+        <boneparent bone="vl4" parent="vl5" />
+        <boneparent bone="vl3" parent="vl4" />
+        <boneparent bone="vl2" parent="vl3" />
+        <boneparent bone="vl1" parent="vl2" />
+        <boneparent bone="vt12" parent="vl1" />
+        <boneparent bone="vt11" parent="vt12" />
+        <boneparent bone="vt10" parent="vt11" />
+        <boneparent bone="vt9" parent="vt10" />
+        <boneparent bone="vt8" parent="vt9" />
+        <boneparent bone="vt7" parent="vt8" />
+        <boneparent bone="vt6" parent="vt7" />
+        <boneparent bone="vt5" parent="vt6" />
+        <boneparent bone="vt4" parent="vt5" />
+        <boneparent bone="vt3" parent="vt4" />
+        <boneparent bone="vt2" parent="vt3" />
+        <boneparent bone="vt1" parent="vt2" />
+        <boneparent bone="vc7" parent="vt1" />
+        <boneparent bone="vc6" parent="vc7" />
+        <boneparent bone="vc5" parent="vc6" />
+        <boneparent bone="vc4" parent="vc5" />
+        <boneparent bone="vc3" parent="vc4" />
+        <boneparent bone="vc2" parent="vc3" />
+        <boneparent bone="vc1" parent="vc2" />
+        <boneparent bone="skullbase" parent="vc1" />
+        <boneparent bone="l_sternoclavicular" parent="vt1" />
+        <boneparent bone="l_acromioclavicular" parent="l_sternoclavicular" />
+        <boneparent bone="l_shoulder" parent="l_acromioclavicular" />
+        <boneparent bone="l_elbow" parent="l_shoulder" />
+        <boneparent bone="l_wrist" parent="l_elbow" />
+        <boneparent bone="l_thumb1" parent="l_wrist" />
+        <boneparent bone="l_thumb2" parent="l_thumb1" />
+        <boneparent bone="l_thumb3" parent="l_thumb2" />
+        <boneparent bone="l_index0" parent="l_wrist" />
+        <boneparent bone="l_index1" parent="l_index0" />
+        <boneparent bone="l_index2" parent="l_index1" />
+        <boneparent bone="l_index3" parent="l_index2" />
+        <boneparent bone="l_middle0" parent="l_wrist" />
+        <boneparent bone="l_middle1" parent="l_middle0" />
+        <boneparent bone="l_middle2" parent="l_middle1" />
+        <boneparent bone="l_middle3" parent="l_middle2" />
+        <boneparent bone="l_pinky0" parent="l_wrist" />
+        <boneparent bone="l_pinky1" parent="l_pinky0" />
+        <boneparent bone="l_pinky2" parent="l_pinky1" />
+        <boneparent bone="l_pinky3" parent="l_pinky2" />
+        <boneparent bone="l_ring0" parent="l_wrist" />
+        <boneparent bone="l_ring1" parent="l_ring0" />
+        <boneparent bone="l_ring2" parent="l_ring1" />
+        <boneparent bone="l_ring3" parent="l_ring2" />
+        <boneparent bone="l_wristORIENT" parent="l_wrist" />
+        <boneparent bone="l_wristTwist1" parent="l_elbow" />
+        <boneparent bone="l_wristTwist2" parent="l_elbow" />
+        <boneparent bone="r_sternoclavicular" parent="vt1" />
+        <boneparent bone="r_acromioclavicular" parent="r_sternoclavicular" />
+        <boneparent bone="r_shoulder" parent="r_acromioclavicular" />
+        <boneparent bone="r_elbow" parent="r_shoulder" />
+        <boneparent bone="r_wrist" parent="r_elbow" />
+        <boneparent bone="r_pinky0" parent="r_wrist" />
+        <boneparent bone="r_pinky1" parent="r_pinky0" />
+        <boneparent bone="r_pinky2" parent="r_pinky1" />
+        <boneparent bone="r_pinky3" parent="r_pinky2" />
+        <boneparent bone="r_middle0" parent="r_wrist" />
+        <boneparent bone="r_middle1" parent="r_middle0" />
+        <boneparent bone="r_middle2" parent="r_middle1" />
+        <boneparent bone="r_middle3" parent="r_middle2" />
+        <boneparent bone="r_ring0" parent="r_wrist" />
+        <boneparent bone="r_ring1" parent="r_ring0" />
+        <boneparent bone="r_ring2" parent="r_ring1" />
+        <boneparent bone="r_ring3" parent="r_ring2" />
+        <boneparent bone="r_thumb1" parent="r_wrist" />
+        <boneparent bone="r_thumb2" parent="r_thumb1" />
+        <boneparent bone="r_thumb3" parent="r_thumb2" />
+        <boneparent bone="r_index0" parent="r_wrist" />
+        <boneparent bone="r_index1" parent="r_index0" />
+        <boneparent bone="r_index2" parent="r_index1" />
+        <boneparent bone="r_index3" parent="r_index2" />
+        <boneparent bone="r_wristORIENT" parent="r_wrist" />
+        <boneparent bone="r_wristTwist1" parent="r_elbow" />
+        <boneparent bone="r_wristTwist2" parent="r_elbow" />
+    </bonehierarchy>
+	
+		
+	<chain name="torsoIK" base = "sacroiliac" end ="vc7">
+		<joint name="vl5" />
+		<!--joint name="vl2"/>
+		<joint name="vt7"/>
+		<joint name="vt4"/-->
+		<joint name="vt1"/>
+	</chain>
+	<chain name="leftArmIK" base = "l_acromioclavicular" end ="l_wrist">
+		<joint name="l_sternoclavicular" mass = "2">
+			<dof>
+				<x  min ="0" max="0"/>
+				<y  min ="-0.3" max="0.5"/>
+				<z  min ="-0.3" max="0.5"/>
+			</dof>
+		</joint>
+		<joint name="l_acromioclavicular" mass = "2">
+			<dof>
+				<x  min ="0" max="0"/>
+				<y  min ="-1.4" max="1.4"/>
+				<z  min ="-0.3" max="0.5"/>
+			</dof>
+		</joint>
+		<joint name="l_shoulder"  mass = "50">
+			<dof>
+				<x  min ="-3.14" max="1.14"/>
+				<y  min ="-3.14" max="3.14"/>
+				<z  min ="0" max="2"/>
+			</dof>
+		</joint> 
+		<joint name="l_elbow">
+			<dof>
+				<x  min ="-3.14" max="0"/>
+				<y  min ="-0.54" max="0.54"/>
+				<z  min ="-0.01" max="0.01"/>
+			</dof>
+		</joint> 
+		<joint name="l_wrist" >
+			
+		</joint> 
+	</chain>
+	
+	<chain name="rightArmIK" base = "r_acromioclavicular" end ="r_wrist">
+		<joint name="r_sternoclavicular" mass = "2">
+			<dof>
+				<x  min ="0" max="0"/>
+				<y  min ="-0.5" max="0.3"/>
+				<z  min ="-0.5" max="0.3"/>
+			</dof>
+		</joint>
+		<joint name="r_acromioclavicular"  mass = "2">
+			<dof>
+				<x  min ="0" max="0"/>
+				<y  min ="-1.4" max="1.4"/>
+				<z  min ="-0.5" max="0.3"/>
+			</dof>
+		</joint> 
+		<joint name="r_shoulder" mass = "50">
+			<dof>
+				<x  min ="-3.14" max="1.14"/>
+				<y  min ="-3.14" max="3.14"/>
+				<z  min ="-2" max="0"/>
+			</dof>
+		</joint> 
+		<joint name="r_elbow">
+			<dof>
+				<x  min ="-3.14" max="-0.0001"/>
+				<y  min ="-0.54" max="0.54"/>
+				<z  min ="-0.00" max="0.00"/>
+			</dof>
+		</joint> 
+		<joint name="r_wrist" >
+				
+		</joint> 
+	</chain>
+	
+	
+	
+	
+	<symblicposition>
+	<x>
+		<XEP>-25.0</XEP>
+		<XP>-15</XP>
+		<XC>-7</XC>
+		<XCC>-2</XCC>
+		<XOppC>5</XOppC>
+	</x>
+	<y>
+		<YUpperEP>35</YUpperEP>
+		<YUpperP>25</YUpperP>
+		<YUpperC>15</YUpperC>
+		<YCC>10</YCC>
+		<YLowerC>5</YLowerC>
+		<YLowerP>0</YLowerP>
+		<YLowerEP>-5</YLowerEP>
+	</y>
+	<z>
+		<ZNear>10</ZNear>
+		<ZMiddle>15</ZMiddle>
+		<ZFar>20</ZFar>
+	</z>
+	</symblicposition>
+	
+	
+	
+</skeleton>

@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml>
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+				
+			<tm id="tm1"/>
+				Yes, 
+			<tm id="tm2"/>	
+				it is in Chapter three 
+			<tm id="tm3"/>	
+				if I remember well. 
+			<tm id="tm4"/>	
+				a Caucus Race 
+			<tm id="tm5"/>	
+				and a Long Tale.
+			<tm id="tm6"/>	
+		</speech>
+		<pitchaccent start="s1:tm1" id="pa1" importance="1" level="medium" end="s1:tm2" type="Lstar" />
+		<boundary start="s1:tm3" id="b2" end="s1:tm5" type="LL" />	
+		<boundary start="s1:tm5" id="b2" end="s1:tm6" type="L" />	
+	</bml>
+	<fml>
+		<deictic id="p1" type="down" start="s1:tm4" end="s1:tm5"  importance="1" />
+		<beat id="p2" type="right" start="s1:tm5" end="s1:tm6"  importance="1" />
+	</fml>
+</fml-apml>

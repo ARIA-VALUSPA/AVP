@@ -1,0 +1,4 @@
+0.5 0
+opinion queen hearts
+queen favouriteCharacter 
+What do you think about the Queen of Heart ? Do you like her ? 

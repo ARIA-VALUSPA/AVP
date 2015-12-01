@@ -1,0 +1,4 @@
+0.5 0
+favouriteCharacter
+favouriteCharacter
+Well, who is you favourite character ? 

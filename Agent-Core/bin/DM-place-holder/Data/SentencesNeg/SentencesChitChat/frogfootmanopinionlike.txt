@@ -1,0 +1,6 @@
+0.5 1
+opinion frog footman frog-footman ?
+footman
+I see that you are not in a great mood. Shall I tell you a story about the Footman to cheer you up?
+He is not really clever ... His sentences don't make any sense, and he doesn't appear so many times in the book.
+I don't really have any opinion on him in the end.

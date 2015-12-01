@@ -1,0 +1,4 @@
+0.5 0
+opinion dormouse
+dormouse favouritecharacter
+What do you think about the Dormouse ?

@@ -1,0 +1,6 @@
+0.5 0
+characters list name information book ? many 
+characters
+The main characters are : Alice, Cheshire Cat and the Queen of Hearts.
+There is also other characters like : the White Rabbit, the King of Heart, the Duchess, the Caterpillar, the Mad Hatter, 
+the Gryphon, the Mock Turtle, the Dodo and the Frog-Footman.

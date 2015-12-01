@@ -1,0 +1,6 @@
+0.5 0
+information gryphon
+gryphon
+I see that you are not in a great mood. Shall I tell you a story about the Gryphon to cheer you up?
+A servant to the Queen who befriends Alice. 
+The Gryphon escorts Alice to see the Mock Turtle.

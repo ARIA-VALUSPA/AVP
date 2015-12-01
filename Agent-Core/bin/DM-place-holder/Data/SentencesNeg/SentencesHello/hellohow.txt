@@ -1,0 +1,4 @@
+0.5 -1
+hello
+how presentation
+Hello, you look uncheerful today. Are you okay ?

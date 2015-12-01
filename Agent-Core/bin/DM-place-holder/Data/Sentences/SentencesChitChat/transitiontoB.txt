@@ -1,0 +1,4 @@
+0.5 0
+bye transitionToB
+transitionToB
+I hope you will have a nice day.

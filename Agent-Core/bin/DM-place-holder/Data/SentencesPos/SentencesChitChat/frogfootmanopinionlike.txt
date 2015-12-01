@@ -1,0 +1,5 @@
+0.5 1
+opinion frog footman frog-footman ?
+footman
+He is not really clever ... His sentences don't make any sense, and he doesn't appear so many times in the book.
+I don't really have any opinion on him in the end.

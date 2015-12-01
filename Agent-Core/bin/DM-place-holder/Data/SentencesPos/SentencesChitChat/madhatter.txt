@@ -1,0 +1,6 @@
+0.5 0
+mad hatter mad-hatter information
+hatter
+I see that you are in the good mood for Alice's story in the Wonderland. Let's talk about Mad Hatter
+He is a small, impolite hatter who lives in perpetual tea-time. 
+The Mad Hatter enjoys frustrating Alice.

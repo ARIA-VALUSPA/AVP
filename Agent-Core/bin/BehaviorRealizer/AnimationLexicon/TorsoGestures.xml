@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<TorsoGestures>
+	<TorsoGesture id="raise" min="1" max="3" trajectory="linear">
+        <X>-5.9</X>
+		<!--
+		<Y>-5.9</Y>
+		<Z>-5.9</Z> -->
+		<!--<HipPitch>
+		<LHipRoll>
+		<RHipRoll>
+		<KneePitch>-->
+		
+	</TorsoGesture>	
+	
+	<TorsoGesture id="forward" min="1" max="3" trajectory="linear">
+		<X>26.9</X>
+	</TorsoGesture>		
+	
+	<TorsoGesture id="backward" min="1" max="3" trajectory="linear">
+		<X>-26.9</X>
+	</TorsoGesture>	
+	
+	<TorsoGesture id="Lateral_lean_Left" min="1" max="3" trajectory="linear">
+		<Z>-16.9</Z>
+	</TorsoGesture>	
+	
+	<TorsoGesture id="Lateral_lean_Right" min="1" max="3" trajectory="linear">
+		<Z>16.9</Z>
+	</TorsoGesture>	
+	
+	<TorsoGesture id="stand" min="1" max="3" trajectory="linear">
+		<X>0</X>
+	</TorsoGesture>		
+	
+</TorsoGestures>	

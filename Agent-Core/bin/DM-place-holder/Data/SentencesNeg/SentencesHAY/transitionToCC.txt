@@ -1,0 +1,4 @@
+0.5 0
+transitionToCC alice fine queenofheart infoqueenofheart finefine talkbook infoalice infoalicewonderland author talkalice summaryalicewonderland 
+whatTalk badSeeYou
+You look uncheerful today. Do you want me to cheer you up with Alice's adventure in Wonderland ?

@@ -1,0 +1,9 @@
+0.5 0
+chess 
+chess
+There are two ways to describe the moves of the pieces. 
+I'll try to explain both of them, but as I'm not very familiar with chess notations there can be some errors in it.
+Carroll pointed out that red and white do not alternate moves properly and that some of the moves listed do not represent actual moves of the pieces on the chessboard (for example the 'castling' of the Queens). 
+However, the check mate is completely orthodox.
+The first way of notation is as follows: you describe the square the piece moves to by writing down the first letter of the piece that was on it when the game started (thats is to say R when the piece goes to one of the squares in the column where the Rook started, B for the one of the Bishop, etc.). 
+As there are two columns for most of the pieces, you should also put a Q or a K in front of it (if the piece moves to the left rook column, you add a Q because it is the side of the Queen. The right columns are those of the King). This isn't necessary if it is the column of the Queen or King. Then you add the number of the square, counting from the side the piece started (if it is a red piece, you count from the top to the bottom, for a white piece, count from the bottom to the top).

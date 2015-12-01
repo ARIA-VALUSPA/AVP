@@ -1,0 +1,4 @@
+0.5 0
+book glass looking author 
+alice
+Lewis Carol. His real name was Charles Lutwidge Dodgson.
