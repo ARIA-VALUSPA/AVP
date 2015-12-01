@@ -1,0 +1,28 @@
+live = true 										# $(bool) use live input from a microphone
+file = media/agender.wav 							# if not live input read in from this file
+
+# classification
+
+config = config/IS10.functs.conf					# name of openSMILE config file
+model:gender = models/gender[os10,zscore]			# path to model
+model:age = models/age[os10,zscore]				 	# path to model
+images = images										# directory with images
+
+# compression filter
+
+compression:use = false								# use compression filter
+compression:pin = 									# NOTE: has to be an empty string if compression is NOT used and non empty if compression is used
+
+# active mq
+
+activemq:use = true									# share results through activemq
+activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
+activemq:id = SSI									# activemq id
+activemq:topic= AGENDER								# activemq topic
+
+# capture
+
+capture:use = false									# capture user interaction
+capture:dir = capture								# folder where media is stored
+capture:user = true									# capture camera and audio
+capture:screen = true								# capture screen

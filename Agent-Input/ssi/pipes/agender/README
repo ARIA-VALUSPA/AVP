@@ -1,0 +1,21 @@
+-------------------------------------------------
+Johannes Wagner, <wagner@hcm-lab.de>, 12.11.2015
+-------------------------------------------------
+
+Age and gender classification either from a microphone or using input from a file
+
+Download model files from https://megastore.uni-augsburg.de/get/V2_oAl3too/ and unzip to models/
+
+To configure the pipeline open 'agender.pipeline-config' in a text editor
+
+To change the output format of the pipeline open 'agender.xml' in a text editor
+
+To run the pipeline execute AGENDER.bat
+
+To test ActiveMQ connection run AGENDER_RECV.bat
+
+-------------------------------------------------------------
+
+To record videos of screen/user execute AGENDER_RECORD.bat, recorded files will be stored in capture/ (see camera.png how to set up camera)
+
+-------------------------------------------------

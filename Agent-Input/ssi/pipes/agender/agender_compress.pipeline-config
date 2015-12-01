@@ -1,0 +1,4 @@
+# compression filter
+
+compression:use = true								# use compression filter
+compression:pin = _compress							# NOTE: has to be an empty string if compression is NOT used and non empty if compression is used

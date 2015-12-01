@@ -1,0 +1,7 @@
+# ssi files
+*.option
+*.model
+*.trainer
+*.norm
+*.err
+*.info

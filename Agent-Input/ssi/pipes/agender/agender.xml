@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<agender>
+		<voice active="$(event=vad@audio;field=state;span=-1)">		
+			<gender>		
+				<male>$(event=gender@audio;select=0)</male>
+				<female>$(event=gender@audio;select=1)</female>
+				<child>$(event=gender@audio;select=2)</child>
+			</gender>
+			<age>
+				<child>$(event=age@audio;select=0)</child>
+				<youth>$(event=age@audio;select=1)</youth>
+				<adult>$(event=age@audio;select=2)</adult>
+				<senior>$(event=age@audio;select=3)</senior>			
+			</age>
+		</voice>
+	</agender>
+</ssi>

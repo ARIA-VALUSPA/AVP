@@ -1,0 +1,19 @@
+<?xml version="1.0" ?>
+<trainer ssi-v="5">
+    <info trained="true" />
+    <streams>
+        <item byte="4" dim="450" sr="0.387597" type="FLOAT" />
+    </streams>
+    <classes>
+        <item name="male" />
+        <item name="female" />
+        <item name="child" />
+    </classes>
+    <users>
+        <item name="dummy" />
+    </users>
+    <normalize>
+        <item method="Scale" stream="0" path="gender[os10,scale].trainer.#0.norm" />
+    </normalize>
+    <model create="ssi_model_LibSVM" stream="0" path="gender[os10,scale].trainer.ssi_model_LibSVM" option="gender[os10,scale].trainer.ssi_model_LibSVM" />
+</trainer>
