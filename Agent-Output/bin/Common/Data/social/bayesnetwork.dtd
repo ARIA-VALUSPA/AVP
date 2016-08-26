@@ -1,0 +1,11 @@
+<!ELEMENT parameters (parameter*)>
+<!ELEMENT parameter (parents,values)>
+<!ELEMENT parents (parent*)>
+<!ELEMENT parent (#PCDATA)>
+<!ELEMENT values (value*)>
+<!ELEMENT value (#PCDATA|parentref)*>
+<!ELEMENT parentref (#PCDATA|parentref)*>
+<!ATTLIST parameter name CDATA #REQUIRED>
+<!ATTLIST parent name CDATA #REQUIRED>
+<!ATTLIST value name CDATA #REQUIRED>
+<!ATTLIST parentref name CDATA #REQUIRED value CDATA #REQUIRED>

@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<environment>
+    <node id="background">
+        <leaf id="backgroundColor" reference="color.background">
+            <size x="0.5" y="0.6000000238418579" z="0.800000011920929"/>
+        </leaf>
+    </node>
+    <node id="scene">
+        <leaf id="axes" reference="debug.axes">
+            <size x="1.0" y="1.0" z="1.0"/>
+        </leaf>
+        <node id="Sun">
+            <position x="0.0" y="5.0" z="0.0"/>
+            <orientation x="50.000024158674" y="45.0000217428066" z="3.5983882186454E-14"/>
+            <leaf id="SunLight" reference="light.directional">
+                <size x="0.699999988079071" y="0.699999988079071" z="0.699999988079071"/>
+            </leaf>
+        </node>
+        <node id="office">
+            <leaf id="sol" reference="office.flour">
+                <size x="18.482799530029297" y="0.0" z="14.93910026550293"/>
+            </leaf>
+            <node id="murs">
+                <node id="mur0">
+                    <position x="12.103300094604492" y="0.0" z="-3.3348000049591064"/>
+                    <leaf id="wall0" reference="office.wall.0">
+                        <size x="0.012600000016391277"
+                            y="2.585200071334839" z="10.924699783325195"/>
+                    </leaf>
+                </node>
+                <node id="mur1">
+                    <position x="2.530100107192993" y="0.0" z="7.577300071716309"/>
+                    <leaf id="wall1" reference="office.wall.1">
+                        <size x="9.573200225830078"
+                            y="2.585200071334839" z="0.012600000016391277"/>
+                    </leaf>
+                </node>
+                <node id="mur12">
+                    <position x="7.709499835968018" y="0.0" z="0.8535000085830688"/>
+                    <leaf id="wall12" reference="office.wall.12">
+                        <size x="4.4096999168396" y="2.585099935531616" z="0.0723000019788742"/>
+                    </leaf>
+                </node>
+                <node id="mur13">
+                    <position x="8.058699607849121" y="0.0" z="0.9244999885559082"/>
+                    <leaf id="wall13" reference="office.wall.13">
+                        <size x="0.05040000006556511"
+                            y="2.5852999687194824" z="6.663099765777588"/>
+                    </leaf>
+                </node>
+            </node>
+            <node id="fenetres">
+                <node id="window0_node">
+                    <position x="8.279999732971191"
+                        y="0.7850000262260437" z="7.494999885559082"/>
+                    <leaf id="window0" reference="object.window">
+                        <size x="1.2480000257492065"
+                            y="1.8013999462127686" z="0.0957999974489212"/>
+                    </leaf>
+                </node>
+                <node id="window_bay0_node">
+                    <position x="11.800000190734863"
+                        y="0.02500000037252903" z="0.9279999732971191"/>
+                    <orientation x="-179.999991348578"
+                        y="-5.008956130975333E-6" z="-179.999991348578"/>
+                    <leaf id="window_bay0" reference="office.window.bay">
+                        <size x="1.6117000579833984"
+                            y="2.0455000400543213" z="0.0551999993622303"/>
+                    </leaf>
+                </node>
+                <node id="view">
+                    <position x="12.0" y="-1.0" z="15.0"/>
+                    <orientation x="-179.99999499104368"
+                        y="7.016708846407763E-15" z="-179.99999499104368"/>
+                    <scale x="21.0" y="21.0" z="20.0"/>
+                    <leaf
+                        id="Leaf_1416838064131_394_3584012034973668376" reference="wos.001">
+                        <size x="1.0" y="1.0" z="1.0"/>
+                    </leaf>
+                </node>
+            </node>
+            <node id="portes">
+                <node id="porte0">
+                    <position x="8.668000221252441" y="0.0" z="0.8740000128746033"/>
+                    <node id="TreeNode_1393250243141_86_8743518690042684124">
+                        <position x="0.013000000268220901" y="0.0" z="0.04500000178813934"/>
+                        <orientation x="0.0" y="0.0" z="-179.999991348578"/>
+                        <node id="charniere0">
+                            <orientation x="-179.999991348578"
+                                y="80.00000450293254" z="-179.999991348578"/>
+                            <node id="TreeNode_1393250243141_88_7459467615612703900">
+                                <position x="0.013000000268220901"
+                                    y="0.0" z="-0.07500000298023224"/>
+                                <orientation x="0.0" y="0.0" z="-179.999991348578"/>
+                                <leaf id="door0" reference="object.door">
+                                    <size x="0.8644000291824341"
+                                    y="2.0427000522613525" z="0.15369999408721924"/>
+                                </leaf>
+                            </node>
+                        </node>
+                    </node>
+                    <leaf id="doorframe0" reference="object.door.frame">
+                        <size x="0.8712000250816345"
+                            y="2.0664000511169434" z="0.05530000105500221"/>
+                    </leaf>
+                </node>
+            </node>
+            <node id="DB301">
+                <node id="Catherine_table">
+                    <position x="9.880000114440918" y="0.0" z="1.659999966621399"/>
+                    <leaf id="Catherine_table0" reference="object.table">
+                        <size x="1.69760000705719"
+                            y="0.7077999711036682" z="1.69760000705719"/>
+                    </leaf>
+                    <node id="tables">
+                        <position x="0.6000000238418579"
+                            y="0.800000011920929" z="0.6000000238418579"/>
+                        <scale x="0.10000000149011612"
+                            y="0.10000000149011612" z="0.10000000149011612"/>
+                    </node>
+                </node>
+                <node id="Catherine_table_chair1">
+                    <position x="9.880000114440918" y="0.0" z="1.659999966621399"/>
+                    <orientation x="0.0" y="45.00000466733366" z="0.0"/>
+                    <leaf id="Catherine_chair1" reference="object.chair">
+                        <size x="0.5690000057220459"
+                            y="0.9430000185966492" z="0.527999997138977"/>
+                    </leaf>
+                    <node id="chaise1">
+                        <position x="0.20000000298023224"
+                            y="0.800000011920929" z="0.10000000149011612"/>
+                        <scale x="0.10000000149011612"
+                            y="0.10000000149011612" z="0.10000000149011612"/>
+                    </node>
+                </node>
+                <node id="Catherine_table_chair2">
+                    <position x="11.5" y="0.0" z="1.659999966621399"/>
+                    <orientation x="0.0" y="-50.00001391339024" z="0.0"/>
+                    <leaf id="Catherine_chair2" reference="object.chair">
+                        <size x="0.5690000057220459"
+                            y="0.9430000185966492" z="0.527999997138977"/>
+                    </leaf>
+                    <node id="chaise2">
+                        <position x="0.20000000298023224"
+                            y="0.800000011920929" z="0.10000000149011612"/>
+                        <scale x="0.10000000149011612"
+                            y="0.10000000149011612" z="0.10000000149011612"/>
+                    </node>
+                </node>
+                <node id="Catherine_table_chair3">
+                    <position x="10.5" y="0.0" z="3.5"/>
+                    <orientation x="-179.999991348578"
+                        y="16.999994212061367" z="-179.999991348578"/>
+                    <leaf id="Catherine_chair3" reference="object.chair">
+                        <size x="0.5690000057220459"
+                            y="0.9430000185966492" z="0.527999997138977"/>
+                    </leaf>
+                    <node id="chaise3">
+                        <position x="0.20000000298023224"
+                            y="0.800000011920929" z="0.10000000149011612"/>
+                        <scale x="0.10000000149011612"
+                            y="0.10000000149011612" z="0.10000000149011612"/>
+                    </node>
+                </node>
+                <node id="Catherine_couch">
+                    <position x="11.4399995803833" y="0.0" z="4.0"/>
+                    <leaf id="Catherine_couch0" reference="object.couch">
+                        <size x="0.6660000085830688"
+                            y="0.5149999856948853" z="1.062000036239624"/>
+                    </leaf>
+                </node>
+                <node id="Catherine_place">
+                    <node id="Catherine_desk">
+                        <node id="Catherine_desk0_node">
+                            <position x="8.119999885559082" y="0.0" z="6.480000019073486"/>
+                            <leaf id="Catherine_desk0" reference="object.desk.angle">
+                                <size x="1.9871000051498413"
+                                    y="0.7026000022888184" z="1.0855000019073486"/>
+                            </leaf>
+                        </node>
+                        <node id="Catherine_desk1_node">
+                            <position x="8.979999542236328" y="0.0" z="4.5"/>
+                            <leaf id="Catherine_desk1" reference="object.desk">
+                                <size x="1.1238000392913818"
+                                    y="0.7026000022888184" z="1.9871000051498413"/>
+                            </leaf>
+                            <node id="bureaux">
+                                <position x="0.5" y="0.800000011920929" z="0.4000000059604645"/>
+                            </node>
+                        </node>
+                    </node>
+                    <node id="Catherine_chair">
+                        <position x="8.399999618530273" y="0.0" z="6.199999809265137"/>
+                        <orientation x="-179.999991348578"
+                            y="59.99999483946294" z="-179.999991348578"/>
+                        <leaf id="Catherine_chair0" reference="object.chair.wheel">
+                            <size x="0.5490000247955322"
+                                y="1.0540000200271606" z="0.6129999756813049"/>
+                        </leaf>
+                    </node>
+                    <node id="Catherine_laptop">
+                        <position x="9.399999618530273"
+                            y="0.699999988079071" z="6.0"/>
+                        <orientation x="5.008956327857061E-6"
+                            y="89.99999743867906" z="5.008956327857064E-6"/>
+                        <leaf id="Catherine_laptop0" reference="object.laptop">
+                            <size x="0.289000004529953"
+                                y="0.2879999876022339" z="0.2840000092983246"/>
+                        </leaf>
+                    </node>
+                    <node id="Catherine_papers">
+                        <node id="Catherine_papers_stack0_node">
+                            <position x="9.350000381469727"
+                                y="0.7039999961853027" z="5.0"/>
+                            <orientation x="0.0" y="30.000004249920654" z="0.0"/>
+                            <leaf id="Catherine_paper_stack0" reference="object.papers">
+                                <size x="0.3089999854564667"
+                                    y="0.013000000268220901" z="0.2280000001192093"/>
+                            </leaf>
+                        </node>
+                        <node id="Catherine_papers0_node">
+                            <position x="9.199999809265137"
+                                y="0.7059999704360962" z="6.300000190734863"/>
+                            <orientation x="0.0" y="-40.000012496750024" z="0.0"/>
+                            <leaf id="Catherine_papers0" reference="object.paper">
+                                <size x="0.296999990940094" y="0.0" z="0.20999999344348907"/>
+                            </leaf>
+                        </node>
+                    </node>
+                </node>
+                <node id="Catherine_cupboard0_node">
+                    <position x="11.399999618530273" y="0.0" z="6.0"/>
+                    <leaf
+                        id="Leaf_1416831637589_381_7744390730789507289" reference="object.cupboard">
+                        <size x="1.0" y="1.0" z="1.0"/>
+                    </leaf>
+                    <node id="armoires">
+                        <position x="0.0" y="1.600000023841858" z="-0.20000000298023224"/>
+                        <scale x="0.10000000149011612"
+                            y="0.10000000149011612" z="0.10000000149011612"/>
+                    </node>
+                </node>
+            </node>
+            <node id="DB304">
+                <node id="halogene0_node">
+                    <position x="8.300000190734863" y="0.0" z="3.0"/>
+                    <leaf id="halogene0" reference="object.light.halogene">
+                        <size x="0.5464000105857849"
+                            y="2.0599000453948975" z="0.5544999837875366"/>
+                    </leaf>
+                    <node id="TreeNode_1393250243142_199_-3929378332839926601">
+                        <position x="0.27320000529289246"
+                            y="2.069999933242798" z="0.27720001339912415"/>
+                        <leaf id="halogene0_light_" reference="light.point">
+                            <size x="0.6000000238418579"
+                                y="0.6000000238418579" z="0.6000000238418579"/>
+                        </leaf>
+                    </node>
+                </node>
+            </node>
+            <node id="plafond">
+                <position x="0.0" y="2.5799999237060547" z="0.0"/>
+                <leaf id="Leaf_1416839813403_84_7789533901337181032" reference="office.flour">
+                    <size x="1.0" y="1.0" z="1.0"/>
+                </leaf>
+            </node>
+        </node>
+        <leaf id="ambient_light" reference="light.ambient">
+            <size x="0.699999988079071" y="0.699999988079071" z="0.699999988079071"/>
+        </leaf>
+    </node>
+</environment>

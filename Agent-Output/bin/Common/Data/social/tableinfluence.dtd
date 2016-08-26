@@ -1,0 +1,9 @@
+<!ELEMENT influences (influence*)>
+<!ELEMENT influence (male,female)>
+<!ELEMENT male (dominance,liking)>
+<!ELEMENT female (dominance,liking)>
+<!ELEMENT dominance (#PCDATA)>
+<!ELEMENT liking (#PCDATA)>
+<!ATTLIST influence type (parameter|signal) #REQUIRED name CDATA #REQUIRED modality CDATA #REQUIRED>
+<!ATTLIST dominance value CDATA #REQUIRED>
+<!ATTLIST liking value CDATA #REQUIRED>

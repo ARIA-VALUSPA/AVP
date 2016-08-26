@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<behaviorsets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Common/Data/xml/behaviorsets.xsd">
+	<!-- empty behaviorsets -->
+	<behaviorset name="theme-*"><signals/><constraints/></behaviorset>
+	<behaviorset name="rheme-*"><signals/><constraints/></behaviorset>
+	<behaviorset name="speech-*"><signals/><constraints/></behaviorset>
+	
+	<!-- bounadries -->
+	<behaviorset name="boundary-H"><signals><signal id="1" modality="gesture" name="SpeakUp" /></signals><constraints/></behaviorset>
+	<behaviorset name="boundary-HH"><signals><signal id="1" modality="gesture" name="SpeakUp" /></signals><constraints/></behaviorset>
+	<behaviorset name="boundary-L"><signals><signal id="1" modality="gesture" name="SpeakDown" /></signals><constraints/></behaviorset>
+	<behaviorset name="boundary-LL"><signals><signal id="1" modality="gesture" name="SpeakDown" /></signals><constraints/></behaviorset>
+	<behaviorset name="boundary-LH"><signals><signal id="1" modality="gesture" name="SpeakRight" >
+									<alternative name="SpeakLeft" probability="0.5"/></signal></signals><constraints/></behaviorset>
+	<behaviorset name="boundary-HL"><signals><signal id="1" modality="gesture" name="SpeakRight" >
+									<alternative name="SpeakLeft" probability="0.5"/></signal></signals><constraints/></behaviorset>
+	<behaviorset name="boundary-*"><signals><signal id="1" modality="gesture" name="Acknowledge" /></signals><constraints/></behaviorset>
+	
+	<!-- pitchAccents -->
+	<behaviorset name="pitchaccent-*"><signals><signal id="1" modality="gesture" name="Acknowledge" >
+										<alternative name="Explain_01" probability="0.16"/>
+										<alternative name="Explain_02" probability="0.16"/>
+										<alternative name="Explain_03" probability="0.16"/>
+										<alternative name="Argue_01" probability="0.16"/>
+										<alternative name="Argue_02" probability="0.16"/>
+										<alternative name="Argue_03" probability="0.16"/></signal></signals><constraints/></behaviorset>
+	
+	<!-- performatives -->
+	<behaviorset name="performative-inform"><signals><signal id="1" modality="gesture" name="Argue_01" >
+											<alternative name="Argue_02" probability="0.25"/>
+											<alternative name="Argue_03" probability="0.25"/>
+											<alternative name="Explain_01" probability="0.25"/></signal></signals><constraints/></behaviorset>
+	<behaviorset name="performative-announce"><signals><signal id="1" modality="gesture" name="Argue_01" >
+												<alternative name="Argue_02" probability="0.25"/>
+												<alternative name="Argue_03" probability="0.25"/>
+												<alternative name="Explain_01" probability="0.25"/></signal></signals><constraints/></behaviorset>
+	<behaviorset name="performative-greet"><signals><signal id="1" modality="gesture" name="Greet" /></signals><constraints /></behaviorset>
+	<behaviorset name="performative-beg"><signals><signal id="1" modality="gesture" name="GestureUser" >
+												<alternative name="GestureMe" probability="0.2"/></signal></signals><constraints/></behaviorset>
+	<behaviorset name="performative-incite"><signals><signal id="1" modality="gesture" name="Suggest" /></signals><constraints /></behaviorset>
+	<behaviorset name="performative-propose"><signals><signal id="1" modality="gesture" name="Propose" /></signals><constraints /></behaviorset>
+	<behaviorset name="performative-progress"><signals><signal id="1" modality="gesture" name="Progress" /></signals><constraints /></behaviorset>
+	
+	<!-- emotions -->
+	<behaviorset name="emotion-joy">			<signals><signal id="1" modality="gesture" name="Happy" /></signals><constraints/></behaviorset>
+	<behaviorset name="emotion-gratitude">		<signals><signal id="1" modality="gesture" name="Happy" /></signals><constraints/></behaviorset>
+	<behaviorset name="emotion-pride">			<signals><signal id="1" modality="gesture" name="Proud" /></signals><constraints/></behaviorset>
+	<behaviorset name="emotion-satisfaction">	<signals><signal id="1" modality="gesture" name="Proud" /></signals><constraints/></behaviorset>
+	<behaviorset name="emotion-hope">			<signals><signal id="1" modality="gesture" name="Hope" /></signals><constraints/></behaviorset>
+	
+	<!-- world -->
+		<!-- deictics -->
+	<behaviorset name="world-place-location-left">		<signals><signal id="1" modality="gesture" name="GestureLeft" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-right">		<signals><signal id="1" modality="gesture" name="GestureRight" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-up">		<signals><signal id="1" modality="gesture" name="GestureUp" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-down">		<signals><signal id="1" modality="gesture" name="GestureDown" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-up_left">	<signals><signal id="1" modality="gesture" name="GestureUpLeft" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-down_left">	<signals><signal id="1" modality="gesture" name="GestureDownLeft" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-up_right">	<signals><signal id="1" modality="gesture" name="GestureUpRight" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-down_right"><signals><signal id="1" modality="gesture" name="GestureDownRight" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-me">		<signals><signal id="1" modality="gesture" name="GestureMe" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-user">		<signals><signal id="1" modality="gesture" name="GestureUser" /></signals><constraints/></behaviorset>
+		<!-- pointers -->
+	<behaviorset name="world-place-location-point_left">		<signals><signal id="1" modality="gesture" name="PointLeft" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-point_right">		<signals><signal id="1" modality="gesture" name="PointRight" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-point_up_left">		<signals><signal id="1" modality="gesture" name="PointUpLeft" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-point_down_left">	<signals><signal id="1" modality="gesture" name="PointDownLeft" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-point_up_right">	<signals><signal id="1" modality="gesture" name="PointUpRight" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-place-location-point_down_right">	<signals><signal id="1" modality="gesture" name="PointDownRight" /></signals><constraints/></behaviorset>
+		<!-- quantities -->
+	<behaviorset name="world-object-quantity-short">	<signals><signal id="1" modality="gesture" name="GestureShort" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-object-quantity-medium">	<signals><signal id="1" modality="gesture" name="GestureMedium" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-object-quantity-long">		<signals><signal id="1" modality="gesture" name="GestureLong" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-object-quantity-increase">	<signals><signal id="1" modality="gesture" name="Increase" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-object-quantity-decrease">	<signals><signal id="1" modality="gesture" name="Decrease" /></signals><constraints/></behaviorset>
+	
+	<!-- belief relations -->
+	<behaviorset name="belief-relation-contrastFirst">	<signals><signal id="1" modality="gesture" name="Comparison-go" /></signals><constraints/></behaviorset>
+	<behaviorset name="belief-relation-contrastSecond">	<signals><signal id="1" modality="gesture" name="Comparison-go2-return" /></signals><constraints/></behaviorset>
+	
+	<behaviorset name="belief-relation-enumerateStart">	<signals><signal id="1" modality="gesture" name="ExplainRight-go" /></signals><constraints/></behaviorset>
+	<behaviorset name="belief-relation-enumerateNext">	<signals><signal id="1" modality="gesture" name="ExplainRight-go2" /></signals><constraints/></behaviorset>
+	<behaviorset name="belief-relation-enumerateEnd">	<signals><signal id="1" modality="gesture" name="ExplainRight-go2-return" /></signals><constraints/></behaviorset>
+	
+	<behaviorset name="belief-relation-enumerateStart_"><signals><signal id="1" modality="gesture" name="ExplainLeft-go" /></signals><constraints/></behaviorset>
+	<behaviorset name="belief-relation-enumerateNext_">	<signals><signal id="1" modality="gesture" name="ExplainLeft-go2" /></signals><constraints/></behaviorset>
+	<behaviorset name="belief-relation-enumerateEnd_">	<signals><signal id="1" modality="gesture" name="ExplainLeft-go2-return" /></signals><constraints/></behaviorset>
+</behaviorsets>

@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE influences SYSTEM "tableinfluence.dtd">
+<!-- Here is the list of influence not taken into account yet // October 2012
+- HandShaking
+- OpenBody position
+- Orients body toward other
+- Pay Attention to other 
+- Gaze for a long time
+- Looks while speaking
+- SelfAssured expression -->
+<influences>
+	<influence type="parameter" name="spatial" modality="gesture">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+	<influence type="parameter" name="openness" modality="gesture">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+	<influence type="parameter" name="overall-activation" modality="gesture">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+	<influence type="parameter" name="overall-activation" modality="face">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="adaptor=self" modality="gesture">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+		<influence type="signal" name="adaptor=hand" modality="gesture">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+		<influence type="signal" name="adaptor=head" modality="gesture">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="up" modality="head">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="shake" modality="head">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="raise" modality="torso">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="torso=forward_lean" modality="torso">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="look_at" modality="gaze">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="frown" modality="face">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="look_down" modality="gaze">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="look_up" modality="gaze">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="look_left" modality="gaze">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="look_right" modality="gaze">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="-1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="faceexp=fear" modality="face">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="0.0"/>
+			<liking value="1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="faceexp=sadness" modality="face">
+		<male>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="-1.0"/>
+			<liking value="0.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="faceexp=disgust" modality="face">
+		<male>
+			<dominance value="1.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="1.0"/>
+			<liking value="-1.0"/>
+		</female>
+	</influence>
+	<influence type="signal" name="smile" modality="face">
+		<male>
+			<dominance value="0.0"/>
+			<liking value="0.0"/>
+		</male>
+		<female>
+			<dominance value="0.0"/>
+			<liking value="1.0"/>
+		</female>
+	</influence>
+	
+</influences>

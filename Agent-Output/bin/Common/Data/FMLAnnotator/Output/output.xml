@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<fml-apml>
+  <bml>
+    <speech id="s1" language="english" text="" type="SAPI4" voice="openmary">
+      <description level="1" type="gretabml">
+        <reference>tmp/from-fml-apml.pho</reference>
+      </description>Ceci est un texte <tm id="tm1" value="1"/>
+      <pause duration_sym="long" id="p1" ref="2"/>d’<boundary end="s1:tm2" id="b1" start="s1:tm1" type="LH"/>essai, <tm id="tm2" value="2"/>
+      <pause duration_sym="short" id="p2" ref="3"/>il ne prends pas <tm id="tm3" value="1"/>
+      <pause duration_sym="long" id="p3" ref="4"/>en compte les différents accès <boundary end="s1:tm4" id="b2" start="s1:tm3" type="LH"/>fichiers, <tm id="tm4" value="2"/>
+      <pause duration_sym="short" id="p4" ref="5"/>mémoire <tm id="tm5" value="1"/>et bases <tm id="tm6" value="1"/>de <boundary end="s1:tm7" id="b3" start="s1:tm6" type="LL"/>données<tm id="tm7" value="0"/>
+    </speech>
+  </bml>
+  <fml>
+    <social end="s1:tm6" id="s1" start="s1:tm5" type="et"/>
+    <turntaking end="s1:tm6" id="tt1" start="s1:tm5" type="enumerate"/>
+  </fml>
+</fml-apml>

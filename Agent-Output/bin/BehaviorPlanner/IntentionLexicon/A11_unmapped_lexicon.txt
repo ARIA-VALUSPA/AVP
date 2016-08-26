@@ -1,0 +1,77 @@
+	No correspondance found:
+	
+	
+	<behaviorset name="other-culture">
+
+	<behaviorset name="emotion-joy">
+	<behaviorset name="emotion-pride">
+			
+	<behaviorset name="emotion-panic_fear">
+	<behaviorset name="emotion-anxiety">
+	<behaviorset name="emotion-despair">
+	<behaviorset name="emotion-disgust">
+	<behaviorset name="emotion-worried">
+	<behaviorset name="emotion-neutral">
+	<behaviorset name="emotion-tension">
+	<behaviorset name="emotion-relief">
+	<behaviorset name="emotion-embarrassment">
+	<behaviorset name="emotion-bored">
+	
+	<behaviorset name="deictic-slide">
+	<behaviorset name="deictic-move">
+	<behaviorset name="deictic-index">
+		
+	<behaviorset name="iconic-chop">
+			
+	<behaviorset name="beat-left">
+	<behaviorset name="beat-right">
+
+	<behaviorset name="performative-beatsocial">
+	<behaviorset name="performative-deny">
+	<behaviorset name="performative-suggest">
+	<behaviorset name="performative-warn">
+
+	<behaviorset name="certainty-certain">
+
+	<behaviorset name="turntaking-takethefloor">
+	<behaviorset name="turntaking-givethefloor">
+	<behaviorset name="turntaking-*">
+
+	<behaviorset name="belief-relation-enumerate">
+	<behaviorset name="belief-relation-enumerate1">
+	<behaviorset name="belief-relation-enumerate2">
+	<behaviorset name="belief-relation-enumerate3">
+	<behaviorset name="belief-relation-metaphoric">
+
+	<behaviorset name="world-object-large">
+	<behaviorset name="world-object-location">
+	<behaviorset name="world-object-quantity">
+	<behaviorset name="world-object-tiny">
+	<behaviorset name="world-object-service">
+	<behaviorset name="world-object-shape">
+
+	<behaviorset name="world-place-away">
+	<behaviorset name="world-place-here">
+	<behaviorset name="world-place-hereleft">
+	<behaviorset name="world-place-hereright">
+	<behaviorset name="world-place-location">
+	
+	<behaviorset name="backchannel-agreement">
+	<behaviorset name="backchannel-disagreement">
+	<behaviorset name="backchannel-refusal">
+	<behaviorset name="backchannel-liking">
+	<behaviorset name="backchannel-disliking">
+	<behaviorset name="backchannel-understanding">
+	<behaviorset name="backchannel-no_understanding">
+	<behaviorset name="backchannel-interest">
+	<behaviorset name="backchannel-no_interest">
+	<behaviorset name="backchannel-belief">
+	<behaviorset name="backchannel-disbelief">
+	
+	<behaviorset name="emphasis-medium">
+
+	<behaviorset name="pitchaccent-Hstar">
+	<behaviorset name="pitchaccent-LplusHstar">
+	<behaviorset name="pitchaccent-Lstar">
+
+		

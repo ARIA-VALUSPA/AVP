@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<RestPoses>
+	<RestPose id="middle">
+		<r_shoulder x="5.58" y="10" z="-13.7"></r_shoulder>
+		<r_elbow x="-3000" y="0" z="0"></r_elbow>
+		<r_wrist x="-16" y="17" z="-5"></r_wrist>
+	</RestPose>	
+	<HandRestPose id="middle" side="right">
+		<r_shoulder x="10" y="40" z="0"></r_shoulder><!--<r_shoulder x="5.58" y="10" z="-13.7"></r_shoulder>-->
+		<r_elbow x="-90" y="0" z="0"></r_elbow><!--<r_elbow x="-30" y="0" z="0"></r_elbow>-->
+		<r_wrist x="0" y="0" z="45"></r_wrist><!--<r_wrist x="-16" y="17" z="-5"></r_wrist>-->
+	</HandRestPose>	
+	<HandRestPose id="middle" side="left">
+		<l_shoulder x="10" y="-45" z="0"></l_shoulder><!--<r_shoulder x="5.58" y="10" z="-13.7"></r_shoulder>-->
+		<l_elbow x="-90" y="0" z="0"></l_elbow><!--<r_elbow x="-30" y="0" z="0"></r_elbow>-->
+		<l_wrist x="0" y="0" z="-45"></l_wrist><!--<r_wrist x="-16" y="17" z="-5"></r_wrist>-->
+	</HandRestPose>	
+</RestPoses>	
