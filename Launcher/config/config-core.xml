@@ -1,7 +1,0 @@
-<xml>
-
-	<process language="java" class="Agent-Core.jar" cwd="..\..\Agent-Core\bin" name="Agent Core">
-		<parameter>-all</parameter>
-	</process>
-	
-</xml>

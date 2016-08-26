@@ -1,9 +1,0 @@
-<xml>
-
-	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\asrkaldi" name="ASR">
-		<parameter>-debug</parameter>
-		<parameter>ssi.log</parameter>
-		<parameter>asrkaldi</parameter>
-	</process>
-	
-</xml>
