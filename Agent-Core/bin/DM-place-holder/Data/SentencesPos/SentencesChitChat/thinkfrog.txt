@@ -1,4 +1,0 @@
-0.5 0
-opinion frog footman frog-footman ?
-frog favouriteCharacter 
-What do you think about the Frog Footman ? Do you like him ? 

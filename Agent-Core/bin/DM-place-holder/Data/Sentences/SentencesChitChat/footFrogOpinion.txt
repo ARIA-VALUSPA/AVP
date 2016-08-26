@@ -1,4 +1,0 @@
-0.5 0
-opinion frog footman frog-footman ?
-footman
-He is not really clever ... I don't really have any opinion on him. He doesn't appear too many times in the book after all.

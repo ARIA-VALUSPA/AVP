@@ -1,4 +1,0 @@
-0.5 0
-talk duchess
-duchess
-Do you want information about the Queen of Heart ?

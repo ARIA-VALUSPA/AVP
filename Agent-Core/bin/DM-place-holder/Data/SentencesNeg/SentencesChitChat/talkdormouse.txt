@@ -1,4 +1,0 @@
-0.5 0
-talk dormouse
-dormouse
-Do you want information about the Dormouse ?

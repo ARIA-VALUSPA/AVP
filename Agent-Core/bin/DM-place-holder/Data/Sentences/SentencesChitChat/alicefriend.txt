@@ -1,4 +1,0 @@
-0.5 0
-alice friend ?
-alice
-I am not sure that Alice has real friends in Wonderland ... 

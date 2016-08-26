@@ -1,4 +1,0 @@
-0.5 0
-saidbyuser tags tag-kTos
-repeat whatTalk
-Sorry, I misunderstood. Do you want me to tell you about $kTos ?

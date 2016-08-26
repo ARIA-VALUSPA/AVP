@@ -1,0 +1,959 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.w3schools.com template.xsd">
+	
+	<template id="0" name="Long_Pause">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="longPause" />
+	   </preconditions>
+	   
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Hi, are you still there?" />
+	   </behaviour>
+	</template>
+	
+	
+	<!-- <template id="1" name="Return_greeting">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="greeting" />
+		  <compare value1="$dialoguestates.topic" value2="greeting" />
+	   </preconditions>
+	   
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Hello, my name is Alice. How are you?"  />
+	   </behaviour>
+	</template> -->
+
+	<template id="1_3" name="Return_greeting_Negative">
+	   <preconditions>
+		  <compare value1="0.5" value2="$userstates.emotion.fromAudio.arousal" comparator="greater_equals"/>
+		  <compare value1="$userstates.intention" value2="greeting" />
+		  <compare value1="$dialoguestates.topic" value2="greeting" />
+	   </preconditions>	   
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Hi, you sound sad, are you alright?" />
+	   </behaviour>
+	</template>
+	
+	<template id="1_4" name="Return_greeting_Positive">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="greeting" />
+		  <compare value1="$dialoguestates.topic" value2="greeting" />
+		  <compare value1="0.5" value2="$userstates.emotion.fromAudio.arousal" comparator="smaller_equals"/>
+	   </preconditions>	   
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Hi, you sound happy today. I love to hear all the happiness." />
+	   </behaviour>
+	</template>	
+	
+	
+	 <template id="1_1" name="Return_HowAreYou_Negative">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askHowAreYou" />
+		  <compare value1="$dialoguestates.topic" value2="greeting" />
+		  <compare value1="0.5" value2="$userstates.emotion.fromAudio.arousal" comparator="greater_equals"/>
+	   </preconditions>   
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I am ok, but you sound sad. Shall we talk about Alice in Wonderland to cheer you up?" />
+	   </behaviour>
+	</template>
+	
+	<template id="1_2" name="Return_HowAreYou_Positive">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askHowAreYou" />
+		  <compare value1="$dialoguestates.topic" value2="greeting" />
+		  <compare value1="0.5" value2="$userstates.emotion.fromAudio.arousal" comparator="smaller_equals"/>
+	   </preconditions>	   
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Yes, I am good and you sound happy, too. Let us talk about Alice in Wonderland." />
+	   </behaviour>
+	</template> 
+
+	 
+	<!-- <template id="6" name="Return_HowAreYou">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askHowAreYou" />
+		  <compare value1="$dialoguestates.topic" value2="greeting" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I am good! Thanks. How are you?" />
+	   </behaviour>
+	</template> -->
+	
+
+	
+	<template id="2" name="Return_ending">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="ending" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Goodbye!" />
+	   </behaviour>
+	</template>
+
+	
+	<template id="3" name="Unknown_intention">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="unknown" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours" quality="0.4">
+	      <argument name="response" value="Pardon?" />
+	   </behaviour>
+	</template>
+
+
+	<template id="3_1" name="Unknown_intention2">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="unknown" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours" quality="0.6">
+	      <argument name="response" value="Say again?" />
+	   </behaviour>
+	</template>
+
+	<!-- 
+	
+	ALICE 
+	
+	-->
+	
+	<template id="4_1" name="Ask_about_alice_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutAlice" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>	
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Alice is a sensible prepubescent girl from a wealthy English family who finds herself in a strange world, called wonderland." />
+	   </behaviour>
+	</template>	
+	
+	<template id="4_2" name="Ask_about_alice_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutAlice" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>	
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Alice is a sensible prepubescent girl who ends up in the wonderland." />
+	   </behaviour>
+	</template>	
+	
+	<template id="5_1" name="Ask_Opinion_Alice_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionAlice" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>	
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I think Alice is a lovely girl and she loves animals especially her cat Dinah. Sometimes she is a bit naive." />
+	   </behaviour>
+	</template>
+		
+	<template id="5_2" name="Ask_Opinion_Alice_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionAlice" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>	
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I think Alice is a lovely girl." />
+	   </behaviour>
+	</template>
+
+	
+	
+	<!-- 
+	
+	CHAPTER 
+	
+	-->
+
+	<template id="6_1" name="Ask_About_Chapter_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutChapterThree" />	
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>	
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Alice begins arguing with the Lory but the Mouse interjects and commands everyone to sit down and listen to a history lesson. The Mouse reasons that the story of William the Conqueror would be best since this story is the driest thing it knows. If you are interested in knowing more just read it." />
+	   </behaviour>
+	</template>	
+		
+	<template id="6_2" name="Ask_About_Chapter_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutChapterThree" />	
+		   <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>	
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Alice begins arguing with the Lory but the Mouse interjects. Wait a moment, I think you are not really interested." />
+	   </behaviour>
+	</template>
+	
+	
+	
+		<!-- 
+	
+	DUCHESS 
+	
+	-->
+	
+	<template id="7_1" name="Ask_about_Duchess_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutDuchess" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>	
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Duchess is an antagonist of The Queen of Hearts. In her first appearance the Duchess seems nearly as unpleasant as the Queen herself but later on treats Alice with friendliness and respect." />
+	   </behaviour>
+	</template>
+	
+	<template id="7_2" name="Ask_about_Duchess_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutDuchess" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>	
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="She is The Queens uncommonly ugly cousin." />
+	   </behaviour>
+	</template>
+	
+	<template id="7_3" name="Ask_opinion_Duchess_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionDuchess" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I dont know actually, she is not really nice at the beginning and then starting to be. She is weird. We just have to see her behaviour with her baby pig. Leaving in pepper smoke. I dont know what to think about her." />
+	   </behaviour>
+	</template>	
+	
+	<template id="7_4" name="Ask_opinion_Duchess_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionDuchess" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I dont really know what to think about her." />
+	   </behaviour>
+	</template>	
+	
+	<!-- 
+	
+	CATERPILLAR 
+	
+	-->
+	
+	<template id="9_1" name="Ask_about_Caterpillar_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutCaterpillar" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>	
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Caterpillar sits on a mushroom, smokes a hookah, and treats Alice with contempt. He directs Alice to the magic mushroom that allows her to shrink and grow." />
+	   </behaviour>
+	</template>
+	
+	<template id="9_2" name="Ask_about_Caterpillar_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutCaterpillar" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Caterpillar sits on a mushroom, smokes a hookah, and treats Alice with contempt. " />
+	   </behaviour>
+	</template>
+	
+	<template id="10_1" name="Ask_opinion_Caterpillar_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionCaterpillar" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I think the Caterpillar is a little bit weird. He usually talks in short, rather rude sentences, or difficult questions. Dont you think so?" />
+	   </behaviour>
+	</template>
+	
+	<template id="10_2" name="Ask_opinion_Caterpillar_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionCaterpillar" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I think the Caterpillar is a little bit weird. Dont you think so?" />
+	   </behaviour>
+	</template>
+	
+	<!-- 
+	
+	CHESHIRE 
+	
+	-->
+	
+	<template id="11_1" name="Ask_about_Cheshire_HighInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutCheshire" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Cheshire Cat is unique among Wonderland creatures. The Cheshire Cat has insight into the workings of Wonderland as a whole. Its calm explanation to Alice that to be in Wonderland is to be mad reveals a number of points that do not occur to Alice on her own. " />
+	   </behaviour>
+	</template>
+	
+	<template id="11_2" name="Ask_about_Cheshire_LowInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutCheshire" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Cheshire Cat is a cat. " />
+	   </behaviour>
+	</template>
+	
+	<template id="12_1" name="Ask_opinion_Cheshire_HighInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionCheshire" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I do like this character. He doesnt seem to have any memory, or just likes playing with words and Alice, so his conversations with her are really funny." />
+	   </behaviour>
+	</template>	
+	
+	<template id="12_2" name="Ask_opinion_Cheshire_LowInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionCheshire" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I do like this character." />
+	   </behaviour>
+	</template>	
+	
+	<!-- 
+	
+	OTHER
+	
+	-->
+	
+	<template id="13" name="Ask_General_Really">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askReally" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Yes, why not?" />
+	   </behaviour>
+	</template>	
+	
+	<template id="14" name="Ask_About_Agent_Name">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutAgentName" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="My name is Alice" />
+	   </behaviour>
+	</template>	
+	
+<!-- 
+	
+	DODO
+	
+	-->
+	
+	<template id="15_1" name="Ask_about_Dodo_HighInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutDodo" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Dodo is a Wonderland creature. He tends to use big words, and others accuse him of not knowing their meanings. He proposes that the animals participate in a Caucus race." />
+	   </behaviour>
+	</template>
+	
+	<template id="15_2" name="Ask_about_Dodo_LowInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutDodo" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Dodo is another Wonderland creature." />
+	   </behaviour>
+	</template>
+	
+	<template id="16_1" name="Ask_opinion_Dodo_HighInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionDodo" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Dodo is funny with his big words! Most of the time I dont really catch what he wants to say, but I am not the only one so that is ok !" />
+	   </behaviour>
+	</template>	
+	
+	<template id="16_2" name="Ask_opinion_Dodo_LowInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionDodo" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I think the Dodo is a funny creature." />
+	   </behaviour>
+	</template>	
+	
+	<!-- 
+	
+	DORMOUSE
+	
+	-->
+	
+	<template id="17_1" name="Ask_about_Dormouse_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutDormouse" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Dormouse sat between the March Hare and the Hatter. They were using him, while he slept, as a cushion when Alice arrives at the start of the chapter. The Dormouse is always falling asleep during the scene, waking up every so often." />
+	   </behaviour>
+	</template>
+	
+	<template id="17_2" name="Ask_about_Dormouse_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutDormouse" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Dormouse sat between the March Hare and the Hatter." />
+	   </behaviour>
+	</template>
+	
+	<template id="18_1" name="Ask_opinion_Dormouse_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionDormouse" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Always sleepy, it is hard to follow his story during the Tea Party." />
+	   </behaviour>
+	</template>	
+	
+	<template id="18_2" name="Ask_opinion_Dormouse_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionDormouse" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="She is always sleepy." />
+	   </behaviour>
+	</template>		
+	
+	<template id="19" name="Ask_about_Duchess">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutDuchess" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Queens uncommonly ugly cousin. The Duchess behaves rudely to Alice at first, but later treats her so affectionately that her advances feel threatening." />
+	   </behaviour>
+	</template>
+	
+	<template id="20" name="Ask_opinion_Duchess">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionDuchess" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I dont know actually, she is not really nice at the beginning and then starting to be. She is weird. We just have to see her behaviour with her baby pig. Leaving in pepper smoke. I dont know what to think about her." />
+	   </behaviour>
+	</template>			
+	
+	
+	
+	
+	<!-- 
+	
+	GRYPHON
+	
+	-->	
+	
+	
+	<template id="21" name="Ask_about_Gryphon">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutGryphon" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="A servant to the Queen who befriends Alice. The Gryphon escorts Alice to see the Mock Turtle." />
+	   </behaviour>
+	</template>
+	
+	<template id="22" name="Ask_opinion_Gryphon">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionGryphon" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I dont know actually, I dont have any particular opinion on him." />
+	   </behaviour>
+	</template>		
+	
+	
+	<!-- 
+	
+	JABBERWOCKY
+	
+	-->	
+	
+	
+	<template id="23" name="Ask_about_Jabberwocky">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutJabberwocky" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Jabberwock is a fictional character from the novel Through the Looking Glass, and What Alice Found There by Lewis Carroll. It only appears within the poem Jabberwocky that Alice reads during the first chapter and never interacts with the rest of the cast." />
+	   </behaviour>
+	</template>
+		
+	<!-- 
+	
+	KING
+	
+	-->	
+		
+	<template id="24_1" name="Ask_about_King_HighInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutKing" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The King is the coruler of Wonderland. He is ineffectual and generally unlikeable, but lacks the Queens ruthlessness and undoes her orders of execution." />
+	   </behaviour>
+	</template>	
+	
+	<template id="24_2" name="Ask_about_King_LowInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutKing" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The King is the coruler of Wonderland." />
+	   </behaviour>
+	</template>	
+	
+	<template id="25" name="Ask_about_Madhatter">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutMadhatter" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="He is a small, impolite hatter who lives in perpetual tea time. The Mad Hatter enjoys frustrating Alice." />
+	   </behaviour>
+	</template>
+	
+	<template id="26" name="Ask_opinion_Madhatter">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionMadhatter" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I love the Mad Hatter! He is mad, but kind with Alice in some way. And his background story is so sad. I cant hate him." />
+	   </behaviour>
+	</template>		
+
+	<template id="27" name="Ask_about_Marchhare">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutMarchhare" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The March Hare appears in the tea party scene. Like the characters friend, the Hatter, the March Hare feels compelled to always behave as though it is tea-time because the Hatter supposedly murdered the time whilst singing for the Queen of Hearts. " />
+	   </behaviour>
+	</template>
+	
+	<!-- 
+	
+	MOCKTURTLE
+	
+	-->	
+	
+	<template id="28" name="Ask_about_Mockturtle">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutMockturtle" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="He is a turtle with the head of a calf. The Mock Turtle is friendly to Alice but is exceedingly sentimental and self absorbed." />
+	   </behaviour>
+	</template>
+	
+	<template id="29" name="Ask_opinion_Mockturtle">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionMockturtle" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Even if Mock the Turtle is friendly with Alice, I think he is only using her to achieve his personal goal. I don't like that" />
+	   </behaviour>
+	</template>	
+	
+	
+	
+	
+	<template id="30" name="Ask_about_Mouse">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutMouse" />
+	   </preconditions>
+	
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Mouse appears at the beginning of the book. He panics every time he hears the word cat and had a sad story." />
+	   </behaviour>
+	</template>
+	
+<!-- 
+	
+	QUEEN
+	
+	-->	
+	
+	<template id="32_1" name="Ask_about_Queen_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutQueen" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="As the ruler of Wonderland, the Queen of Hearts is the character that Alice must inevitably face to figure out the puzzle of Wonderland. In a sense, the Queen of Hearts is literally the heart of Alices conflict." />
+	   </behaviour>
+	</template>
+	
+	<template id="32_2" name="Ask_about_Queen_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutQueen" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="She is the ruler of Wonderland." />
+	   </behaviour>
+	</template>
+	
+	<template id="31_1" name="Ask_opinion_Queen_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionQueen" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Queen is cruel and mad. She is a bad woman who only want power. But she stays one of the most interesting character of the book for me. And I must admit that the way I imagine her say cut off their head is funny." />
+	   </behaviour>
+	</template>	
+	
+	<template id="31_2" name="Ask_opinion_Queen_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionQueen" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The Queen is cruel and mad." />
+	   </behaviour>
+	</template>	
+	
+	<!-- 
+	
+	WHITE RABBIT
+	
+	-->	
+	
+	<template id="33_1" name="Ask_opinion_Whiterabbit_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionWhiterabbit" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I think that the White Rabbit is always in such a hurry, he looks at his watch so often. I dont like people who are always hurry such as the White Rabbit." />
+	   </behaviour>
+	</template>	
+	
+	<template id="33_2" name="Ask_opinion_Whiterabbit_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askOpinionWhiterabbit" />
+		   <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="I dont like he is always in a hurry." />
+	   </behaviour>
+	</template>	
+	
+	<template id="34_1" name="Ask_about_Whiterabbit_InterestHigh">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutWhiterabbit" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The frantic, harried Wonderland creature that originally leads Alice to Wonderland. The White Rabbit is figure of some importance, but he is manic, timid, and occasionally aggressive." />
+	   </behaviour>
+	</template>	
+	
+	<template id="34_2" name="Ask_about_Whiterabbit_InterestLow">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutWhiterabbit" />
+		   <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="The White Rabbit is figure of some importance, but occasionally aggressive." />
+	   </behaviour>
+	</template>	
+	
+	
+	<!-- 
+	
+	WONDERLAND
+	
+	-->	
+	
+	<template id="35_1" name="Ask_about_Wonderland_HighInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutWonderland" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="smaller_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Wonderland is a world where Alice goes after falling into the Rabbit Hole. It seems to look like a big garden where animals can talk just like humans. The Cheshire Cat says to Alice that she would not have come there if she wasnt mad. " />
+	   </behaviour>
+	</template>
+	
+	<template id="35_2" name="Ask_about_Wonderland_LowInterest">
+	   <preconditions>
+	      <compare value1="$userstates.intention" value2="askAboutWonderland" />
+		  <compare value1="0.8" value2="$userstates.emotion.fromAudio.interest" comparator="greater_equals"/>
+	   </preconditions>
+	   <behaviour class="eu.aria.dialogue.main.Behaviours">
+	      <argument name="response" value="Wonderland is a world where Alice goes after falling into the Rabbit Hole." />
+	   </behaviour>
+	</template>
+	
+	
+	
+	
+	
+	
+	
+	<template id="36" name="Respond_AU12">
+		<preconditions>
+			<compare value1="0.5" value2="$userstates.emotion.fromFE.AU.12" comparator="greater_than"/>
+		</preconditions>
+		
+		<behaviour quality="0.5" class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="You seem happy today. I love to see all the happiness."/>
+		</behaviour>
+	</template>
+	
+	<template id="37" name="Respond_Happiness">
+		<preconditions>
+			<compare value1="0.5" value2="$userstates.emotion.fromFE.happiness" comparator="greater_than"/>
+		</preconditions>
+		
+		<behaviour quality="0.5" class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="You seem happy today. I love to see all the happiness."/>
+		</behaviour>
+	</template>
+	
+	<template id="38" name="Respond_Sadness">
+		<preconditions>
+			<compare value1="0.5" value2="$userstates.emotion.fromFE.sadness" comparator="greater_than"/>
+		</preconditions>
+		
+		<behaviour quality="0.5" class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="You look sad, whats happened?."/>
+		</behaviour>
+	</template>
+	
+	<template id="39" name="Respond_Undefined_Questions">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="undefinedQuestions" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Yes?"/>
+		</behaviour>
+	</template>
+	
+	
+	<template id="41" name="Respond_To_Unclear_Questions">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="askUnclearQuestions" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Sorry could you repeat that again?"/>
+		</behaviour>
+	</template>	
+	
+	<template id="42" name="Respond_To_Sad_Words">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressSadnessWords" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Oh no, dont be sad"/>
+		</behaviour>
+	</template>	
+	
+	<template id="42_1" name="Respond_To_Happy_Words">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressHappinessWords" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Do go on.I love to hear about this happiness."/>
+		</behaviour>
+	</template>	
+	
+	<template id="43" name="Respond_To_Negative_Words">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressNegative" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Oh no, I hope everything will be alright"/>
+		</behaviour>
+	</template>	
+
+	<template id="44" name="Respond_To_Nice_ToMeet_Neutral">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="sayNiceToMeet" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Nice to meet you too!"/>
+		</behaviour>
+	</template>	
+	
+	<template id="44_3" name="Respond_To_Nice_ToMeet_Negative2">
+		<preconditions>
+			<compare value1="0.4" value2="$userstates.emotion.fromAudio.valence" comparator="greater_equals"/>			 
+			<compare value1="$userstates.intention" value2="sayNiceToMeet" />
+		</preconditions>
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Nice to meet you too! You sound unhappy. I hope everything is alright"/>
+		</behaviour>
+	</template>	
+
+	<template id="44_4" name="Respond_To_Nice_ToMeet_Postive2">
+		<preconditions>
+			<compare value1="0.6" value2="$userstates.emotion.fromAudio.valence" comparator="smaller_equals"/>			 
+			<compare value1="$userstates.intention" value2="sayNiceToMeet" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Nice to meet you too! I love to hear all this happiness!"/>
+		</behaviour>
+	</template>	
+	
+	
+	<template id="44_1" name="Respond_To_Nice_ToMeet_Negative">
+		<preconditions>
+			<compare value1="-0.2" value2="$userstates.emotion.fromFE.fusion" comparator="smaller_equals"/>			 
+			<compare value1="$userstates.intention" value2="sayNiceToMeet" />
+		</preconditions>
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Nice to meet you too! You look unhappy. I hope everything is alright"/>
+		</behaviour>
+	</template>	
+
+	<template id="44_2" name="Respond_To_Nice_ToMeet_Postive">
+		<preconditions>
+			<compare value1="0.2" value2="$userstates.emotion.fromFE.fusion" comparator="greater_equals"/>			 
+			<compare value1="$userstates.intention" value2="sayNiceToMeet" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Nice to meet you too! I love to see all this happiness!"/>
+		</behaviour>
+	</template>	
+	
+	<template id="45" name="Respond_ToAgreement">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressAgreement" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="I am glad you are agree with me"/>
+		</behaviour>
+	</template>	
+	
+	<template id="46" name="Respond_ToDisagreement">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressDisagreement" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Why not?"/>
+		</behaviour>
+	</template>	
+	
+	<template id="47" name="Respond_ToBad_Weather">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressBadWeather" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Indeed.It is rather gloomy weather today. But Wherever you go, no matter what the weather, always bring your own sunshine"/>
+		</behaviour>
+	</template>	
+				
+	<template id="48" name="Respond_ToGood_Weather">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressGoodWeather" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Yes indeed. I love this kind of weather. Dont you think so? "/>
+		</behaviour>
+	</template>		
+	
+	
+	<template id="40" name="Respond_To_Positive_Words">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressPositive" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Glad to hear that"/>
+		</behaviour>
+	</template>	
+	
+	
+		
+	<template id="49" name="Respond_To_Good_Information">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressGoodInformation" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="Glad you like it."/>
+		</behaviour>
+	</template>	
+	
+	<template id="50" name="Respond_To_Gratitude">
+		<preconditions>
+			 <compare value1="$userstates.intention" value2="expressGratitude" />
+		</preconditions>
+		
+		<behaviour class="eu.aria.dialogue.main.Behaviours">
+			<argument name="response" value="No problem"/>
+		</behaviour>
+	</template>		
+
+
+	
+</behaviourtemplates>

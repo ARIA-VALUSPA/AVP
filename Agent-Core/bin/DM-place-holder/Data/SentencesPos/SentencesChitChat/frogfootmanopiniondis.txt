@@ -1,4 +1,0 @@
-0.5 -1
-opinion frog footman frog-footman ?
-footman
-He is not really clever ... 

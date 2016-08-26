@@ -1,4 +1,0 @@
-0.5 -1
-bye 
-transitionToB
-Have a nice day.

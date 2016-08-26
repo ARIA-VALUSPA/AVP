@@ -1,4 +1,0 @@
-0.5 0
-opinion book ?
-book
-I like the book. It is easy to read, and sometime time funny.

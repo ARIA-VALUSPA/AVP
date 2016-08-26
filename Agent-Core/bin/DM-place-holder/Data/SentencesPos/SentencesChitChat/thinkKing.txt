@@ -1,4 +1,0 @@
-0.5 0
-opinion king hearts
-king favouriteCharacter 
-What do you think about the King of Heart ? Do you like him ? 

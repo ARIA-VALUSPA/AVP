@@ -265,3 +265,5 @@ crashlytics.properties
 crashlytics-build.properties
 Agent-Output/out/
 Agent-Output/nbproject/private/
+Agent-Core/nbproject/private/
+Agent-Core/out/

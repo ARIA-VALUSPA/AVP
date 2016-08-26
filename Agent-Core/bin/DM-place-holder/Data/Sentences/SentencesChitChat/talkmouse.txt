@@ -1,4 +1,0 @@
-0.5 0
-mouse talk
-mouse
-Do you want information about the Mouse ?

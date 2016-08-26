@@ -1,4 +1,0 @@
-0.5 0
-turtle mock mock-turle talk
-turtle
-Do you want information about Morck Turtle ?

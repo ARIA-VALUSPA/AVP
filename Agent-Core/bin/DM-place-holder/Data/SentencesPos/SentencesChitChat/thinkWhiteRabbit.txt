@@ -1,4 +1,0 @@
-0.5 0
-opinion white rabbit white-rabbit
-rabbit favouriteCharacter 
-What do you think about the White Rabbit ? Do you like him ? 

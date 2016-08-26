@@ -1,4 +1,0 @@
-0.5 1
-bye byebye transitionToB
-bye
-Catch you later !

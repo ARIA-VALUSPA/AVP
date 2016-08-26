@@ -1,31 +1,57 @@
 package eu.aria.core.DM;
 
-import eu.aria.alice.interactive.AliceInteractive;
-import eu.aria.core.activemq.InputFusionBox;
+import eu.aria.core.activemq.InputConnection;
+import eu.aria.dialogue.dm.DMPool;
 import eu.aria.util.types.AGenderData;
 import eu.aria.util.types.ASRData;
+import eu.aria.util.types.AudioEmotionData;
 import eu.aria.util.types.EMaxData;
 
 import java.util.HashSet;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by adg on 02/10/2015.
+ *
  */
 public class DialogueManager {
 
-    private AliceInteractive placeHolder = new AliceInteractive();
+    private DMPool manager = DMPool.getInstance();
     private HashSet<FmlListener> fmlListeners = new HashSet<>();
     private HashSet<PlainListener> plainListeners = new HashSet<>();
 
-    private String lastASRSpeech = null;
+    // this ensures that the getters always return the same listener (using lambda creates a new hidden object every time)
+    private DMPool.ResponseListener responseListener = this::onAgentText;
+    private DMPool.FMLResponseListener fmlResponseListener = this::onAgentFML;
+    private InputConnection.EMaxListener eMaxListener;
+    private InputConnection.AGenderListener aGenderListener;
+    private InputConnection.ASRListener asrListener;
+    private InputConnection.AudioEmotionListener audioEmotionListener;
+
+    private boolean useAsrActive = false;
+
+    private volatile boolean ready = false;
 
     public DialogueManager() {
-        placeHolder.addFmlListener(this::onAgentFML);
-        placeHolder.addListener(this::onAgentText);
+        manager.addListener(responseListener);
+        manager.addFmlListener(fmlResponseListener);
+
+        eMaxListener = this::onEMaxData;
+        aGenderListener = this::onAGenderData;
+        asrListener = this::onASRData;
+        audioEmotionListener = this::onAudioEmotionData;
+
+        new Timer().schedule(new TimerTask() {
+            @Override
+            public void run() {
+                onAgentReady();
+            }
+        }, 7000L);
     }
 
     public void init() {
-        placeHolder.init();
+        manager.init(1);
     }
 
     public void addFmlListener(FmlListener fmlListener) {
@@ -44,6 +70,10 @@ public class DialogueManager {
         plainListeners.remove(listener);
     }
 
+    public void setUseAsrActive(boolean useAsrActive) {
+        this.useAsrActive = useAsrActive;
+    }
+
     private void onAgentFML(String fml) {
         fmlListeners.stream().forEach(l -> l.onAgentFML(fml));
     }
@@ -53,36 +83,48 @@ public class DialogueManager {
     }
 
     private void onEMaxData(EMaxData data) {
-        placeHolder.onEMaxData(data);
+        manager.onEMaxData(data);
     }
 
     private void onAGenderData(AGenderData data) {
 
     }
 
+    private void onAudioEmotionData(AudioEmotionData data) {
+        manager.onAudioEmotionData(data);
+    }
+
     private void onASRData(ASRData data) {
-        if (data != null && data.isActive() && (lastASRSpeech == null || !lastASRSpeech.equals(data.getSpeech()))) {
-            userSays(data.getSpeech());
-            lastASRSpeech = data.getSpeech();
+        if (!ready) {
+            return;
+        }
+        if (data != null && (!useAsrActive || data.isActive()) && data.getSpeech() != null) {
+            long t1 = System.currentTimeMillis();
+            System.out.println("Received speech(" + data.getSpeech() + ") which was generated " + (t1 - data.getStartTime() * 1000) + " ms ago.");
+
+            manager.onASRText(data.getSpeech());
         }
     }
 
-    public void userSays(String text) {
-        if (!placeHolder.process(text)) {
-            placeHolder.reset();
-        }
+    public void onAgentReady() {
+        ready = true;
+        System.out.println("Dialogue manager was marked as ready");
     }
 
-    public InputFusionBox.EMaxListener getEMaxListener() {
-        return this::onEMaxData;
+    public InputConnection.EMaxListener getEMaxListener() {
+        return eMaxListener;
     }
 
-    public InputFusionBox.AGenderListener getAGenderListener() {
-        return this::onAGenderData;
+    public InputConnection.AGenderListener getAGenderListener() {
+        return aGenderListener;
     }
 
-    public InputFusionBox.ASRListener getASRListener() {
-        return this::onASRData;
+    public InputConnection.ASRListener getASRListener() {
+        return asrListener;
+    }
+
+    public InputConnection.AudioEmotionListener getAudioEmotionListener() {
+        return audioEmotionListener;
     }
 
     public interface FmlListener {

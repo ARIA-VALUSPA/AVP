@@ -1,5 +1,0 @@
-0.5 0
-information frog footman frog-footman 
-footman
-He is the Duchess's footman. 
-The Frog-footman is stupid and accustomed to the fact that nothing makes sense in Wonderland.

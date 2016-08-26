@@ -1,4 +1,0 @@
-0.5 0
-transitionToCC 
-whatTalk badSeeYou
-Would you like to speak about Alice's adventure in Wonderland ?

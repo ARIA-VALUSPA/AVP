@@ -1,9 +1,0 @@
-0.5 1
-information mock turtle mock-turtle 
-turtle
-I see that you are in the good mood for Alice's story in the Wonderland. Let's talk about the Turtle
-He is a turtle with the head of a calf. 
-The Mock Turtle is friendly to me but is exceedingly sentimental and self-absorbed.
-He is a very melancholy character, it is thought because he used to be a real turtle. 
-He tells me his history of going to school in the sea, but cannot understand the school system that Alice describes to him- least of all the poetry she recites. 
-Ironically, she cannot understand it either.

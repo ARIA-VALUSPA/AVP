@@ -1,4 +1,0 @@
-0.5 0
-others
-whatTalk badSeeYou
-bye

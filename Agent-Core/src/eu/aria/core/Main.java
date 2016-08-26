@@ -5,17 +5,12 @@
  */
 package eu.aria.core;
 
-import eu.aria.alice.interactive.AliceInteractive;
-import eu.aria.alice.interactive.AliceInteractiveGUI;
 import eu.aria.core.DM.DialogueManager;
-import eu.aria.core.activemq.InputFusionBox;
-import eu.aria.core.demo.EMaxFilter;
-import eu.aria.core.demo.EMaxThresholdDialog;
-import eu.aria.core.demo.InputDialog;
-import eu.aria.core.greta.Greta;
-
-import java.util.Arrays;
-import java.util.List;
+import eu.aria.core.activemq.InputConnection;
+import eu.aria.core.activemq.OutputConnection;
+import eu.aria.dialogue.dm.DMPool;
+import eu.aria.dialogue.main.DialogueManagerGUI;
+import vib.core.util.IniManager;
 
 /**
  *
@@ -23,36 +18,72 @@ import java.util.List;
  */
 public class Main {
 
-    private static String lastASRSpeech = null;
+    private static void runCore(Config config) {
+        IniManager iniManager = new IniManager("./Agent-Core.ini");
 
-    private static void fullSystem(Config config) {
         // Try to setup of the appearance of the GUI to the OS one:
         try {javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());} catch (Exception e) {}
 
-        AliceInteractiveGUI.setDataFolder(".\\DM-place-holder\\Data");
-        AliceInteractiveGUI.setResultsFolder(".\\DM-place-holder\\Results");
-        AliceInteractiveGUI aliceInteractiveGUI = new AliceInteractiveGUI();
-        Greta greta = new Greta();
-        DialogueManager dialogueManager = new DialogueManager();
-        InputFusionBox inputBox = new InputFusionBox();
+        DialogueManagerGUI.setResourcesFolder(".\\DM-place-holder\\Resources");
+        DialogueManagerGUI.setResultsFolder(".\\DM-place-holder\\Results");
 
-        aliceInteractiveGUI.addListener(dialogueManager::userSays);
-        dialogueManager.addPlainListener(aliceInteractiveGUI::agentSays);
-        dialogueManager.addFmlListener(text -> greta.perform(text, "TempId"));
+        DialogueManagerGUI dialogueManagerGUI = new DialogueManagerGUI(1);
+        DialogueManager dialogueManager = new DialogueManager();
+        InputConnection inputBox = new InputConnection();
+        OutputConnection outputBox = new OutputConnection();
+
+        DMPool.getInstance().setOhTime(iniManager.getValueInt("DM.singleWordDelay"));
+        DMPool.getInstance().setPromptUserTime(iniManager.getValueInt("DM.idleTime"));
+        dialogueManager.addFmlListener(outputBox::sendFML);
+        dialogueManager.setUseAsrActive(iniManager.getValueBoolean("DM.useAsrActive"));
+
         inputBox.addAGenderListener(dialogueManager.getAGenderListener());
         inputBox.addEMaxListener(dialogueManager.getEMaxListener());
         inputBox.addASRListener(dialogueManager.getASRListener());
-        inputBox.addASRListener(data -> {
-            if (data != null && data.isActive() && (lastASRSpeech == null || !lastASRSpeech.equals(data.getSpeech()))) {
-                aliceInteractiveGUI.agentSays("<font color=\"blue\">" + data.getSpeech() + "</font>");
-                lastASRSpeech = data.getSpeech();
-            }
-        });
+        inputBox.addAudioEmotionListener(dialogueManager.getAudioEmotionListener());
+
+        inputBox.init(config, iniManager);
+        outputBox.init(config, iniManager);
+        dialogueManager.init();
+        dialogueManagerGUI.show();
+
+        // This keeps the program alive to prevent the situation where there would be no frame or non-threads
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        String input="";
+        while(!input.equalsIgnoreCase("exit") && !input.equalsIgnoreCase("quit") && !input.equalsIgnoreCase("end")) {
+            input = scanner.next();
+        }
+        System.out.println("Exiting ARIA-Core.");
+        System.exit(0);
+    }
+
+    /*private static void fullSystem(Config config) {
+        IniManager iniManager = new IniManager("./Agent-Core.ini");
+
+        // Try to setup of the appearance of the GUI to the OS one:
+        try {javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());} catch (Exception e) {}
+
+        DialogueManagerGUI.setResourcesFolder(".\\DM-place-holder\\Resources");
+        DialogueManagerGUI.setResultsFolder(".\\DM-place-holder\\Results");
+        DialogueManagerGUI dialogueManagerGUI = new DialogueManagerGUI(1);
+        Greta greta = new Greta();
+        DialogueManager dialogueManager = new DialogueManager();
+        InputConnection inputBox = new InputConnection();
+
+        DMPool.getInstance().setOhTime(iniManager.getValueInt("DM.singleWordDelay"));
+        DMPool.getInstance().setPromptUserTime(iniManager.getValueInt("DM.idleTime"));
+        dialogueManager.addFmlListener(text -> greta.perform(text, "TempId"));
+        dialogueManager.setUseAsrActive(iniManager.getValueBoolean("DM.useAsrActive"));
+        inputBox.addAGenderListener(dialogueManager.getAGenderListener());
+        inputBox.addEMaxListener(dialogueManager.getEMaxListener());
+        inputBox.addASRListener(dialogueManager.getASRListener());
+        inputBox.addAudioEmotionListener(dialogueManager.getAudioEmotionListener());
 
         inputBox.init(config);
+        greta.setAgentReadyListener(dialogueManager::onAgentReady);
         greta.init();
         dialogueManager.init();
-        aliceInteractiveGUI.show();
+        dialogueManagerGUI.show();
 
         // This keeps the program alive to prevent the situation where there would be no frame or non-threads
         java.util.Scanner scanner = new java.util.Scanner(System.in);
@@ -66,7 +97,7 @@ public class Main {
 
     private static void eMaxMimic(Config config) {
         Greta greta = new Greta();
-        InputFusionBox inputBox = new InputFusionBox();
+        InputConnection inputBox = new InputConnection();
         EMaxThresholdDialog eMaxThresholdDialog = new EMaxThresholdDialog();
         InputDialog inputDialog = new InputDialog();
         EMaxFilter eMaxFilter = new EMaxFilter(eMaxThresholdDialog);
@@ -83,7 +114,7 @@ public class Main {
         eMaxThresholdDialog.addIntentionPerformer(greta.getIntentionPerformer());
         eMaxFilter.setListener(inputDialog::setText);
 
-        inputBox.init(config, false, true, false);
+        inputBox.init(config);
         greta.init();
 
         eMaxThresholdDialog.showWindow();
@@ -100,15 +131,19 @@ public class Main {
     }
 
     private static void dialogueManager() {
-        AliceInteractiveGUI.setDataFolder(".\\DM-place-holder\\Data");
-        AliceInteractiveGUI.setResultsFolder(".\\DM-place-holder\\Results");
-        AliceInteractiveGUI aliceInteractiveGUI = new AliceInteractiveGUI(new AliceInteractive());
+        IniManager iniManager = new IniManager("./Agent-Core.ini");
+
+        DialogueManagerGUI.setResourcesFolder(".\\DM-place-holder\\Resources");
+        DialogueManagerGUI.setResultsFolder(".\\DM-place-holder\\Results");
+        DMPool.getInstance().setOhTime(iniManager.getValueInt("DM.singleWordDelay"));
+        DMPool.getInstance().setPromptUserTime(iniManager.getValueInt("DM.idleTime"));
+
+        DialogueManagerGUI aliceInteractiveGUI = new DialogueManagerGUI(1);
         aliceInteractiveGUI.showLog(false);
         aliceInteractiveGUI.show();
-    }
+    }*/
 
     public static void main(String[] args) {
-        List<String> argList = Arrays.asList(args);
         Config.Builder configBuilder = new Config.Builder();
 
         for (String arg : args) {
@@ -116,17 +151,14 @@ public class Main {
                 case "-ssiWindows":
                     configBuilder.withSSIWindows();
                     break;
+                case "-agentWindows":
+                    configBuilder.withAgentWindows();
+                    break;
             }
         }
 
         Config myConfig = configBuilder.build();
 
-        if (argList.contains("-all")) {
-            fullSystem(myConfig);
-        } else if (argList.contains("-emaxmimic")) {
-            eMaxMimic(myConfig);
-        } else if (argList.contains("-dmonly")) {
-            dialogueManager();
-        }
+        runCore(myConfig);
     }
 }

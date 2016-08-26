@@ -1,4 +1,0 @@
-0 0
-bye byebye transitionToB tags tag-time
-bye
-Good $time ! 

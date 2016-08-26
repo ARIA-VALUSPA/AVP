@@ -1,4 +1,0 @@
-0.5 -1
-hello
-how presentation
-Hello, how are you ?

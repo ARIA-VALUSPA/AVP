@@ -1,5 +1,0 @@
-0 0
-fine transitionToCC
-whatTalk badSeeYou
-Fine Thank you.
-Do you want to talk about Alice in Wonderland ?

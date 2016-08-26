@@ -1,4 +1,0 @@
-0.5 0
-end information book ?
-tellend betteridea
-Are you sure ? Do you really want to know the end ?

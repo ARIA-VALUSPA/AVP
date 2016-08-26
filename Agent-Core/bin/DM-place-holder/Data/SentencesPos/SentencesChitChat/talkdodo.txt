@@ -1,4 +1,0 @@
-0.5 0
-talk dodo
-dodo
-Do you want information about Dodo ?

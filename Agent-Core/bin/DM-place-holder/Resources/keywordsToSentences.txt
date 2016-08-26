@@ -1,0 +1,395 @@
+characters the list of characters
+listcharacters the list of characters
+howcharactersbook? how many characters are there in the book
+numbercharacters how many characters are there in the book
+howcharactersalicewonderland how many characters are there in the book
+numbercharactersalicewonderland how many characters are there in the book
+characters? the list of characters
+listcharacters? the list of characters
+namecharacters? the names of characters 
+namecharacters the names of characters
+protagonist? main protagonist
+talkbook the book
+protagonist main protagonist
+titlechapter? the title of all the chapters 
+titlechapter the title of all the chapters
+listchapters the title of all the chapters
+listchapters? the title of all the chapters
+namechapters? the title of all the chapters
+namechapters the titles of all the chapters
+summary the book's summury 
+wonderland? Wonderland
+summaryalicewonderland the book's summury 
+summaryalicewonderland? the book's summury 
+summarybook the book's summury 
+summarybook? the book's summury 
+infoalicewonderland? the book 
+infoalicewonderland the book 
+alicewonderland? the book 
+alicewonderland the book 
+howcharacters? the number of characters
+howchaptersbook? the number of chapter
+howchaptersbook the number of chapter
+summarychapter1 chapter's one summary
+summarychapter1? chapter's one summary
+opinionchapter1 my opinion on chapter 1
+opinionchapter1? my opinion on chapter 1
+howstart? the beginning of the book
+beginingbook? the beginning of the book
+chapter1 chapter's one summary
+1chapter chapter's one summary
+chapter1? chapter's one summary
+1chapter? chapter's one summary
+summarychapter2 chapter's two summary
+chapter2 chapter's two summary
+2chapter chapter's two summary
+summarychapter2? chapter's two summary
+chapter2? chapter's two summary
+2chapter? chapter's two summary
+summarychapter3 chapter's three summary
+chapter3 chapter's three summary
+summarychapter3? chapter's three summary
+chapter3? chapter's three summary
+summarychapter4 chapter's four summary
+chapter4 chapter's four summary
+summarychapter4? chapter's four summary
+chapter4? chapter's four summary
+summarychapter5 chapter's five summary
+chapter5 chapter's five summary
+summarychapter5? chapter's five summary
+chapter5? chapter's five summary
+summarychapter6 chapter's six summary
+chapter6 chapter's six summary
+summarychapter6? chapter's six summary
+chapter6? chapter's six summary
+summarychapter7 chapter's seven summary
+chapter7 chapter's seven summary
+summarychapter7? chapter's seven summary
+chapter7? chapter's seven summary
+summarychapter8 chapter's eight summary
+chapter8 chapter's eight summary
+summarychapter8? chapter's eight summary
+chapter8? chapter's eight summary
+summarychapter9 chapter's nine summary
+chapter9 chapter's nine summary
+summarychapter9? chapter's nine summary
+chapter9? chapter's nine summary
+summarychapter10 chapter's ten summary
+chapter10 chapter's ten summary
+summarychapter10? chapter's ten summary
+chapter10? chapter's ten summary
+summarychapter11 chapter's eleven summary
+chapter11 chapter's eleven summary
+summarychapter11? chapter's eleven summary
+chapter11? chapter's eleven summary
+summarychapter12 chapter's twelve summary
+chapter12 chapter's twelve summary
+summarychapter12? chapter's twelve summary
+chapter12? chapter's twelve summary
+queenofheart the Queen of Hearts
+queenofheart? the Queen of Hearts
+thinkQueenOfHeart my opinion of the Queen of Hearts
+talkqueenofheart about the Queen of Hearts
+infoqueenofheart the Queen of Hearts
+infoqueenofheart? the Queen of Hearts
+queenofheart1? when the Queen of Hearts is first introduced 
+opinionqueenofheart my opinion of the Queen of Hearts
+opinionqueenofheart? my opinion of the Queen of Hearts
+kingofheart the King of Hearts
+kingofheart? the King of Hearts
+kingofheart1? when the King of Hearts is first introduced
+talkkingofheart about the King of Hearts 
+thinkKingOfHeart my opinion of the King of Hearts
+infokingofheart the King of Hearts
+infokingofheart? the King of Hearts
+opinionkingofheart my opinion of the King of Hearts
+opinionkingofheart? my opinion of the King of Hearts
+duchess the Duchess
+duchess? the Duchess
+duchess1? when the Duchess is first introduced
+thinkDuchess my opinion of the Duchess
+talkduchess about the Duchess
+infoduchess the Duchess
+infoduchess? the Duchess
+opinionduchess my opinion of the Duchess
+opinionduchess? my opinion of the Duchess
+whiterabbit the White Rabbit
+whiterabbit? the White Rabbit
+whiterabbit1? when the White Rabbit is first introduced
+talkwhiterabbit the White Rabbit
+thinkWhiteRabbit my opinion of the White Rabbit
+infowhiterabbit the White Rabbit
+infowhiterabbit? the White Rabbit
+opinionwhiterabbit my opinion of the White Rabbit
+opinionwhiterabbit? my opinion of the White Rabbit
+caterpillar the Caterpillar 
+caterpillar? the Caterpillar 
+caterpillar1? when the Caterpillar is first introduced
+talkcaterpillar about the Caterpillar
+thinkCaterpillar my opinion of the Caterpillar
+infocaterpillar the Caterpillar 
+infocaterpillar? the Caterpillar 
+opinioncaterpillar my opinion of the Caterpillar
+opinioncaterpillar? my opinion of the Caterpillar
+madnesshatter the Mad Hatter
+madnesshatter? the Mad Hatter
+madnesshatter1? when the Mad Hatter is first introduced
+talkmadnesshatter about the Mad Hatter
+thinkmadnesshatter my opinion of the Mad Hatter
+infomadnesshatter the Mad Hatter
+infomadnesshatter? the Mad Hatter
+opinionmadnesshatter my opinion of the Mad Hatter
+opinionmadnesshatter? my opinion of the Mad Hatter
+opinionmadnesshattermadness? the madness of the Mad Hatter
+opinionmadnesshattermadness the madness of the Mad Hatter
+gryphon the Gryphon 
+gryphon? the Gryphon 
+talkgryphon about the Gryphon 
+thinkGryphon my opinion of the Gryphon 
+infogryphon the Gryphon 
+infogryphon? the Gryphon 
+opiniongryphon my opinion of the Gryphon
+opiniongryphon? my opinion of the Gryphon
+gryphon1? when is Gryphon is first introduced
+mockturtle the Mock Turtle 
+thinkMockTurtle my opinion of the Mock Turtle
+talkturtle about the Mock Turtle
+infomockturtle the Mock Turtle 
+infomockturtle? the Mock Turtle 
+opinionmockturtle my opinion of the Mock Turtle
+opinionmockturtle? my opinion of the Mock Turtle
+turtle the Mock Turtle 
+turtle? the Mock Turtle 
+turtle1? when the Mock Turtle is first introduced
+infoturtle the Mock Turtle 
+infoturtle? the Mock Turtle 
+opinionturtle my opinion of the Mock Turtle
+opinionturtle? my opinion of the Mock Turtle
+dodo the Dodo
+dodo? the Dodo
+dodo1? when the Dodo is first introduced
+thinkDodo my opinion of the Dodo
+talkdodo about the Dodo
+infododo the Dodo
+infododo? the Dodo
+opiniondodo my opinion of the Dodo
+opiniondodo? my opinion of the Dodo
+frogfootman the Frog Footman
+frog-footmaninformation the Frog Footman
+frogfootman? the Frog Footman
+frog-footman? the Frog Footman
+thinkFrogFootman my opinion of the Frog Footman
+talkfrogfootman the Frog Footman
+talkfrog-footman the Frog Footman
+infofrogfootman the Frog Footman
+infofrog-footman the Frog Footman
+infofrogfootman? the Frog Footman
+infofrog-footman? the Frog Footman
+opinionfrogfootman my opinion of the Frog Footman
+opinionfrog-footman my opinion of the Frog Footman
+opinionfrogfootman? my opinion of the Frog Footman
+opinionfrog-footman? my opinion of the Frog Footman
+chaptersmentionfrogfoot? in which chapter is the Frog Footman mentioned
+frogfootman1? when the Frog Footman is first introduced
+infofishfootman the Fish Footman 
+infofishfootman? the Fish Footman 
+fishfootman the Fish Footman 
+fishfootman? the Fish Footman 
+infofish-footman the Fish Footman 
+infofish-footman? the Fish Footman 
+fish-footman the Fish Footman 
+fish-footman? the Fish Footman 
+thinkfishFootman my opinion of the Fish Footman 
+chaptersmentionfishfoot? in which chapter is the Fish Footman mentioned
+opinionfishfootman? my opinion of the Fish Footman
+opinionfishfootman my opinion of the Fish Footman
+fishfootman1? when the Fish Footman is first introduced 
+cheshire the Cheshire Cat
+cheshirecat the Cheshire Cat
+cheshirecat? the Cheshire Cat
+cheshire? the Cheshire Cat
+cheshirecat1? when the Cheshire Cat is first introduced
+talkcheshire the Cheshire Cat
+thinkCheshire my opinion of Cheshire Cat
+infocheshire the Cheshire Cat
+infocheshire the Cheshire Cat
+infocheshire? the Cheshire Cat
+infocheshirecat the Cheshire Cat
+infocheshirecat? the Cheshire Cat
+opinioncheshire my opinion of Cheshire Cat
+opinioncheshire? my opinion of Cheshire Cat
+opinioncheshirecat my opinion of Cheshire Cat
+opinioncheshirecat? my opinion of Cheshire Cat
+alice Alice
+alice? Alice
+alice1? when Alice is first introduced
+talkalice about Alice
+infoalice Alice
+infoalice? Alice
+thinkAlice my opinion of Alice
+opinionalice my opinion of Alice
+opinionalice? my opinion of Alice
+alicefall about Alice's fall in chapter 1
+mouse the Mouse
+mouse? the Mouse
+talkmouse about the Mouse
+infomouse the Mouse
+informouse? the Mouse
+thinkmouse my opinion of the Mouse
+mouse1? when the Mouse is first introduced
+opinionmouse my opinion of the Mouse
+opinionmouse? my opinion of the Mouse
+mousestory the story of the Mouse
+mousestory? the story of the Mouse
+storymouse? the story of the Mouse
+storymouse the story of the Mouse
+marchhare the March Hare
+marchhare? the March Hare
+infomarchhare the March Hare
+infomarchhare? the March Hare
+thinkmarchhare my opinion of the March Hare
+opinionmarchhare my opinion of the March Hare
+opinionmarchhare? my opinion of the March Hare
+talkmarchhare about the March Hare
+marchhare1? when the March hare is first introduced
+infodormouse the Dormhouse
+dormouse? the Dormhouse`
+dormouse the Dormhouse
+talkdormouse about the Dormhouse
+opiniondormouse? my opinion of the Dormhouse
+opiniondormouse my opinion of the Dormhouse
+thinkdormouse my opinion of the Dormhouse
+dormouse1? when the Dormhouse is first introduced
+favouriteCharacter my favourite character
+author the author, Lewis Caroll
+author? the author, Lewis Caroll
+authoralicewonderland? the author of the book, Lewis Caroll
+infoauthor the author, Lewis Caroll
+talkauthor the author, Lewis Caroll
+talklewiscaroll the author, Lewis Caroll
+infoauthor? the author, Lewis Caroll
+lewisscarool the author, Lewis Caroll
+infolewiscaroll the author, Lewis Caroll
+infolewiscaroll? the author, Lewis Caroll
+lewis the author, Lewis Caroll
+c.s.lewis the author, C.S. Lewis
+caroll the author, Lewis Caroll
+rabbitGo why the White Rabbit is in such a hurry 
+opinioncake my opinion of Alice eating the cake in chapter one 
+opinioncake? my opinion of Alice eating the cake in chapter one 
+cake? my opinion of Alice eating the cake in chapter one 
+madnesshatterfrustationalice? how the Mad Hatter frustrated Alice 
+frustationalice? how the Mad Hatter frustrated Alice 
+opinionalicecake? my opinion of Alice eating the cake in chapter one 
+opinionpotion my opinion of Alice drinking the potion in chapter one 
+realityalice? if there was a real Alice 
+realityalice if there was a real Alice 
+originalicebooks? the origin of Alice book 
+originalicebooks the origin of Alice book
+originalicebook the origin of Alice book
+originalicebook? the origin of Alice book
+mr.dodgson who is Mr Dodgson
+mr.dodgson? who is Mr Dodgson
+dodgson who is Mr Dodgson
+dodgson? who is Mr Dodgson
+alicewonderlandglass? who wrote Alice in Wonderland and Through the Looking Glass 
+alicewonderlandglass who wrote Alice in Wonderland and Through the Looking Glass
+alicetale? who told Alice about his long and sad tale
+alicetale who told Alice about his long and sad tale
+appearancedisappearance? who kept appearing and disappearing
+appearancedisappearance who kept appearing and disappearing
+carolldrugsalicebooks if Caroll on drugs when he wrote the Alice books, or are the books about drugs
+carolldrugsalicebooks? if Caroll on drugs when he wrote the Alice books, or are the books about drugs
+booksdrugs if Caroll on drugs when he wrote the Alice books, or are the books about drugs
+booksdrugs? if Caroll on drugs when he wrote the Alice books, or are the books about drugs
+carollpedophile? if Caroll was a pedophile
+carollpedophile if Caroll was a pedophile
+madnesshattercardhat10/6 what is the meaning of the 10/6 card of the Mad Hatter's hat
+fineravenopiniondesk? why is the Raven writing on a desk 
+ravenopiniondesk? why is the Raven writing on a desk 
+editionbook how much your old version of Alice in Wonderland worth 
+helppublishingdate? how much your old version of Alice in Wonderland worth 
+howvalue how much your old version of Alice in Wonderland worth 
+helpdate? how much your old version of Alice in Wonderland worth 
+bookspicturescopyright? is the picture of the book are still copyright protected
+alicemovie which movie you have seen 
+infoalicemovie which movie you have seen 
+dormousehead the Dormhouse saying "Feed your head" 
+opinionjeffersonairplanesongwhiterabbit? the Dormhouse saying "Feed your head" 
+oysterscenedisneymoviermarchflashes the Oyster scene in the Disney movie
+chessmovesglass? me to explain the Chess move in the book Through the Looking Glass
+alicebookschina why Alice in Wonderland is banned in China 
+alicewonderlandchina? why Alice in Wonderland is banned in China 
+alicechina? why Alice in Wonderland is banned in China 
+infobook the book
+opinionmadnesshattermadness why I think the Mad Hatter is mad 
+alicemadness if I think Alice is mad 
+madnesshattermadness if I think the Mad Hatter is mad
+dodomadness if I think the Dodo is mad
+dormousemadness if I think the Dormouse is mad
+queenofheartmadness if I think the Queen of Hearts is mad
+kingofheartmadness if I think the King of Hearts is mad
+marchharemadness if I think the March Hare is mad
+opinionalicemadness if I think Alice is mad
+opiniondodomadness if I think the Dodo is mad
+opiniondormousemadness if I think the Dormouse is mad
+opinionqueenofheartmadness if I think the Queen of Hearts is mad
+opinionkingofheartmadness if I think the King of Hearts is mad
+opinionmarchharemadness if I think the March Hare is mad
+chaptermadnesshatteralice? when the Mad Hatter met Alice 
+chaptermadnesshatterappearance? when the Mad Hatter met Alice 
+madnesshatterappearance1? when the Mad Hatter met Alice 
+madnesshattercall? whe is the Mad Hatter called like that
+madnesshatterfrustrationalice? why or when the Mad Hatter frustrated Alice
+colourchesirecat? the color of the Cheshire Cat
+movieadaptationsbook? if there is any movie adaptations of the book
+movieadaptationsbook? if there is any movie adaptations of the book
+movieadaptations? if there is any movie adaptation of the book
+moviesbook? if there is any movie adaptation of the book
+howlewiscarollalicewonderland? how old was Lewis Caroll when he wrote Alice in Wonderland 
+aliceenemybook? who is Alice's enemy in the book
+inpirationbook? what was the inspiration of the book
+inspirationalicewonderland? what was the inspiration of the book
+howalicewonderlandend? the end of the book 
+alicewonderlandend? the end of the book 
+howpopularityalicewonderland? how popular is Alice in Wonderland 
+popularityalicewonderland? how popular is Alice in Wonderland
+howpopularitybook? how popular is Alice in Wonderland
+popularitybook? how popular is Alice in Wonderland
+aliceenemy? who is Alice's enemy
+chaptercaterpillarappearance?  when the Caterpillar appears for the first time
+aliceappearance1? when Alice appears for the first time
+chapteraliceappearance? when Alice appears for the first time
+caterpillarappearance1? when the Caterpillar appears for the first time
+chaptercheshireappearance? when the Cheshire Cat appears for the first time
+cheshireappearance1? when the Cheshire Cat appears for the first time
+chapterdormouseappearance? when the Dormouse appears for the first time
+dormouseappearance1? when the Dormouse appears for the first time
+chapterdodoappearance? when the Dodo appears for the first time
+dodoappearance1? when the Dodo appears for the first time
+chapterduchessappearance?  when the Duchess appears for the first time
+duchessappearance1? when the Duchess appears for the first time
+chapterfishfootmanappearance? when the Fish Footman appears for the first time
+fishfootmanappearance1? when the Fish Footman appears for the first time
+chapterfrogfootmanappearance? when the Frog Footman appears for the first time
+frogfootmanappearance1? when the Frog Footman appears for the first time
+chaptergryphonappearance? when the Gryphon appears for the first time
+gryphonappearance1? when the Gryphon appears for the first time
+chapterkingofheartappearance? when the King of Hearts appears for the first time
+kingofheartappearance1? when the King of Hearts appears for the first time
+chaptermouseappearance? when the Mouse appears for the first time
+chapterqueenofheartappearance? when the Queen of Hearts appears for the first time
+queenofheartappearance1? when the Queen of Hearts appears for the first time
+chapterwhiterabbitappearance? when the White Rabbit appears for the first time
+whiterabbitappearance1? when the White Rabbit appears for the first time
+mouseappearance1? when the Mouse appears for the first time
+dodgsonpedophile? if Caroll was a pedophile
+dodgsonpenname? Dodgson's pen name 
+authorlife Caroll's life 
+end the end of the book 
+end? the end of the book 
+endbook the end of the book 
+bye Nothing... You want to leave right 
+endbook? the end of the book 
+secret secret
+howareyou? how are you

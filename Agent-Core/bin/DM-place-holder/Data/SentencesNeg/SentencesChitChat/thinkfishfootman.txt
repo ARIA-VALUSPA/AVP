@@ -1,4 +1,0 @@
-0.5 0
-opinion fish footman fish-footman
-fish-footman favouriteCharacter 
-What do you think about the Fish Footman ? Do you like him ? 

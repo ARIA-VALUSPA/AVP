@@ -1,4 +1,0 @@
-0.5 0
-opinion dodo
-dodo favouriteCharacter 
-What do you think about the Dodo ? Do you like him ? 

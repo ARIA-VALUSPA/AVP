@@ -1,4 +1,0 @@
-0.5 -1
-information mock turtle mock-turtle 
-turtle
-He is a turtle with the head of a calf. 

@@ -1,6 +1,0 @@
-0.5 0
-information king heart 
-king
-I see that you are not in a great mood. Shall I tell you a story about the King to cheer you up?
-The King is the coruler of Wonderland. 
-He is ineffectual and generally unlikeable, but lacks the Queen's ruthlessness and undoes her orders of execution.

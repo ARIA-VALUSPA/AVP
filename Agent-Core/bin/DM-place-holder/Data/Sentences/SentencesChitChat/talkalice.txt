@@ -1,4 +1,0 @@
-0.5 0
-talk alice
-alice
-Do you want information about Alice ?

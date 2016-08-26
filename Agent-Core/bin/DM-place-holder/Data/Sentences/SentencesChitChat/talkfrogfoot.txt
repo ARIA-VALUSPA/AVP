@@ -1,4 +1,0 @@
-0.5 0
-talk frog footman frog-footman
-frog
-Do you want information about Frog Foot ?

@@ -1,4 +1,0 @@
-0.5 0
-whatTalk
-alice
-What do you want to talk about ? 

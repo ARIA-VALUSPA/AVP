@@ -1,4 +1,0 @@
-0.5 0
-talk white rabbit white-rabbit
-rabbit
-Do you want information about the White Rabbit ?
