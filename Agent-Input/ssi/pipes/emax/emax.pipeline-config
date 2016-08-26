@@ -1,12 +1,12 @@
 # number of faces
-faces:multiple = true   # detect multiple faces (2 at the moment)
+emax:faces:max    = 2  # number of faces to detect (0 = always nearest, otherwise 4 at max)
+emax:faces:values = 13 # number of values per face
 
 # models
-# model:face = models/haarcascade_frontalface_alt.xml     # face detection model path
-# model:eyes = models/haarcascade_eye_tree_eyeglasses.xml # eyes detection model path
-model:aus  = models/aus.cfg                             # action units detection model path
+emax:model = ../../models/face/caffe.cfg               # emax model path
 
 # activemq
+activemq:use = false
 activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
 activemq:id = SSI									# activemq id
 activemq:topic= EMAX								# activemq topic

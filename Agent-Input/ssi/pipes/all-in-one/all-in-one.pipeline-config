@@ -1,0 +1,11 @@
+# visualization
+
+show:plot = true
+show:gui = true
+
+# active mq
+
+activemq:use = true
+activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
+activemq:id = SSI									# activemq id
+activemq:topic= SSI									# activemq topic

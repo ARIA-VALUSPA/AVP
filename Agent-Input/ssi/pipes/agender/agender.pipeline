@@ -2,94 +2,109 @@
 <pipeline>
 	
 	<register>		
-		<load name="ssiaudio.dll" />
-		<load name="ssigraphic.dll" />
-		<load name="ssibrowser.dll" />
-		<load name="ssiopensmilewrapper.dll" />
-		<load name="ssilibsvm.dll"/>
-		<load name="ssimodel.dll"/>
-		<load name="ssiactivemq.dll"/>
-		<load name="ssicamera.dll"/>
-		<load name="ssiffmpeg.dll"/>
-		<load name="ssilibsoxfilter.dll"/>
+		<load name="audio" />
+		<load name="graphic" />
+		<load name="browser" />
+		<load name="opensmilewrapper" />
+		<load name="libsvm"/>
+		<load name="model"/>
+		<load name="activemq"/>
+		<load name="camera"/>
+		<load name="ffmpeg"/>
+		<load name="libsoxfilter"/>
+		<load name="control"/>
 	</register>
-	
-	<!-- set framework options -->		
-	<framework console="true" cpos="0,0,400,600"/> 
 	
 	<!-- audio sensor initialization -->
 	<gate open="$(live)">
-		<sensor create="ssi_sensor_Audio" option="options/audio" sr="8000" scale="true">
-			<provider channel="audio" pin="audio"/>		
+		<sensor create="Audio" option="options/audio" sr="8000" scale="true">
+			<output channel="audio" pin="audio"/>		
 		</sensor>	
 	</gate>
 	<gate close="$(live)">
-		<sensor create="ssi_sensor_WavReader" path="$(file)" blockInSamples="512" scale="true" loop="true">
-			<provider channel="audio" pin="audio"/>		
+		<sensor create="WavReader" path="$(file)" blockInSamples="512" scale="true" loop="true">
+			<output channel="audio" pin="audio"/>		
 		</sensor>	 
 	</gate>	
 	
 	<!-- compression filter -->
 	<gate open="$(compression:use)">
-		<transformer create="ssi_filter_LibsoxFilter" ssi_sample_block_offset="1" sox_global_buffer="256" sox_signal_length="256" sox_effect_chain_str="gain -1 compand 0.1,0.3 -60,-60,-30,-15,-20,-12,-4,-8,-2,-7 -2">
+		<transformer create="LibsoxFilter" block_offset="1" sox_global_buffer="256" sox_signal_length="256" sox_effect_chain_str="gain -1 compand 0.1,0.3 -60,-60,-30,-15,-20,-12,-4,-8,-2,-7 -2">
 			<input pin="audio" frame="256"/>
 			<output pin="audio$(compression:pin)"/>
 		</transformer>	
 	</gate>
 		
 	<!-- activity detection -->
-	<transformer create="ssi_feature_AudioActivity" method="0" threshold="0.05">
+	<transformer create="AudioActivity" method="0" threshold="0.05">
 		<input pin="audio$(compression:pin)" frame="0.03s" delta="0.015s"/>
 		<output pin="vad"/>
 	</transformer>
-	<consumer create="ssi_consumer_ZeroEventSender" mindur="0.3" maxdur="5.0" eager="true" hangin="3" hangout="10" sname="audio" ename="vad">
+	<consumer create="ZeroEventSender" mindur="0.3" maxdur="5.0" eager="true" hangin="3" hangout="10" address="vad@audio">
 		<input pin="vad" frame="0.1s"/>
 	</consumer>	
 	
 	<!-- feature extraction -->
-	<consumer create="ssi_consumer_FloatsEventSender" sname="audio" ename="feature">
-		<input pin="audio$(compression:pin)" listen="vad@audio">
-			<transformer create="ssi_feature_OSWrapper" configFile="$(config)"/>
+	<consumer create="TupleEventSender" address="feature@audio">
+		<input pin="audio$(compression:pin)" address="vad@audio" state="completed">
+			<transformer create="OSWrapper" configFile="$(config)"/>
 		</input>
 	</consumer>
 	
 	<!-- classifier -->
-	<object create="ssi_consumer_Classifier" console="false" trainer="$(model:gender)" sname="audio" ename="gender">
+	<object create="Classifier" trainer="$(model:gender)" address="gender@audio">
 		<listen address="feature@audio"/>
 	</object>
-	<object create="ssi_consumer_Classifier" console="false" trainer="$(model:age)" sname="audio" ename="age">
+	<object create="Classifier" trainer="$(model:age)" address="age@audio">
 		<listen address="feature@audio"/>
 	</object>	
 	
+	<!-- smoother -->
+	<object create="DecisionSmoother:genderSmoother" average="true" address="gender(avg)@audio">
+		<listen address="gender@audio"/>
+	</object>
+	<object create="DecisionSmoother:ageSmoother" average="true" address="age(avg)@audio">
+		<listen address="age@audio"/>
+	</object>
+	
+	<!-- reset button -->
+	<runnable create="ControlButton" label="RESET" id="genderSmoother,ageSmoother" message="RESET" pos="50,50,200,100"/>
+	
 	<!-- event sender -->
-	<object create="ssi_consumer_XMLEventSender" sname="xml" ename="agender" path="agender.xml" monitor="true" mname="RESULT" mpos="800,300,400,300" console="false" update="100" coldelim=" ">
-		<listen address="@"/>
+	<object create="XMLEventSender" address="agender@xml" path="agender.xml" monitor="true" mname="RESULT" mpos="800,300,400,300" console="false" update="100" coldelim=" ">
+		<listen address="gender(avg),age(avg)@audio"/>
 	</object>
 	<gate open="$(activemq:use)">
-		<object create="ssi_listener_ActiveMQEvent" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
 			<listen address="agender@xml"/>
 		</object>		
 	</gate>
 		
-	<!-- browser -->
-	<object create="ssi_object_ImageViewer" name="GENDER" directory="$(images)" extension="jpg" pos="800,0,200,300">
+	<!-- bar plots -->
+	<object create="EventPainter:eplot" title="GENDER" type="1" fix="1.0" global="true" autoscale="false">
 		<listen address="gender@audio"/>
 	</object>
-	<object create="ssi_object_ImageViewer" name="AGE" directory="$(images)" extension="jpg" pos="1000,0,200,300">
+	<object create="EventPainter:eplot" title="AGE" type="1" fix="1.0" global="true" autoscale="false">
 		<listen address="age@audio"/>
+	</object>		
+	<object create="EventPainter:eplot" title="GENDER (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="gender(avg)@audio"/>
+	</object>
+	<object create="EventPainter:eplot" title="AGE (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="age(avg)@audio"/>
 	</object>	
 	
 	<!-- visualization -->	
-	<consumer create="ssi_consumer_SignalPainter" name="AUDIO - RAW" size="10" type="2" move="1,0,400,0,400,300" autoscale="false" fix="-1.0,1.0">
+	<consumer create="SignalPainter:plot" title="AUDIO - RAW" size="10" type="2" autoscale="false" fix="-1.0,1.0">
 		<input pin="audio$(compression:pin)" frame="0.02s"/>
 	</consumer>
-	<consumer create="ssi_consumer_SignalPainter" name="AUDIO - ACTIVITY" size="10" type="0" move="1,0,400,300,400,300">
+	<consumer create="SignalPainter:plot" title="AUDIO - ACTIVITY" size="10" type="0">
 		<input pin="vad" frame="0.02s"/>
 	</consumer>	
 	
 	<!-- wav output -->
 	<gate close="$(live)">
-		<consumer create="ssi_consumer_AudioPlayer" option="options/aplayer">
+		<consumer create="AudioPlayer" option="options/aplayer">
 			<input pin="audio$(compression:pin)" frame="0.1s"/>
 		</consumer>
 	</gate>
@@ -100,13 +115,13 @@
 		<!-- capture user -->
 		<gate open="$(capture:user)">
 		
-			<sensor create="ssi_sensor_Camera" option="options/camera" flip="true" >
-				<provider channel="video" pin="camera" size="2.0"/>
+			<sensor create="Camera" option="options/camera" flip="true" >
+				<output channel="video" pin="camera" size="2.0s"/>
 			</sensor>	
-			<consumer create="ssi_consumer_FFMPEGWriter" url="$(capture:dir)/$(date)_user.mp4">
+			<consumer create="FFMPEGWriter" url="$(capture:dir)/$(date)_user.mp4">
 				<input pin="camera;audio" frame="1"/>				
 			</consumer>	
-			<consumer create="ssi_consumer_VideoPainter" name="CAMERA" flip="false" move="1,0,20,620,320,240">
+			<consumer create="VideoPainter:vplot" title="CAMERA" flip="false" pos="20,620,320,240">
 				<input pin="camera" frame="1" delta="0"/>
 			</consumer>			
 			
@@ -115,18 +130,26 @@
 		<!-- capture screen -->
 		<gate open="$(capture:screen)">
 		
-			<sensor create="ssi_sensor_CameraScreen" full="false" region="400,0,800,600" fps="25">
-				<provider channel="video" pin="screen" size="2.0"/>
+			<sensor create="CameraScreen" full="false" region="400,0,800,600" fps="25">
+				<output channel="video" pin="screen" size="2.0s"/>
 			</sensor>			
-			<consumer create="ssi_consumer_FFMPEGWriter" url="$(capture:dir)/$(date)_screen.mp4">
+			<consumer create="FFMPEGWriter" url="$(capture:dir)/$(date)_screen.mp4">
 				<input pin="screen" frame="1"/>				
 			</consumer>				
-			<consumer create="ssi_consumer_VideoPainter" name="SCREEN" flip="false" move="1,0,340,620,320,240">
+			<consumer create="VideoPainter:vplot" title="SCREEN" flip="false" pos="340,620,320,240">
 				<input pin="screen" frame="1" delta="0"/>
 			</consumer>			
 		
 		</gate>
 		
 	</gate>
+	
+	<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,600">console</area>
+		<area pos="400,0,400,600">eplot*</area>
+		<area pos="800,0,400,300">plot*</area>		
+		<area pos="800,300,400,300">monitor*</area>
+	</object>	
 		
 </pipeline>

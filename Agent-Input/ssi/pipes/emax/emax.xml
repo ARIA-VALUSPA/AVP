@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<face id="$(0{select*13=1;precision=0}">
+		<emotion>
+			<neutral>$(emotion@emax{select*7=0;precision=2})</neutral>		
+			<anger>$(emotion@emax{select*7=1;precision=2})</anger>		
+			<disgust>$(emotion@emax{select*7=2;precision=2})</disgust>
+			<fear>$(emotion@emax{select*7=3;precision=2})</fear>
+			<happiness>$(emotion@emax{select*7=4;precision=2})</happiness>
+			<sadness>$(emotion@emax{select*7=5;precision=2})</sadness>		
+			<surprise>$(emotion@emax{select*7=6;precision=2})</surprise>
+		</emotion>
+		<valence>$(va@emax{select*2=0;precision=2}</valence>		
+		<arousal>$(va@emax{select*2=1;precision=2}</arousal>	
+	</face>		
+</ssi>
+

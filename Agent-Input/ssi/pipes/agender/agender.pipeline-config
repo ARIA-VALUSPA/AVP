@@ -3,9 +3,9 @@ file = media/agender.wav 							# if not live input read in from this file
 
 # classification
 
-config = config/IS10.functs.conf					# name of openSMILE config file
-model:gender = models/gender[os10,zscore]			# path to model
-model:age = models/age[os10,zscore]				 	# path to model
+config = config/IS13_ComParE.conf					# name of openSMILE config file
+model:gender = ../../models/speech/gender[IS13-scale-linear-c1e-1]  # path to model
+model:age = ../../models/speech/age[IS13-scale-linear-c1e-1]	 	 # path to model
 images = images										# directory with images
 
 # compression filter
@@ -15,7 +15,7 @@ compression:pin = 									# NOTE: has to be an empty string if compression is N
 
 # active mq
 
-activemq:use = true									# share results through activemq
+activemq:use = false								# share results through activemq
 activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
 activemq:id = SSI									# activemq id
 activemq:topic= AGENDER								# activemq topic

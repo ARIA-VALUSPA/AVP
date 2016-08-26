@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<trainer ssi-v="5">
+    <info trained="true" />
+    <streams>
+        <item byte="4" dim="6373" sr="0.000000" type="FLOAT" />
+    </streams>
+    <classes>
+        <item name="personality_O" />
+        <item name="personality_NO" />
+    </classes>
+    <users>
+        <item name="dummy" />
+    </users>
+    <normalize>
+        <item method="Scale" stream="0" path="openness[IS13-scale-linear-c1e-5].trainer.#0" />
+    </normalize>
+    <model create="LibSVM" stream="0" path="openness[IS13-scale-linear-c1e-5].trainer.LibSVM" option="openness[IS13-scale-linear-c1e-5].trainer.LibSVM" />
+</trainer>

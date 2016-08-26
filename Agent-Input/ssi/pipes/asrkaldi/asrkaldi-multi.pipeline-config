@@ -1,0 +1,18 @@
+# asr
+
+asr:host	= 192.168.88.128
+asr:xport	= 8888:en;9999:de
+
+# classification
+
+config = config/IS13_ComParE.conf					# name of openSMILE config file
+													# path to models
+model:language = ../../models/speech/language[IS13-scale-linear-c1e-5]
+
+# activemq
+
+activemq:use = false								# share results through activemq
+activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
+activemq:id = SSI									# activemq id
+activemq:topic= ASR									# activemq topic
+activemq:useTopics = false							# if false, cues will be used

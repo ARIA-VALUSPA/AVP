@@ -3,8 +3,16 @@ file = media/emotion.wav 							# if not live input read in from this file
 
 # classification
 
-config = config/IS10.functs.conf					# name of openSMILE config file
-model:emotion = models/savee[os10,zscore]			# path to model
+config = config/IS13_ComParE.conf					# name of openSMILE config file
+													# path to models
+model:arousal = ../../models/speech/arousal[IS13-scale-linear-c1e-3]	
+model:valence = ../../models/speech/valence[IS13-scale-linear-c1e-3]
+model:interest = ../../models/speech/interest[IS13-scale-linear-c1e-5]
+model:agreeableness = ../../models/speech/agreeableness[IS13-scale-linear-c1e-1]	
+model:conscientiousness = ../../models/speech/conscientiousness[IS13-scale-linear-c1e-3]
+model:extraversion = ../../models/speech/extraversion[IS13-scale-linear-c1e-2]
+model:neuroticism = ../../models/speech/neuroticism_train[IS13-scale-linear-c1e-3]
+model:openness = ../../models/speech/openness[IS13-scale-linear-c1e-5]
 
 # active mq
 

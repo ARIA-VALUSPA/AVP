@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<!-- activity detection -->
+	<transformer create="AudioActivity" method="1" threshold="0.005">
+		<input pin="audio16k" frame="0.01s"/>
+		<output pin="vad16k"/>
+	</transformer>
+	
+	<!-- send asr string -->
+	<consumer create="AsrKaldiSender:kaldi" host="$(asr:host)" port="$(asr:port)" type="1" address="asr@audio" monitor="$(show:gui)" mcaption="ASR" mnum="10" mfontsize="24">
+		<input pin="audio16k" frame="0.01s">
+			<transformer create="AudioConvert"/>
+		</input>
+		<xinput>
+			<input pin="vad16k"/>
+		</xinput>
+	</consumer>	
+
+</pipeline>

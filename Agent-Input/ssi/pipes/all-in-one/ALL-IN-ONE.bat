@@ -1,0 +1,1 @@
+..\..\bin\xmlpipe -debug ssi.log all-in-one

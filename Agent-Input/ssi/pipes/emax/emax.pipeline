@@ -2,102 +2,86 @@
 <pipeline>
 	
 	<register>
-		<load name="ssiemax.dll" />
-		<load name="ssigraphic.dll" />
-		<load name="ssicamera.dll" />
-		<load name="ssiioput.dll" />
-		<load name="ssiactivemq.dll" />
+		<load name="emax" />
+		<load name="graphic" />
+		<load name="camera" />
+		<load name="ioput" />
+		<load name="activemq" />
 	</register>
 	
-	<!-- set framework options -->		
-	<framework console="true" cpos="800,0,400,600"/> 
-	
 	<!-- camera sensor -->
-	<sensor create="ssi_sensor_Camera" option="options/camera">
-		<provider channel="video" pin="video" size="2.0"/>
+	<sensor create="Camera" option="options/camera" fps="25.0">
+		<output channel="video" pin="video" size="2.0s"/>
 	</sensor>	
 	
 	<!-- emax tracker -->
-	<!-- <transformer create="ssi_filter_EMaxTransformer" faceDetectionModelPath="$(model:face)" eyesDetectionModelPath="$(model:eyes)" ausPath="$(model:aus)" runMultiple="$(faces:multiple)" maxFaces="2"> -->
-	<transformer create="ssi_filter_EMaxTransformer" ausPath="$(model:aus)" runMultiple="$(faces:multiple)" maxFaces="2">
-		<input pin="video" frame="1" delta="0"/>
-		<output pin="emaxtracker"/>
+	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
+		<input pin="video" frame="1" async="true"/>
+		<output pin="emax"/>
 	</transformer>
 	
-	<!-- switch between single and multiple faces -->
-	<gate close="$(faces:multiple)">
+	<!-- select valence and arousal -->
+	<transformer create="EMaxValenceArousal:emax_va">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_va"/>
+	</transformer>		
 	
-		<!-- select emotion scores and face region -->
-		<transformer create="ssi_filter_Selector" indices="5,6,7,8,9,10,11">
-			<input pin="emaxtracker" frame="1"/>
-			<output pin="emotion"/>
-		</transformer>
-		<transformer create="ssi_filter_Selector" indices="1,2,3,2,3,4,1,4">
-			<input pin="emaxtracker" frame="1"/>
-			<output pin="face"/>
-		</transformer>
-		
-		<!-- create event with emotion scores -->
-		<consumer create="ssi_consumer_TupleEventSender" tnames="neutral,anger,disgust,fear,happiness,sadness,surpised" ename="emotion" sname="emax">
-			<input pin="emotion" frame="1" />		
-		</consumer>	
-		
-		<!-- prepare xml event -->
-		<consumer create="ssi_consumer_XMLEventSender" ename="emtion" sname="xml" path="emax-1.xml" monitor="true" mpos="400,0,400,600" console="false" update="100" coldelim=" ">
-			<input pin="emaxtracker" frame="1"/>
-			<listen address="emotion@emax"/>
-		</consumer>
+	<!-- select emotion scores and face region -->	
+	<transformer create="Selector" indices="6, 7, 8, 9, 10, 11, 12" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_emotion"/>
+	</transformer>
+	<transformer create="Selector" indices="2, 3, 4, 3, 4, 5, 2, 5" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_face"/>
+	</transformer>	
 	
-		<!-- show video -->
-		<consumer create="ssi_consumer_VideoPainter" flip="true" move="1,0,0,0,400,300" type="1" relative="true" swap="false" name="CAMERA">
-			<input pin="video;face" frame="1"/>			
-		</consumer>		
-		
+	<!-- create event with emotion scores -->
+	<consumer create="MapEventSender" keys="NEU,ANG,DIS,FEA,HAP,SAD,SUR" address="emotion@emax">
+		<input pin="emax_emotion" frame="1" />		
+	</consumer>	
+	
+	<!-- create event with valence/arousal scores -->
+	<consumer create="MapEventSender" keys="VALENCE,AROUSAL" address="va@emax">
+		<input pin="emax_va" frame="1" />		
+	</consumer>	
+	
+	<!-- prepare xml event -->
+	<consumer create="XMLEventSender:monitor" address="result@xml" path="emax.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
+		<input pin="emax" frame="1"/>
+		<listen address="va,emotion@emax"/>
+	</consumer>
+
+	<!-- publish on active mq -->
+	<gate open="$(activemq:use)">
+			
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+			<listen address="result@xml"/>
+		</object>		
+
 	</gate>
 	
-	<gate open="$(faces:multiple)">
-	
-		<!-- select emotion scores and face region -->
-		<transformer create="ssi_filter_Selector" indices="6,7,8,9,10,11,12,18,19,20,21,22,23,24">
-			<input pin="emaxtracker" frame="1"/>
-			<output pin="emotion"/>
-		</transformer>
-		<transformer create="ssi_filter_Selector" indices="2, 3, 4, 3, 4, 5, 2, 5">
-			<input pin="emaxtracker" frame="1"/>
-			<output pin="face_1"/>
-		</transformer>
-		<transformer create="ssi_filter_Selector" indices="14, 15, 16, 15, 16, 17, 14, 17">
-			<input pin="emaxtracker" frame="1"/>
-			<output pin="face_2"/>
-		</transformer>	
+	<!-- show video -->
+	<consumer create="VideoPainter:vplot" flip="true" type="1" relative="true" swap="false" title="CAMERA">
+		<input pin="video;emax_face" frame="1"/>		
+	</consumer>	
 		
-		<!-- create event with emotion scores -->
-		<consumer create="ssi_consumer_TupleEventSender" tnames="neutral#1,anger#1,disgust#1,fear#1,happiness#1,sadness#1,surpised#1,neutral#2,anger#2,disgust#2,fear#2,happiness#2,sadness#2,surpised#2" ename="emotion" sname="emax">
-			<input pin="emotion" frame="1" />		
-		</consumer>	
-		
-		<!-- prepare xml event -->
-		<consumer create="ssi_consumer_XMLEventSender" ename="emotion" sname="xml" path="emax-2.xml" monitor="true" mname="RESULT" mpos="400,0,400,600" console="false" update="100" coldelim=" ">
-			<input pin="emaxtracker" frame="1"/>
-			<listen address="emotion@emax"/>
-		</consumer>
-		
-		<!-- show video -->
-		<consumer create="ssi_consumer_VideoPainter" move="1,0,0,0,400,300" flip="true"  type="1" relative="true" swap="false" name="CAMERA">
-			<input pin="video;face_1;face_2" frame="1"/>		
-		</consumer>
-	
-	</gate>
-	
-	<!-- event sender -->
-	<object create="ssi_listener_ActiveMQEvent" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)" caption="RESULT">
-		<listen address="emotion@xml"/>
-	</object>		
-	
 	<!-- show emotion scores -->
-	<object create="ssi_object_EventPainter" type="1" autoscale="false" reset="false" fix="9.0f" move="1,0,0,300,400,300" name="EMAX">
+	<object create="EventPainter:eplot" type="1" autoscale="false" reset="false" fix="9.0f" title="EMAX - EMOTIONS">
 		<listen address="emotion@emax" />		
 	</object>	
-
+	
+	<!-- show valence/arousal scores -->
+	<object create="EventPainter:eplot" type="1" global="true" autoscale="false" reset="false" fix="0.5f" title="EMAX - EMOTIONS">
+		<listen address="va@emax" />		
+	</object>	
+	
+	<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,600">console</area>
+		<area pos="800,0,400,300">vplot*</area>
+		<area pos="400,0,400,600">eplot*</area>
+		<area pos="800,300,400,300">monitor*</area>
+	</object>	
 	
 </pipeline>

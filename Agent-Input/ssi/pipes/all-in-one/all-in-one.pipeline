@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>
+		<load name="audio" />
+		<load name="opensmilewrapper" />
+		<load name="libsvm"/>
+		<load name="graphic" />
+		<load name="emax" />
+		<load name="graphic" />
+		<load name="camera" />
+		<load name="ioput" />
+		<load name="activemq" />
+		<load name="model" />
+		<load name="control" />
+		<load name="asrkaldi" />
+	</register>
+		
+	<!-- camera sensor -->
+	<sensor create="Camera" option="options/camera" fps="25.0">
+		<output channel="video" pin="video" size="2.0s"/>
+	</sensor>	
+	
+	<!-- audio sensor -->
+	<sensor create="Audio" option="options/audio8k" sr="8000" scale="true">
+		<output channel="audio" pin="audio8k"/>		
+	</sensor>
+	<sensor create="Audio" option="options/audio16k" sr="16000" scale="true">
+		<output channel="audio" pin="audio16k"/>		
+	</sensor>
+
+	<!-- activity detection -->
+	<transformer create="AudioActivity:activity" method="0" threshold="0.05">
+		<input pin="audio8k" frame="0.03s" delta="0.015s"/>
+		<output pin="vad"/>
+	</transformer>
+	<consumer create="ZeroEventSender:vad" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad@audio">
+		<input pin="vad" frame="0.1s"/>
+	</consumer>	
+	
+	<!-- emax tracker -->
+	<include path="emax"/>
+	
+	<!-- emotional speech -->
+	<include path="emospeech"/>
+	
+	<!-- asr -->
+	<include path="asrkaldi"/>
+	
+	<gate open="$(show:plot)">
+	
+		<!-- show video -->
+		<consumer create="VideoPainter:vi-video" flip="true" type="1" relative="true" swap="false" title="CAMERA">
+			<input pin="video;emax_face" frame="1"/>		
+		</consumer>
+		
+		<!-- show audio -->	
+		<consumer create="SignalPainter:vi-audio" title="MIC (RAW)" size="10" type="2" autoscale="false" fix="-1.0,1.0">
+			<input pin="audio8k" frame="0.02s"/>
+		</consumer>
+		<consumer create="SignalPainter:vi-vad" title="MIC (ACTIVITY)" size="10" type="0">
+			<input pin="vad" frame="0.02s"/>
+		</consumer>		
+		
+		<runnable create="ControlSlider:vi-activity" title="ACTIVITY THRESHOLD" id="activity" name="threshold" maxval="0.5"/>
+	
+	</gate>
+	
+	<!-- prepare xml event -->
+	<consumer create="XMLEventSender:monitor" address="result@xml" path="all-in-one.xml" monitor="$(show:plot)" mname="RESULT" console="false" update="500" coldelim=" ">
+		<input pin="emax" frame="1"/>
+		<listen address="@"/>
+	</consumer>
+	
+	<!-- event sender -->
+	<gate open="$(activemq:use)">
+	
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+			<listen address="result@xml"/>
+		</object>		
+
+	</gate>
+	
+	<gate open="$(show:gui)">
+		
+		<!-- grid to change option at run-time -->
+		<runnable create="ControlGrid" title="CONTROL" pos="0,600,400,200" id="kaldi,sm-*"/>
+		
+		<!-- button to reset models -->	
+		<runnable create="ControlCheckBox" title="GRAPHS" label="SHOW" pos="0,800,200,100" id="vi-*" default="true"/>
+		
+		<!-- check box to turn off visualization -->	
+		<runnable create="ControlButton" title="AGE/GENDER" label="RESET" pos="200,800,200,100" id="sm-gender,sm-age,vi-age,vi-gender" message="RESET"/>	
+	
+	</gate>
+	
+	<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="400,600,400,300">console</area>
+		<area pos="0,0,400,300">vi-video</area>
+		<area pos="400,0,800,150">vi-audio</area>
+		<area pos="400,150,800,150">vi-vad</area>
+		<area pos="0,900,400,100">vi-activity</area>
+		<area pos="800,600,400,300">kaldi</area>		
+		<area pos="800,300,400,300" nv="1">vi-age,vi-gender</area>
+		<area pos="0,300,800,300" nv="1">vi-emax,vi-arousal,vi-valence,vi-interest</area>
+		<area pos="1200,000,400,900">monitor</area>
+	</object>		
+
+</pipeline>

@@ -1,0 +1,9 @@
+# visualization
+
+show:plot = true
+show:gui = true
+
+# asr
+
+asr:host	= 192.168.88.128
+asr:port	= 8888

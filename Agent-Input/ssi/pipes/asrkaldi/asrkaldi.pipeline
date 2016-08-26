@@ -2,56 +2,59 @@
 <pipeline>
 
 	<register>
-		<load name="ssibrowser.dll" />		
-		<load name="ssiioput.dll" />	
-		<load name="ssiaudio.dll" />	
-		<load name="ssigraphic.dll" />	
-		<load name="ssiasrkaldi.dll" />	
-		<load name="ssiactivemq.dll" />	
-		<load name="ssicamera.dll"/>
-		<load name="ssiffmpeg.dll"/>		
+		<load name="browser" />		
+		<load name="ioput" />	
+		<load name="audio" />	
+		<load name="graphic" />	
+		<load name="asrkaldi" />	
+		<load name="control"/>		
+		<load name="activemq" />	
+		<load name="camera"/>
+		<load name="ffmpeg"/>		
 	</register>	
-	
-	<!-- set framework options -->
-	<framework console="true" cpos="0,300,400,300"/>
 
 	<!-- audio sensor -->
-	<sensor create="ssi_sensor_Audio" option="options/audio" scale="true" blockInSamples="512">
-		<provider channel="audio" pin="audio"/>
+	<sensor create="Audio" option="options/audio" scale="true" blockInSamples="512" sr="16000">
+		<output channel="audio" pin="audio"/>
 	</sensor>
 	
 	<!-- activity detection -->
-	<transformer create="ssi_feature_AudioActivity" method="0" threshold="0.05">
-		<input pin="audio" frame="0.03s" delta="0.015s"/>
+	<transformer create="AudioActivity" method="1" threshold="0.005">
+		<input pin="audio" frame="0.01s"/>
 		<output pin="vad"/>
 	</transformer>
-	<consumer create="ssi_consumer_ZeroEventSender" mindur="0.3" maxdur="5.0" hangin="3" hangout="30" sname="audio" ename="vad">
-		<input pin="vad" frame="0.1s"/>
-	</consumer>
 	
 	<!-- send asr string -->
-	<consumer create="ssi_consumer_AsrKaldi" ename="asr" sname="audio"
-	script="$(rootdir)\s5\step-0900-decode-mytest.cmd"
-	tmpwav="$(rootdir)\data\TestSpeech\mytest2\a-01_c01_s0003.wav"
-	result="$(rootdir)\s5\exp\nnet7a_960\decode_tgsmall_mytest2\output_11_0.0"
-	>
-		<input pin="audio" listen="vad@audio">
-			<transformer create="ssi_filter_AudioConvert"/>
-		</input>
+	<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" port="$(asr:port)" type="1" address="asr@audio" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24">
+		<input pin="audio;vad" frame="0.01s">
+			<transformer create="AudioConvert"/>
+		</input>		
 	</consumer>	
-	<consumer create="ssi_consumer_XMLEventSender" ename="asr" sname="xml" path="asrkaldi.xml" monitor="true" mname="RESULT" mpos="400,0,400,600" console="false" update="100" coldelim=" ">
+	<consumer create="XMLEventSender:monitor" address="asr@xml" path="asrkaldi.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
 		<input pin="vad" frame="1"/>
-		<listen address="vad,asr@audio"/>
+		<listen address="asr@audio"/>
 	</consumer>
 	<gate open="$(activemq:use)">
-		<object create="ssi_listener_ActiveMQEvent" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">			
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)" useTopics="$(activemq:useTopics)">			
 			<listen address="asr@xml"/>
 		</object>
 	</gate>
 	
 	<!-- diplay audio -->
-	<consumer create="ssi_consumer_SignalPainter" type="2" size="10" move="1,0,0,0,400,300" name="AUDIO" autoscale="false" fix="-1.0,1.0">
+	<consumer create="SignalPainter:plot" title="audio" size="10" type="2">
 		<input pin="audio" frame="0.01s"/>
 	</consumer>
+	<consumer create="SignalPainter:plot" title="vad" size="10">
+		<input pin="vad" frame="1"/>
+	</consumer>
+	
+	<runnable create="ControlGrid" pos="0,600,300,300"/>
+	
+		<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,600">console</area>		
+		<area pos="400,0,400,600">plot*</area>
+		<area pos="800,000,400,600">monitor*</area>
+	</object>	
 	
 </pipeline>

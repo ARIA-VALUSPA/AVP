@@ -1,2 +1,0 @@
-activemq:use = false								# share results through activemq
-capture:use = true									# capture user interaction

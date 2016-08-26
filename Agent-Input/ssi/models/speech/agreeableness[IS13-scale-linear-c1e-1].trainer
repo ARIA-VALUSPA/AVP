@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<trainer ssi-v="5">
+    <info trained="true" />
+    <streams>
+        <item byte="4" dim="6373" sr="0.000000" type="FLOAT" />
+    </streams>
+    <classes>
+        <item name="personality_A" />
+        <item name="personality_NA" />
+    </classes>
+    <users>
+        <item name="dummy" />
+    </users>
+    <normalize>
+        <item method="Scale" stream="0" path="agreeableness[IS13-scale-linear-c1e-1].trainer.#0" />
+    </normalize>
+    <model create="LibSVM" stream="0" path="agreeableness[IS13-scale-linear-c1e-1].trainer.LibSVM" option="agreeableness[IS13-scale-linear-c1e-1].trainer.LibSVM" />
+</trainer>

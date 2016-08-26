@@ -1,0 +1,20 @@
+# visualization
+
+show:plot = true
+
+# features set
+
+config = config/IS13.conf
+
+# classification models
+
+model:arousal 	= ../../models/speech/arousal[IS13-scale-linear-c1e-3]	
+model:valence 	= ../../models/speech/valence[IS13-scale-linear-c1e-3]
+model:interest 	= ../../models/speech/interest[IS13-scale-linear-c1e-5]
+model:gender 	= ../../models/speech/gender[IS13-scale-linear-c1e-1]			
+model:age 		= ../../models/speech/age[IS13-scale-linear-c1e-1]				 	
+
+# compression filter
+
+compression:use = false		# use compression filter
+compression:pin = 			# NOTE: has to be an empty string if compression is NOT used and non empty if compression is used

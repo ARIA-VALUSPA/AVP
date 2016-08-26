@@ -1,0 +1,42 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<face id="$(0{select*13=1;precision=0})">				
+		<dimension>
+			<valence>$(va(avg)@emax{select*2=0;precision=2})</valence>		
+			<arousal>$(va(avg)@emax{select*2=1;precision=2})</arousal>					
+		</dimension>
+		<emotion>
+			<neutral>$(emotion(avg)@emax{select*7=0;precision=2})</neutral>		
+			<anger>$(emotion(avg)@emax{select*7=1;precision=2})</anger>		
+			<disgust>$(emotion(avg)@emax{select*7=2;precision=2})</disgust>
+			<fear>$(emotion(avg)@emax{select*7=3;precision=2})</fear>
+			<happiness>$(emotion(avg)@emax{select*7=4;precision=2})</happiness>
+			<sadness>$(emotion(avg)@emax{select*7=5;precision=2})</sadness>		
+			<surprise>$(emotion(avg)@emax{select*7=6;precision=2})</surprise>	
+		</emotion>		
+	</face>		
+	<voice active="$(vad@audio{field=state;span=-1;precision=0})">			
+		<demographic>
+			<gender>		
+				<male>$(gender(avg)@audio{select=1;precision=2})</male>
+				<female>$(gender(avg)@audio{select=0;precision=2})</female>
+			</gender>
+			<age>
+				<child>$(age(avg)@audio{select=0;precision=2})</child>
+				<youth>$(age(avg)@audio{select=1;precision=2})</youth>
+				<adult>$(age(avg)@audio{select=2;precision=2})</adult>
+				<senior>$(age(avg)@audio{select=3;precision=2})</senior>			
+			</age>
+		</demographic>
+		<dimension>		
+			<arousal>$(arousal(avg)@audio{select=0;precision=2})</arousal>
+			<valence>$(valence(avg)@audio{select=0;precision=2})</valence>
+			<interest>$(interest(avg)@audio{select=0;precision=2})</interest>
+		</dimension>
+		<asr>		
+			<words time="$(asr@audio{field=time_system})" dur="$(asr@audio{field=duration})">$(asr@audio{select=0})</words>
+		</asr>
+	</voice>
+</ssi>
+

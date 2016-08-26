@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<!-- emax tracker -->
+	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
+		<input pin="video" frame="1" async="true"/>
+		<output pin="emax"/>
+	</transformer>
+	
+	<!-- calculate valence and arousal -->
+	<transformer create="EMaxValenceArousal:emax_va">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_va"/>
+	</transformer>		
+	
+	<!-- select emotion scores and face region -->	
+	<transformer create="Selector" indices="6, 7, 8, 9, 10, 11, 12" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_emotion"/>
+	</transformer>
+	<transformer create="Selector" indices="2, 3, 4, 3, 4, 5, 2, 5" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_face"/>
+	</transformer>	
+	
+	<!-- create event with emotion scores -->
+	<consumer create="MapEventSender" keys="NEU,ANG,DIS,FEA,HAP,SAD,SUR" address="emotion@emax">
+		<input pin="emax_emotion" frame="1" />		
+	</consumer>	
+	<object create="DecisionSmoother:sm-emaxemo" average="true" window="2.0" address="emotion(avg)@emax">
+		<listen address="emotion@emax"/>
+	</object>	
+	
+	<!-- create event with valence/arousal scores -->
+	<consumer create="MapEventSender" keys="VAL,ARO" address="va@emax">
+		<input pin="emax_va" frame="1" />		
+	</consumer>	
+	<object create="DecisionSmoother:sm-emaxva" average="true" window="2.0" address="va(avg)@emax">
+		<listen address="va@emax"/>
+	</object>
+		
+	<!-- show valence/arousal scores -->
+	<gate open="$(show:plot)">
+	
+		<object create="EventPainter:vi-emax" type="1" global="true" autoscale="false" reset="false" fix="0.5f" title="VIDEO">
+			<listen address="va(avg)@emax"/>		
+		</object>	
+
+	</gate>
+	
+</pipeline>

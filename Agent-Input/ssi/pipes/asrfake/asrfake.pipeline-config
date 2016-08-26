@@ -2,7 +2,7 @@ file = questions/question.txt						# file with asr strings
 
 # activemq
 
-activemq:use = true									# share results through activemq
+activemq:use = false								# share results through activemq
 activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
 activemq:id = SSI									# activemq id
 activemq:topic= ASR									# activemq topic

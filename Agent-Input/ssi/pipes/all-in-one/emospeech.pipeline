@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<!-- feature extraction -->
+	<consumer create="TupleEventSender" address="feature@audio">
+		<input pin="audio8k" address="vad@audio" state="nonzerodur">
+			<transformer create="OSWrapper" configFile="$(config)"/>
+		</input>
+	</consumer>
+	
+	<!-- classifier -->
+	<object create="Classifier" trainer="$(model:gender)" address="gender@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier" trainer="$(model:age)" address="age@audio">
+		<listen address="feature@audio"/>
+	</object>		
+	<object create="Classifier:cl-arousal" trainer="$(model:arousal)" select="1" address="arousal@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier:cl-valence" trainer="$(model:valence)" select="1" address="valence@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier:cl-interest" trainer="$(model:interest)" select="1" address="interest@audio">
+		<listen address="feature@audio"/>
+	</object>	
+	
+	<!-- smoother -->
+	<object create="DecisionSmoother:sm-gender" average="true" address="gender(avg)@audio">
+		<listen address="gender@audio"/>
+	</object>
+	<object create="DecisionSmoother:sm-age" average="true" address="age(avg)@audio">
+		<listen address="age@audio"/>
+	</object>
+	<object create="DecisionSmoother:sm-arousal" average="true" window="2.0" address="arousal(avg)@audio">
+		<listen address="arousal@audio"/>
+	</object>
+	<object create="DecisionSmoother:sm-valence" average="true" window="2.0" address="valence(avg)@audio">
+		<listen address="valence@audio"/>
+	</object>
+	<object create="DecisionSmoother:sm-interest" average="true" window="2.0" address="interest(avg)@audio">
+		<listen address="interest@audio"/>
+	</object>
+		
+	<!-- bar plots -->
+	<gate open="$(show:plot)">
+	
+		<object create="EventPainter:vi-age" title="VOICE" barNames="CHI,YOU,ADU,SEN" type="1" fix="1.0" global="true" autoscale="false">
+			<listen address="age(avg)@audio"/>
+		</object>
+		<object create="EventPainter:vi-gender" title="VOICE" barNames="FEM,MAL" type="1" fix="1.0" global="true" autoscale="false">
+			<listen address="gender(avg)@audio"/>
+		</object>	
+		<object create="EventPainter:vi-arousal" title="VOICE" barNames="ARO" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+			<listen address="arousal(avg)@audio"/>
+		</object>
+		<object create="EventPainter:vi-valence" title="VOICE" barNames="VAL" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+			<listen address="valence(avg)@audio"/>
+		</object>
+		<object create="EventPainter:vi-interest" title="VOICE" barNames="INT" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+			<listen address="interest(avg)@audio"/>
+		</object>	
+		
+	</gate>
+		
+</pipeline>

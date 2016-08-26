@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+
+	<register>
+		<load name="browser" />		
+		<load name="ioput" />	
+		<load name="audio" />	
+		<load name="graphic" />	
+		<load name="asrkaldi" />	
+		<load name="control"/>		
+		<load name="activemq" />	
+		<load name="camera"/>
+		<load name="ffmpeg"/>		
+		<load name="model"/>
+		<load name="opensmilewrapper"/>
+		<load name="libsvm"/>
+	</register>	
+
+	<!-- audio sensor -->
+	<sensor create="Audio" option="options/audio" scale="true" blockInSamples="512" sr="16000">
+		<output channel="audio" pin="audio"/>
+	</sensor>
+	<sensor create="Audio" option="options/audio8k" sr="8000" scale="true">
+		<output channel="audio" pin="audio8k"/>		
+	</sensor>
+	
+	<!-- activity detection -->
+	<transformer create="AudioActivity" method="1" threshold="0.005">
+		<input pin="audio" frame="0.01s"/>
+		<output pin="vad"/>
+	</transformer>
+	<consumer create="ZeroEventSender" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad@audio">
+		<input pin="vad" frame="0.1s"/>
+	</consumer>		
+	<transformer create="AudioActivity" method="0" threshold="0.05">
+		<input pin="audio8k" frame="0.03s" delta="0.015s"/>
+		<output pin="vad8k"/>
+	</transformer>
+	<consumer create="ZeroEventSender" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad8k@audio">
+		<input pin="vad8k" frame="0.1s"/>
+	</consumer>	
+	
+	<!-- feature extraction -->
+	<consumer create="TupleEventSender" address="feature@audio">
+		<input pin="audio8k" address="vad8k@audio" state="nonzerodur">
+			<transformer create="OSWrapper" configFile="$(config)"/>
+		</input>
+	</consumer>
+	
+	<!-- language detection -->
+	<object create="Classifier:cl-language" trainer="$(model:language)" address="language@audio">
+		<listen address="feature@audio"/>
+	</object>	
+	<object create="DecisionSmoother:sm-language" average="true" window="5.0" address="language(avg)@audio">
+		<listen address="language@audio"/>
+	</object>		
+	
+	<!-- send asr string -->
+	<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" xport="$(asr:xport)" type="1" address="asr@audio" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24">
+		<input pin="audio;vad" frame="0.01s">
+			<transformer create="AudioConvert"/>
+		</input>		
+		<listen address="language(avg)@audio"/>
+	</consumer>	
+	<consumer create="XMLEventSender:monitor" address="asr@xml" path="asrkaldi.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
+		<input pin="vad" frame="1"/>
+		<listen address="asr@audio"/>
+	</consumer>
+	<gate open="$(activemq:use)">
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)" useTopics="$(activemq:useTopics)">			
+			<listen address="asr@xml"/>
+		</object>
+	</gate>
+	
+	<!-- visualization -->
+	<consumer create="SignalPainter:plot" title="audio" size="10" type="2">
+		<input pin="audio" frame="0.01s"/>
+	</consumer>
+	<consumer create="SignalPainter:plot" title="vad" size="10">
+		<input pin="vad" frame="1"/>
+	</consumer>
+	<object create="EventPainter:ep-language" title="LANGUAGE" barNames="DE,EN" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="language@audio"/>
+	</object>	
+	<object create="EventPainter:ep-language" title="LANGUAGE (avg)" barNames="DE,EN" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="language(avg)@audio"/>
+	</object>	
+
+	<!-- controls -->
+	<runnable create="ControlButton" id="ep-language," label="RESET" message="RESET" pos="1240,40,200,75"/>
+	<runnable create="ControlCheckBox" pos="1240,115,200,75" id="cl-language" name=""/>
+	
+	<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,600">console</area>		
+		<area pos="400,0,400,300">plot*</area>
+		<area pos="400,300,400,300">ep-*</area>
+		<area pos="800,000,400,600">monitor*</area>
+	</object>	
+	
+</pipeline>

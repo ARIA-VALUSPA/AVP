@@ -1,0 +1,38 @@
+-------------------------------------------------
+Johannes Wagner, <wagner@hcm-lab.de>, 11.01.2016
+-------------------------------------------------
+
+This pipelines features:
+
+* Emotional speech recognition (emospeech.pipeline)
+
+	Download model files from https://megastore.uni-augsburg.de/get/tailMrpTOG/ and unzip to models/
+
+	user states			average
+	------------------------------------
+	age 				until reset
+	gender 				until reset
+	arousal 			2 seconds
+	valence 			2 seconds
+	interest 			2 seconds
+		
+	Use RESET button to reset age/gender prediction (e.g. when a new user enters)
+
+* Emotional face recognition (emax.pipeline)
+
+* Automatic speech recognition (kaldi.pipeline)
+
+	1. Run ARIA's virtual machine (see ARIA\System\Agent-Input\kaldi\README)
+	2. Open 'asrkaldi.pipeline-config' and set the ip of the virtual machine
+	
+To run one of the following configurations:
+
+	- ALL-IN-ONE.bat (requires ActivMQ server) 
+	- ALL-IN-ONE_NOAMQ.bat (ActivMQ not used)
+	- ALL-IN-ONE_SILENT.bat (no visualization)
+	
+You can change ActivMQ parameters in 'all-in-one.pipeline-config' (by default id/topic are 'SSI')
+	
+To change the output format of the pipeline edit 'all-in-one.xml'
+
+-------------------------------------------------
