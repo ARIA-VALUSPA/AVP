@@ -1,0 +1,6 @@
+../Agent-Input/ssi/models/speech/age[IS13-scale-linear-c1e-1].trainer.LibSVM.model https://megastore.uni-augsburg.de/fcgi/do?get=wuNbpyvOOx
+../Agent-Input/ssi/models/speech/agreeableness[IS13-scale-linear-c1e-1].trainer.LibSVM.model https://megastore.uni-augsburg.de/get/KeeH3iXGBe/
+../Agent-Input/ssi/models/speech/conscientiousness[IS13-scale-linear-c1e-3].trainer.LibSVM.model https://megastore.uni-augsburg.de/get/QLHiwkh5mg/
+../Agent-Input/ssi/models/speech/interest[IS13-scale-linear-c1e-5].trainer.LibSVM.model https://megastore.uni-augsburg.de/get/oxvdy2WRmS/
+../Agent-Input/ssi/models/speech/language[IS13-scale-linear-c1e-5].trainer.LibSVM.model https://megastore.uni-augsburg.de/get/x3upuH7B_U/
+../Agent-Input/ssi/models/speech/valence[IS13-scale-linear-c1e-3].trainer.LibSVM.model https://megastore.uni-augsburg.de/get/bL_E9WuVnp/
