@@ -1,3 +1,7 @@
+-------------------------------------------------
+Alexandru Ghitulescu, <alexandru.ghitulescu@nottingham.ac.uk>, 26.08.2016
+-------------------------------------------------
+
 # ARIA-Valuspa
 
 Public release of ARIA-Valuspa
@@ -16,12 +20,12 @@ Installing:
 
 1. ActiveMQ
 	ActiveMQ is bundeled with the system. In order to make it run, the JAVA_HOME environment path has to point to the JDK install directory.
+	(for a default instalation of java this would be C:\Program Files\Java\jdk1.8.0_60)
 	If any problems arrise, please use this guide http://activemq.apache.org/version-5-getting-started.html .
 	
 2. Detectors
 	- run get_models.bat to get the models
 	- follow the instructions in README-ASR to get a virtual machine with the ASR working
-	
 
 Running:
 
