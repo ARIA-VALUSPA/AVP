@@ -1,7 +1,7 @@
 <xml>
 	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\all-in-one" name="SSI Pipeline">
 		<parameter>-config</parameter>
-		<parameter>all-in-one</parameter>
+		<parameter>all-in-one</parameter> 
 		<parameter>-debug</parameter>
 		<parameter>ssi.log</parameter>
 		<parameter>all-in-one</parameter>
@@ -11,11 +11,6 @@
 			<option default="True">GPU</option>
 			<option>CPU</option>
 		</config>
-	</process>
-
-	<process language="java" class="Agent-Core.jar" cwd="..\..\Agent-Core\bin" name="Agent Core">
-		<parameter>-ssiWindows</parameter>
-		<parameter>-agentWindows</parameter>
 	</process>
 	
 	<process language="java" class="Agent-Output.jar" cwd="..\..\Agent-Output\bin" name="Agent Window">

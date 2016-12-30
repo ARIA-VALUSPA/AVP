@@ -1,0 +1,13 @@
+<xml>
+	<process language="java" class="Agent-Output.jar" cwd="..\..\Agent-Output\bin" name="Agent Window">
+		<config file="..\..\Agent-Output\bin\Agent-Output.ini" key="Environment" separator=" = " info="Select Greta environment">
+			<option>./empty.xml</option>
+			<option>./environment-ARIADemo1.xml</option>
+			<option default="True">./environment-ARIADemo2.xml</option>
+		</config>
+		<config file="..\..\Agent-Output\bin\Agent-Output.ini" key="WhiteBoard.visible" separator=" = " info="Show ActiveMQ windows for Greta">
+			<option>true</option>
+			<option default="True">false</option>
+		</config>
+	</process>
+</xml>

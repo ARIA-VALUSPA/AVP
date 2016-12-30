@@ -1,7 +1,7 @@
 <xml>
 	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\all-in-one" name="SSI Pipeline">
 		<parameter>-config</parameter>
-		<parameter>all-in-one</parameter>
+		<parameter>all-in-one</parameter> 
 		<parameter>-debug</parameter>
 		<parameter>ssi.log</parameter>
 		<parameter>all-in-one</parameter>
@@ -13,9 +13,9 @@
 		</config>
 	</process>
 
-	<process language="java" class="Agent-Core.jar" cwd="..\..\Agent-Core\bin" name="Agent Core">
-		<parameter>-ssiWindows</parameter>
-		<parameter>-agentWindows</parameter>
+	<process language="javacp" class="" cwd="..\..\Agent-Core-New" name="Agent Core">
+		<parameter>lib/*;modules/*;modules/lib/*</parameter>
+		<parameter>hmi.winger.Main</parameter>
 	</process>
 	
 	<process language="java" class="Agent-Output.jar" cwd="..\..\Agent-Output\bin" name="Agent Window">

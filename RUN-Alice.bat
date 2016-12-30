@@ -1,2 +1,2 @@
-Launcher\bin\launcher.exe Launcher\config\config-all.xml
+Launcher\bin\launcher.exe Launcher\config\config-all-new.xml
 pause
