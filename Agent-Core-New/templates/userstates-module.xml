@@ -1,0 +1,11 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+	
+	<template id="userstates-001" name="Update User Emotion Value">
+		<preconditions>
+		</preconditions>
+		<effects>
+			<update name="$userstates.is_talking" value="$amq.ssi.voice.active"/>
+		</effects>
+	</template> 
+	
+</behaviourtemplates>

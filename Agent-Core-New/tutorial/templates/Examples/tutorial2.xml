@@ -1,0 +1,76 @@
+<!-- All used information states 
+	$dialoguestates.initialized 			Useful for initializing information state in the beginning
+
+	$userstates								Information States root of the user
+	$userstates.emotion.valence 			Valence level recognized by both audio and video (Double [0-1])
+
+	$agentstates 							Information States root of the agent
+	$agentstates.intents 					List of all intents of the agent
+	$agentstates.utterance.value 			The full string of what is said by the agent
+
+FML-templates:
+	See ./data/fmltemplates
+	Use inform_statement_y_02 for any self-defined utterance.
+-->
+
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+	<!-- this template is to initialize -->
+	<template id="initialize" name="initializeInformationState"> 
+		<preconditions>
+			<compare value1="$dialoguestates.initialized" comparator="not_exists"/> 
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.initialized" value="true"/>
+			<update name="$agentstates.intents._addfirst" value=" "/>
+		</effects>
+	</template>
+
+	<!-- this template determines what should be done when user valence is high -->
+	<template id="agentstates-001" name="React to high valence"> 
+		<preconditions> 																				
+			<!-- when, in the information state, the userstate 'valence' (which is updated by SSI) is greater than some threshold -->
+			<compare value1="$userstates.emotion.valence" comparator="greater_than" value2="0.5"/>
+			<!-- and the agent has not commented on high valence the previous time -->
+			<compare value1="$agentstates.intents._first" comparator="not_equals" value2="highValence"/>
+		</preconditions>
+		<effects> 																			
+			<!-- agent says -->
+			<update name="$agentstates.utterance.value" value="You seem happy! Why are you happy?"/>
+			<!-- update that the agent has commented on high valence -->
+			<update name="$agentstates.intents._addfirst" value="highValence"/>
+		</effects>
+		<!-- call the class that will generate the agent behaviour: FMLGenerator -->
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<!-- select the template for the behaviour, templates can be found: \ARIA\System\Agent-Core-New\data\fmltemplates\ This inform_statement_y_02 template is an fml template wich takes as input some agentstate utterance (in var1) -->
+			<argument name="template" value="inform_statement_y_02"/>
+			<!-- this parameter has to be set in this template. it can be inform (value=1) or opinion (value=2) -->
+			<argument name="alt.inform" value="1"/>
+			<!-- set the variant of the utterance as defined in the template, in this case variant1 will be set to the utterance.value (which we set earlier) -->
+			<argument name="var.var1" value="$agentstates.utterance.value"/>
+			<!-- set the emootion value for the agent utterance, in this case the type will be set to 'happy' -->
+			<argument name="em1.type" value="happy"/>
+			<!-- as a fallback/debug, we set the utterance (so without the fml markup) -->
+			<argument name="fallback" value="$agentstates.utterance.value"/>
+		</behaviour>
+	</template>
+
+	<!-- this template determines what should be done when user valence is low -->
+	<template id="agentstates-002" name="React to low valence">
+		<preconditions>
+			<compare value1="$userstates.emotion.valence" comparator="smaller_than" value2="0.3"/>
+			<compare value1="$agentstates.intents._first" comparator="not_equals" value2="lowValence"/>
+		</preconditions>
+		<effects>			
+			<update name="$agentstates.utterance.value" value="You seem sad. What happened?"/>
+			<update name="$agentstates.intents._addfirst" value="lowValence"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="inform_statement_y_02"/>
+			<argument name="alt.inform" value="1"/>
+			<argument name="var.var1" value="$agentstates.utterance.value"/>
+			<argument name="em1.type" value="sad"/>
+			<argument name="fallback" value="$agentstates.utterance.value"/>
+		</behaviour>
+	</template>
+
+</behaviourtemplates>

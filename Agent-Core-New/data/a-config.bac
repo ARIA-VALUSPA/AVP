@@ -1,0 +1,116 @@
+[
+  {
+    "type": "tag",
+    "tag": "aria-var",
+    "replaceWith": "var"
+  },
+  {
+    "type": "tag",
+    "tag": "aria-alternative",
+    "nodeType": "static",
+    "replaceWith": "static"
+  },
+  {
+    "type": "tag",
+    "tag": "aria-alternative",
+    "nodeType": "dynamic",
+    "replaceWith": "dynamic"
+  },
+  {
+    "type": "tag",
+    "tag": "aria-alternative",
+    "nodeType": "selectable",
+    "replaceWith": "selectable"
+  },
+  {
+    "type": "tag",
+    "tag": "voice",
+    "attributes": [
+      {
+        "name": "emotion",
+        "replaceWith": "option",
+        "options": [
+          "none",
+          "joy",
+          "sad"
+        ],
+        "removeIf": "none"
+      }
+    ]
+  },
+  {
+    "type": "tag",
+    "tag": "emotion",
+    "attributes": [
+      {
+        "name": "type",
+        "replaceWith": "option",
+        "options": [
+          "neutral",
+          "panic_fear",
+          "fear",
+          "anxiety",
+          "sadness",
+          "envy",
+          "anger",
+          "joy",
+          "despair",
+          "disgust",
+          "hate",
+          "worried",
+          "disappointment",
+          "pride",
+          "tension",
+          "relief",
+          "embarrassment",
+          "surprise",
+          "bored"
+        ]
+      },
+      {
+        "name": "regulation",
+        "replaceWith": "option",
+        "options": [
+          "felt",
+          "inhibited",
+          "fake"
+        ]
+      },
+      {
+        "name": "intensity",
+        "replaceWith": "number",
+        "minVal": 0,
+        "maxVal": 1
+      }
+    ]
+  },
+  {
+    "type": "tag",
+    "tag": "aria-header",
+    "remove": true
+  },
+  {
+    "type": "tag",
+    "tag": "certainty",
+    "attributes": [
+      {
+        "name": "type",
+        "replaceWith": "option",
+        "options": [
+          "certain",
+          "uncertain"
+        ]
+      },
+      {
+        "name": "intensity",
+        "replaceWith": "number",
+        "minVal": 0,
+        "maxVal": 1
+      }
+    ]
+  },
+  {
+    "type": "dtd",
+    "file": ".\\Common\\Data\\ARIA-ValuspaFMLTranslator\\fml-apml.dtd"
+  }
+]

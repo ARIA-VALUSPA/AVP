@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Example manager template  
+
+A manager template uses a structure similar to the templates used in Flipper.
+When creating a template, it consists of three required parts and one optional.
+
+Managers: A template can contain one or multiple managers, and for each managers:
+	InformationState: None or one information state (DefaultRecords) where the manager can update from and read to. Does not override by default.
+	Template: None or one Flipper template that the manager has to process
+	Function: None or more custom made functions that can be called from the manager
+	(Optional) Class: The custom classes can be called when creating a custom manager which for example needs a
+	connection with an external source or has to read/write data.
+		Parameter: Can contain zero or more optional parameters for the call to
+		an external class.
+--> 
+
+
+<managers>
+    <manager id="000" name="Utils" interval="50">
+		<templates>
+			<template path="../templates/util-timestamp.xml" />		
+		</templates>
+	</manager>
+	<manager id="001" name="POSManager" interval="50">
+		<class classname="eu.aria.dialogue.managers.POSManager">
+			<parameter name="stopwords_path" path="true" value="../data/stopwords.txt"/>
+			<parameter name="synonyms_path" path="true" value="../data/synonyms.txt"/>
+			<parameter name="pos_model_path" path="true" value="../data/english-left3words-distsim.tagger"/>
+		</class>
+	</manager>
+	<manager id="002" name="IntentGenerator" interval="100">
+		<templates>
+			<!-- <template path="../templates/rules.xml" />		 -->
+			<template path="../templates/info-rules.xml" />
+			<template path="../templates/opening-rules.xml" />	
+			<template path="../templates/closing-rules.xml" />	
+		</templates>
+	</manager>
+        <!-- BUG: The turn manager doesnt work if faster than 50 ms (or around it, makes it work sometimes, probably quickly changing vars -->
+    <manager id="003" name="TurnManager" interval="200">
+		<templates>
+			<template path="../templates/turn-module.xml" />		
+		</templates>
+	</manager>
+	<!-- SSI Manager that updates SSI and processes its templates -->
+
+    <manager id="004" name="AMQManager" interval="50">
+    	<class classname="eu.aria.dialogue.managers.AMQMultipleManager">
+    	 	
+			<parameter name="amq_ssi_template_path" path="true" value="../data/SSITemplate.xml"/>
+<!--
+			<parameter name="host" path="false" value="localhost"/>
+			<parameter name="port" path="false" value="61616"/>
+			<parameter name="destination_name" path="false" value="SSI"/> 
+-->
+		</class>
+		<templates>
+			<template path="../templates/presence-module.xml" />		
+			<template path="../templates/tom-module.xml" />	
+			<template path="../templates/userstates-module.xml" />	
+		</templates>
+	</manager>
+
+	<manager id="005" name="BehaviourGenerator" interval="100">
+		    <class classname="eu.aria.dialogue.managers.FMLManager">
+		    	
+				<parameter name="fml_template_folder" path="true" value="../data/fmltemplates"/>
+				<parameter name="replacer_config_path" path="true" value="../data/a-config.json"/>
+				<parameter name="amq_hostname" path="false" value="localhost"/>
+				<parameter name="amq_port" path="false" value="61616"/>
+				
+				<parameter name="amq_send_topic_name" path="false" value="vib.FML"/>
+				<parameter name="amq_feedback_topic_name" path="false" value="vib.feedback.BML"/>
+
+				<parameter name="disable_amq" path="false" value="true" />
+
+				<parameter name="show_fml_gui" path="false" value="false"/>
+				<parameter name="show_fallback_gui" path="false" value="true"/>
+			</class>
+            <behaviours>
+            	<behaviour classname="eu.aria.dialogue.behaviours.FMLGenerator" />
+            </behaviours>
+
+            <templates>
+            	<template path="../templates/info-responses.xml" />	
+            	<!-- <template path="../templates/responses.xml" />		 -->
+            	<template path="../templates/opening-responses.xml" />
+            	<template path="../templates/closing-responses.xml" />
+            </templates>
+	</manager>
+
+	<manager id="006" name="GuiManager" interval="50">
+		<class classname="eu.aria.dialogue.managers.GuiManager">
+		</class>		
+	</manager>
+
+	<manager id="007" name="IS Inspector" interval="25">
+		<class classname="eu.aria.dialogue.managers.utils.ISInspector">
+		</class>
+	</manager>
+
+</managers>

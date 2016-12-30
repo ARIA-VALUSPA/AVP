@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- 
+This file manages the opening (greeting) sequence
+
+Template Dependencies:
+	util-timestamp.xml
+Dependent Managers: 
+	<none>
+Dependent Behaviours:
+	eu.aria.flipper.behaviours.FML
+Dependent Functions:
+	<none>
+IS-Vars:
+	$userstates.intent.*
+	$dialoguestates.topic.*
+	$dialoguestates.state.*
+	$agentstates.taketurn
+-Static
+	$STATIC.agentstates.name
+-Winger-Input:
+	<none>
+-Winger-Output:
+	<none>
+Schema files: 
+	opening-sequence.png
+--><behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS C:\Users\Siewart\Documents\HMI\Flipper\target\classes\template.xsd">
+
+<!--In opening phase, but no intention can be recognized-->
+<template id="opening-user_unknown" name="Unknown opening">
+	<preconditions>
+		<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+		<compare comparator="smaller_than" value1="$agentstates.intent.ts" value2="$util.timestamp.now-5000"/>
+		<compare comparator="not_equals" value1="$userstates.utterance.value" value2=""/>
+		<compare comparator="not_equals" value1="$userstates.utterance.value" value2=" "/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<indicator comparator="greater_equals" endvalue="1" startvalue="0">
+			<icompare comparator="not_exists" modifier="+1" value1="$userstates.intent.function"/>
+			<icompare modifier="+1" value1="$userstates.intent.function" value2=""/>
+		</indicator>
+	</preconditions>
+
+    <effects> 
+        <update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
+        <update name="$userstates.intent.function" value="unknown"/>
+		<update name="$agentstates.previousIntent" value="$agentstates.intent"/>
+		<update name="$agentstates.intent" value=""/>
+		<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+	</effects>
+</template>
+
+<!--The user starts to talk to the agent -->
+<template id="opening-user_001" name="On User Approach">
+	<preconditions>
+		<compare value1="$userstates.presence.value" value2="true"/>
+		<indicator comparator="greater_equals" endvalue="1" startvalue="0">
+			<icompare comparator="not_exists" modifier="+1" value1="$dialoguestates.topic.value"/>
+			<icompare modifier="+1" value1="$dialoguestates.topic.value" value2=""/>
+			<icompare modifier="+1" value1="$dialoguestates.topic.state" value2=""/>
+		</indicator>
+	</preconditions>
+
+    <effects> 
+        <update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
+        <update name="$userstates.intent.function" value="approach"/>
+		<update name="$dialoguestates.topic.value" value="opening"/>
+		<update name="$dialoguestates.topic.ts" value="$util.timestamp.now"/>
+		<update name="$dialoguestates.state.value" value="approach"/>
+		<update name="$agentstates.previousIntent" value="$agentstates.intent"/>
+		<update name="$agentstates.intent" value=""/>
+	</effects>
+</template>
+
+
+<!-- The user responded politely to an agent approach (.e.g How are you?)-->
+<template id="opening-user_002a" name="On User Respond Polite">
+	<preconditions>
+
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<compare value1="$dialoguestates.state.value" value2="awaitGreetingReturn"/>		
+		<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+		<indicator comparator="greater_equals" endvalue="3" startvalue="0">
+			<icompare comparator="contains" modifier="+1" value1="$userstates.utterance.pos" value2="hello"/>
+			<icompare comparator="contains" modifier="+2" value1="$userstates.utterance.pos" value2="alice"/>
+			<icompare comparator="contains" modifier="+1" value1="$userstates.utterance.pos" value2="good"/>
+			<icompare comparator="contains" modifier="+1" value1="$userstates.utterance.pos" value2="information"/>
+		</indicator>
+	</preconditions>
+
+    <effects> 
+        <update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
+        <update name="$userstates.intent.function" value="returnGreeting"/>
+        <update name="$userstates.intent.sentiment" value="1"/>
+		<update name="$agentstates.previousIntent" value="$agentstates.intent"/>
+		<update name="$agentstates.intent" value=""/>
+		<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+	</effects>
+</template>
+
+<!-- The user responded to an agent approach-->
+<template id="opening-user_002b" name="On User Respond">
+	<preconditions>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<compare value1="$dialoguestates.state.value" value2="awaitGreetingReturn"/>
+		<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+		<indicator comparator="greater_equals" endvalue="1" startvalue="0">
+			<icompare comparator="contains" modifier="+1" value1="$userstates.utterance.pos" value2="hello"/>
+			<icompare comparator="contains" modifier="-10" value1="$userstates.utterance.pos" value2="information"/>
+			<icompare comparator="contains" modifier="+1" value1="$userstates.utterance.pos" value2="good"/>
+		</indicator>
+	</preconditions>
+
+    <effects> 
+        <update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
+        <update name="$userstates.intent.function" value="returnGreeting"/>
+		<update name="$agentstates.previousIntent" value="$agentstates.intent"/>
+		<update name="$agentstates.intent" value=""/>
+		<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+	</effects>
+</template>
+
+<!-- The user replies not to know about Wonderland -->
+<template id="opening-user_003a" name="On User Not In Wonderland">
+	<preconditions>
+		<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+		<compare comparator="contains" value1="$userstates.utterance.pos" value2="no"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<compare value1="$dialoguestates.state.value" value2="introduceDialogue"/>
+	</preconditions>
+
+    <effects> 
+        <update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
+        <update name="$userstates.intent.function" value="disconfirm"/>
+        <update name="$userstates.intent.subject" value="beenToWonderland"/>
+        <update name="$dialoguestates.state.value" value="beenToWonderland"/>
+		<update name="$agentstates.previousIntent" value="$agentstates.intent"/>
+		<update name="$agentstates.intent" value=""/>
+		<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+	</effects>
+</template>
+
+
+<!-- The user replies to do know about Wonderland -->
+<template id="opening_003b" name="On User In Wonderland">
+<preconditions>
+		<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+		<compare comparator="contains" value1="$userstates.utterance.pos" value2="yes"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<compare value1="$dialoguestates.state.value" value2="introduceDialogue"/>
+	</preconditions>
+
+    <effects> 
+        <update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
+        <update name="$userstates.intent.function" value="confirm"/>
+        <update name="$dialoguestates.state.value" value="beenToWonderland"/>
+        <update name="$userstates.intent.subject" value="beenToWonderland"/>
+		<update name="$agentstates.previousIntent" value="$agentstates.intent"/>
+		<update name="$agentstates.intent" value=""/>
+		<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+	</effects>
+</template>
+
+<!-- The user breaks the opening sequence, thus move forward to info retrieval -->
+<template id="opening-user_unknown-long" name="Unknown opening break">
+	<preconditions>
+		<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+		<compare comparator="exists" value1="$userstates.utterance.pos"/>
+		<compare comparator="smaller_than" value1="$agentstates.intent.ts" value2="$util.timestamp.now-15000"/>
+		<compare comparator="smaller_than" value1="$dialoguestates.topic.ts" value2="$util.timestamp.now-30000"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<indicator comparator="greater_equals" endvalue="1" startvalue="0">
+			<icompare comparator="not_exists" modifier="+1" value1="$userstates.intent.function"/>
+			<icompare modifier="+1" value1="$userstates.intent.function" value2=""/>
+		</indicator>
+	</preconditions>
+
+    <effects> 
+        <update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
+        <update name="$userstates.intent.function" value=""/>
+		<update name="$dialoguestates.topic.value" value="infoRetrieval"/>
+		<update name="$dialoguestates.topic.ts" value="$util.timestamp.now"/>
+		<update name="$dialoguestates.state.value" value="enter"/>
+		<update name="$agentstates.previousIntent" value="$agentstates.intent"/>
+		<update name="$agentstates.intent" value=""/>
+		<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+	</effects>
+</template>
+
+
+</behaviourtemplates>

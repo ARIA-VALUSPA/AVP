@@ -1,0 +1,89 @@
+<!-- All used information states in this behaviour file
+	$dialoguestates.initialized 			Useful for initializing information state in the beginning
+
+	$userstates								Information States root of the user
+	$userstates.name.value					Name of the user (e.g. 'dear human')
+	$userstates.utterance.pos 				List of all keywords said by the user
+
+	$agentstates 							Information States root of the agent
+	$agentstates.intents 					List of all intents of the agent
+	$agentstates.utterance.value 			The full string of what is said by the agent
+
+FML-templates:
+	See ./data/fmltemplates
+-->
+
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+	<!-- this template is to initialize information states -->
+	<template id="initialize" name="initializeInformationState"> 
+		<preconditions>
+			 <!-- checking if the variable dialoguestates is not yet initialized -->
+			<compare value1="$dialoguestates.initialized" comparator="not_exists"/>
+		</preconditions>
+		<effects>
+			<!-- create the variable dialoguestates.initialized. notice that we use update, this also creates a variable when it does not exist yet. it is, however, necessary to have the variable before you can check its value in some precondition -->
+			<update name="$dialoguestates.initialized" value="true"/>
+			<!-- create the agentstate intent list _addfirst. we will use this list to keep track of what the agent has said previously. note, to initialize a list, you need to add 'something' (e.g. a space) -->
+			<update name="$agentstates.intents._addfirst" value=" "/>	
+		</effects>
+	</template>
+	
+	<!-- this template determines what should be done when user said 'hi' -->
+	<template id="agentstates-001" name="React to hi"> 
+		<!-- when the preconditions defined here are met, the template's effects and behaviours are executed -->
+		<preconditions>
+			<!-- when, in the information state, the userstate utterance (pos contains keywords/synonyms) contains hello (ie. the user said hello or some synonym). the synonym list can be found here: "ARIA\System\Agent-Core-New\data". The words on each line are all 'translated' to the first word on that line. -->
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="hello"/>
+			<!-- and the agent has not returned a greeting the previous time (this results in the agent saying hi only once per conversation) -->
+			<compare value1="$agentstates.intents" comparator="not_contains" value2="returnGreeting" /> 
+		</preconditions>
+		
+		<!-- these effects are executed when the preconditions are met -->
+		<effects>
+			<!-- quick and dirty: update the user state with a name of the user (can be made dependent on some SSI input) -->
+			<update name="$userstates.name.value" value="dear human"/>
+			<!-- update that the last agent intent (which is a list) was to greet  (needed to ensure the agent returns the greeting only once )-->			
+			<update name="$agentstates.intents._addfirst" value="returnGreeting"/>			
+			<!-- pos = keywords (for synonyms) and should be removed after each use -->
+			<remove name="$userstates.utterance.pos"/>
+		</effects>
+		
+		<!-- call the class that will generate the agent behaviour: FMLGenerator -->
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">	
+			<!-- select the template for the behaviour, templates can be found: \ARIA\System\Agent-Core-New\data\fmltemplates\ (notice that in this template the agent utterance is defined as the text 'hello to you, ' with some variable: var1) -->
+			<argument name="template" value="socialobligations_salutation_return_y_01"/>
+			<!-- add the user's name to the template: resulting in agent utterance 'hello to you, dear human' -->
+			<argument name="var.var1" value="$userstates.name.value"/>
+			<!-- set the emotion value for the agent utterance, in this case the type will be set to 'happy' -->
+			<argument name="em1.type" value="happy"/>
+			<!-- set a fallback/debug, we set the utterance (so if you want to test the DM without the behaviour planner) -->
+			<argument name="fallback" value="Hello to you, $agentstates.utterance.value"/>
+		</behaviour>
+	</template>
+	
+	<!-- this template determines what should be done when user said 'bye' -->
+	<template id="agentstates-002" name="React to bye"> 
+		<preconditions>
+			<!-- when the user said 'bye' -->
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="bye"/>
+			<!-- and the agent has not returned a greeting the previous time -->
+			<compare value1="$agentstates.intents" comparator="not_contains" value2="returnValediction"/>
+		</preconditions>
+		<effects>		
+			<!-- the agent should say 'bye' -->
+			<update name="$agentstates.utterance.value" value="Bye"/>
+			<!-- update that the last agent intent was to say goodbye -->
+			<update name="$agentstates.intents._addfirst" value="returnValediction"/>
+			<remove name="$userstates.utterance.pos"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<!-- this template. note that in this template there are synonyms for 'bye' randomly selected. -->
+			<argument name="template" value="socialobligations_valediction_return_n_01"/>
+			<!-- obviously the agent is sad to see the user go -->
+			<argument name="em1.type" value="sad"/>
+			<!-- the fallback is the agent utterance -->
+			<argument name="fallback" value="$agentstates.utterance.value"/>
+		</behaviour>
+	</template>
+
+</behaviourtemplates>

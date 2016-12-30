@@ -1,0 +1,34 @@
+<!-- 
+This file manages the user presence, based on a face detected by EMAX
+
+Template Dependencies:
+	<none>
+Dependent Managers: 
+	<none>
+Dependent Behaviours:
+	<none>
+Dependent Functions:
+	<none>
+IS-Vars:
+	$util.timestamp.now
+-Static
+	<none>
+-Winger-Input:
+	<none>
+-Winger-Output:
+	<none>
+Schema files: 
+	<no states>
+-->
+
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="C:\Users\Siewart\Documents\HMI\Flipper\target\classes\ C:\Users\Siewart\Documents\HMI\Flipper\target\classes\template.xsd">
+
+	<!-- Get presence from EMAX and update the presence if it has been true for over 5 seconds -->
+	<template id="util.timestamp.now" name="Update current time">
+		<preconditions> </preconditions>
+		<effects>
+			<update name="$util.timestamp.now" value="@{new Date().getTime();}"/>
+
+		</effects>
+	</template> 
+</behaviourtemplates>

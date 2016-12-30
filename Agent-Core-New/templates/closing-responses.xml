@@ -1,0 +1,166 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+	<template id="closing-responses-001" name="Agent Returns Goodbye">
+		<preconditions>
+			<compare value1="$dialoguestates.topic.value" value2="closing"/>
+			<compare value1="$userstates.intent.function" value2="initialGoodbye"/>
+			<!-- Line below should maybe be called as a wait function for a time manager in the behaviour of the template. -->
+			<!--<compare comparator="smaller_equals" value1="$userstates.intent.ts+5000" value2="$util.timestamp.now"/>-->
+			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.intent.function" value="returnGoodbye"/>
+			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>	
+			<update name="$userstates.previousUtterance" value="$userstates.utterance.value"/>
+			<update name="$debug" value="@{print('Ending Conversation: User Said Goodbye'); 1;}"/>	
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="socialobligations_valediction_return_n_01"/>
+			<argument name="fallback" value="Goodbye."/>
+		</behaviour>
+	</template>
+	<template id="closing-responses-002" name="Agent Apologises For Faulty Goodbye">
+		<preconditions>
+			<compare value1="$userstates.intent.function" value2="autoFeedbackNegative"/>
+			<compare value1="$userstates.intent.subject" value2="cancelClosing"/>
+			<!--<indicator comparator="greater_equals" endvalue="3" startvalue="1">
+				<icompare comparator="smaller_equals" modifier="+1" value1="$agentstates.emotion.arousal" value2="0.2"/>
+				<icompare comparator="smaller_equals" modifier="+1" value1="$agentstates.emotion.valence" value2="0.2"/>
+			</indicator>-->
+			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.intent.function" value="apology"/>
+			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+			<update name="$dialoguestates.topic.value" value="infoRetrieval"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="socialobligations_apologizing_apology_n_01"/>
+			<argument name="fallback" value="Sorry."/>
+		</behaviour>
+	</template>
+	<!--<template id="closing-responses-003" name="Agent Initiates Goodbye">
+		<preconditions>
+			<compare value1="$dialoguestates.topic.value" comparator="not_equals" value2="closing"/>
+			<compare value1="$userstates.emotion.interest" value2="0" comparator="smaller_equals"/>
+			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.intent.function" value="initialGoodbye"/>
+			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+			<update name="$agentstates.intent.function.previous" value="initialGoodbye"/>
+			<update name="$dialoguestates.topic.value" value="closing"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="socialobligations_valediction_initial_n_01"/>
+			<argument name="fallback" value="Oh? I see it's time to say goodbye!"/>
+		</behaviour>
+	</template>-->
+	<template id="closing-responses-004" name="Agent Repeats Initiates Goodbye">
+		<preconditions>
+			<compare value1="$agentstates.intent.function.previous" value2="initialGoodbye"/>
+			<compare value1="$userstates.intent.function" comparator="not_equals" value2="returnGoodbye" />
+			<compare value1="$userstates.intent.ts" comparator="smaller_than" value2="$util.timestamp.now-5000" />
+			<compare value1="$dialoguestates.topic.value" value2="closing"/>
+			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.emotion.valence.value" value="$agentstates.emotion.valence.value-0.2"/>
+			<update name="$agentstates.emotion.arousal.value" value="$agentstates.emotion.arousal.value-0.2"/>
+			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+			<update name="$debug" value="@{print('Ending Conversation: User Repeats Goodbye'); 1;}"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="socialobligations_valediction_initial_n_01"/>
+			<argument name="fallback" value="Goodbye."/>
+		</behaviour>
+	</template>
+	<template id="check_dialogue_start_time">
+		<preconditions>
+			<compare comparator="not_exists" value1="$dialoguestates.time.start"/>
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.time.start" value="$util.timestamp.now"/>
+		</effects>
+	</template>
+	<template id="closing-responses-005" name="Agent Announces Initial Goodbye">
+		<preconditions>
+			<compare value1="$dialoguestates.topic.value" comparator="not_equals" value2="closing"/>
+			<indicator comparator="greater_equals" endvalue="2" startvalue="0">
+				<icompare comparator="smaller_equals" modifier="+2" value1="$userstates.emotion.interest" value2="0.05"/>
+				<!--<icompare comparator="greater_equals" modifier="+1" value1="$agentstates.turn.count" value2="10"/>-->
+				<!--<icompare comparator="smaller_equals" modifier="+3" value1="$dialoguestates.time.start+120000" value2="$util.timestamp.now"/>-->
+			</indicator>
+			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.intent.function" value="initialGoodbye"/>
+			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+			<update name="$dialoguestates.topic.value" value="closing"/>
+			<update name="$dialoguestates.topic.ts" value="$util.timestamp.now"/>
+			<update name="$debug" value="@{print('Ending Conversation: Timeout OR User lost interest'); 1;}"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="inform_statement_y_02"/>
+			<!--<argument name="alt.inform" value="I have to go | Sorry, I have to go"/>-->
+			<argument name="alt.inform" value="1"/>
+			<argument name="var.var1" value="Sorry, I have to go"/>
+			<argument name="fallback" value="Sorry, I have to go"/>
+		</behaviour>
+	</template>
+	<template id="closing-responses-006" name="User Left">
+		<preconditions>
+			<compare value1="$userstates.presence.existed" value2="true"/>
+			<compare value1="$userstates.presence.value" value2="false"/>
+			<compare value1="$dialoguestates.topic.value" comparator="not_equals" value2="closing"/>
+			<!-- Line below should maybe be called as a wait function for a time manager in the behaviour of the template. -->
+			<!--<compare comparator="smaller_equals" value1="$userstates.intent.ts+5000" value2="$util.timestamp.now"/>-->
+			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+		</preconditions>
+		<effects>
+			<update name="$debug" value="@{print('Ending Conversation: User Left'); 1;}"/>
+			<update name="$agentstates.intent.function" value="returnGoodbye"/>
+			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>		
+			<update name="$dialoguestates.topic.value" value="closing"/>	
+			<update name="$dialoguestates.topic.ts" value="$util.timestamp.now"/>	
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="socialobligations_valediction_return_n_01"/>
+			<argument name="fallback" value="Goodbye."/>
+		</behaviour>
+	</template>
+ 	<template id="end_conversation_001">
+		<preconditions>
+			<compare value1="$userstates.intent.function" value2="returnGoodbye"/>
+            <compare value1="$dialoguestates.topic.value" value2="closing"/>
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates" value=""/>
+			<update name="$userstates" value=""/>
+			<update name="$agentstates" value=""/>
+		</effects>
+	</template>
+	<template id="end_conversation_002">
+		<preconditions>
+			<compare value1="$agentstates.intent.function" value2="returnGoodbye"/>
+			<compare value1="$agentstates.intent.ts" comparator="smaller_than" value2="$util.timestamp.now-15000"/>
+            <compare value1="$dialoguestates.topic.value" value2="closing"/>
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates" value=""/>
+			<update name="$userstates" value=""/>
+			<update name="$agentstates" value=""/>
+		</effects>
+	</template>
+
+	 <template id="end_conversation_003">
+		<preconditions>
+			<compare value1="$dialoguestates.topic.ts" comparator="smaller_than" value2="$util.timestamp.now-15000"/>
+            <compare value1="$dialoguestates.topic.value" value2="closing"/>
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates" value=""/>
+			<update name="$userstates" value=""/>
+			<update name="$agentstates" value=""/>
+		</effects>
+	</template>
+</behaviourtemplates>

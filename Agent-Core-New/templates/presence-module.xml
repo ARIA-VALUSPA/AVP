@@ -1,0 +1,117 @@
+<!-- 
+This file manages the user presence, based on a face detected by EMAX
+
+Template Dependencies:
+	util-timestamp.xml
+Dependent Managers: 
+	eu.aria.flipper.behaviours.AMQ
+Dependent Behaviours:
+	<none>
+Dependent Functions:
+	<none>
+IS-Vars:
+	$providers.amq.ssi.emax.presence
+	$userstates.presence.value
+	$userstates.presence.last.ts
+	$userstates.presence.last.consumers
+	$userstates.presence.change.ts
+	$userstates.presence.change.consumers
+	$util.timestamp.now
+-Static
+	<none>
+-Winger-Input:
+	<none>
+-Winger-Output:
+	<none>
+Schema files: 
+	opening-sequence.png
+-->
+
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="C:\Users\Siewart\Documents\HMI\Flipper\target\classes\ C:\Users\Siewart\Documents\HMI\Flipper\target\classes\template.xsd">
+
+<!-- Default true for debugging purposes without SSI
+	<template id="presence_default_true" name="Default True DEBUG">
+
+		<preconditions>
+			<compare value1="$userstates.presence.value" value2="false" />
+		</preconditions>
+
+		<effects>
+			<update name="$userstates.presence.value" value="true" />
+			<update name="$userstates.presence.last.ts" value="$util.timestamp.now" />
+		</effects>
+
+	</template>
+-->
+
+	<!-- Setup all values if not exist so we can compare them -->
+	<template id="presence_000" name="Setup">
+		<preconditions>
+			<compare value1="$userstates.presence" comparator="not_exists" />
+		</preconditions>
+		<effects>
+			<update name="$userstates.presence.existed" value="false"/>
+			<update name="$userstates.presence.value" value="false" />
+			<update name="$userstates.presence.last.ts" value="0" />
+		</effects>
+	</template>
+
+
+
+	<!-- Get presence from EMAX and update the presence if it has been true for over 5 seconds -->
+	<template id="presence_001" name="User Presence to True">
+		<preconditions>
+			<compare value1="$amq.ssi.face.active" value2="true"/>
+			<compare value1="$userstates.presence.last.ts" comparator="smaller_than" value2="$util.timestamp.now - 5000"/>
+			<compare value1="$userstates.presence.value" value2="false"/>
+		</preconditions>
+		<effects>
+			<update name="$userstates.presence.value" value="true"/>
+			<update name="$userstates.presence.existed" value="true"/>
+			<update name="$userstates.presence.change.ts" value="$util.timestamp.now"/>
+			<update name="$userstates.presence.last.ts" value="$util.timestamp.now"/>
+			<remove name="$userstates.presence.change.consumers"/>
+			<remove name="$userstates.presence.last.consumers"/>
+		</effects>
+	</template> 
+	
+	<!-- Get presence from EMAX and update the presence if it has been false for over 5 seconds -->
+	<template id="presence_002" name="User Presence to False">
+		<preconditions>
+			<compare value1="$amq.ssi.face.active" value2="false"/>
+			<compare value1="$userstates.presence.last.ts" comparator="smaller_than" value2="$util.timestamp.now - 5000"/>
+			<compare value1="$userstates.presence.value" value2="true"/>
+		</preconditions>
+		<effects>
+			<update name="$userstates.presence.value" value="false"/>
+			<update name="$userstates.presence.change.ts" value="$util.timestamp.now"/>
+			<update name="$userstates.presence.last.ts" value="$util.timestamp.now"/>
+			<remove name="$userstates.presence.change.consumers"/>
+			<remove name="$userstates.presence.last.consumers"/>
+		</effects>
+	</template>
+	
+	<!-- Get presence from EMAX and update the last presence if it is still false -->
+	<template id="presence_003" name="User Presence remain False">
+		<preconditions>
+			<compare value1="$amq.ssi.face.active" value2="false"/>
+			<compare value1="$userstates.presence.value" value2="false"/>
+		</preconditions>
+		<effects>
+			<update name="$userstates.presence.last.ts" value="$util.timestamp.now"/>
+			<remove name="$userstates.presence.last.consumers"/>
+		</effects>
+	</template>
+
+	<!-- Get presence from EMAX and update the last presence if it is still true -->
+	<template id="presence_003" name="User Presence remain True">
+		<preconditions>
+			<compare value1="$amq.ssi.face.active" value2="true"/>
+			<compare value1="$userstates.presence.value" value2="true"/>
+		</preconditions>
+		<effects>
+			<update name="$userstates.presence.last.ts" value="$util.timestamp.now"/>
+			<remove name="$userstates.presence.last.consumers"/>
+		</effects>
+	</template>
+</behaviourtemplates>

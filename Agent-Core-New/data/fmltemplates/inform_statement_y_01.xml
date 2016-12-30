@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace">
+	<aria-header purpose="inform-statement" semantics="topic"/>
+
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<aria-alternative id="alt1" name="inform" type="selectable">
+				<alternative option="opinion"><tm id="tm0"/><aria-var id="var1" type="noun"/><tm id="tm1"/> was <tm id="tm2"/><aria-var id="var2" type="emotion-adjective"/><tm id="tm3"/> at <aria-var id="var3" type="location"/><tm id="tm4"/>.</alternative>
+				<alternative option="neutral"><tm id="tm0"/><aria-var id="var1" type="noun"/><tm id="tm1"/> was <tm id="tm2"/>at <aria-var id="var3" type="location"/><tm id="tm3"/>.</alternative>
+			</aria-alternative>
+			
+			<aria-alternative id="alt2" name="inform" type="selectable">
+				<alternative option="opinion">
+					<pitchaccent id="pa1" start="s1:tm2" level="none" end="s1:tm4" type="Hstar" importance="1"/>
+					<boundary id="b1" start="s1:tm4" type="LH"/>
+				</alternative>
+				<alternative option="neutral">
+					<pitchaccent id="pa2" start="s1:tm2" level="none" end="s1:tm3" type="Hstar" importance="1"/>
+					<boundary id="b2" start="s1:tm3" type="LH"/>
+				</alternative>
+			</aria-alternative>
+			
+		</speech>
+	</bml>
+	
+	<fml>
+	
+		<aria-alternative id="alt3" name="inform" type="selectable" >
+				<alternative option="opinion">
+					<emotion id="em1" type="neutral" regulation="felt" start="s1:tm0" end="s1:tm3" intensity="1" importance="1.0"/>
+					<certainty id="cr1" type="none" start="s1:tm0" end="s1:tm2" intensity="0.5" importance="1.0"/>
+					<performative id="p1" type="inform" start="s1:tm0" end="s1:tm1" importance="1" />
+				</alternative>
+				<alternative option="neutral">
+					<emotion id="em1" type="neutral" regulation="felt" start="s1:tm0" end="s1:tm3" intensity="1" importance="1.0"/>
+					<certainty id="cr1" type="none" start="s1:tm0" end="s1:tm2" intensity="0.5" importance="1.0"/>
+					<performative id="p1" type="inform" start="s1:tm0" end="s1:tm1" importance="1" />
+				</alternative>
+		</aria-alternative>
+		
+	</fml>
+	
+</fml-apml>

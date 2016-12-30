@@ -1,0 +1,255 @@
+<!-- 
+This file manages the opening (greeting) sequence
+
+Template Dependencies:
+	util-timestamp.xml
+Dependent Managers: 
+	<none>
+Dependent Behaviours:
+	eu.aria.flipper.behaviours.FML
+Dependent Functions:
+	<none>
+IS-Vars:
+	$userstates.intent.*
+	$dialoguestates.topic.*
+	$dialoguestates.state.*
+	$agentstates.taketurn
+-Static
+	$STATIC.agentstates.name
+-Winger-Input:
+	<none>
+-Winger-Output:
+	<none>
+Schema files: 
+	opening-sequence.png
+-->
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS C:\Users\Siewart\Documents\HMI\Flipper\target\classes\template.xsd">
+<!--
+	<template id="unique_id_001" name="Descriptive Name">
+		<preconditions>
+
+		</preconditions>
+		<effects>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="feedback_allo_elicitation_n_01"/>
+			<argument name="alt.dish" value="Pizza | Risotto | Minestrone | Pasta"/>  use one, dynamic value seperated by |
+			<argument name="alt.inform" value="opinion"/> use one, given option
+			<argument name="var.var1" value="Alice"/> word to replace named var with
+			<argument name="var.var2" value="nice"/> value to replace named var with
+			<argument name="var.var3" value="rabbit"/> value to replace named var with
+			<argument name="certainty.type" value="none"/> one of {none | uncertain | certain}
+			<argument name="certainty.intensity" value="0.5"/> between {0..1}
+			<argument name="certainty.importance" value="0.5"/> between {0..1}
+			<argument name="emotion.type" value="neutral"/>  one of { neutral | panic_fear | fear | anxiety |sadness | envy | anger | joy | despair | disgust | hate | worried | disappointment | pride | tension | relief | embarrassment | surprise | bored }
+			<argument name="voice.emotion" value="calm"/> one of {calm | cross | happy | sad}
+		</behaviour>
+	</template> 
+-->
+<!--
+	<template id="unique_id_001" name="Descriptive Name">
+		<preconditions>
+			<compare value1="$userstates.present" value2="true"/>
+			<compare value1="$dialoguestates.topic" value2=""/>
+		</preconditions>
+		<effects>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="feedback_allo_elicitation_n_01"/>
+			<argument name="alt.dish" value="Pizza | Risotto | Minestrone | Pasta"/>
+			<argument name="alt.inform" value="opinion"/>
+			<argument name="var.var1" value="Alice"/>
+			<argument name="var.var2" value="nice"/>
+			<argument name="var.var3" value="rabbit"/>
+			<argument name="certainty.type" value="none"/>
+			<argument name="certainty.intensity" value="0.5"/>
+			<argument name="certainty.importance" value="0.5"/>
+			<argument name="emotion.type" value="neutral"/>
+			<argument name="voice.emotion" value="calm"/>
+		</behaviour>
+	</template> 
+-->
+
+<!--	<preconditions>
+		<compare value1="$userstates.intent.function" value2="approach"/>
+		<indicator startvalue="0" comparator="greater_equals" endvalue="1">
+			<icompare value1="$dialoguestates.topic" comparator="not_exists" modifier="+1"/>
+			<icompare value1="$dialoguestates.topic" comparator="equals" value2="" modifier="+1"/>
+		</indicator>
+		<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+	</preconditions>
+
+	<effects>
+		<update name="$dialoguestates.topic.value" value="opening" />
+		<update name="$dialoguestates.state.value" value="await_opening_return" />
+		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+<update name="$agentstates.intent.function" value="initialGreeting"/>
+	</effects>
+
+	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+		<argument name="fallback" value="@{'Hello'+ ($userstates.name$ || '')+'!';}"/>
+		<argument name="template" value="socialobligations_salutation_initial_y_01"/>
+		<argument name="var.var1" value="@{$userstates.name$ || '';}"/>
+	</behaviour>
+</template>-->
+<!--The user has approached the agent physically -->
+<template id="opening_001" name="On User Approach">
+	<preconditions>
+		<!--<compare value1="$userstates.intent.function" value2="returnGreeting"/>-->
+		<compare value1="$userstates.intent.function" value2="approach"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<compare value1="$dialoguestates.state.value" value2="approach"/>
+		<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+	</preconditions>
+
+	<effects>
+		<update name="$dialoguestates.topic.value" value="opening" />
+		<update name="$dialoguestates.state.value" value="awaitGreetingReturn" />
+		<!-- actually a double intent, but flipper makes it overly complex to check against multiple intents -->
+		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+		<update name="$agentstates.intent.function" value="initialSelfIntroduction"/>
+		<update name="$dialoguestates.time.start" value="$util.timestamp.now"/>
+	</effects>
+
+	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+		<!-- <argument name="fallback" value="@{'I don't think I know you yet, I am ' + ($agentstates.name$ || 'Alice')+'!';}"/>
+		<argument name="template" value="socialobligations_selfintroduction_initial_y_01"/>
+		<argument name="var.var1" value="@{$agentstates.name$ || 'Alice';}"/>-->
+		<argument name="template" value="inform_statement_y_02"/>
+		<argument name="alt.inform" value="1"/>
+		<argument name="var.var1" value="Hi, I'm Alice. How are you?"/>
+		<argument name="fallback" value="Hi, I'm Alice. How are you?"/>
+	</behaviour>
+</template>
+
+<!--The user has responded politely to a greeting -->
+<template id="opening_002a" name="On User Respond Polite">
+
+	<preconditions>
+		<compare value1="$userstates.intent.function" value2="returnGreeting"/>
+		<compare value1="$userstates.intent.sentiment" comparator="greater_than" value2="0"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+	</preconditions>
+
+	<effects>
+		<update name="$dialoguestates.state.value" value="introduceDialogue" />
+		<update name="$dialoguestates.state.ts" value="$util.timestamp.now" />
+		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+		<update name="$agentstates.intent.function" value="setQuestion"/>
+		<!-- secondary intents: thanking, inform-->
+		<update name="$agentstates.intent.sentiment" value="1.0"/>
+	</effects>
+
+	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+		<argument name="template" value="inform_statement_y_02"/>
+		<argument name="alt.inform" value="1"/>
+		<argument name="var.var1" value="I'm feeling great, thank you! Have you ever been to Wonderland?"/>
+		<argument name="fallback" value="I'm feeling great, thank you! Have you ever been to Wonderland?"/>
+	</behaviour>
+</template>
+
+<!-- The user has responded to a greeting-->
+<template id="opening_002b" name="On User Respond">
+	<preconditions>
+		<compare value1="$userstates.intent.function" value2="returnGreeting"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+	</preconditions>
+
+	<effects>
+		<update name="$dialoguestates.state.value" value="introduceDialogue" />
+		<update name="$dialoguestates.state.ts" value="$util.timestamp.now" />
+		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+		<update name="$agentstates.intent.function" value="setQuestion"/>
+		<update name="$agentstates.intent.sentiment" value="1.0"/>
+	</effects>
+
+	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+		<argument name="template" value="inform_statement_y_02"/>
+		<argument name="alt.inform" value="1"/>
+		<argument name="var.var1" value="Have you ever been to Wonderland?"/>
+		<argument name="fallback" value="Have you ever been to Wonderland?"/>
+	</behaviour>
+</template>
+
+<!-- The user is unfamiliar with Wonderland -->
+<template id="opening_003a" name="On User Not In Wonderland">
+	<preconditions>
+		<compare value1="$userstates.intent.function" value2="disconfirm"/>
+		<compare value1="$userstates.intent.subject" value2="beenToWonderland"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+	</preconditions>
+
+	<effects>
+		<update name="$dialoguestates.state.ts" value="$util.timestamp.now" />
+		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+		<update name="$agentstates.intent.function" value="setQuestion"/>
+<!-- move to next topic-->
+		<update name="$dialoguestates.topic.value" value="infoRetrieval" />
+		
+		<update name="$dialoguestates.topic.ts" value="$util.timestamp.now" />
+		<update name="$dialoguestates.state.value" value="enter" />
+
+			
+			<update name="$userstates.utterance" value=""/>
+	</effects>
+
+	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+		<argument name="template" value="inform_statement_y_02"/>
+		<argument name="alt.inform" value="1"/>
+		<argument name="var.var1" value="No? I will tell you all about it!"/>
+		<argument name="fallback" value="No? I will tell you all about it!"/>
+	</behaviour>
+</template>
+
+
+<!-- The user is familiar with Wonderland-->
+<template id="opening_003b" name="On User In Wonderland">
+	<preconditions>
+		<compare value1="$userstates.intent.function" value2="confirm"/>
+		<compare value1="$userstates.intent.subject" value2="beenToWonderland"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+	</preconditions>
+
+	<effects>
+		<update name="$dialoguestates.state.ts" value="$util.timestamp.now" />
+		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+		<update name="$agentstates.intent.function" value="setQuestion"/>
+		<!-- move to next topic-->
+		<update name="$dialoguestates.topic.value" value="infoRetrieval" />
+		
+		<update name="$dialoguestates.topic.ts" value="$util.timestamp.now" />
+		<update name="$dialoguestates.state.value" value="enter" />
+		<update name="$userstates.utterance" value=""/>
+	</effects>
+
+	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+		<argument name="template" value="inform_statement_y_02"/>
+		<argument name="alt.inform" value="1"/>
+		<argument name="var.var1" value="Great! Let's talk about it!"/>
+		<argument name="fallback" value="Great! Let's talk about it!"/>
+	</behaviour>
+</template>
+
+<!-- The user's intention in the opening-phase is unknown -->
+<template id="opening_unknown" name="Unknown opening" >
+	<preconditions>
+		<compare value1="$userstates.intent.function" value2="unknown"/>
+		<compare value1="$dialoguestates.topic.value" value2="opening"/>
+		<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
+	</preconditions>
+
+	<effects>
+		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
+		<update name="$agentstates.intent.function" value="autoNegative"/>
+	</effects>
+
+	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+		<argument name="template" value="feedback_auto_negative_n_01"/>
+		<argument name="fallback" value="Sorry?"/>
+	</behaviour>
+</template>
+</behaviourtemplates>
