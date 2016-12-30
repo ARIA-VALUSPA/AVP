@@ -1,58 +1,405 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <behaviorsets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Common/Data/xml/behaviorsets.xsd">
 	<!-- empty behaviorsets -->
-	<behaviorset name="theme-*"><signals/><constraints/></behaviorset>
-	<behaviorset name="rheme-*"><signals/><constraints/></behaviorset>
-	<behaviorset name="speech-*"><signals/><constraints/></behaviorset>
+	<behaviorset name="theme-*">
+		<signals/>
+		<constraints/>
+	</behaviorset>
 	
-		<!-- backchannels -->
-	<behaviorset name="backchannel-refusal"><signals><signal id="1" modality="gesture" name="Decline" /></signals><constraints/></behaviorset>
-	<behaviorset name="backchannel-disagreement"><signals><signal id="1" modality="gesture" name="Decline" /></signals><constraints/></behaviorset>
-	<behaviorset name="backchannel-no_understanding"><signals><signal id="1" modality="gesture" name="Uncertain" /></signals><constraints/></behaviorset>
-
-
-	<!-- bounadries -->
-	<behaviorset name="boundary-H"><signals><signal id="1" modality="face" name="EyesbrowsUp" /></signals><constraints/></behaviorset>
-	<behaviorset name="boundary-HH"><signals><signal id="1" modality="face" name="EyesbrowsUp" /></signals><constraints/></behaviorset>
-	<behaviorset name="boundary-L"><signals><signal id="1" modality="face" name="EyesbrowsDown" /></signals><constraints/></behaviorset>
-	<behaviorset name="boundary-LL"><signals><signal id="1" modality="face" name="EyesbrowsDown" /></signals><constraints/></behaviorset>
-	<behaviorset name="boundary-LH"><signals><signal id="1" modality="gesture" name="LookRight" >
-									<alternative name="LookLeft" probability="0.5"/></signal></signals><constraints/></behaviorset>
-	<behaviorset name="boundary-HL"><signals><signal id="1" modality="gesture" name="LookRight" >
-									<alternative name="LookLeft" probability="0.5"/></signal></signals><constraints/></behaviorset>
-	<behaviorset name="boundary-*"><signals><signal id="1" modality="gesture" name="Acknowledge" /></signals><constraints/></behaviorset>
+	<behaviorset name="rheme-*">
+		<signals/>
+		<constraints/>
+	</behaviorset>
 	
-	<!-- pitchAccents -->
-	<behaviorset name="pitchaccent-*"><signals><signal id="1" modality="gesture" name="Acknowledge" >
-										<alternative name="Explain_01" probability="0.16"/>
-										<alternative name="Explain_02" probability="0.16"/>
-										<alternative name="Explain_03" probability="0.16"/>
-										<alternative name="Argue_01" probability="0.16"/>
-										<alternative name="Argue_02" probability="0.16"/>
-										<alternative name="Argue_03" probability="0.16"/></signal></signals><constraints/></behaviorset>
+	<behaviorset name="speech-*">
+		<signals/>
+		<constraints/>
+	</behaviorset>
 	
-	<!-- performatives -->
-	<!-- Animations with arm gesture. -->
-	<behaviorset name="performative-inform"><signals><signal id="1" modality="gesture" name="Explain_03" >
-										<alternative name="Explain_01" probability="0.4"/>
-										<alternative name="Explain_02" probability="0.4"/>
-										<alternative name="Acknowledge" probability="0.2"/>
-									<!--	<alternative name="Argue_01" probability="0.16"/>
-										<alternative name="Argue_02" probability="0.16"/>
-										<alternative name="Argue_03" probability="0.16"/>-->
-										</signal></signals><constraints/></behaviorset>
-
-		<!--translation doesn't work if it's not a Greta gesture-->
-<!--		<behaviorset name="performative-inform1"><signals><signal id="1" modality="gesture" name="Explain_01" ></signals><constraints/></behaviorset>
-	<behaviorset name="performative-inform2"><signals><signal id="1" modality="gesture" name="Explain_02" ></signals><constraints/></behaviorset>
-	<behaviorset name="performative-inform3"><signals><signal id="1" modality="gesture" name="Explain_03" ></signals><constraints/></behaviorset>-->
-
-	<!-- Animations without arm gesture. -->
-	<behaviorset name="performative-announce">
+	<behaviorset name="performative-none">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="emphasis-none">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="certainty-none">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<!-- EMOTIONS  DEFAULT DEFINITIONS - you can edit and add new items -->
+	<behaviorset name="emotion-panic">
 		<signals>
-			<signal id="1" modality="gesture" name="Argue_01" >
-				<alternative name="Argue_02" probability="0.30"/>
-				<alternative name="Argue_03" probability="0.30"/>
+			<signal id="1" name="Surprised" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-fear">
+		<signals>
+			<signal id="1" name="Surprised" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-anxiety">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-sadness">
+		<signals>
+			<signal id="1" name="Sad" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-envy">
+		<signals>
+			<signal id="1" name="Angry" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-anger">
+		<signals>
+			<signal id="1" name="Angry" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-joy">			
+		<signals>
+			<signal id="1" modality="face" name="Happy" />
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-despair">
+		<signals>
+			<signal id="1" name="Sad" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-disgust">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+
+
+
+
+
+
+	<behaviorset name="emotion-hate">
+		<signals>
+			<signal id="1" name="Angry" modality="face"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	
+	<behaviorset name="emotion-worried">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+
+
+
+
+
+
+	<behaviorset name="emotion-disappointment">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-neutral">
+		<signals>
+			<signal id="1" name="Neutral" modality="face"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="emotion-pride">
+		<signals>
+			<signal id="1" name="Happy" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+
+
+
+
+
+
+	<behaviorset name="emotion-tension">
+		<signals/>
+		<constraints/>
+	</behaviorset>.
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-relief">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-embarrassment">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="emotion-surprise">
+		<signals>
+			<signal id="1" name="Surprise" modality="face"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="emotion-bored">
+		<signals>
+			<signal id="1" name="EyesbrowsDown" modality="face"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	
+	
+	
+	
+	<!-- DEICTIC       -->
+	<behaviorset name="deictic-you">
+		<signals>
+			<signal id="1" name="GestureUser" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	
+	
+	<behaviorset name="deictic-selftouch">
+		<signals>
+			<signal id="1" name="GestureMe" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="deictic-down">
+		<signals>
+			<signal id="1" name="GestureDown" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="deictic-slide">
+		<signals>
+			<signal id="1" name="GestureRight" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="deictic-move">
+		<signals>
+			<signal id="1" name="GestureLeft" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="deictic-index">
+		<signals>
+			<signal id="1" name="Suggest" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="deictic-onmyleft">
+		<signals>
+			<signal id="1" name="GestureLeft" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+
+	<!-- ICONIC        -->
+	<behaviorset name="iconic-chop">
+		<signals>
+			<signal id="1" name="GestureRight" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="iconic-byebye">
+		<signals>
+			<signal id="1" name="Greet" modality="gesture">
 			</signal>
 		</signals>
 		<constraints>
@@ -62,63 +409,718 @@
 		</constraints>
 	</behaviorset>
 	
-	<behaviorset name="performative-greet"><signals><signal id="1" modality="gesture" name="Greet" /></signals><constraints /></behaviorset>
-	<behaviorset name="performative-beg"><signals><signal id="1" modality="gesture" name="GestureUser" >
-												<alternative name="GestureMe" probability="0.2"/></signal></signals><constraints/></behaviorset>
-	<behaviorset name="performative-incite"><signals><signal id="1" modality="gesture" name="Suggest" /></signals>
+	<!-- BEAT        -->
+	<behaviorset name="beat-left">
+		<signals>
+			<signal id="1" name="GestureLeft" modality="gesture"/>
+		</signals>
 		<constraints>
 			<core>
 				<item id="1"/>
 			</core>
 		</constraints>
 	</behaviorset>
-	<behaviorset name="performative-lookright"><signals><signal id="1" modality="gesture" name="LookRight" /></signals><constraints /></behaviorset>
-	<behaviorset name="performative-lookleft"><signals><signal id="1" modality="gesture" name="LookLeft" /></signals><constraints /></behaviorset>
 	
-	<behaviorset name="backchannel-acceptance"><signals><signal id="1" modality="gesture" name="Acknowledge" /></signals><constraints/></behaviorset>
-
-		
-	<!-- emotions -->
-
-	<behaviorset name="emotion-sadness">			<signals><signal id="1" modality="face" name="Sad" /></signals><constraints/></behaviorset>
-	<behaviorset name="emotion-anger">			<signals><signal id="1" modality="face" name="Angry" /></signals><constraints/></behaviorset>
-	<behaviorset name="emotion-surprise">			<signals><signal id="1" modality="gesture" name="Surprised_Low_2" /></signals>
-		<!-- Constraints has to be added in order that the agent plays the animation with a probability of 1. -->
-		<constraints> 
-			<core>
-				<item id="1"/>
-			</core>
-		</constraints>
-	</behaviorset>
-	<behaviorset name="emotion-joy">			<signals><signal id="1" modality="face" name="Happy" /></signals>
+	<behaviorset name="beat-right">
+		<signals>
+			<signal id="1" name="GestureRight" modality="gesture"/>
+		</signals>
 		<constraints>
 			<core>
 				<item id="1"/>
 			</core>
 		</constraints>
 	</behaviorset>
-	<behaviorset name="emotion-disgust">			<signals><signal id="1" modality="face" name="Disgusted" /></signals>
+	
+	<!-- PERFORMATIVES -->
+	<behaviorset name="performative-restpose">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+
+
+
+
+
+
+	<behaviorset name="performative-accept">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
 		<constraints>
 			<core>
 				<item id="1"/>
 			</core>
 		</constraints>
 	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="performative-confirm">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture">
+			</signal>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
 
+	
+	
+	
+	
+	
+	
+	<behaviorset name="performative-deny">
+		<signals>
+			<signal id="1" name="Decline" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="performative-refuse">
+		<signals>
+			<signal id="1" name="Decline" modality="gesture"/>
+
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+
+	<behaviorset name="performative-greet">
+		<signals>
+			<signal id="1" name="Greet" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="performative-disagree">
+		<signals>
+			<signal id="1" name="Decline" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="performative-advice">
+		<signals>
+			<signal id="1" name="Speak_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+
+	<behaviorset name="performative-agree">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="performative-approve">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+			</core>
+			<rules>
+			</rules>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-beg">
+		<signals>
+			<signal id="1" name="Speak_02" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+
+	<behaviorset name="performative-incite">
+		<signals>
+			<signal id="1" name="Speak_03" modality="gesture">
+				<alternative name="Explain_01" probability="0.6"/>
+				<alternative name="Explain_02" probability="0.2"/>
+			</signal>
+		</signals>
+		<constraints/>
+	</behaviorset>
+
+	<behaviorset name="performative-criticize">
+		<signals>
+			<signal id="1" name="Argue_02" modality="gesture"/>
+		</signals>
+		<constraints>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-inform">
+		<signals>
+			<signal id="1" modality="gesture" name="Explain_03" >
+				<alternative name="Explain_01" probability="0.4"/>
+				<alternative name="Explain_02" probability="0.4"/>
+				<alternative name="Acknowledge" probability="0.2"/>
+			</signal>
+		</signals>
+		<constraints/>
+	</behaviorset>
+
+	<behaviorset name="performative-announce">
+		<signals>
+			<signal id="1" name="Explain_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="performative-implore">
+		<signals>
+			<signal id="1" name="Speak_03" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<behaviorset name="performative-order">
+		<signals>
+			<signal id="1" name="Suggest" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+
+	<behaviorset name="performative-suggest">
+		<signals>
+			<signal id="1" name="Suggest" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+
+	<behaviorset name="performative-propose">
+		<signals>
+			<signal id="1" name="Argue_01" modality="gesture">
+				<alternative name="Argue_02" probability="0.5"/>
+				<alternative name="Argue_03" probability="0.5"/>
+			</signal>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="performative-question">
+		<signals>
+			<signal id="1" name="Suggest" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="performative-request">
+		<signals>
+			<signal id="1" name="Explain_01" modality="gesture"/>
+			
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="performative-recognize">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-paraphrase">
+		<signals>
+			<signal id="1" name="Argue_03" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-praise">
+		<signals>
+			<signal id="1" name="Explain_02" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	
+	
+
+	
+	
+	<behaviorset name="performative-warn">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	
+	<behaviorset name="performative-lookright">
+		<signals>
+			<signal id="1" name="LookRight" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="performative-lookleft">
+		<signals>
+			<signal id="1" name="LookLeft" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<!-- certainty -->
+	
+	<behaviorset name="certainty-certain">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="certainty-uncertain">
+		<signals>
+			<signal id="1" name="Uncertain" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+
+	
+	<!-- TURNTAKING -->
+	<behaviorset name="turntaking-takethefloor">
+		<signals>
+			<signal id="1" name="Wait_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="turntaking-givethefloor">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="turntaking-*">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	
+	<!-- beliefs -->
+	
+	<behaviorset name="belief-relation-enumerate">
+		<signals>
+			<signal id="1" name="Explain_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="belief-relation-enumerate1">
+		<signals>
+			<signal id="1" name="Explain_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="belief-relation-enumerate2">
+		<signals>
+			<signal id="1" name="Explain_02" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="belief-relation-enumerate3">
+		<signals>
+			<signal id="1" name="Explain_03" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="belief-relation-cause">
+		<signals>
+			<signal id="1" name="Explain_01" modality="gesture">
+				<alternative name="Explain_02" probability="0.5"/>
+				<alternative name="Explain_03" probability="0.5"/>
+			</signal>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="belief-relation-effect">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
 	
 	<!-- world -->
-	<behaviorset name="world-person-self">		<signals><signal id="1" modality="gesture" name="GestureMe" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-*">
+		<signals>
+			<signal id="1" name="Argue_01" modality="gesture" >
+				<alternative name="Argue_02" probability="0.2"/>
+				<alternative name="Argue_03" probability="0.4"/>
+			</signal>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
 	
-		<!-- deictics -->
-	<behaviorset name="deictic-down">		<signals><signal id="1" modality="gesture" name="GestureDown" /></signals><constraints/></behaviorset>
-	<behaviorset name="deictic-onmyleft">		<signals><signal id="1" modality="gesture" name="GestureLeft" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-object-large">
+		<signals/>
+		<constraints/>
+	</behaviorset>
 	
-	<behaviorset name="world-place-location-left">		<signals><signal id="1" modality="gesture" name="GestureLeft" /></signals><constraints/></behaviorset>
-	<behaviorset name="world-place-hereleft">		<signals><signal id="1" modality="gesture" name="GestureLeft" /></signals><constraints/></behaviorset>
-	<behaviorset name="world-place-hereright">		<signals><signal id="1" modality="gesture" name="GestureRight" /></signals><constraints/></behaviorset>
-	<behaviorset name="world-place-location-up">		<signals><signal id="1" modality="gesture" name="GestureUp" /></signals><constraints/></behaviorset>
-	<behaviorset name="world-place-location-down">		<signals><signal id="1" modality="gesture" name="GestureDown" /></signals><constraints/></behaviorset>
-	<behaviorset name="world-person-self">		<signals><signal id="1" modality="gesture" name="GestureMe" /></signals><constraints/></behaviorset>
-	<behaviorset name="world-place-location">		<signals><signal id="1" modality="gesture" name="GestureUser" /></signals><constraints/></behaviorset>
+	<behaviorset name="world-object-location">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-object-quantity">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-object-tiny">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-object-service">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-object-shape">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-person-self">
+		<signals>
+			<signal id="1" name="GestureMe" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-place-away">
+		<signals>
+			<signal id="1" name="LookLeft" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-place-here">
+		<signals>
+			<signal id="1" name="Explain_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-place-hereleft">
+		<signals>
+			<signal id="1" name="GestureLeft" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-place-hereright">
+		<signals>
+			<signal id="1" name="GestureRight" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="world-place-location">
+		<signals>
+			<signal id="1" name="GestureUp" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	
+	<!-- backchannels -->
+	
+	<behaviorset name="backchannel-agreement">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-disagreement">
+		<signals>
+			<signal id="1" name="Decline" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-acceptance">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-refusal">
+		<signals>
+			<signal id="1" name="Decline" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-liking">
+		<signals>
+			<signal id="1" name="Congratulate" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-disliking">
+		<signals>
+			<signal id="1" name="Decline" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-understanding">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-no_understanding">
+		<signals>
+			<signal id="1" name="Uncertain" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-interest">
+		<signals>
+			<signal id="1" name="EyesbrowsUp" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-no_interest">
+		<signals>
+			<signal id="1" name="LookUp" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-belief">
+		<signals>
+			<signal id="1" name="EyesbrowsUp" modality="face"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-disbelief">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-grasp_interest">
+		<signals>
+			<signal id="1" name="Suggest" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="backchannel-distraction">
+		<signals>
+			<signal id="1" name="Wait_03" modality="gesture"/>
+			
+		</signals>
+		<constraints>
+			
+		</constraints>
+	</behaviorset>
 
+	
+	<!-- emphasis -->
+	<behaviorset name="emphasis-reduced">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="emphasis-moderate">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="emphasis-strong">
+		<signals>
+			<signal id="2" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<!-- pitchaccent -->
+	<behaviorset name="pitchaccent-Hstar">
+		<signals>
+			<signal id="1" name="Acknowledge" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="pitchaccent-LplusHstar">
+		<signals>
+			<signal id="1" name="Speak_02" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="pitchaccent-Lstar">
+		<signals>
+			<signal id="1" name="Speak_03" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	
+	<!-- boundary -->
+	<behaviorset name="boundary-L">
+		<signals>
+			<signal id="1" name="Argue_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="boundary-HL">
+		<signals>
+			<signal id="1" name="Speak_01" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="boundary-H">
+		<signals>
+			<signal id="1" name="Speak_02" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="boundary-HH">
+		<signals>
+			<signal id="1" name="Argue_02" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="boundary-LL">
+		<signals>
+			<signal id="1" name="Explain_02" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
+	<behaviorset name="boundary-LH">
+		<signals>
+			<signal id="1" name="Speak_03" modality="gesture"/>
+		</signals>
+		<constraints/>
+	</behaviorset>
+	
 </behaviorsets>

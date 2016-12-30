@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<environment>
+    <node id="background">
+        <leaf id="backgroundColor" reference="color.background">
+            <size x="0.5" y="0.6000000238418579" z="0.800000011920929"/>
+        </leaf>
+    </node>
+    <node id="scene">
+        <leaf id="axes" reference="debug.axes">
+            <size x="1.0" y="1.0" z="1.0"/>
+        </leaf>
+        <node id="Sun">
+            <position x="0.0" y="5.0" z="0.0"/>
+            <orientation x="50.000024158674" y="45.0000217428066" z="3.5983882186454E-14"/>
+            <leaf id="SunLight" reference="light.directional">
+                <size x="0.699999988079071" y="0.699999988079071" z="0.699999988079071"/>
+            </leaf>
+        </node>
+        <leaf id="ambient_light" reference="light.ambient">
+            <size x="0.699999988079071" y="0.699999988079071" z="0.699999988079071"/>
+        </leaf>
+        <node id="background-container">
+            <position x="-2" y="-0.5" z="-1"/>
+			<scale x="1.5" y="1.5" z="1.5"/>
+			<node id="background-image">
+				<scale x="3.72" y="3.50" z="1.0"/>
+				<leaf id="bg" reference="aria.background.1">
+					<size x="1.0" y="1.0" z="0.0"/>
+				</leaf>
+			</node>
+        </node>
+    </node>
+</environment>

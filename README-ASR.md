@@ -45,5 +45,5 @@ Prepare host pipeline
 
 1. Open a terminal and run 'ifconfig' to receive the IP address of the VM (should be in the format 192.168.*.*)
 
-2. Use this address in Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config
+2. Use this address in the configuration dialog
 

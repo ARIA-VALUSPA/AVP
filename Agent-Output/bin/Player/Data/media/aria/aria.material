@@ -1,0 +1,11 @@
+import * from "base.material"
+
+material ARIA_WALL_1 : base {
+	set_texture_alias diffuseMap aria/alice-bg-1.png
+	set_texture_alias celShadingMap aria/alice-bg-1.png
+}
+
+material ARIA_WALL_2 : base {
+	set_texture_alias diffuseMap aria/alice-bg-2.png
+	set_texture_alias celShadingMap aria/alice-bg-2.png
+}

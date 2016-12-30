@@ -86,6 +86,76 @@
   },
   {
     "type": "tag",
+    "tag": "backchannel",
+    "replaceAll": false,
+    "attributes": [
+      {
+        "name": "type",
+        "replaceWith": "option",
+        "options": [
+          "acceptance",
+		  "agreement",
+		  "belief",
+		  "disagreement",
+		  "disbelief",
+		  "disliking",
+		  "distraction",
+		  "grasp_interest",
+		  "interest",
+		  "liking",
+		  "no_interest",
+		  "no_understanding",
+		  "refusal",
+		  "understanding"
+        ]
+      },
+      {
+        "name": "end",
+        "replaceWith": "number",
+        "minVal": 0,
+        "maxVal": 10
+      }
+    ]
+  },
+  {
+    "type": "tag",
+    "tag": "fml-apml",
+    "replaceAll": false,
+    "attributes": [
+      {
+        "name": "composition",
+        "replaceWith": "option",
+        "options": [
+          "replace",
+		  "blend",
+		  "append"
+        ]
+      },
+	  {
+        "name": "reaction_type",
+        "replaceWith": "option",
+        "options": [
+          "none",
+		  "halt",
+		  "overlap",
+		  "replan"
+        ]
+      },
+	  {
+        "name": "reaction_duration",
+        "replaceWith": "option",
+        "options": [
+          "none",
+		  "extra_short",
+		  "short",
+		  "medium",
+		  "long"
+        ]
+      }
+    ]
+  },
+  {
+    "type": "tag",
     "tag": "aria-header",
     "remove": true
   },

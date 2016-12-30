@@ -25,6 +25,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
+import vib.core.util.math.Quaternion;
 
 /**
  * Created by adg on 17/08/2016.
@@ -64,21 +65,21 @@ public class Greta {
         AudioKeyFramePerformer audioKeyframePerformer = new AudioKeyFramePerformer();
 
         // Init the Environment Manager
-        Environment environment = new Environment();
+        Environment environment = new Environment(initManager.getValueString("Environment"));
 
         // Init the Ogre3D Player
         OgreFrame playerOgre = new OgreFrame();
-        playerOgre.setCameraPositionX(9.6);
-        playerOgre.setCameraPositionY(1.8);
-        playerOgre.setCameraPositionZ(1);
-        playerOgre.setCameraPitch(-0.15);
-        playerOgre.setCameraYaw(-3.0);
-        playerOgre.setCameraRoll(0.0);
+        playerOgre.setCameraPositionX(initManager.getValueDouble("Camera.posX"));
+        playerOgre.setCameraPositionY(initManager.getValueDouble("Camera.posY"));
+        playerOgre.setCameraPositionZ(initManager.getValueDouble("Camera.posZ"));
+        playerOgre.setCameraPitch(Math.toRadians(initManager.getValueDouble("Camera.pitch")));
+        playerOgre.setCameraYaw(Math.toRadians(initManager.getValueDouble("Camera.yaw")));
+        playerOgre.setCameraRoll(Math.toRadians(initManager.getValueDouble("Camera.roll")));
         if(icon!=null){playerOgre.setIconImage(icon);}
         playerOgre.setTitle("PlayerOgre");
-        playerOgre.setLocation(9, 6);
-        playerOgre.setSize(631, 542);
-        playerOgre.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        playerOgre.setLocation(initManager.getValueInt("Player.window.x"), initManager.getValueInt("Player.window.y"));
+        playerOgre.setSize(initManager.getValueInt("Player.window.width"), initManager.getValueInt("Player.window.height"));
+        playerOgre.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         playerOgre.setVisible(true);
 
         // Init the TTS
@@ -92,17 +93,19 @@ public class Greta {
         CereprocTTS cereproc_TTS = new CereprocTTS();
 
         // Init the Mpeg4 Animation Table
-        MPEG4Animatable mPEG4Animatable = new MPEG4Animatable();
-        mPEG4Animatable.setCoordinateX(initManager.getValueDouble("MPEG4Animatable.posX"));
-        mPEG4Animatable.setCoordinateY(initManager.getValueDouble("MPEG4Animatable.posY"));
-        mPEG4Animatable.setCoordinateZ(initManager.getValueDouble("MPEG4Animatable.posZ"));
-        mPEG4Animatable.setOrientationX(initManager.getValueDouble("MPEG4Animatable.rotX"));
-        mPEG4Animatable.setOrientationY(initManager.getValueDouble("MPEG4Animatable.rotY"));
-        mPEG4Animatable.setOrientationZ(initManager.getValueDouble("MPEG4Animatable.rotZ"));
-        mPEG4Animatable.setOrientationW(initManager.getValueDouble("MPEG4Animatable.rotW"));
-        mPEG4Animatable.setScaleX(initManager.getValueDouble("MPEG4Animatable.scaleX"));
-        mPEG4Animatable.setScaleY(initManager.getValueDouble("MPEG4Animatable.scaleY"));
-        mPEG4Animatable.setScaleZ(initManager.getValueDouble("MPEG4Animatable.scaleZ"));
+        MPEG4Animatable mPEG4Animatable = new MPEG4Animatable();     
+        mPEG4Animatable.setCoordinateX(initManager.getValueDouble("Agent.posX"));
+        mPEG4Animatable.setCoordinateY(initManager.getValueDouble("Agent.posY"));
+        mPEG4Animatable.setCoordinateZ(initManager.getValueDouble("Agent.posZ"));
+        
+        Quaternion agentOri = Quaternion.fromXYZInDegrees(initManager.getValueDouble("Agent.rotX"), 
+                                                          initManager.getValueDouble("Agent.rotY"),
+                                                          initManager.getValueDouble("Agent.rotZ"));
+        
+        mPEG4Animatable.setOrientation(agentOri);
+        mPEG4Animatable.setScaleX(initManager.getValueDouble("Agent.scaleX"));
+        mPEG4Animatable.setScaleY(initManager.getValueDouble("Agent.scaleY"));
+        mPEG4Animatable.setScaleZ(initManager.getValueDouble("Agent.scaleZ"));
 
         // Init the Animation Key Frame Perfomer
         AnimationKeyframePerformer animationKeyframePerformer = new AnimationKeyframePerformer();
@@ -122,7 +125,7 @@ public class Greta {
         amqFMLReceiverModuleFrame.setLocation(1082, 10);
         amqFMLReceiverModuleFrame.setSize(260, 240);
         amqFMLReceiverModuleFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        amqFMLReceiverModuleFrame.setVisible(true);
+        amqFMLReceiverModuleFrame.setVisible(initManager.getValueBoolean("WhiteBoard.visible"));
 
         // Create the ActiveMQ BML Feedback Sender
         BMLCallbacksSender amqBMLCallbacksSender = new BMLCallbacksSender();
@@ -137,8 +140,23 @@ public class Greta {
         amqBMLCallbacksSenderModuleFrame.setLocation(1382, 10);
         amqBMLCallbacksSenderModuleFrame.setSize(260, 240);
         amqBMLCallbacksSenderModuleFrame.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-        amqBMLCallbacksSenderModuleFrame.setVisible(true);
+        amqBMLCallbacksSenderModuleFrame.setVisible(initManager.getValueBoolean("WhiteBoard.visible"));
 
+        // Create the ActiveMQ BML Sender
+        vib.auxiliary.activemq.semaine.BMLSender amqBMLSender = new vib.auxiliary.activemq.semaine.BMLSender();
+        amqBMLSender.setHost(initManager.getValueString("BMLSender.host"));
+        amqBMLSender.setPort(initManager.getValueString("BMLSender.port"));
+        amqBMLSender.setTopic(initManager.getValueString("BMLSender.topic"));
+        amqBMLSender.setIsQueue(initManager.getValueBoolean("BMLSender.isQueue"));
+        WhitboardFrame amqBMLSenderModuleFrame = new WhitboardFrame();
+        amqBMLSenderModuleFrame.setWhitboard(amqBMLSender);
+        if(icon!=null){amqBMLSenderModuleFrame.setIconImage(icon);}
+        amqBMLSenderModuleFrame.setTitle("BML Sender");
+        amqBMLSenderModuleFrame.setLocation(1382, 40);
+        amqBMLSenderModuleFrame.setSize(260, 240);
+        amqBMLSenderModuleFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        amqBMLSenderModuleFrame.setVisible(initManager.getValueBoolean("WhiteBoard.visible"));
+        
         // Create a body animation noise generator
         BodyAnimationNoiseGenerator bodyNoiseGenerator = new BodyAnimationNoiseGenerator();
         bodyNoiseGenerator.setUseLowerBody(false);
@@ -150,7 +168,6 @@ public class Greta {
         // Connect the modules
         simpleAUPerformer.addFAPFramePerformer(lipBlender);
         animationKeyframePerformer.addBAPFramesPerformer(mPEG4Animatable);
-        //ssiFilter.setSSITranslator(ssiTranslator);
         environment.addNode(mPEG4Animatable);
         behaviorRealizer.addKeyframePerformer(faceKeyframePerformer);
         behaviorRealizer.addKeyframePerformer(lipModel);
@@ -163,6 +180,7 @@ public class Greta {
         tTS.setTTS(cereproc_TTS);
         audioKeyframePerformer.addAudioPerformer(mPEG4Animatable);
         behaviorPlanner.addSignalPerformer(behaviorRealizer);
+        behaviorPlanner.addSignalPerformer(amqBMLSender);
         bodyNoiseGenerator.addBAPFramesPerformer(mPEG4Animatable);
         amqFMLReceiver.addIntentionPerformer(behaviorPlanner);
         behaviorRealizer.addCallbackPerformer(amqBMLCallbacksSender);

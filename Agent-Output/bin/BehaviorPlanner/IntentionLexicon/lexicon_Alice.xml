@@ -21,6 +21,11 @@
 		<constraints/>
 	</behaviorset>
 	
+	<behaviorset name="backchannel-none">
+		<signals/>
+		<constraints/>
+	</behaviorset>
+	
 	<behaviorset name="emphasis-none">
 		<signals/>
 		<constraints/>
@@ -1645,4 +1650,27 @@
 		<constraints/>
 	</behaviorset>
 	
+	<!-- INTERRUPTIONS behaviorsets -->
+	<behaviorset name="interruption-hold">
+		<signals>
+			<signal id="1" name="faceexp=neutral" modality="face"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	<behaviorset name="interruption-restpose">
+		<signals>
+			<signal id="1" name="rest=Along" modality="gesture"/>
+			<signal id="2" name="faceexp=neutral" modality="face"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+				<item id="2"/>
+			</core>
+		</constraints>
+	</behaviorset>
 </behaviorsets>
