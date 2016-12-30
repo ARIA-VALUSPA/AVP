@@ -3,7 +3,7 @@
 	
 	<!-- emax tracker -->
 	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
-		<input pin="video" frame="1" async="true"/>
+		<input pin="video" frame="1" async="$(emax:async)"/>
 		<output pin="emax"/>
 	</transformer>
 	
@@ -22,6 +22,18 @@
 		<input pin="emax" frame="1"/>
 		<output pin="emax_face"/>
 	</transformer>	
+	<transformer create="Selector" indices="13-144" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_points"/>
+	</transformer>		
+	<transformer create="Selector" indices="145-151" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_pose"/>
+	</transformer>		
+	<transformer create="Selector" indices="152, 153, 154, 155, 154, 155, 156, 157, 156, 157, 158, 159, 152, 153, 158, 159, 156, 157, 160, 161, 154, 155, 162, 163, 152, 153, 164, 165, 158, 159, 166, 167, 164, 165, 162, 163, 162, 163, 160, 161, 160, 161, 166, 167, 166, 167, 164, 165" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_box"/>
+	</transformer>			
 	
 	<!-- create event with emotion scores -->
 	<consumer create="MapEventSender" keys="NEU,ANG,DIS,FEA,HAP,SAD,SUR" address="emotion@emax">
@@ -38,7 +50,7 @@
 	<object create="DecisionSmoother:sm-emaxva" average="true" window="2.0" address="va(avg)@emax">
 		<listen address="va@emax"/>
 	</object>
-		
+			
 	<!-- show valence/arousal scores -->
 	<gate open="$(show:plot)">
 	

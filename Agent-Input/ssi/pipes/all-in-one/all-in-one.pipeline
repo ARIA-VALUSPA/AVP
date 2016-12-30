@@ -17,7 +17,7 @@
 	</register>
 		
 	<!-- camera sensor -->
-	<sensor create="Camera" option="options/camera" fps="25.0">
+	<sensor create="Camera" option="options/camera" fps="$(camera:fps)">
 		<output channel="video" pin="video" size="2.0s"/>
 	</sensor>	
 	
@@ -51,7 +51,7 @@
 	
 		<!-- show video -->
 		<consumer create="VideoPainter:vi-video" flip="true" type="1" relative="true" swap="false" title="CAMERA">
-			<input pin="video;emax_face" frame="1"/>		
+			<input pin="video;emax_box" frame="1"/>		
 		</consumer>
 		
 		<!-- show audio -->	
@@ -72,13 +72,68 @@
 		<listen address="@"/>
 	</consumer>
 	
+	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="all-in-one_extra.xml" monitor="$(show:plot)" mname="RESULT - EXTRA" console="false" update="500" coldelim=" " strbuf="4096">
+		<input pin="emax_points;emax_pose;emax_box" frame="1"/>
+		<listen address="@"/>
+	</consumer>	
+	
 	<!-- event sender -->
 	<gate open="$(activemq:use)">
 	
 		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
 			<listen address="result@xml"/>
 		</object>		
+		
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)-EXTRA">
+			<listen address="result-extra@xml"/>
+		</object>			
 
+	</gate>
+	
+	<gate open="$(log:use)">
+	
+		<job path="mkdir.bat" args="$(log:dir)\$(date)" when="pre" wait="-1"/>
+	
+		<consumer create="CameraWriter:camerawriter" flip="true" option="options\camerawriter" path="$(log:dir)\$(date)\video.avi">
+			<input pin="video" frame="1" delta="0"/>
+		</consumer>	
+	
+		<consumer create="WavWriter::wavwriter" path="$(log:dir)\$(date)\audio.wav">
+			<input pin="audio16k" frame="0.1s"/>
+		</consumer>
+		
+		<consumer create="FileWriter::vadwriter" path="$(log:dir)\$(date)\voiceactivity" type="1">
+			<input pin="vad" frame="1"/>
+		</consumer>		
+			
+		<consumer create="FileWriter::emaxwriter" path="$(log:dir)\$(date)\emax" type="1">
+			<input pin="emax" frame="1"/>
+		</consumer>		
+		
+		<sensor create="EventToStream:arousalserializer" sr="$(camera:fps)" eventValue="arousal_pos">
+			<listen address="arousal(avg)@audio"/>
+			<output channel="event output" pin="arousal(avg)"/>
+		</sensor>
+		<consumer create="FileWriter::arousalwriter" path="$(log:dir)\$(date)\arousal" type="1">
+			<input pin="arousal(avg)" frame="1"/>
+		</consumer>			
+
+		<sensor create="EventToStream:valenceserializer" sr="$(camera:fps)" eventValue="valence_pos">
+			<listen address="valence(avg)@audio"/>
+			<output channel="event output" pin="valence(avg)"/>
+		</sensor>
+		<consumer create="FileWriter::valencewriter" path="$(log:dir)\$(date)\valence" type="1">
+			<input pin="valence(avg)" frame="1"/>
+		</consumer>		
+		
+		<sensor create="EventToStream:interestserializer" sr="$(camera:fps)" eventValue="interested">
+			<listen address="interest(avg)@audio"/>
+			<output channel="event output" pin="interest(avg)"/>
+		</sensor>
+		<consumer create="FileWriter::interestwriter" path="$(log:dir)\$(date)\interest" type="1">
+			<input pin="interest(avg)" frame="1"/>
+		</consumer>		
+		
 	</gate>
 	
 	<gate open="$(show:gui)">
@@ -95,7 +150,7 @@
 	</gate>
 	
 	<!-- decoration -->
-	<object create="Decorator" icon="true" title="Pipeline">
+	<object create="Decorator" icon="true" title="Pipeline" show="$(show:windows)">
 		<area pos="400,600,400,300">console</area>
 		<area pos="0,0,400,300">vi-video</area>
 		<area pos="400,0,800,150">vi-audio</area>

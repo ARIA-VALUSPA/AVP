@@ -1,6 +1,6 @@
 # asr
 
-asr:host	= 192.168.88.128
+asr:host	= 192.168.138.128
 asr:xport	= 8888:en;9999:de
 
 # classification

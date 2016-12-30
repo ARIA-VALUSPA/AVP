@@ -3,7 +3,16 @@
 show:plot = true
 show:gui = true
 
+# voice activity detection
+
+vad:use		= true
+
+# logging
+
+log:use  	= false
+log:dir 	= log
+
 # asr
 
-asr:host	= 192.168.88.128
-asr:port	= 8888
+asr:host=192.168.88.128
+asr:port=8888

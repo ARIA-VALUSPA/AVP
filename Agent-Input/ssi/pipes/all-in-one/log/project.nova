@@ -1,0 +1,17 @@
+<novaproject version="1">
+	<medias>
+		<media>audio.wav</media>
+		<media>video.avi</media>
+	</medias>
+	<signals>
+		<signal bg="#FFF0F0F0" fg="#FF000000">audio.wav</signal>
+		<signal bg="#FFF0F0F0" fg="#FF000000">voiceactivity.stream</signal>
+		<signal bg="#FFF0F0F0" fg="#FF000000">emax.stream</signal>
+		<signal bg="#FFF0F0F0" fg="#FF000000">arousal.stream</signal>
+		<signal bg="#FFF0F0F0" fg="#FF000000">valence.stream</signal>
+		<signal bg="#FFF0F0F0" fg="#FF000000">interest.stream</signal>
+	</signals>
+	<tiers>
+		<tier filepath="transcription.annotation" name="transcription"></tier>
+	</tiers>
+</novaproject>

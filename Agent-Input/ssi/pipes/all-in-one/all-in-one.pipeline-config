@@ -2,6 +2,16 @@
 
 show:plot = true
 show:gui = true
+show:windows = true
+
+# camera
+
+camera:fps = 25
+
+# logging
+
+log:use  	= true
+log:dir 	= log
 
 # active mq
 

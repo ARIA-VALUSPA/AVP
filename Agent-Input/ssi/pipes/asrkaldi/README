@@ -6,6 +6,16 @@ This pipeline uses KALDI for speech recognition.
 
 1. Set up ASR on a linux machine (contact Amr how to do this <amr.eldesoky@gmail.com>)
 2. Open 'asrkaldi.pipeline-config' and set the ip and port of your linux machine
-3. Launch ASRKALDI.bat
+3. Launch ASRKALDI.bat to run from a microphone or ASRKALDI_OFFLINE.bat to run from a file
+
+see also remarks below
 
 -------------------------------------------------------------
+  Remarks
+-------------------------------------------------------------
+
+- you can set a different wav file using the 'file' option (PCA with a sample rate of 16kHz)
+- you can change the vad threshold using the 'vad:threshold' option (or play around with the volume of your mic)
+- you can change the amount of silence added to each segment using the 'asr:silence' option (0 means no silence will be added)
+- if 'log:use = true' everytime you run the pipeline a new wav file and a new annotation will be created in the 'log' folder (make sure to properly stop the pipeline!)
+- to display a logged session drag and drop the wav and annotation file to NOVA

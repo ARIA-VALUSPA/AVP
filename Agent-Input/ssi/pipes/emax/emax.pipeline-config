@@ -1,6 +1,6 @@
 # number of faces
 emax:faces:max    = 2  # number of faces to detect (0 = always nearest, otherwise 4 at max)
-emax:faces:values = 13 # number of values per face
+emax:faces:values = 168 # number of values per face
 
 # models
 emax:model = ../../models/face/caffe.cfg               # emax model path
@@ -10,3 +10,8 @@ activemq:use = false
 activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
 activemq:id = SSI									# activemq id
 activemq:topic= EMAX								# activemq topic
+
+# websocket
+websocket:use = true
+websocket:port = 80
+websocket:site = website

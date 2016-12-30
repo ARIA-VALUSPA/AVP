@@ -32,13 +32,13 @@
 	<object create="DecisionSmoother:sm-age" average="true" address="age(avg)@audio">
 		<listen address="age@audio"/>
 	</object>
-	<object create="DecisionSmoother:sm-arousal" average="true" window="2.0" address="arousal(avg)@audio">
+	<object create="DecisionSmoother:sm-arousal" average="true" window="10.0" address="arousal(avg)@audio">
 		<listen address="arousal@audio"/>
 	</object>
-	<object create="DecisionSmoother:sm-valence" average="true" window="2.0" address="valence(avg)@audio">
+	<object create="DecisionSmoother:sm-valence" average="true" window="10.0" address="valence(avg)@audio">
 		<listen address="valence@audio"/>
 	</object>
-	<object create="DecisionSmoother:sm-interest" average="true" window="2.0" address="interest(avg)@audio">
+	<object create="DecisionSmoother:sm-interest" average="true" window="10.0" address="interest(avg)@audio">
 		<listen address="interest@audio"/>
 	</object>
 		

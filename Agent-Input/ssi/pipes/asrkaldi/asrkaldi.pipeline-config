@@ -1,12 +1,28 @@
+live 		= true 										# $(bool) use live input from a microphone
+file 		= media/audio.wav 			   				# if not live input read in from this file
+
+# logging
+
+log:use  	= true
+log:dir 	= log
+log:name	= asr
+log:role	= user
+
+# voice activity detection
+
+vad:use		  = true
+vad:threshold = 0.005								# voice activity threshold
+
 # asr
 
-asr:host	= 137.250.171.134
-asr:port	= 7777
+asr:host	= 192.168.187.129
+asr:port	= 8888
+asr:silence = 30									# amount of silence (in ms) that is added to beginning of each segment (only if vad is turned on)
 
 # activemq
 
 activemq:use = false								# share results through activemq
 activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
 activemq:id = SSI									# activemq id
-activemq:topic= ASR									# activemq topic
+activemq:topic = ASR								# activemq topic
 activemq:useTopics = false							# if false, cues will be used

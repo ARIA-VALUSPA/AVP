@@ -1,1 +1,1 @@
-..\..\bin\xmlpipe -debug ssi.log all-in-one
+..\..\bin\xmlpipe -debug ssi.log -config all-in-one all-in-one

@@ -2,11 +2,17 @@
 
 show:plot = true
 
+# logging
+
+log:use  	= false
+log:dir 	= log
+
 # number of faces
 
-emax:faces:max    = 2  # number of faces to detect (0 = always nearest, otherwise 4 at max)
-emax:faces:values = 13 # number of values per face
+emax:faces:max    = 2     # number of faces to detect (0 = always nearest, otherwise 4 at max)
+emax:faces:values = 168   # number of values per face
+emax:async        = true  # run in async mode
 
 # models
 
-emax:model = ../../models/face/caffe.cfg                      # model path
+emax:model = ../../models/face/caffe.cfg         # model path

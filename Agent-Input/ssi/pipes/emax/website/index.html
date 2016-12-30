@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<title>EMAX</title>
+
+	<link href="examples.css" rel="stylesheet" type="text/css">
+	<script language="javascript" type="text/javascript" src="jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript">
+
+	$(function() {
+
+		// Set up the control widget
+		
+		var neu = [
+			[1, 0],
+		];
+		
+		var ang = [
+			[2, 0]
+		];
+		
+		var dis = [
+			[3, 0]
+		];
+		
+		var fea = [
+			[4, 0]
+		];
+		
+		var hap = [
+			[5, 0]
+		];
+		
+		var sad = [
+			[6, 0]
+		];
+		
+		var sur = [
+			[7, 0]
+		];
+		
+		var barPlotEmo = $.plot($("#placeholder-emo"), 
+		[
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: neu, label: "NEUTRAL" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: ang, label: "ANGER" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: dis, label: "DISGUST" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: fea, label: "FEAR" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: hap, label: "HAPPINESS" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: sad, label: "SADNESS" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: sur, label: "SURPRISE" },
+		], 
+		{
+			legend: {
+				position: "sw",
+				show: true
+			},
+			series: {
+				lines: {
+					show: false
+				}
+			},
+			xaxis: {
+				min: 0.5,
+				max: 7.5,
+				show: false
+			},
+			yaxis: {
+				min: 0,
+				max: 1.1
+			}
+		});
+		
+		var valence = [
+			[1, 0],
+		];
+		
+		var arousal = [
+			[2, 0]
+		];
+		
+		var barPlotEV = $.plot($("#placeholder-ev"), 
+		[
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: valence, label: "VALENCE" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: arousal, label: "AROUSAL" },
+		], 
+		{
+			legend: {
+				position: "sw",
+				show: true
+			},
+			series: {
+				lines: {
+					show: false
+				}
+			},
+			xaxis: {
+				min: 0.5,
+				max: 2.5,
+				show: false
+			},
+			yaxis: {
+				min: 0,
+				max: 1.1
+			}
+		});
+		
+		// Set up the web socket
+		
+		var ws = new WebSocket('ws://' + location.host + '/ws');
+		
+		ws.onopen = function(ev)  { console.log(ev); };
+		ws.onerror = function(ev) { console.log(ev); };
+		ws.onclose = function(ev) { console.log(ev); };
+		ws.onmessage = function(ev) {
+		
+			var data = JSON.parse(ev.data);
+			//console.log(data)
+
+			if (data.name == "va")
+			{
+			
+				valence[0][1] = data.value[0].VALENCE;
+				arousal[0][1] = data.value[1].AROUSAL;
+				
+				barPlotEV.setData([	
+				{
+					data: valence,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: arousal,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				}
+				]);
+				barPlotEV.draw();	
+
+			} 
+			else if (data.name == "emotion")
+			{
+			
+				neu[0][1] = data.value[0].NEU;
+				ang[0][1] = data.value[1].ANG;
+				dis[0][1] = data.value[2].DIS;
+				fea[0][1] = data.value[3].FEA;
+				hap[0][1] = data.value[4].HAP;
+				sad[0][1] = data.value[5].SAD;
+				sur[0][1] = data.value[6].SUR;
+				
+				barPlotEmo.setData([	
+				{
+					data: neu,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: ang,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: dis,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: fea,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: hap,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: sad,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: sur,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				}
+				]);
+				barPlotEmo.draw();
+			
+			}
+				
+		}
+
+		// Add the Flot version string to the footer
+
+		$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+	});
+
+	</script>
+</head>
+
+<body>
+
+	<div id="header">
+		<h2>EMAX</h2>
+	</div>
+
+	<div id="content">
+		
+		<div class="demo-container">
+			<div id="placeholder-emo" class="demo-placeholder"></div>	
+		</div>			
+		<div class="demo-container">
+			<div id="placeholder-ev" class="demo-placeholder"></div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

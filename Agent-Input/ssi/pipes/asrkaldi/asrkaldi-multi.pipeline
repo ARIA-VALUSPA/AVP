@@ -36,7 +36,7 @@
 		<input pin="audio8k" frame="0.03s" delta="0.015s"/>
 		<output pin="vad8k"/>
 	</transformer>
-	<consumer create="ZeroEventSender" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad8k@audio">
+	<consumer create="ZeroEventSender" mindur="1.0" maxdur="5.0" incdur="3.0" eager="false" hangin="3" hangout="10" address="vad8k@audio">
 		<input pin="vad8k" frame="0.1s"/>
 	</consumer>	
 	
@@ -51,7 +51,7 @@
 	<object create="Classifier:cl-language" trainer="$(model:language)" address="language@audio">
 		<listen address="feature@audio"/>
 	</object>	
-	<object create="DecisionSmoother:sm-language" average="true" window="5.0" address="language(avg)@audio">
+	<object create="DecisionSmoother:sm-language" average="true" window="15.0" address="language(avg)@audio">
 		<listen address="language@audio"/>
 	</object>		
 	

@@ -3,6 +3,11 @@
 show:plot = true
 show:gui = true
 
+# logging
+
+log:use  	= true
+log:dir 	= log
+
 # active mq
 
 activemq:use = false

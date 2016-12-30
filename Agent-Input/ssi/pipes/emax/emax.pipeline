@@ -7,6 +7,7 @@
 		<load name="camera" />
 		<load name="ioput" />
 		<load name="activemq" />
+		<load name="websocket" />
 	</register>
 	
 	<!-- camera sensor -->
@@ -35,6 +36,18 @@
 		<input pin="emax" frame="1"/>
 		<output pin="emax_face"/>
 	</transformer>	
+	<transformer create="Selector" indices="13-144" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_points"/>
+	</transformer>		
+	<transformer create="Selector" indices="145-151" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_pose"/>
+	</transformer>		
+	<transformer create="Selector" indices="152, 153, 154, 155, 154, 155, 156, 157, 156, 157, 158, 159, 152, 153, 158, 159, 156, 157, 160, 161, 154, 155, 162, 163, 152, 153, 164, 165, 158, 159, 166, 167, 164, 165, 162, 163, 162, 163, 160, 161, 160, 161, 166, 167, 166, 167, 164, 165" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_box"/>
+	</transformer>		
 	
 	<!-- create event with emotion scores -->
 	<consumer create="MapEventSender" keys="NEU,ANG,DIS,FEA,HAP,SAD,SUR" address="emotion@emax">
@@ -51,19 +64,26 @@
 		<input pin="emax" frame="1"/>
 		<listen address="va,emotion@emax"/>
 	</consumer>
+	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="emax-extra.xml" monitor="true" mname="RESULT - EXTRA" console="false" update="100" coldelim=" " strbuf="4096">
+		<input pin="emax_points;emax_pose;emax_box" frame="1"/>
+	</consumer>	
 
 	<!-- publish on active mq -->
 	<gate open="$(activemq:use)">
 			
 		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
 			<listen address="result@xml"/>
+		</object>
+
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)-EXTRA">
+			<listen address="result-extra@xml"/>
 		</object>		
 
 	</gate>
 	
 	<!-- show video -->
 	<consumer create="VideoPainter:vplot" flip="true" type="1" relative="true" swap="false" title="CAMERA">
-		<input pin="video;emax_face" frame="1"/>		
+		<input pin="video;emax_box" frame="1"/>		
 	</consumer>	
 		
 	<!-- show emotion scores -->
@@ -75,6 +95,13 @@
 	<object create="EventPainter:eplot" type="1" global="true" autoscale="false" reset="false" fix="0.5f" title="EMAX - EMOTIONS">
 		<listen address="va@emax" />		
 	</object>	
+	
+	<!-- websocket -->
+	<gate open="$(websocket:use)">
+		<object create="websocket:websocket" http_root="$(websocket:site)" http_port="$(websocket:port)">
+			<listen address="va,emotion@emax" />
+		</object>
+	</gate>
 	
 	<!-- decoration -->
 	<object create="Decorator" icon="true" title="Pipeline">

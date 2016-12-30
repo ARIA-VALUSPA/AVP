@@ -14,22 +14,47 @@
 	</register>	
 
 	<!-- audio sensor -->
-	<sensor create="Audio" option="options/audio" scale="true" blockInSamples="512" sr="16000">
-		<output channel="audio" pin="audio"/>
-	</sensor>
+	<gate open="$(live)">
+		<sensor create="Audio" option="options/audio" scale="true" blockInSamples="512" sr="16000">
+			<output channel="audio" pin="audio"/>
+		</sensor>
+	</gate>
+	<gate close="$(live)">
+		<sensor create="WavReader" path="$(file)" scale="true" blockInSamples="512" loop="true">
+			<output channel="audio" pin="audio"/>		
+		</sensor>	 
+	</gate>
 	
 	<!-- activity detection -->
-	<transformer create="AudioActivity" method="1" threshold="0.005">
+	<transformer create="AudioActivity" method="1" threshold="$(vad:threshold)">
 		<input pin="audio" frame="0.01s"/>
 		<output pin="vad"/>
 	</transformer>
 	
 	<!-- send asr string -->
-	<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" port="$(asr:port)" type="1" address="asr@audio" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24">
-		<input pin="audio;vad" frame="0.01s">
-			<transformer create="AudioConvert"/>
-		</input>		
-	</consumer>	
+	<gate open="$(vad:use)">
+		<consumer create="AsrKaldiSender:monitor" 
+		host="$(asr:host)" 
+		port="$(asr:port)" 
+		addSilenceMs="$(asr:silence)"
+		type="1" 
+		address="asr@audio" 
+		monitor="true" 
+		mcaption="KALDI" 
+		mnum="10" 
+		mfontsize="24">
+			<input pin="audio;vad" frame="0.01s">
+				<transformer create="AudioConvert"/>
+			</input>		
+		</consumer>	
+	</gate>
+	<gate close="$(vad:use)">
+		<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" port="$(asr:port)" type="1" address="asr@audio" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24">
+			<input pin="audio" frame="0.01s">
+				<transformer create="AudioConvert"/>
+			</input>		
+		</consumer>	
+	</gate>
 	<consumer create="XMLEventSender:monitor" address="asr@xml" path="asrkaldi.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
 		<input pin="vad" frame="1"/>
 		<listen address="asr@audio"/>
@@ -44,9 +69,27 @@
 	<consumer create="SignalPainter:plot" title="audio" size="10" type="2">
 		<input pin="audio" frame="0.01s"/>
 	</consumer>
-	<consumer create="SignalPainter:plot" title="vad" size="10">
-		<input pin="vad" frame="1"/>
-	</consumer>
+	<gate open="$(vad:use)">
+		<consumer create="SignalPainter:plot" title="vad" size="10">
+			<input pin="vad" frame="1"/>
+		</consumer>
+	</gate>	
+	
+	<!-- wav output -->
+	<gate close="$(live)">
+		<consumer create="AudioPlayer:player" option="options/aplayer">
+			<input pin="audio" frame="0.1s"/>
+		</consumer>
+	</gate>
+	
+	<gate open="$(log:use)">
+		<object create="FileAnnotationWriter:asrannowriter" annotationPath="$(log:dir)\$(date)_$(log:name)" schemePath="schemes/transcription" defaultConfidence="1" meta="annotator=system;role=$(log:role)">
+			<listen address="asr@audio"/>
+		</object>
+		<consumer create="WavWriter::wavwriter" path="$(log:dir)\$(date)_$(log:name).wav">
+			<input pin="audio" frame="0.1s"/>
+		</consumer>
+	</gate>
 	
 	<runnable create="ControlGrid" pos="0,600,300,300"/>
 	

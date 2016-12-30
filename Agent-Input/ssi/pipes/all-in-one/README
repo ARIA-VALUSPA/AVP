@@ -6,7 +6,13 @@ This pipelines features:
 
 * Emotional speech recognition (emospeech.pipeline)
 
-	Download model files from https://megastore.uni-augsburg.de/get/tailMrpTOG/ and unzip to models/
+	https://hcm-lab.de/cloud/index.php/s/I5Kbp1XCylYFAlk 
+
+and unzip to:
+
+./models/speech/
+
+Password: Wonderland2016
 
 	user states			average
 	------------------------------------

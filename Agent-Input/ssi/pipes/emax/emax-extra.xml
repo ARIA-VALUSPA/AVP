@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<face>		
+		<points>$(0{precision=2}</points>		
+		<pose>$(1{precision=2}</pose>	
+		<box>$(2{precision=2}</box>
+	</face>		
+</ssi>
+

@@ -2,6 +2,11 @@
 
 show:plot = true
 
+# logging
+
+log:use  	= false
+log:dir 	= log
+
 # features set
 
 config = config/IS13.conf
