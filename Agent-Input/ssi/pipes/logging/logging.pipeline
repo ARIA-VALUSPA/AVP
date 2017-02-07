@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>
+		<load name="activemq" />
+		<load name="ioput" />		
+	</register>
+		
+	<runnable create="ActiveMQEventReceiver:agentfmlreceiver" address="message@agent-fml" brokerURI="$(activemq:uri)" topic="$(activemq:topic:agent:fml)" defaultDuration="1000" console="true" />
+	<object create="FileAnnotationWriter:agentfmlwriter" annotationPath="agent-fml" schemePath="schemes\agent-fml" defaultConfidence="1" meta="annotator=system;role=agent">
+		<listen address="message@agent-fml"/>
+	</object>		
+	<runnable create="ActiveMQEventReceiver:agenbmltreceiver" address="message@agent-bml" brokerURI="$(activemq:uri)" topic="$(activemq:topic:agent:bml)" defaultDuration="1000" console="true" />
+	<object create="FileAnnotationWriter:agentbmlwriter" annotationPath="agent-bml" schemePath="schemes\agent-bml" defaultConfidence="1" meta="annotator=system;role=agent">
+		<listen address="message@agent-bml"/>
+	</object>		
+	<runnable create="ActiveMQEventReceiver:dialogreceiver" address="message@dialog" brokerURI="$(activemq:uri)" topic="$(activemq:topic:dialog)" defaultDuration="1000" console="true" />
+	<object create="FileAnnotationWriter:dialogwriter" annotationPath="dialog" schemePath="schemes\dialog" defaultConfidence="1" meta="annotator=system;role=agent">
+		<listen address="message@dialog"/>
+	</object>
+	
+	<object create="EventMonitor:monitor">
+		<listen address="@" span="10000"/>
+	</object>
+	
+	<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,800">console</area>		
+		<area pos="400,0,400,800">monitor</area>
+	</object>		
+
+</pipeline>

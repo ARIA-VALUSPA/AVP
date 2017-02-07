@@ -416,6 +416,7 @@
 	<!-- autodesk familly -->
 	<agent name="camille" type="autodesk" scale="1">
 		<all mesh="camille/body.mesh" />
+		<wrinklesmaterial name="camille_wrinkles" target="0" />
 	</agent>
 	<agent name="camille.football" type="autodesk" scale="1">
 		<all mesh="camille/foot.mesh" />
@@ -426,6 +427,7 @@
 	
 	<agent name="laure" type="autodesk" scale="1">
 		<all mesh="laure/body.mesh" />
+		<wrinklesmaterial name="laure_wrinkles" target="0" />
 	</agent>
 	
 	<agent name="laure.football" type="autodesk" scale="1">

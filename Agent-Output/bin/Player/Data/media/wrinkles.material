@@ -98,3 +98,88 @@ material obadiah_face_wrinkles
         }
     }
 }
+
+material camille_wrinkles
+{
+    receive_shadows on
+    technique
+    {
+        pass as
+        {
+            ambient 0.5 0.5 0.5 1
+            diffuse 0.8 0.8 0.8 1
+            emissive 0 0 0 1
+            specular 0.2 0.2 0.2 5
+            cull_hardware none
+            cull_software none
+
+            vertex_program_ref face/wrinkles_vert
+            {
+            }
+
+            fragment_program_ref face/wrinkles_frag
+            {
+            }
+
+            texture_unit a
+            {
+                texture camille/color.jpg
+                colour_op modulate
+            }
+
+            texture_unit b
+            {
+                //texture obadiah_face_high_normal.jpg
+            }
+
+            texture_unit c
+            {
+                texture camille/camillewrinkles.dds 3d 0
+                filtering bilinear
+            }
+        }
+    }
+}
+
+
+material laure_wrinkles
+{
+    receive_shadows on
+    technique
+    {
+        pass as
+        {
+            ambient 0.5 0.5 0.5 1
+            diffuse 0.8 0.8 0.8 1
+            emissive 0 0 0 1
+            specular 0.2 0.2 0.2 5
+            cull_hardware none
+            cull_software none
+
+            vertex_program_ref face/wrinkles_vert
+            {
+            }
+
+            fragment_program_ref face/wrinkles_frag
+            {
+            }
+
+            texture_unit a
+            {
+                texture camille/color.jpg
+                colour_op modulate
+            }
+
+            texture_unit b
+            {
+                //texture obadiah_face_high_normal.jpg
+            }
+
+            texture_unit c
+            {
+                texture laure/laurewrinkles.dds 3d 0
+                filtering bilinear
+            }
+        }
+    }
+}

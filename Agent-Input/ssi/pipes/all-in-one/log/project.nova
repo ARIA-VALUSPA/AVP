@@ -7,11 +7,14 @@
 		<signal bg="#FFF0F0F0" fg="#FF000000">audio.wav</signal>
 		<signal bg="#FFF0F0F0" fg="#FF000000">voiceactivity.stream</signal>
 		<signal bg="#FFF0F0F0" fg="#FF000000">emax.stream</signal>
-		<signal bg="#FFF0F0F0" fg="#FF000000">arousal.stream</signal>
-		<signal bg="#FFF0F0F0" fg="#FF000000">valence.stream</signal>
-		<signal bg="#FFF0F0F0" fg="#FF000000">interest.stream</signal>
 	</signals>
 	<tiers>
-		<tier filepath="transcription.annotation" name="transcription"></tier>
+		<tier name="transcription">transcription.annotation</tier>
+		<tier name="valence">valence.annotation</tier>
+		<tier name="arousal">arousal.annotation</tier>
+		<tier name="interest">interest.annotation</tier>
+		<tier name="agent-fml">agent-fml.annotation</tier>
+		<tier name="agent-bml">agent-bml.annotation</tier>
+		<tier name="dialog">dialog.annotation</tier>
 	</tiers>
 </novaproject>

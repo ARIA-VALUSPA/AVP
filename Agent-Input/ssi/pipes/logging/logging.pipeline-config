@@ -1,0 +1,8 @@
+# active mq
+
+activemq:uri = failover:(tcp://localhost:61616)		# uri
+activemq:id = SSI									# id of ssi events
+activemq:topic = SSI								# topic of ssi events
+activemq:topic:agent:fml = vib.FML					# topic of agent fml events
+activemq:topic:agent:bml = vib.feedback.BML			# topic of agent bml events
+activemq:topic:dialog = dialog						# topic if dialog events

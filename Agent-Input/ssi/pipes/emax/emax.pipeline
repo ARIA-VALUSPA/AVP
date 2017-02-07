@@ -11,9 +11,16 @@
 	</register>
 	
 	<!-- camera sensor -->
-	<sensor create="Camera" option="options/camera" fps="25.0">
-		<output channel="video" pin="video" size="2.0s"/>
-	</sensor>	
+	<gate open="$(live)">
+		<sensor create="Camera" option="options/camera" fps="25.0">
+			<output channel="video" pin="video" size="2.0s"/>
+		</sensor>	
+	</gate>
+	<gate close="$(live)">	
+		<sensor create="CameraReader" path="$(file)">
+			<output channel="video" pin="video" size="2.0s"/>
+		</sensor>
+	</gate>		
 	
 	<!-- emax tracker -->
 	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
@@ -64,7 +71,7 @@
 		<input pin="emax" frame="1"/>
 		<listen address="va,emotion@emax"/>
 	</consumer>
-	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="emax-extra.xml" monitor="true" mname="RESULT - EXTRA" console="false" update="100" coldelim=" " strbuf="4096">
+	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="emax-extra.xml" monitor="true" mname="RESULT - EXTRA" console="false" update="100" coldelim=" " strbuf="6000">
 		<input pin="emax_points;emax_pose;emax_box" frame="1"/>
 	</consumer>	
 

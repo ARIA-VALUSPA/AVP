@@ -114,7 +114,10 @@
 			<listen address="arousal(avg)@audio"/>
 			<output channel="event output" pin="arousal(avg)"/>
 		</sensor>
-		<consumer create="FileWriter::arousalwriter" path="$(log:dir)\$(date)\arousal" type="1">
+		<!--consumer create="FileWriter::arousalwriter" path="$(log:dir)\$(date)\arousal" type="1">
+			<input pin="arousal(avg)" frame="1"/>
+		</consumer-->			
+		<consumer create="FileAnnotationWriter::arousalwriter" annotationPath="$(log:dir)\$(date)\arousal" schemePath="schemes\arousal" defaultConfidence="1" meta="annotator=system;role=user">
 			<input pin="arousal(avg)" frame="1"/>
 		</consumer>			
 
@@ -122,7 +125,10 @@
 			<listen address="valence(avg)@audio"/>
 			<output channel="event output" pin="valence(avg)"/>
 		</sensor>
-		<consumer create="FileWriter::valencewriter" path="$(log:dir)\$(date)\valence" type="1">
+		<!--consumer create="FileWriter::valencewriter" path="$(log:dir)\$(date)\valence" type="1">
+			<input pin="valence(avg)" frame="1"/>
+		</consumer-->		
+		<consumer create="FileAnnotationWriter::valencewriter" annotationPath="$(log:dir)\$(date)\valence" schemePath="schemes\valence" defaultConfidence="1" meta="annotator=system;role=user">
 			<input pin="valence(avg)" frame="1"/>
 		</consumer>		
 		
@@ -130,9 +136,27 @@
 			<listen address="interest(avg)@audio"/>
 			<output channel="event output" pin="interest(avg)"/>
 		</sensor>
-		<consumer create="FileWriter::interestwriter" path="$(log:dir)\$(date)\interest" type="1">
+		<!--consumer create="FileWriter::interestwriter" path="$(log:dir)\$(date)\interest" type="1">
+			<input pin="interest(avg)" frame="1"/>
+		</consumer-->
+		<consumer create="FileAnnotationWriter::interestwriter" annotationPath="$(log:dir)\$(date)\interest" schemePath="schemes\interest" defaultConfidence="1" meta="annotator=system;role=user">
 			<input pin="interest(avg)" frame="1"/>
 		</consumer>		
+		
+		<gate open="$(activemq:use)">
+			<runnable create="ActiveMQEventReceiver:agentfmlreceiver" address="message@agent-fml" brokerURI="$(activemq:uri)" topic="$(activemq:topic:agent:fml)" defaultDuration="1000" />
+			<object create="FileAnnotationWriter:agentfmlwriter" annotationPath="$(log:dir)\$(date)\agent-fml" schemePath="schemes\agent-fml" defaultConfidence="1" meta="annotator=system;role=agent">
+				<listen address="message@agent-fml"/>
+			</object>		
+			<runnable create="ActiveMQEventReceiver:agenbmltreceiver" address="message@agent-bml" brokerURI="$(activemq:uri)" topic="$(activemq:topic:agent:bml)" defaultDuration="1000" />
+			<object create="FileAnnotationWriter:agentbmlwriter" annotationPath="$(log:dir)\$(date)\agent-bml" schemePath="schemes\agent-bml" defaultConfidence="1" meta="annotator=system;role=agent">
+				<listen address="message@agent-bml"/>
+			</object>		
+			<runnable create="ActiveMQEventReceiver:dialogreceiver" address="message@dialog" brokerURI="$(activemq:uri)" topic="$(activemq:topic:dialog)" defaultDuration="1000" />
+			<object create="FileAnnotationWriter:dialogwriter" annotationPath="$(log:dir)\$(date)\dialog" schemePath="schemes\dialog" defaultConfidence="1" meta="annotator=system;role=agent">
+				<listen address="message@dialog"/>
+			</object>
+		</gate>
 		
 	</gate>
 	
