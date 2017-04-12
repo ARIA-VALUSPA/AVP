@@ -1,0 +1,63 @@
+<!-- All used information states 
+	$dialoguestates.initialized 			Useful for initializing information state in the beginning
+
+	$userstates								Information States root of the user
+	$userstates.emotion.valence 			Valence level recognized by both audio and video (Double [0-1])
+
+	$agentstates 							Information States root of the agent
+	$agentstates.intents 					List of all intents of the agent
+	$agentstates.utterance.value 			The full string of what is said by the agent
+
+FML-templates:
+	See ./data/fmltemplates
+	Use inform_statement_y_02 for any self-defined utterance.
+-->
+
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+	<template id="initialize" name="initializeInformationState"> 
+		<preconditions>
+			<compare value1="$dialoguestates.initialized" comparator="not_exists"/> 
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.initialized" value="true"/>
+			<update name="$agentstates.intents._addfirst" value=" "/>
+		</effects>
+	</template>
+
+	<template id="agentstates-001" name="React to high valence"> 
+		<preconditions> 																				
+			<compare value1="$userstates.emotion.valence" comparator="greater_than" value2="0.5"/>
+			<compare value1="$agentstates.intents._first" comparator="not_equals" value2="highValence"/>
+		</preconditions>
+		<effects> 																			
+			<update name="$agentstates.utterance.value" value="You seem happy! Why are you happy?"/>
+			<update name="$agentstates.intents._addfirst" value="highValence"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="inform_statement_y_02"/>
+			<argument name="alt.inform" value="1"/>
+			<argument name="var.var1" value="$agentstates.utterance.value"/>
+			<argument name="em1.type" value="happy"/>
+			<argument name="fallback" value="$agentstates.utterance.value"/>
+		</behaviour>
+	</template>
+
+	<template id="agentstates-002" name="React to low valence">
+		<preconditions>
+			<compare value1="$userstates.emotion.valence" comparator="smaller_than" value2="0.3"/>
+			<compare value1="$agentstates.intents._first" comparator="not_equals" value2="lowValence"/>
+		</preconditions>
+		<effects>			
+			<update name="$agentstates.utterance.value" value="You seem sad. What happened?"/>
+			<update name="$agentstates.intents._addfirst" value="lowValence"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="inform_statement_y_02"/>
+			<argument name="alt.inform" value="1"/>
+			<argument name="var.var1" value="$agentstates.utterance.value"/>
+			<argument name="em1.type" value="sad"/>
+			<argument name="fallback" value="$agentstates.utterance.value"/>
+		</behaviour>
+	</template>
+
+</behaviourtemplates>

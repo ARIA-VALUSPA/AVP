@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 
 <ssi>
-	<face id="$(0{select*13=1;precision=0})">				
+	<face id="$(0{select*152=1;precision=0})">				
 		<dimension>
 			<valence>$(va(avg)@emax{select*2=0;precision=2})</valence>		
 			<arousal>$(va(avg)@emax{select*2=1;precision=2})</arousal>					

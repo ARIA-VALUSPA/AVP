@@ -2,7 +2,7 @@
 <pipeline>
 	
 	<!-- activity detection -->
-	<transformer create="AudioActivity" method="1" threshold="0.005">
+	<transformer create="AudioActivity" method="1" threshold="$(vad:threshold)">
 		<input pin="audio16k" frame="0.01s"/>
 		<output pin="vad16k"/>
 	</transformer>

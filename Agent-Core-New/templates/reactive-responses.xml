@@ -1,0 +1,17 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\src\main\resources\template.xsd">
+	<template id="mirrorBehaviour-001">
+		<preconditions>
+			<compare value1="$userstates.emotion.value" value2="angry"/>
+		</preconditions>
+		<effects>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="inform_statement_y_02"/>
+			<argument name="alt.inform" value="1"/>
+			<argument name="emotion" value="angry"/>
+			<argument name="var.var1" value="Why do you look so angry?"/>
+			<argument name="fallback" value="Why do you look so angry?"/>
+		</behaviour>
+	</template>
+
+</behaviourtemplates>

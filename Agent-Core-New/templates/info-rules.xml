@@ -1,17 +1,16 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
 	
 
-	<!-- <template id="set-unknown" name="Not understood">
+	<template id="set-unknown" name="Not understood" >
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
-			30 seconds is the time required for GRETA to have finished her last sentence and at least additional 10 seconds of the user input has been recorded
-			<compare comparator="smaller_than" value1="$agentstates.intent.ts" value2="$util.timestamp.now-30000"/>
-			<compare comparator="not_equals" value1="$userstates.utterance.value" value2=""/>
-			<compare comparator="not_equals" value1="$userstates.utterance.value" value2=" "/>
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" />
+			<compare value1="$agentstates.intent.ts" comparator="smaller_than" value2="$util.timestamp.now-7000"/>
+			<compare value1="$userstates.utterance.value" comparator="not_equals" value2=""/>
+			<compare value1="$userstates.utterance.value" comparator="not_equals" value2=" "/>
 			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>
-			<indicator comparator="greater_equals" endvalue="1" startvalue="0">
-				<icompare comparator="not_exists" modifier="+1" value1="$userstates.intent.function"/>
-				<icompare modifier="+1" value1="$userstates.intent.function" value2=""/>
+			<indicator startvalue="0" comparator= "greater_equals" endvalue="1">
+				<icompare value1="$userstates.intent.function" comparator="not_exists" modifier="+1"/>
+				<icompare value1="$userstates.intent.function" value2="" modifier="+1"/>
 			</indicator>
 		</preconditions>
 		<effects>
@@ -19,23 +18,24 @@
 			<update name="$userstates.intent.ts" value="$util.timestamp.now"/>
 
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
- -->
+
 	<template id="intro">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>
-			<compare value1="$dialoguestates.state.value" value2="enter"/>
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />
+			<compare value1="$dialoguestates.state.value" value2="enter" />
 		</preconditions>        
 		<effects> 
+			<update name="$dialoguestates.state.value" value="body" />
 			<update name="$userstates.intent.ts" value="$util.timestamp.now"/> 
-			<update name="$userstates.intent.function" value="request"/>
-			<update name="$userstates.intent.subject" value="proposeQuestions"/>
+			<update name="$userstates.intent.function" value="request" />
+			<update name="$userstates.intent.subject" value="proposeQuestions" />
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 
@@ -46,13 +46,13 @@
 	<!-- Initial -->
 	<template id="set-question-rabbit-001a" name="User Wants Opinion About White Rabbit">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="white"/>
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="rabbit"/>		
-			<indicator comparator="greater_equals" endvalue="2" startvalue="1">
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.valence" value2="0.6"/>
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.arousal" value2="0.6"/>
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="white" />
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="rabbit" />		
+			<indicator comparator="greater_equals" startvalue="1" endvalue="2">
+				<icompare value1="$userstates.emotion.valence" comparator="greater_equals" value2="0.6" modifier="+1"/>
+				<icompare value1="$userstates.emotion.arousal" comparator="greater_equals" value2="0.6" modifier="+1"/>
 			</indicator>			
 		</preconditions>
 		<effects>
@@ -63,17 +63,17 @@
 			<update name="$dialoguestates.lastsubject" value="whiteRabbit"/>
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 	<template id="set-question-rabbit-001b" name="User Wants Info About White Rabbit">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="white"/>
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="rabbit"/>		
-			<compare comparator="smaller_than" value1="$userstates.emotion.valence" value2="0.6"/>
-			<compare comparator="smaller_than" value1="$userstates.emotion.arousal" value2="0.6"/>			
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="white" />
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="rabbit" />		
+			<compare value1="$userstates.emotion.valence" comparator="smaller_than" value2="0.6"/>
+			<compare value1="$userstates.emotion.arousal" comparator="smaller_than" value2="0.6" />			
 		</preconditions>
 		<effects>
 			<update name="$userstates.intent.function" value="setQuestion"/>
@@ -83,20 +83,20 @@
 			<update name="$dialoguestates.lastsubject" value="whiteRabbit"/>
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 	<!-- Follow up -->
 	<template id="set-question-followup-a" name="User Wants Follow Opinion">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>	
-			<compare value1="$userstates.utterance.followup" value2="true"/>
-			<compare comparator="exists" value1="$dialoguestates.lastsubject"/>									
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="information"/>	
-			<indicator comparator="greater_equals" endvalue="2" startvalue="1">
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.valence" value2="0.6"/>
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.arousal" value2="0.6"/>
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />	
+			<compare value1="$userstates.utterance.followup" value2="true" />
+			<compare value1="$dialoguestates.lastsubject" comparator="exists" />									
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="information" />	
+			<indicator comparator="greater_equals" startvalue="1" endvalue="2">
+				<icompare value1="$userstates.emotion.valence" comparator="greater_equals" value2="0.6" modifier="+1"/>
+				<icompare value1="$userstates.emotion.arousal" comparator="greater_equals" value2="0.6" modifier="+1"/>
 			</indicator>			
 		</preconditions>
 		<effects>
@@ -108,18 +108,18 @@
 			
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 	<template id="set-question-followup-b" name="User Wants Follow Info">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare value1="$userstates.utterance.followup" value2="true"/>
-			<compare comparator="exists" value1="$dialoguestates.lastsubject"/>
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="information"/>	
-			<compare comparator="smaller_than" value1="$userstates.emotion.valence" value2="0.6"/>
-			<compare comparator="smaller_than" value1="$userstates.emotion.arousal" value2="0.6"/>			
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.followup" value2="true" />
+			<compare value1="$dialoguestates.lastsubject" comparator="exists" />
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="information" />	
+			<compare value1="$userstates.emotion.valence" comparator="smaller_than" value2="0.6"/>
+			<compare value1="$userstates.emotion.arousal" comparator="smaller_than" value2="0.6" />			
 		</preconditions>
 		<effects>
 			<update name="$userstates.intent.function" value="setQuestion"/>
@@ -129,36 +129,36 @@
 			
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 
 
 	<template id="set-question-followup-c" name="User Wants Follow But No Subject">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare value1="$userstates.utterance.followup" value2="true"/>
-			<compare comparator="not_exists" value1="$dialoguestates.lastsubject"/>
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="information"/>
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.followup" value2="true" />
+			<compare value1="$dialoguestates.lastsubject" comparator="not_exists" />
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="information" />
 		</preconditions>
 		<effects>
 			<update name="$userstates.intent.function" value="unknown"/>
 			<update name="$userstates.intent.ts" value="$util.timestamp.now"/>
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 
 	<!--Hatter intents !-->
 	<template id="set-question-hatter-001a" name="User Wants Opinion About Hatter">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="hatter"/>	
-			<indicator comparator="greater_equals" endvalue="2" startvalue="1">
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.valence" value2="0.6"/>
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.arousal" value2="0.6"/>
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="hatter" />	
+			<indicator comparator="greater_equals" startvalue="1" endvalue="2">
+				<icompare value1="$userstates.emotion.valence" comparator="greater_equals" value2="0.6" modifier="+1"/>
+				<icompare value1="$userstates.emotion.arousal" comparator="greater_equals" value2="0.6" modifier="+1"/>
 			</indicator>			
 		</preconditions>
 		<effects>
@@ -169,16 +169,16 @@
 			<update name="$dialoguestates.lastsubject" value="hatter"/>
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 	<template id="set-question-hatter-001b" name="User Wants Info About Hatter">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="hatter"/>	
-			<compare comparator="smaller_than" value1="$userstates.emotion.valence" value2="0.6"/>
-			<compare comparator="smaller_than" value1="$userstates.emotion.arousal" value2="0.6"/>			
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="hatter" />	
+			<compare value1="$userstates.emotion.valence" comparator="smaller_than" value2="0.6"/>
+			<compare value1="$userstates.emotion.arousal" comparator="smaller_than" value2="0.6" />			
 		</preconditions>
 		<effects>
 			<update name="$userstates.intent.function" value="setQuestion"/>
@@ -189,7 +189,7 @@
 			
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 	
@@ -197,12 +197,12 @@
 	<!--Gryphon intents !-->
 	<template id="set-question-gryphon-001a" name="User Wants Opinion About Gryphon">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="gryphon"/>		
-			<indicator comparator="greater_equals" endvalue="2" startvalue="1">
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.valence" value2="0.6"/>
-				<icompare comparator="greater_equals" modifier="+1" value1="$userstates.emotion.arousal" value2="0.6"/>
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="gryphon" />		
+			<indicator comparator="greater_equals" startvalue="1" endvalue="2">
+				<icompare value1="$userstates.emotion.valence" comparator="greater_equals" value2="0.6" modifier="+1"/>
+				<icompare value1="$userstates.emotion.arousal" comparator="greater_equals" value2="0.6" modifier="+1"/>
 			</indicator>			
 		</preconditions>
 		<effects>
@@ -214,16 +214,16 @@
 			
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
 	<template id="set-question-gryphon-001b" name="User Wants Info About Gryphon">
 		<preconditions>
-			<compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/> 
-			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval"/>						
-			<compare comparator="contains" value1="$userstates.utterance.pos" value2="gryphon"/>		
-			<compare comparator="smaller_than" value1="$userstates.emotion.valence" value2="0.6"/>
-			<compare comparator="smaller_than" value1="$userstates.emotion.arousal" value2="0.6"/>			
+			<compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" /> 
+			<compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />						
+			<compare value1="$userstates.utterance.pos" comparator="contains" value2="gryphon"/>		
+			<compare value1="$userstates.emotion.valence" comparator="smaller_than" value2="0.6"/>
+			<compare value1="$userstates.emotion.arousal" comparator="smaller_than" value2="0.6" />			
 		</preconditions>
 		<effects>
 			<update name="$userstates.intent.function" value="setQuestion"/>
@@ -233,7 +233,7 @@
 			<update name="$dialoguestates.lastsubject" value="gryphon"/>
 			
 			<update name="$agentstates.turn.want" value="true"/>
-			<update name="$userstates.utterance.consumers._addlast" value="rules"/>
+			<update name="$userstates.utterance.consumers._addlast" value="rules" />
 		</effects>
 	</template>
-</behaviourtemplates>  
+</behaviourtemplates>

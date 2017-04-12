@@ -3,7 +3,6 @@
 
 	<template id="userstates-001" name="Update User Emotion">
 		<preconditions>
-			<compare value1="$userstates.presence.value" value2="true"/>
 		</preconditions>
 		<effects>
 			<update name="$userstates.emotion.valence" value="$amq.ssi.face.dimension.valence+$amq.ssi.voice.dimension.valence"/>
@@ -36,10 +35,8 @@
 
 	<template id="userstates-003" name="Update User Utterance">
 		<preconditions>
-			<indicator comparator="greater_equals" startvalue="0" endvalue="1">
-				<icompare value1="$userstates.utterance.start" comparator="not_equals" value2="$amq.ssi.voice.asr.ts" modifier="+1"/>
-				<icompare value1="$userstates.utterance.value" comparator="not_equals" value2="$amq.ssi.voice.asr.words" modifier="+1"/>
-			</indicator>
+			<compare value1="$userstates.utterance.start" comparator="not_equals" value2="$amq.ssi.voice.asr.ts"/>
+			<compare value1="$userstates.utterance.value" comparator="not_equals" value2="$amq.ssi.voice.asr.words"/>
 		</preconditions>
 		<effects>
 			<update name="$userstates.utterance.value" value="$amq.ssi.voice.asr.words"/>
@@ -50,11 +47,35 @@
 		</effects>
 	</template> 
 
+	<template id="userstates-003a" name="Update User SpeechFinal">
+		<preconditions>
+			<compare value1="$userstates.utterance.speechFinal.value" comparator="not_equals" value2="$amq.ssi.voice.asr.speechFinal.words"/>
+			<compare value1="$userstates.utterance.start" comparator="not_equals" value2="$amq.ssi.voice.asr.ts"/>
+		</preconditions>
+		<effects>
+			<update name="$userstates.utterance.speechFinal.value" value="$amq.ssi.voice.asr.speechFinal.words"/>
+			<update name="$userstates.utterance.ts" value="$util.timestamp.now"/>
+			<update name="$userstates.utterance.start" value="$amq.ssi.voice.asr.ts"/>
+			<update name="$userstates.utterance.dur" value="$amq.ssi.voice.asr.duration"/>
+			<remove name="$userstates.utterance.consumers"/>			
+		</effects>
+	</template>
+
+	<template id="userstates-003b" name="Update User SpeechLive">
+		<preconditions>
+			<compare value1="$userstates.utterance.speechLive.value" comparator="not_equals" value2="$amq.ssi.voice.asr.speechLive.words"/>
+			<compare value1="$userstates.utterance.start" comparator="not_equals" value2="$amq.ssi.voice.asr.ts"/>
+		</preconditions>
+		<effects>
+			<update name="$userstates.utterance.speechLive.value" value="$amq.ssi.voice.asr.speechLive.words"/>
+		</effects>
+	</template>
+
 	<template id="userstates-004" name="Update User Emotion Value">
 		<preconditions>
 		</preconditions>
 		<effects>
-			<update name="$userstates.emotion.value" value="$amq.ssi.face.emotion.dominant"/>
+			<update name="$userstates.emotion.value" value="$userstates.emotion.dominant"/>
 		</effects>
 	</template> 
 

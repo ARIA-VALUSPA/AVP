@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?><!-- 
+<!-- 
 This file manages retrieving the user intention from the POS-tagger list
 
 Template Dependencies:
@@ -21,14 +21,15 @@ Template Dependencies:
         <none>Author:
     Andry
     Siewart
---><behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+-->
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
     <template id="closing-rules-001" name="User Initiates Goodbye">
         <preconditions>
 
-            <compare comparator="exists" value1="$dialoguestates.topic.value"/>
-            <compare comparator="not_equals" value1="$dialoguestates.topic.value" value2="opening"/>
-            <compare comparator="not_equals" value1="$dialoguestates.topic.value" value2="closing"/>
-            <compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+            <compare value1="$dialoguestates.topic.value" comparator="exists"/>
+            <compare value1="$dialoguestates.topic.value" comparator="not_equals" value2="opening" />
+            <compare value1="$dialoguestates.topic.value" comparator="not_equals" value2="closing" />
+            <compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" />
             <compare comparator="contains" value1="$userstates.utterance.pos" value2="bye"/>
         </preconditions>
         <effects>
@@ -37,13 +38,13 @@ Template Dependencies:
             <update name="$dialoguestates.topic.previous" value="$dialoguestates.topic.value"/>
             <update name="$dialoguestates.topic.value" value="closing"/>
             <update name="$dialoguestates.topic.ts" value="$util.timestamp.now"/>
-            <update name="$userstates.utterance.consumers._addlast" value="rules"/>
+            <update name="$userstates.utterance.consumers._addlast" value="rules" />
     </effects>
     </template>
     <template id="closing-rules-002" name="User Cancels Goodbye">
         <preconditions>
             <compare value1="$dialoguestates.topic.value" value2="closing"/>
-            <compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+            <compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" />
             <compare comparator="contains" value1="$userstates.utterance.pos" value2="no"/>
             <compare value1="$agentstates.intent.function" value2="returnGoodbye"/>
         </preconditions>
@@ -55,13 +56,13 @@ Template Dependencies:
             <update name="$dialoguestates.topic.previous" value="closing"/>
             <update name="$dialoguestates.topic.ts" value="$util.timestamp.now"/>
  
-                <update name="$userstates.utterance.consumers._addlast" value="rules"/>
+                <update name="$userstates.utterance.consumers._addlast" value="rules" />
     </effects>
     </template>
     <template id="closing-rules-003" name="User Returns Goodbye">
         <preconditions>
             <compare value1="$dialoguestates.topic.value" value2="closing"/>
-            <compare comparator="not_contains" value1="$userstates.utterance.consumers" value2="rules"/>
+            <compare value1="$userstates.utterance.consumers" comparator="not_contains" value2="rules" />
             <compare value1="$agentstates.intent.function" value2="initialGoodbye"/>
             <compare comparator="contains" value1="$userstates.utterance.pos" value2="bye"/>
         </preconditions>
@@ -69,7 +70,7 @@ Template Dependencies:
             <update name="$userstates.intent.ts" value="$util.timestamp.now"/>
             <update name="$userstates.intent.function" value="returnGoodbye"/>
  
-                <update name="$userstates.utterance.consumers._addlast" value="rules"/>
+                <update name="$userstates.utterance.consumers._addlast" value="rules" />
     </effects>
     </template>
     <!-- This should perhaps be put in the time manager -->

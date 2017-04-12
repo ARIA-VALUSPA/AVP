@@ -1,0 +1,71 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\src\main\resources\template.xsd">
+
+	<template id="alice_agent" name="InitialPersonality">
+		<preconditions>
+			<compare value1="$agentstates.emotion.personality" comparator="not_exists"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.emotion.personality.O" value="-0.6"/>
+			<update name="$agentstates.emotion.personality.C" value="-0.1"/>
+			<update name="$agentstates.emotion.personality.E" value="-0.3"/>
+			<update name="$agentstates.emotion.personality.A" value="-0.6"/>
+			<update name="$agentstates.emotion.personality.N" value="0.1"/>
+		</effects>
+	</template>
+
+	<template id="alice_SR" name="InitialSocialRelationship">
+		<preconditions>
+			<compare value1="$agentstates.emotion.SR" comparator="not_exists"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.SR.value" value="0"/>
+			<update name="$agentstates.SR.affinity" value="0"/>
+			<update name="$agentstates.SR.familiarity" value="0"/>
+			<update name="$agentstates.SR.maxFamiliarity" value="200 + $agentstates.emotion.personality.O * -100 + $agentstates.emotion.personality.E * -100 + $agenstates.emotion.personality.N * -100 "/>
+			<update name="$agentstates.SR.decayRate" value="0.69"/>
+			<update name="$agentstates.SR.intentionAffinity" value="0"/>
+			<update name="$agentstates.SR.interactionNumber" value="0"/>			
+		</effects>
+	</template>
+
+	<template id="alice_emotion" name="InitialEmotions">
+		<preconditions>
+			<compare value1="$agentstates.emotion.happy" comparator="not_exists"/>
+			<compare value1="$agentstates.emotion.sad" comparator="not_exists"/>
+			<compare value1="$agentstates.emotion.angry" comparator="not_exists"/>
+			<compare value1="$agentstates.emotion.surprise" comparator="not_exists"/>
+			<compare value1="$agentstates.emotion.disgust" comparator="not_exists"/>
+			<compare value1="$agentstates.emotion.fear" comparator="not_exists"/>
+			<compare value1="$agentstates.emotion.neutral" comparator="not_exists"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.emotion.happy.intensity" value="0"/>
+			<update name="$agentstates.emotion.happy.decayRate" value="-0.4"/>
+			<update name="$agentstates.emotion.happy.threshold" value="0.2"/>
+
+			<update name="$agentstates.emotion.sad.intensity" value="0"/>
+			<update name="$agentstates.emotion.sad.decayRate" value="-0.5"/>
+			<update name="$agentstates.emotion.sad.threshold" value="-0.3"/>
+
+			<update name="$agentstates.emotion.angry.intensity" value="0"/>
+			<update name="$agentstates.emotion.angry.decayRate" value="-0.6"/>
+			<update name="$agentstates.emotion.angry.threshold" value="-0.3"/>
+
+			<update name="$agentstates.emotion.surprise.intensity" value="0"/>
+			<update name="$agentstates.emotion.surprise.decayRate" value="-0.7"/>
+			<update name="$agentstates.emotion.surprise.threshold" value="0.2"/>
+
+			<update name="$agentstates.emotion.disgust.intensity" value="0"/>
+			<update name="$agentstates.emotion.disgust.decayRate" value="-0.5"/>
+			<update name="$agentstates.emotion.disgust.threshold" value="-0.3"/>
+
+			<update name="$agentstates.emotion.fear.intensity" value="0"/>
+			<update name="$agentstates.emotion.fear.decayRate" value="-0.7"/>
+			<update name="$agentstates.emotion.fear.threshold" value="-0.3"/>
+			
+			<update name="$agentstates.emotion.neutral.intensity" value="1"/>
+			<update name="$agentstates.emotion.neutral.decayRate" value="-0.5"/>
+			<update name="$agentstates.emotion.neutral.threshold" value="0.2"/>
+		</effects>
+	</template>
+</behaviourtemplates>

@@ -4,7 +4,7 @@
 modulespaths=lib/*:modules/*:modules/lib/*
 
 # MAIN JAR TO LOAD
-mainjar=winger-0.1.jar
+# mainjar=FlipperMMDS.jar
 
 # MAIN CLASS TO LOAD
 # package name and class name as defined in java file

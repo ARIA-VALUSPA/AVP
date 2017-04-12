@@ -92,7 +92,7 @@ Schema files:
 		<argument name="var.var1" value="@{$userstates.name$ || '';}"/>
 	</behaviour>
 </template>-->
-<!--The user has approached the agent physically -->
+
 <template id="opening_001" name="On User Approach">
 	<preconditions>
 		<!--<compare value1="$userstates.intent.function" value2="returnGreeting"/>-->
@@ -109,6 +109,8 @@ Schema files:
 		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
 		<update name="$agentstates.intent.function" value="initialSelfIntroduction"/>
 		<update name="$dialoguestates.time.start" value="$util.timestamp.now"/>
+
+
 	</effects>
 
 	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
@@ -122,8 +124,7 @@ Schema files:
 	</behaviour>
 </template>
 
-<!--The user has responded politely to a greeting -->
-<template id="opening_002a" name="On User Respond Polite">
+<template id="opening_002a" name="On User Respond">
 
 	<preconditions>
 		<compare value1="$userstates.intent.function" value2="returnGreeting"/>
@@ -149,7 +150,6 @@ Schema files:
 	</behaviour>
 </template>
 
-<!-- The user has responded to a greeting-->
 <template id="opening_002b" name="On User Respond">
 	<preconditions>
 		<compare value1="$userstates.intent.function" value2="returnGreeting"/>
@@ -173,7 +173,6 @@ Schema files:
 	</behaviour>
 </template>
 
-<!-- The user is unfamiliar with Wonderland -->
 <template id="opening_003a" name="On User Not In Wonderland">
 	<preconditions>
 		<compare value1="$userstates.intent.function" value2="disconfirm"/>
@@ -183,6 +182,7 @@ Schema files:
 	</preconditions>
 
 	<effects>
+		<update name="$dialoguestates.state.value" value="beenToWonderland" />
 		<update name="$dialoguestates.state.ts" value="$util.timestamp.now" />
 		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
 		<update name="$agentstates.intent.function" value="setQuestion"/>
@@ -191,9 +191,7 @@ Schema files:
 		
 		<update name="$dialoguestates.topic.ts" value="$util.timestamp.now" />
 		<update name="$dialoguestates.state.value" value="enter" />
-
-			
-			<update name="$userstates.utterance" value=""/>
+		<update name="$userstates.utterance" value=""/>
 	</effects>
 
 	<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
@@ -204,8 +202,6 @@ Schema files:
 	</behaviour>
 </template>
 
-
-<!-- The user is familiar with Wonderland-->
 <template id="opening_003b" name="On User In Wonderland">
 	<preconditions>
 		<compare value1="$userstates.intent.function" value2="confirm"/>
@@ -215,6 +211,7 @@ Schema files:
 	</preconditions>
 
 	<effects>
+		<update name="$dialoguestates.state.value" value="beenToWonderland" />
 		<update name="$dialoguestates.state.ts" value="$util.timestamp.now" />
 		<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
 		<update name="$agentstates.intent.function" value="setQuestion"/>
@@ -234,7 +231,6 @@ Schema files:
 	</behaviour>
 </template>
 
-<!-- The user's intention in the opening-phase is unknown -->
 <template id="opening_unknown" name="Unknown opening" >
 	<preconditions>
 		<compare value1="$userstates.intent.function" value2="unknown"/>

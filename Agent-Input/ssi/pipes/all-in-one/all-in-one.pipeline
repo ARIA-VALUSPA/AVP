@@ -149,7 +149,7 @@
 				<listen address="message@agent-fml"/>
 			</object>		
 			<runnable create="ActiveMQEventReceiver:agenbmltreceiver" address="message@agent-bml" brokerURI="$(activemq:uri)" topic="$(activemq:topic:agent:bml)" defaultDuration="1000" />
-			<object create="FileAnnotationWriter:agentbmlwriter" annotationPath="$(log:dir)\$(date)\agent-bml" schemePath="schemes\agent-bml" defaultConfidence="1" meta="annotator=system;role=agent">
+			<object create="FileAnnotationWriter:agentbmlwriter" annotationPath="$(log:dir)\$(date)\agent-bml" schemePath="schemes\agent-bml" defaultConfidence="1" meta="annotator=system;role=agent;trigger=ActiveMQSender{topic=vib.input.BML,uri=tcp://localhost:61616}">
 				<listen address="message@agent-bml"/>
 			</object>		
 			<runnable create="ActiveMQEventReceiver:dialogreceiver" address="message@dialog" brokerURI="$(activemq:uri)" topic="$(activemq:topic:dialog)" defaultDuration="1000" />

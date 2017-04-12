@@ -1,6 +1,6 @@
 <behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
 
-	<!-- <template id="0" name="Respond_To_Unclear_Questions">
+	<template id="0" name="Respond_To_Unclear_Questions">
 		<preconditions>
             <compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />
 			<compare value1="$userstates.intent.function" value2="unknown"/>
@@ -8,8 +8,8 @@
 		</preconditions>
 		<effects>
 
-			<update name="$dialoguestates.state.value" value="infoRequest" />
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
+			<update name="$agentstates.intent.function" value="answer"/>
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
 		</effects>
 
@@ -17,7 +17,7 @@
 			<argument name="template" value="feedback_auto_negative_n_01"/>
 			<argument name="fallback" value="I'm sorry?"/>
 		</behaviour>
-	</template> -->
+	</template>
 
 	<template id="set-question-choice-001" name="Agent Asks User to Select Subject">
   		<preconditions>
@@ -27,8 +27,8 @@
    			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
   		</preconditions>
   		<effects>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
-  			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
+  			<update name="$agentstates.intent.function" value="answer"/>
   			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
 		</effects>
   		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
@@ -51,9 +51,9 @@
 			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
 		</preconditions>
 		<effects>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_02"/>
@@ -73,9 +73,9 @@
 			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
 		</preconditions>
 		<effects>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_02"/>
@@ -95,9 +95,9 @@
 			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
 		</preconditions>
 		<effects>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_02"/>
@@ -108,8 +108,8 @@
 	</template>
 
 
-	<!-- ID's can be identified as topic(informs)-semantic(rabbit)-inform(001)type(a) -->
-	<!-- Agent informs: "The white rabbit was mean at the tea party" -->
+	<!-- ID's can be identified as topic(informs)-semantic(rabbit)-answer(001)type(a) -->
+	<!-- Agent answers: "The white rabbit was mean at the tea party" -->
 	<!-- whiteRabbit -->
 	<template id="informs-rabbit-001a" name="Agent Informs About Rabbit">
 		<preconditions>
@@ -126,9 +126,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="whiteRabbit1"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_01"/>
@@ -153,9 +153,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="whiteRabbit1"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_01"/>
@@ -182,9 +182,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="whiteRabbit2"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -209,9 +209,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="whiteRabbit2"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -239,9 +239,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="whiteRabbit3"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -266,9 +266,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="whiteRabbit3"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -298,9 +298,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="hatter1"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_01"/>
@@ -325,9 +325,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="hatter1"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_01"/>
@@ -354,9 +354,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="hatter2"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -381,9 +381,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="hatter2"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -411,9 +411,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="hatter3"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -438,9 +438,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="hatter3"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -470,9 +470,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="gryphon1"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_01"/>
@@ -497,9 +497,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="gryphon1"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_01"/>
@@ -526,9 +526,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="gryphon2"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
@@ -554,9 +554,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="gryphon2"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -584,9 +584,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="gryphon3"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>
@@ -611,9 +611,9 @@
 		</preconditions>
 		<effects>
 			<update name="$dialoguestates.subjects._addfirst" value="gryphon3"/>
-			<update name="$dialoguestates.state.value" value="infoRequest" />
+			<update name="$dialoguestates.state.value" value="awaitUserResponse" />
 			<update name="$agentstates.intent.ts" value="$util.timestamp.now"/>
-			<update name="$agentstates.intent.function" value="inform"/>
+			<update name="$agentstates.intent.function" value="answer"/>
 		</effects>
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_elaborate_y_01"/>

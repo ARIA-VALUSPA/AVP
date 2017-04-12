@@ -6,6 +6,7 @@ show:gui = true
 # voice activity detection
 
 vad:use		= true
+vad:threshold = 0.005
 
 # logging
 

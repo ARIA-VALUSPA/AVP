@@ -115,8 +115,8 @@
 		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
 			<argument name="template" value="inform_statement_y_02"/>
 			<argument name="alt.inform" value="1"/>
-			<argument name="var.var1" value="Oh you look happy today. Shall I tell you about the queen or about the white rabbit?"/>
-			<argument name="fallback" value="Oh you look happy today. Shall I tell you about the queen or about the white rabbit?"/>
+			<argument name="var.var1" value="Oh you look happy today. Shall I tell you about the queen or about the rabbit?"/>
+			<argument name="fallback" value="Oh you look happy today. Shall I tell you about the queen or about the rabbit?"/>
 		</behaviour>
 	</template>	
 	
@@ -1145,7 +1145,7 @@ so need to change this to another character - MT -->
 	</template>	
 	
 	<!-- Template 46: but how will the agent react to the user's response to this one? -MT -->
-<!--	<template id="46" name="Respond_ToDisagreement">
+	<template id="46" name="Respond_ToDisagreement">
 		<preconditions> 
             <compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />
             <compare value1="$dialoguestates.state.value" comparator="not_equals" value2="enter" />
@@ -1165,7 +1165,7 @@ so need to change this to another character - MT -->
 			<argument name="var.var1" value="Why not?"/>
 			<argument name="fallback" value="Why not?"/>
 		</behaviour>
-	</template>-->	
+	</template>	
 	
 <!-- T47 Bad weather response -->	
 	<template id="47" name="Respond_ToBad_Weather">
@@ -1287,7 +1287,7 @@ so need to change this to another character - MT -->
 	</template>	
 
 	<!-- Template 50: replaced No Problem with You're welcome  -MT -->	
-<!--	<template id="50" name="Chocie Question">
+	<template id="50" name="Chocie Question">
 		<preconditions> 
                 <compare value1="$dialoguestates.topic.value" value2="infoRetrieval" />
 			<compare value1="$userstates.intent.function" value2="longPause" />
@@ -1308,7 +1308,7 @@ so need to change this to another character - MT -->
 			<argument name="fallback" value="Would you like to talk about the White Rabbit, the Mad Hatter or the Queen?"/>
 		</behaviour>
 	</template>		
--->
+
 <!-- Template 51  -MT -->		
 	<template id="51" name="Respond_To_Interest_FromAudio">
 		<preconditions>

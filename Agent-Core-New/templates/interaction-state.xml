@@ -1,0 +1,68 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+<!--
+	New:
+	$dialoguestate.interaction.state = [idle, engaging, engaged]
+
+	Required:
+	$userstates.presence.value = [true,false]
+	$userstates.presence.last.ts = time (ms)
+	$userstates.is_talking = [true,false]
+	$userstates.utterance.ts = time (ms)
+	$util.timestamp.now = time (ms)
+-->
+	<!-- Intialize the interaction states -->
+	<template id="initial" name="initializeinteraction">
+		<preconditions>
+			<compare value1="$dialoguestates.interaction.state" comparator="not_exists"/>			
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.interaction.state" value="idle"/>
+		</effects>		
+	</template>
+
+	<template id="idle-engaging" name="idleToEngaging">
+		<preconditions>
+			<compare value1="$dialoguestates.interaction.state" value2="idle"/>
+			<compare value1="$userstates.presence.value" value2="true"/>        
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.interaction.state" value="engaging"/>
+		</effects>		
+	</template>
+	
+	<template id="engaging-engaged" name="engagingToEngaged">
+		<preconditions>
+			<compare value1="$dialoguestates.interaction.state" value2="engaging"/>	
+			<indicator startvalue="1" comparator="greater_equals" endvalue="2">
+				<icompare value1="$userstates.presence.last.ts" comparator="smaller_than" value2="$util.timestamp.now-2000" modifier="+1"/>        
+				<icompare value1="$userstates.is_talking" value2="true" modifier="+1"/>        
+			</indicator>					
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.interaction.state" value="engaged"/>
+		</effects>		
+	</template>	
+
+	<template id="engaged-engaging" name="engagedToEngaging">
+		<preconditions>
+			<compare value1="$dialoguestates.interaction.state" value2="engaged"/>
+			<compare value1="$userstates.is_talking" value2="false"/>
+			<compare value1="$userstates.utterance.ts" comparator="smaller_than" value2="$util.timestamp.now-20000"/>        
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.interaction.state" value="engaging"/>
+		</effects>		
+	</template>
+
+	<template id="engaging-idle" name="engagingToIdle">
+		<preconditions>
+			<compare value1="$dialoguestates.interaction.state" value2="engaging"/>
+			<compare value1="$userstates.presence.last.ts" comparator="smaller_than" value2="$util.timestamp.now-5000"/>  
+			<compare value1="$userstates.presence.value" value2="false"/>      
+		</preconditions>
+		<effects>
+			<update name="$dialoguestates.interaction.state" value="idle"/>
+		</effects>		
+	</template>
+
+</behaviourtemplates>

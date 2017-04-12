@@ -1,0 +1,15 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+	<template id="update-agent-emotion" name="updateAgentHappiness">
+		<preconditions>
+			<compare value1="$agentstates.emotion.happy.ts" comparator="smaller_than" value2="$util.timestamp.now-2000"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.emotion.happy.adaptation" value="$userstates.emotion.valence-0.5"/>
+			<update name="$agentstates.emotion.happy.adaptation" value="$agentstates.emotion.happy.adaptation * $agentstates.personality.E"/>
+			<update name="$agentstates.emotion.happy.intensity" value="$agentstates.emotion.happy.intensity + $agentstates.emotion.happy.adaptation "/>
+			<update name="$agentstates.emotion.happy.ts" value="$util.timestamp.now"/>
+
+			<remove name="$agentstates.emotion.happy.adaptation" />
+		</effects>
+	</template>
+</behaviourtemplates>

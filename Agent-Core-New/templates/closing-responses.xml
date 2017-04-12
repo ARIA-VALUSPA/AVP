@@ -85,10 +85,10 @@
 	<template id="closing-responses-005" name="Agent Announces Initial Goodbye">
 		<preconditions>
 			<compare value1="$dialoguestates.topic.value" comparator="not_equals" value2="closing"/>
-			<indicator comparator="greater_equals" endvalue="2" startvalue="0">
+			<indicator comparator="greater_equals" endvalue="3" startvalue="0">
 				<icompare comparator="smaller_equals" modifier="+2" value1="$userstates.emotion.interest" value2="0.05"/>
-				<!--<icompare comparator="greater_equals" modifier="+1" value1="$agentstates.turn.count" value2="10"/>-->
-				<!--<icompare comparator="smaller_equals" modifier="+3" value1="$dialoguestates.time.start+120000" value2="$util.timestamp.now"/>-->
+				<icompare comparator="greater_equals" modifier="+1" value1="$agentstates.turn.count" value2="10"/>
+				<icompare comparator="smaller_equals" modifier="+3" value1="$dialoguestates.time.start+120000" value2="$util.timestamp.now"/>
 			</indicator>
 			<trigger value1="$dialoguestates.turn.owner" value2="agent"/>
 		</preconditions>

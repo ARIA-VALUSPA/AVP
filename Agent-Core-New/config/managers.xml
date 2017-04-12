@@ -26,23 +26,16 @@ Managers: A template can contain one or multiple managers, and for each managers
 			<parameter name="stopwords_path" path="true" value="../data/stopwords.txt"/>
 			<parameter name="synonyms_path" path="true" value="../data/synonyms.txt"/>
 			<parameter name="pos_model_path" path="true" value="../data/english-left3words-distsim.tagger"/>
+			<parameter name="qa_path" path="true" value="../data/alice_questions.xml"/>
 		</class>
 	</manager>
-	<!-- <manager id="002" name="IntentGenerator" interval="100"> -->
-		<!-- <templates> -->
-			<!-- <template path="../templates/rules.xml" />		 -->
-			<!-- <template path="../templates/info-rules.xml" />
-			<template path="../templates/opening-rules.xml" />	
-			<template path="../templates/closing-rules.xml" />	 -->
-		<!-- </templates> -->
-	<!-- </manager> -->
         <!-- BUG: The turn manager doesnt work if faster than 50 ms (or around it, makes it work sometimes, probably quickly changing vars -->
-    <!-- <manager id="003" name="TurnManager" interval="200">
+    <manager id="003" name="TurnManager" interval="200">
 		<templates>
 			<template path="../templates/turn-module.xml" />		
 		</templates>
 	</manager>
-	 --><!-- SSI Manager that updates SSI and processes its templates -->
+	<!-- SSI Manager that updates SSI and processes its templates -->
 
     <manager id="004" name="AMQManager" interval="50">
     	<class classname="eu.aria.dialogue.managers.AMQMultipleManager">
@@ -77,11 +70,7 @@ Managers: A template can contain one or multiple managers, and for each managers
             	<behaviour classname="eu.aria.dialogue.behaviours.FMLGenerator" />
             </behaviours>
             <templates>
-            	<!-- <template path="../templates/info-responses.xml" />	 -->
-            	<!-- <template path="../templates/responses.xml" />		 -->
-            	<!-- <template path="../templates/opening-responses.xml" /> -->
-            	<!-- <template path="../templates/closing-responses.xml" /> -->
-	            <template path="../templates/Examples/tutorial1.xml" /> 
+            	<template path="../templates/qa-template.xml"/>
             </templates>
 	</manager>
 
@@ -93,5 +82,14 @@ Managers: A template can contain one or multiple managers, and for each managers
 	<manager id="007" name="IS Inspector" interval="25">
 		<class classname="eu.aria.dialogue.managers.utils.ISInspector">
 		</class>
+	</manager>
+
+	<manager id="008" name="PersonalityManager" interval="100">
+		<class classname="eu.aria.dialogue.managers.SocialManager">
+		</class>
+		<templates>
+			<template path="../templates/Personalities/Alice.xml"/>
+			<template path="../templates/emotion-agent.xml"/>
+		</templates>
 	</manager>
 </managers>

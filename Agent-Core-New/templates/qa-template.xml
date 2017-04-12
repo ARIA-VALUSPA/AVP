@@ -1,0 +1,30 @@
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+	
+
+	<!-- QA example -->
+	<template id="qa-initialize" name="initialize QAMatcher">
+		<preconditions>
+			<compare value1="$agentstates.utterance.previousAnswer" comparator="not_exists"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.utterance.previousAnswer" value=" "/>
+		</effects>
+	</template>
+
+	<template id="question" name="General Question Answer Pair">
+		<preconditions>
+			<compare value1="$agentstates.utterance.previousAnswer" comparator="not_equals" value2="$agentstates.utterance.bestAnswer"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.utterance.previousAnswer" value="$agentstates.utterance.bestAnswer"/>			
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="inform_statement_y_02"/>
+			<argument name="alt.inform" value="1"/>
+			<argument name="var.var1" value="$agentstates.utterance.bestAnswer"/>
+			<argument name="fallback" value="$agentstates.utterance.bestAnswer"/>
+		</behaviour>
+	</template>
+
+	
+</behaviourtemplates>

@@ -7,6 +7,7 @@
 		<parameter>all-in-one</parameter>
 		<config file="..\..\Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config" key="asr:host" separator="=" info="IP of the ASR machine" />
 		<config file="..\..\Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config" key="asr:port" separator="=" info="Port used by the ASR" />
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config" key="vad:threshold" separator="=" info="Threshold for voice activity detection" />
 		<config file="..\..\Agent-Input\ssi\models\face\caffe.cfg" key="mode" separator=" " info="Switch between CPU and GPU classification">
 			<option default="True">GPU</option>
 			<option>CPU</option>
