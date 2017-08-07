@@ -1,25 +1,42 @@
 live 		= true 										# $(bool) use live input from a microphone
 file 		= media/audio.wav 			   				# if not live input read in from this file
 
-# logging
+# LOGGING
 
-log:use  	= true
+log:use  	= false
 log:dir 	= log
 log:name	= asr
 log:role	= user
 
-# voice activity detection
+# ASR HOST
 
-vad:use		  = true
-vad:threshold = 0.005								# voice activity threshold
+# asr:host	=  127.0.0.1 # localhost
+asr:host	=  34.252.96.222 # amazon server
 
-# asr
+# ASR PORT
+# Below you can find the option for the ASR server running from Amazon
 
-asr:host	= 192.168.187.129
-asr:port	= 8888
-asr:silence = 30									# amount of silence (in ms) that is added to beginning of each segment (only if vad is turned on)
+# asr:port = 8888   # EN, 1-best ("utt")
+# asr:port = 8887 # EN, 5-best ("utt")
+asr:port = 8886 # EN, 1-best ("inc")
+# asr:port = 9999 # DE, 1-best ("utt")
+# asr:port = 9998 # DE, 5-best ("utt")
+# asr:port = 9997 # DE, 1-best ("inc")
+asr:nbest = 1
+asr:mode  = inc
 
-# activemq
+# ASR EXTRA OPTIONS
+
+asr:console = true
+asr:silence = 30	# amount of silence (in ms) board is added to beginning of each segment (only if vad is turned on)
+
+# VOICE ACTIVITY DETECTION OPTIONS
+
+vad:use		    = false # set to false if using ASR server in 'inc' mode. True otherwise
+vad:threshold = 0.01								# voice activity threshold
+
+
+# ACTIVEMQ OPTIONS
 
 activemq:use = false								# share results through activemq
 activemq:uri = failover:(tcp://localhost:61616)		# activemq uri

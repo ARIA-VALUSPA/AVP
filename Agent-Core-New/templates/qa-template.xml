@@ -1,4 +1,4 @@
-<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS D:\GitHub\Flipper\resource\template.xsd">
+<behaviourtemplates xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://github.com/hmi-utwente/FlipperMMDS C:\Users\WaterschootJB\Documents\GitHub\ARIA-DialogueManagement\dist\data\template.xsd">
 	
 
 	<!-- QA example -->
@@ -8,6 +8,7 @@
 		</preconditions>
 		<effects>
 			<update name="$agentstates.utterance.previousAnswer" value=" "/>
+			<remove name="$agentstates.utterance.bestAnswer" />
 		</effects>
 	</template>
 
@@ -25,6 +26,33 @@
 			<argument name="fallback" value="$agentstates.utterance.bestAnswer"/>
 		</behaviour>
 	</template>
+
+	<!-- <template id="interrupt" name="interruption">
+		<preconditions>
+			<compare value1="$agentstates.is_talking" value2="true"/>
+			<compare value1="$userstates.is_talking" value2="true"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.interrupted" value="true"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="feedback_empty_n_01.xml"/>
+			<argument name="emotion" value="angry"/>
+		</behaviour>
+	</template>
+
+	<template id="longSentence" name="longSentence">
+		<preconditions>
+			<compare value1="$agentstates.is_talking" value2="false"/>
+			<compare value1="$userstates.is_talking" value2="false"/>
+		</preconditions>
+		<effects>
+			<update name="$agentstates.interrupted" value="false"/>
+		</effects>
+		<behaviour class="eu.aria.dialogue.behaviours.FMLGenerator">
+			<argument name="template" value="long_answer.xml"/>
+		</behaviour>
+	</template> -->
 
 	
 </behaviourtemplates>

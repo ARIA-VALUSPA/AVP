@@ -65,15 +65,15 @@
 
 <!ATTLIST certainty id ID #REQUIRED type (none|certain|uncertain) #IMPLIED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5" intensity CDATA "1">
 
-<!ATTLIST performative id ID #REQUIRED type (accept|advice|agree|announce|approve|beg|confirm|criticize|deny|disagree|greet|implore|incite|inform|none|order|paraphrase|praise|propose|question|recognize|refuse|request|restpose|suggest|warn) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
+<!ATTLIST performative id ID #REQUIRED type (accept|advice|agree|announce|approve|beg|confirm|criticize|deny|disagree|greet|implore|incite|inform|none|order|paraphrase|praise|propose|question|recognize|refuse|request|restpose|suggest|warn|restposeakimbo) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
 
 <!ATTLIST iconic id ID #REQUIRED type (chop|byebye) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
 
-<!ATTLIST deictic id ID #REQUIRED type (you|selftouch) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
+<!ATTLIST deictic id ID #REQUIRED type (you|selftouch|down|onmyleft|onmyright) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
 
 <!ATTLIST backchannel id ID #REQUIRED type (none|acceptance|agreement|belief|disagreement|disbelief|disliking|distraction|grasp_interest|interest|liking|no_interest|no_understanding|refusal|understanding) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
 
-<!ATTLIST emotion id ID #REQUIRED type (anger|anxiety|bored|despair|disappointment|disgust|embarrassment|envy|fear|hate|joy|neutral|panic|pride|relief|sadness|surprise|tension|worried) #REQUIRED regulation (fake|felt|inhibited) "felt" start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5" intensity CDATA "1">
+<!ATTLIST emotion id ID #REQUIRED type (anger|anxiety|bored|despair|disappointment|disgust|embarrassment|envy|fear|hate|joy|neutral|panic|pride|relief|sadness|surprise|tension|worried|joybody) #REQUIRED regulation (fake|felt|inhibited) "felt" start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5" intensity CDATA "1">
 
 <!ATTLIST emphasis id ID #REQUIRED type (none|reduced|moderate|strong) #REQUIRED start CDATA #REQUIRED end CDATA #REQUIRED>
 

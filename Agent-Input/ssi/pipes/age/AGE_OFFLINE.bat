@@ -1,0 +1,1 @@
+..\..\bin\xmlpipe -debug ssi.log -config age_offline age

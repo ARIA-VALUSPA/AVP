@@ -1,12 +1,11 @@
 <novaproject version="1">
 	<medias>
-		<media>audio.wav</media>
 		<media>video.avi</media>
 	</medias>
 	<signals>
-		<signal bg="#FFF0F0F0" fg="#FF000000">audio.wav</signal>
-		<signal bg="#FFF0F0F0" fg="#FF000000">voiceactivity.stream</signal>
-		<signal bg="#FFF0F0F0" fg="#FF000000">emax.stream</signal>
+		<signal>audio.wav</signal>
+		<signal>voiceactivity.stream</signal>
+		<signal>emax.stream</signal>		
 	</signals>
 	<tiers>
 		<tier name="transcription">transcription.annotation</tier>

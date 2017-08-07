@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+
+<ssi>
+	<voice active="$(vad@audio{field=state;span=-1})">		
+		<emotion>		
+			<arousal>
+				<negative>$(arousal(avg)@audio{select=0})</negative>
+				<positive>$(arousal(avg)@audio{select=1})</positive>
+			</arousal>
+			<valence>
+				<negative>$(valence(avg)@audio{select=0})</negative>
+				<positive>$(valence(avg)@audio{select=1})</positive>
+			</valence>
+			<interest>
+				<not_interested>$(interest(avg)@audio{select=0})</not_interested>
+				<interested>$(interest(avg)@audio{select=1})</interested>
+			</interest>
+		</emotion>
+		<gender>		
+			<male>$(gender(avg)@audio{select=0})</male>
+			<female>$(gender(avg)@audio{select=1})</female>
+		</gender>
+		<age>
+			<child>$(age(avg)@audio{select=0})</child>
+			<youth>$(age(avg)@audio{select=1})</youth>
+			<adult>$(age(avg)@audio{select=2})</adult>
+			<senior>$(age(avg)@audio{select=3})</senior>			
+		</age>
+	</voice>
+</ssi>

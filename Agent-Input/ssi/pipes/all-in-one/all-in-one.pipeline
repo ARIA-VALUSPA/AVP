@@ -14,6 +14,7 @@
 		<load name="model" />
 		<load name="control" />
 		<load name="asrkaldi" />
+		<load name="python" />		
 	</register>
 		
 	<!-- camera sensor -->
@@ -119,7 +120,7 @@
 		</consumer-->			
 		<consumer create="FileAnnotationWriter::arousalwriter" annotationPath="$(log:dir)\$(date)\arousal" schemePath="schemes\arousal" defaultConfidence="1" meta="annotator=system;role=user">
 			<input pin="arousal(avg)" frame="1"/>
-		</consumer>			
+		</consumer>
 
 		<sensor create="EventToStream:valenceserializer" sr="$(camera:fps)" eventValue="valence_pos">
 			<listen address="valence(avg)@audio"/>
@@ -130,7 +131,7 @@
 		</consumer-->		
 		<consumer create="FileAnnotationWriter::valencewriter" annotationPath="$(log:dir)\$(date)\valence" schemePath="schemes\valence" defaultConfidence="1" meta="annotator=system;role=user">
 			<input pin="valence(avg)" frame="1"/>
-		</consumer>		
+		</consumer>
 		
 		<sensor create="EventToStream:interestserializer" sr="$(camera:fps)" eventValue="interested">
 			<listen address="interest(avg)@audio"/>

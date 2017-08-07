@@ -141,6 +141,20 @@
 		</constraints>
 	</behaviorset>
 	
+	<behaviorset name="emotion-joybody">
+		<signals>
+			<signal id="1" name="head=head_infront" modality="head"/>
+			<signal id="2" name="faceexp=joy" modality="face"/>
+			<signal id="3" name="emotion=Joy_Signal_12" modality="gesture" />
+		</signals>
+		<constraints>
+			<core>
+				<item id="2"/>
+				<item id="3"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
 	<behaviorset name="emotion-despair">
 		<signals>
 			<signal id="1" name="gaze=look_down" modality="face">
@@ -380,7 +394,18 @@
 	
 	<behaviorset name="deictic-onmyleft">
 		<signals>
-			<signal id="1" name="deictic=on_my_left_Ges_L" modality="gesture"/>
+			<signal id="1" name="deictic=OnMyLeft_Ges_L" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="deictic-onmyright">
+		<signals>
+			<signal id="1" name="deictic=OnMyRight_Ges_R" modality="gesture"/>
 		</signals>
 		<constraints>
 			<core>
@@ -437,9 +462,34 @@
 	</behaviorset>
 	
 	<!-- PERFORMATIVES -->
-	<behaviorset name="performative-restpose">
+	<behaviorset name="performative-engaginguser">
 		<signals>
 			<signal id="1" name="rest=Along" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-restposeakimbo">
+		<signals>
+			<signal id="1" name="rest=Akimbo" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="1"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-randomrestpose">
+		<signals>
+			<signal id="1" name="rest=Along" modality="gesture">
+				<alternative name="rest=Akimbo" probability="0.33"/>
+				<alternative name="rest=ArmsCrossed" probability="0.33"/>
+			</signal>
 		</signals>
 		<constraints>
 			<core>

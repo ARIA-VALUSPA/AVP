@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <annotation ssi-v="3">
     <info ftype="ASCII" size="0" />
-    <meta role="user" annotator="system" />
+    <meta role="agent" annotator="system" />
     <scheme name="dialog" type="FREE" />
 </annotation>

@@ -56,12 +56,17 @@
 	</object>		
 	
 	<!-- send asr string -->
-	<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" xport="$(asr:xport)" type="1" address="asr@audio" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24">
+	<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" xport="$(asr:xport)" type="1" address="raw@kaldi" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24">
 		<input pin="audio;vad" frame="0.01s">
 			<transformer create="AudioConvert"/>
 		</input>		
 		<listen address="language(avg)@audio"/>
 	</consumer>	
+	
+	<object create="PythonObject" syspath=".;scripts" script="kaldi_parser" optsstr="address=asr@audio">
+		<listen address="raw@kaldi"/>
+	</object>
+	
 	<consumer create="XMLEventSender:monitor" address="asr@xml" path="asrkaldi.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
 		<input pin="vad" frame="1"/>
 		<listen address="asr@audio"/>

@@ -9,7 +9,7 @@
 	
 	<!-- send asr string -->
 	<gate open="$(vad:use)">
-		<consumer create="AsrKaldiSender:kaldi" host="$(asr:host)" port="$(asr:port)" type="1" address="asr@audio" monitor="$(show:gui)" mcaption="ASR" mnum="10" mfontsize="24">
+		<consumer create="AsrKaldiSender:kaldi" host="$(asr:host)" port="$(asr:port)" type="1" address="raw@kaldi" monitor="$(show:gui)" mcaption="ASR" mnum="10" mfontsize="24">
 			<input pin="audio16k" frame="0.01s">
 				<transformer create="AudioConvert"/>
 			</input>
@@ -19,12 +19,16 @@
 		</consumer>	
 	</gate>
 	<gate close="$(vad:use)">
-		<consumer create="AsrKaldiSender:kaldi" host="$(asr:host)" port="$(asr:port)" type="1" address="asr@audio" monitor="$(show:gui)" mcaption="ASR" mnum="10" mfontsize="24">
+		<consumer create="AsrKaldiSender:kaldi" host="$(asr:host)" port="$(asr:port)" type="1" address="raw@kaldi" monitor="$(show:gui)" mcaption="ASR" mnum="10" mfontsize="24">
 			<input pin="audio16k" frame="0.01s">
 				<transformer create="AudioConvert"/>
 			</input>
 		</consumer>	
 	</gate>
+	
+	<object create="PythonObject" syspath=".;scripts" script="kaldi_parser" optsstr="address=asr@audio">
+		<listen address="raw@kaldi"/>
+	</object>	
 	
 	<gate open="$(log:use)">
 		<object create="FileAnnotationWriter:asrannowriter" annotationPath="$(log:dir)\$(date)\transcription" schemePath="schemes\transcription" defaultConfidence="1" meta="annotator=system;role=user">

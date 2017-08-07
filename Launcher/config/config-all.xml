@@ -29,5 +29,9 @@
 			<option>true</option>
 			<option default="True">false</option>
 		</config>
+		<config file="..\..\Agent-Output\bin\Agent-Output.ini" key="System.animEngine" separator=" = " info="Switch animation engine">
+			<option default="True">GRETA</option>
+			<option>LIVING-ACTOR</option>
+		</config>
 	</process>
 </xml>

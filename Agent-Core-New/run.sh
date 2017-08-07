@@ -16,4 +16,4 @@ mainclass=hmi.winger.Main
 # echo java -cp "$mainjar:$modulespaths" $mainclass
 
 # java -cp "$mainjar:$modulespaths" $mainclass
-java -cp "$modulespaths" $mainclass
+java -cp $modulespaths $mainclass

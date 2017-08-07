@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>		
+		<load name="audio" />
+		<load name="graphic" />
+		<load name="browser" />
+		<load name="opensmilewrapper" />
+		<load name="libsvm"/>
+		<load name="model"/>
+		<load name="camera"/>
+		<load name="ffmpeg"/>
+		<load name="control"/>
+		<load name="emax" />
+	</register>
+	
+	
+	
+	
+	
+	<!-- camera sensor -->
+	<sensor create="Camera" option="options/camera" fps="25.0">
+		<output channel="video" pin="video" size="2.0s"/>
+	</sensor>	
+	
+	<!-- emax tracker -->
+	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
+		<input pin="video" frame="1" async="true"/>
+		<output pin="emax"/>
+	</transformer>
+	
+	<!-- select valence and arousal -->
+	<transformer create="EMaxValenceArousal:emax_va">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_va"/>
+	</transformer>		
+	
+	<!-- select emotion scores and face region -->	
+	<transformer create="Selector" indices="6, 7, 8, 9, 10, 11, 12" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_emotion"/>
+	</transformer>
+	<transformer create="Selector" indices="2, 3, 4, 3, 4, 5, 2, 5" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_face"/>
+	</transformer>	
+	
+	<!-- create event with emotion scores -->
+	<consumer create="MapEventSender" keys="NEU,ANG,DIS,FEA,HAP,SAD,SUR" address="emotion@emax">
+		<input pin="emax_emotion" frame="1" />		
+	</consumer>	
+	
+	<!-- create event with valence/arousal scores -->
+	<consumer create="MapEventSender" keys="VALENCE,AROUSAL" address="va@emax">
+		<input pin="emax_va" frame="1" />		
+	</consumer>	
+	
+	<!-- show video -->
+	<consumer create="VideoPainter:vplot" flip="true" type="1" relative="true" swap="false" title="CAMERA">
+		<input pin="video;emax_face" frame="1"/>		
+	</consumer>	
+		
+	<!-- show emotion scores -->
+	<object create="EventPainter:eplot" type="1" autoscale="false" reset="false" fix="9.0f" title="EMAX - EMOTIONS">
+		<listen address="emotion@emax" />		
+	</object>	
+	
+	<!-- show valence/arousal scores -->
+	<object create="EventPainter:eplot" type="1" global="true" autoscale="false" reset="false" fix="0.5f" title="EMAX - EMOTIONS">
+		<listen address="va@emax" />		
+	</object>	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- audio sensor initialization -->
+	<sensor create="Audio" option="options/audio" sr="8000" scale="true">
+		<output channel="audio" pin="audio"/>		
+	</sensor>	
+>	
+	
+	<!-- activity detection -->
+	<transformer create="AudioActivity" method="0" threshold="0.05">
+		<input pin="audio" frame="0.03s" delta="0.015s"/>
+		<output pin="vad"/>
+	</transformer>
+	<consumer create="ZeroEventSender" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad@audio">
+		<input pin="vad" frame="0.1s"/>
+	</consumer>	
+	
+	<!-- feature extraction -->
+	<consumer create="TupleEventSender" address="feature@audio">
+		<input pin="audio" address="vad@audio" state="nonzerodur">
+			<transformer create="OSWrapper" configFile="$(config)"/>
+		</input>
+	</consumer>
+	
+	<!-- classifier -->
+	<object create="Classifier" trainer="$(model:gender)" address="gender@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier" trainer="$(model:age)" address="age@audio">
+		<listen address="feature@audio"/>
+	</object>	
+	<object create="Classifier:cl-arousal" trainer="$(model:arousal)" address="arousal@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier:cl-valence" trainer="$(model:valence)" address="valence@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier:cl-interest" trainer="$(model:interest)" address="interest@audio">
+		<listen address="feature@audio"/>
+	</object>	
+	
+	<!-- smoother -->
+	<object create="DecisionSmoother:genderSmoother" average="true" address="gender(avg)@audio">
+		<listen address="gender@audio"/>
+	</object>
+	<object create="DecisionSmoother:ageSmoother" average="true" address="age(avg)@audio">
+		<listen address="age@audio"/>
+	</object>		
+	<object create="DecisionSmoother:arousalSmoother" average="true" window="5.0" address="arousal(avg)@audio">
+		<listen address="arousal@audio"/>
+	</object>
+	<object create="DecisionSmoother:valenceSmoother" average="true" window="5.0" address="valence(avg)@audio">
+		<listen address="valence@audio"/>
+	</object>	
+	<object create="DecisionSmoother:interestSmoother" average="true" window="5.0" address="interest(avg)@audio">
+		<listen address="interest@audio"/>
+	</object>	
+	
+	<!-- visualization -->	
+	<consumer create="SignalPainter:plot" title="AUDIO (RAW)" size="10" type="2" autoscale="false" fix="-1.0,1.0">
+		<input pin="audio" frame="0.02s"/>
+	</consumer>
+	<consumer create="SignalPainter:plot" title="AUDIO (ACTIVITY)" size="10" type="0">
+		<input pin="vad" frame="0.02s"/>
+	</consumer>		
+		
+	<!-- browser -->
+	<object create="EventPainter:ep-gender" title="GENDER" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="gender@audio"/>
+	</object>
+	<object create="EventPainter:ep-age" title="AGE" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="age@audio"/>
+	</object>		
+	<object create="EventPainter:ep-gender(avg)" title="GENDER (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="gender(avg)@audio"/>
+	</object>
+	<object create="EventPainter:ep-age(avg)" title="AGE (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="age(avg)@audio"/>
+	</object>	
+	<object create="EventPainter:ep-arousal" title="AROUSAL" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="arousal(avg)@audio"/>
+	</object>
+	<object create="EventPainter:ep-valence" title="VALENCE" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="valence(avg)@audio"/>
+	</object>
+	<object create="EventPainter:ep-interest" title="INTEREST" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="interest(avg)@audio"/>
+	</object>	
+	
+	<!-- reset and enable button -->
+	<runnable create="ControlButton" id="genderSmoother,ageSmoother" label="RESET" message="RESET" pos="0,810,200,75"/>
+
+	
+		
+	<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+	
+		<area pos="0,0,400,600">console</area>
+		
+		<area pos="400,0,800,200" nv="1">ep-gender*</area>	
+		<area pos="400,200,800,200" nv="1">ep-age*</area>
+		<area pos="400,400,800,200" nv="1">ep-arousal,ep-valence,ep-interest</area>
+
+		<area pos="1200,0,400,300">vplot*</area>
+		<area pos="1200,300,400,600">eplot*</area>		
+		
+		<area pos="0,600,1200,200" nv="1">plot*,monitor</area>
+	</object>			
+		
+</pipeline>

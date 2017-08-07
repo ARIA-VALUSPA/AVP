@@ -1,0 +1,131 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+# All Vagrant configuration is done below. The "2" in Vagrant.configure
+# configures the configuration version (we support older styles for
+# backwards compatibility). Please don't change it unless you know what
+# you're doing.
+Vagrant.configure(2) do |config|
+  # The most common configuration options are documented and commented below.
+  # For a complete reference, please see the online documentation at
+  # https://docs.vagrantup.com.
+
+  # Every Vagrant development environment requires a box. You can search for
+  # boxes at https://atlas.hashicorp.com/search.
+  config.vm.box = "ubuntu/trusty64"
+  # config.vm.box = "ubuntu/trusty32"
+
+  # Disable automatic box update checking. If you disable this, then
+  # boxes will only be checked for updates when the user runs
+  # `vagrant box outdated`. This is not recommended.
+  # config.vm.box_check_update = false
+
+  # Create a forwarded port mapping which allows access to a specific port
+  # within the machine from a port on the host machine. In the example below,
+  # accessing "localhost:8080" will access port 80 on the guest machine.
+  # Forward port 8888 to English ASR
+  config.vm.network "forwarded_port", guest: 8888, host: 8888, host_ip: "127.0.0.1"
+  # Forward port 9999 to German ASR
+  config.vm.network "forwarded_port", guest: 9999, host: 9999, host_ip: "127.0.0.1"
+
+  # Create a private network, which allows host-only access to the machine
+  # using a specific IP.
+  config.vm.network "private_network", ip: "192.168.33.10"
+
+  # Create a public network, which generally matched to bridged network.
+  # Bridged networks make the machine appear as another physical device on
+  # your network.
+  # config.vm.network "public_network"
+
+  # Share an additional folder to the guest VM. The first argument is
+  # the path on the host to the actual folder. The second argument is
+  # the path on the guest to mount the folder. And the optional third
+  # argument is a set of non-required options.
+  # config.vm.synced_folder "../data", "/vagrant_data"
+
+  # Provider-specific configuration so you can fine-tune various
+  # backing providers for Vagrant. These expose provider-specific options.
+  # Example for VirtualBox:
+  #
+  config.vm.provider "virtualbox" do |vb|
+  #   # Display the VirtualBox GUI when booting the machine
+  #   vb.gui = true
+     vb.name = "aria-asr"
+     vb.memory = "4096"
+     vb.cpus = 2
+  end
+
+  config.vm.provider "vmware_fusion" do |v|
+     v.vmx["name"] = "aria-asr"
+     v.vmx["memsize"] = "4096"
+     v.vmx["numvcpus"] = "2"
+  end
+  #
+  # View the documentation for the provider you are using for more
+  # information on available options.
+
+  # Define a Vagrant Push strategy for pushing to Atlas. Other push strategies
+  # such as FTP and Heroku are also available. See the documentation at
+  # https://docs.vagrantup.com/v2/push/atlas.html for more information.
+  # config.push.define "atlas" do |push|
+  #   push.app = "YOUR_ATLAS_USERNAME/YOUR_APPLICATION_NAME"
+  # end
+
+  # Rather bad: private key for accessing github
+  config.vm.provision "file", preserve_order: true, source: "id_rsa_aria_git", destination: "~/.ssh/id_rsa"
+  
+  # Rather ugly: fully automated script downloading / building / configuring the latest ASR server.
+  # CUDA support is built in, but require to manually install the guest additions for 3D acceleration from virtual box or
+  # vmware to actually make any difference.
+  config.vm.provision "shell", preserve_order: true, name: "setup", privileged: false, inline: <<-SHELL
+     su vagrant
+     sudo apt-get update
+     # dependencies
+     echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+     #echo "|1|mN3AReUW5Lds2lHNc8TIccQ0RqA=|Yw4USIiwPvQjZJhTcbGd/fyu3K4= ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEAq2A7hRGmdnm9tUDbO9IDSwBK6TbQa+PXYPCPy6rbTrTtw7PHkccKrpp0yVhp5HdEIcKr6pLlVDBfOLX9QUsyCOV0wzfjIJNlGEYsdlLJizHhbn2mUjvSAHQqZETYP81eFzLQNnPHt4EVVUh7VfDESU84KezmD5QlWpXLmvU31/yMf+Se8xhHTvKSCZIFImWwoG6mbUoWf9nzpIoaSjB+weqqUUmpaaasXVal72J+UX2B+2RPW3RcT0eOzQgqlJL3RKrTJvdsjE3JEAvGq3lGHSZXy28G3skua2SmVi/w4yCE6gbODqnTWlg7+wC604ydGXA8VJiS5ap43JXiUFFAaQ==" >> ~/.ssh/known_hosts
+     sudo apt-get install -y g++ zlib1g-dev unzip make gcc automake autoconf libtool git bzip2 wget curl subversion gawk python2.7 libatlas3-base nvidia-cuda-toolkit
+     #wget -q https://s3-eu-west-1.amazonaws.com/aria-agent/kaldi.tgz -O - | tar xz
+     # the latest version of kaldi is now supported
+     git clone https://github.com/kaldi-asr/kaldi.git
+     # download latest ASR server code
+     git clone git@github.com:ARIA-VALUSPA/ARIA-ICL.git
+     mv ARIA-ICL/Module-ASR/ .
+     rm -rf ARIA-ICL
+     cp Module-ASR/src/online-tcp-* kaldi/src/online2
+     cp Module-ASR/src/online2-* kaldi/src/online2bin
+     # Apply patch
+     (cd kaldi; patch -p1 < ../Module-ASR/src/kaldi.patch)
+     # download ASR models in background
+     wget -q -O ARIA-ICL.Module-ASR.models.de.zip "https://aria-tmp.s3.amazonaws.com/ARIA-ICL.Module-ASR.models.de_2017-06-06.zip?Signature=Hv%2F9eXyhkPKxUu10xxNT%2Fj1SZL0%3D&Expires=1511999844&AWSAccessKeyId=AKIAI5SVOVTJBC4CU6AQ"; unzip ARIA-ICL.Module-ASR.models.de.zip; rm -f ARIA-ICL.Module-ASR.models.de.zip
+     wget -q -O ARIA-ICL.Module-ASR.models.en.zip "https://aria-tmp.s3.amazonaws.com/ARIA-ICL.Module-ASR.models.en_2017-03-01.zip?Signature=7ms9GMXj9saNp3alvQh9fIDk63w%3D&Expires=1512000008&AWSAccessKeyId=AKIAI5SVOVTJBC4CU6AQ"; unzip ARIA-ICL.Module-ASR.models.en.zip; rm -f ARIA-ICL.Module-ASR.models.en.zip
+     #tar xzf kaldi.tgz
+     cd kaldi/tools/
+     echo "Building kaldi tools"
+     make -j4 > /dev/null 2>&1
+     cd ../src/
+     echo "Building kaldi..."
+     ./configure --shared > /dev/null
+     # Manually patch compilation options
+     echo "CXXFLAGS += -O4 -mtune=native -DKALDI_NO_PORTAUDIO" >> kaldi.mk
+     make depend > /dev/null
+     make -j2 online2bin > /dev/null
+     # Wait until we have fully downloaded the models
+     wait
+     # link models
+     cd ~/
+     rm -rf Module-ASR/models/{en,de}
+     ln -sf ../../aria-models+mpe   Module-ASR/models/de
+     ln -sf ../../ARIA-ICL.Module-ASR.models.en_01-03-2017 Module-ASR/models/en
+  SHELL
+  # This script is always run, unlike the previous one which is only run during the first up
+  # This only starts the ASR servers
+  config.vm.provision "shell", name: "launch ASR", run: "always", privileged: false, inline: <<-SHELL
+     # Start English and German ASR
+     echo "Starting English ASR..."
+     cd Module-ASR/run
+     until ./launch-asr.sh --bin_root ../../kaldi/src/online2bin/ --lang en --socket 8888; do 
+        echo "Respawning crashed server..."; sleep 3;
+     done
+     echo 'All done!'
+  SHELL
+end

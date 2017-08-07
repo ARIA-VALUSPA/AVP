@@ -13,7 +13,19 @@ vad:threshold = 0.005
 log:use  	= false
 log:dir 	= log
 
-# asr
+# ASR HOST
 
-asr:host=192.168.88.128
-asr:port=8888
+# asr:host	=  127.0.0.1 # localhost
+asr:host	=  34.252.96.222 # amazon server
+
+# ASR PORT
+# Below you can find the option for the ASR server running from Amazon
+
+# asr:port = 8888   # EN, 1-best ("utt")
+# asr:port = 8887 # EN, 5-best ("utt")
+asr:port = 8886 # EN, 1-best ("inc")
+# asr:port = 9999 # DE, 1-best ("utt")
+# asr:port = 9998 # DE, 5-best ("utt")
+# asr:port = 9997 # DE, 1-best ("inc")
+asr:nbest = 1
+asr:mode  = inc

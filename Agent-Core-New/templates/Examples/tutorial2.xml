@@ -45,7 +45,7 @@ FML-templates:
 			<argument name="template" value="inform_statement_y_02"/>
 			<!-- this parameter has to be set in this template. it can be inform (value=1) or opinion (value=2) -->
 			<argument name="alt.inform" value="1"/>
-			<!-- set the variant of the utterance as defined in the template, in this case variant 1 will be set to the utterance.value (which we set earlier) -->
+			<!-- set the variant of the utterance as defined in the template, in this case variant1 will be set to the utterance.value (which we set earlier) -->
 			<argument name="var.var1" value="$agentstates.utterance.value"/>
 			<!-- set the emootion value for the agent utterance, in this case the type will be set to 'happy' -->
 			<argument name="em1.type" value="happy"/>

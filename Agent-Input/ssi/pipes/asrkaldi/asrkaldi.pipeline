@@ -11,6 +11,7 @@
 		<load name="activemq" />	
 		<load name="camera"/>
 		<load name="ffmpeg"/>		
+		<load name="python"/>
 	</register>	
 
 	<!-- audio sensor -->
@@ -38,23 +39,29 @@
 		port="$(asr:port)" 
 		addSilenceMs="$(asr:silence)"
 		type="1" 
-		address="asr@audio" 
+		address="raw@kaldi" 
 		monitor="true" 
 		mcaption="KALDI" 
 		mnum="10" 
-		mfontsize="24">
+		mfontsize="24"
+		showOnConsole="$(asr:console)">
 			<input pin="audio;vad" frame="0.01s">
 				<transformer create="AudioConvert"/>
 			</input>		
 		</consumer>	
 	</gate>
 	<gate close="$(vad:use)">
-		<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" port="$(asr:port)" type="1" address="asr@audio" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24">
+		<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" port="$(asr:port)" type="1" address="raw@kaldi" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24" showOnConsole="$(asr:console)">
 			<input pin="audio" frame="0.01s">
 				<transformer create="AudioConvert"/>
 			</input>		
 		</consumer>	
 	</gate>
+	
+	<object create="PythonObject" syspath=".;scripts" script="kaldi_parser" optsstr="address=asr@audio;nbest=$(asr:nbest);mode=$(asr:mode)">
+		<listen address="raw@kaldi"/>
+	</object>
+	
 	<consumer create="XMLEventSender:monitor" address="asr@xml" path="asrkaldi.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
 		<input pin="vad" frame="1"/>
 		<listen address="asr@audio"/>

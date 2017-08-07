@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+	<meta charset="utf-8" />
+	<title>AGE</title>
+
+	<link href="examples.css" rel="stylesheet" type="text/css">
+	<script language="javascript" type="text/javascript" src="jquery.js"></script>
+	<script language="javascript" type="text/javascript" src="jquery.flot.js"></script>
+	<script language="javascript" type="text/javascript">
+
+	$(function() {
+
+		// Set up the control widget
+		
+		var gender_female = [
+			[1, 0],
+		];
+		
+		var gender_male = [
+			[2, 0]
+		];
+		
+		var gender_barPlot = $.plot($("#placeholder-gender"), 
+		[
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: gender_female, label: "FEMALE" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: gender_male, label: "MALE" },
+		], 
+		{
+			legend: {
+				position: "sw",
+				show: true
+			},
+			series: {
+				lines: {
+					show: false
+				}
+			},
+			xaxis: {
+				min: 0.5,
+				max: 2.5,
+				show: false
+			},
+			yaxis: {
+				min: 0,
+				max: 1.1
+			}
+		});
+		
+		var age_child = [
+			[1, 0],
+		];
+		
+		var age_youth = [
+			[2, 0]
+		];
+		
+		var age_adult = [
+			[3, 0],
+		];
+		
+		var age_senior = [
+			[4, 0]
+		];
+		
+		var age_barPlot = $.plot($("#placeholder-age"), 
+		[
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: age_child, label: "CHILD" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: age_youth, label: "YOUTH" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: age_adult, label: "ADULT" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: age_senior, label: "SENIOR" },
+		], 
+		{
+			legend: {
+				position: "sw",
+				show: true
+			},
+			series: {
+				lines: {
+					show: false
+				}
+			},
+			xaxis: {
+				min: 0.5,
+				max: 4.5,
+				show: false
+			},
+			yaxis: {
+				min: 0,
+				max: 1.1
+			}
+		});
+		
+		var arousal_neg = [
+			[1, 0],
+		];
+		
+		var arousal_pos = [
+			[2, 0]
+		];
+		
+		var arousal_barPlot = $.plot($("#placeholder-arousal"), 
+		[
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: arousal_neg, label: "AROUSAL -" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: arousal_pos, label: "AROUSAL +" },
+		], 
+		{
+			legend: {
+				position: "sw",
+				show: true
+			},
+			series: {
+				lines: {
+					show: false
+				}
+			},
+			xaxis: {
+				min: 0.5,
+				max: 2.5,
+				show: false
+			},
+			yaxis: {
+				min: 0,
+				max: 1.1
+			}
+		});
+		
+		var valence_neg = [
+			[1, 0],
+		];
+		
+		var valence_pos = [
+			[2, 0]
+		];
+		
+		var valence_barPlot = $.plot($("#placeholder-valence"), 
+		[
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: valence_neg, label: "VALENCE -" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: valence_pos, label: "VALENCE +" },
+		], 
+		{
+			legend: {
+				position: "sw",
+				show: true
+			},
+			series: {
+				lines: {
+					show: false
+				}
+			},
+			xaxis: {
+				min: 0.5,
+				max: 2.5,
+				show: false
+			},
+			yaxis: {
+				min: 0,
+				max: 1.1
+			}
+		});
+		
+		var interest_neg = [
+			[1, 0],
+		];
+		
+		var interest_pos = [
+			[2, 0]
+		];
+		
+		var interest_barPlot = $.plot($("#placeholder-interest"), 
+		[
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: interest_neg, label: "INTEREST -" },
+			{ bars: {show: true, align: "center", barWidth: 0.75}, data: interest_pos, label: "INTEREST +" },
+		], 
+		{
+			legend: {
+				position: "sw",
+				show: true
+			},
+			series: {
+				lines: {
+					show: false
+				}
+			},
+			xaxis: {
+				min: 0.5,
+				max: 2.5,
+				show: false
+			},
+			yaxis: {
+				min: 0,
+				max: 1.1
+			}
+		});
+		
+		// Set up the web socket
+		
+		var ws = new WebSocket('ws://' + location.host + '/ws');
+		
+		ws.onopen = function(ev)  { console.log(ev); };
+		ws.onerror = function(ev) { console.log(ev); };
+		ws.onclose = function(ev) { console.log(ev); };
+		ws.onmessage = function(ev) {
+		
+			var data = JSON.parse(ev.data);
+			//console.log(data.name)
+
+			if (data.name == "gender(avg)")
+			{
+			
+				gender_female[0][1] = data.value[0].female;
+				gender_male[0][1] = data.value[1].male;
+				
+				gender_barPlot.setData([	
+				{
+					data: gender_female,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: gender_male,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				}
+				]);
+				gender_barPlot.draw();	
+
+			} 
+			else if (data.name == "age(avg)")
+			{
+			
+				age_child[0][1] = data.value[0].child;
+				age_youth[0][1] = data.value[1].youth;
+				age_adult[0][1] = data.value[2].adult;
+				age_senior[0][1] = data.value[3].senior;
+				
+				age_barPlot.setData([	
+				{
+					data: age_child,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: age_youth,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: age_adult,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: age_senior,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				}
+				]);
+				age_barPlot.draw();	
+
+			} 
+			else if (data.name == "arousal(avg)")
+			{
+			
+				arousal_neg[0][1] = data.value[0].arousal_neg;
+				arousal_pos[0][1] = data.value[1].arousal_pos;
+				
+				arousal_barPlot.setData([	
+				{
+					data: arousal_neg,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: arousal_pos,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				}
+				]);
+				arousal_barPlot.draw();	
+
+			} 
+			else if (data.name == "valence(avg)")
+			{
+			
+				valence_neg[0][1] = data.value[0].valence_neg;
+				valence_pos[0][1] = data.value[1].valence_pos;
+				
+				valence_barPlot.setData([	
+				{
+					data: valence_neg,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: valence_pos,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				}
+				]);
+				valence_barPlot.draw();	
+
+			} 
+			else if (data.name == "interest(avg)")
+			{
+			
+				interest_neg[0][1] = data.value[0].not_interested;
+				interest_pos[0][1] = data.value[1].interested;
+				
+				interest_barPlot.setData([	
+				{
+					data: interest_neg,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				},
+				{
+					data: interest_pos,
+					bars: {show: true, align: "center", barWidth: 0.75}
+				}
+				]);
+				interest_barPlot.draw();	
+
+			} 
+				
+		}
+
+		// Add the Flot version string to the footer
+
+		$("#footer").prepend("Flot " + $.plot.version + " &ndash; ");
+	});
+
+	</script>
+</head>
+
+<body>
+
+	<div id="header">
+		<h2>AgeGenderEmotion</h2>
+	</div>
+
+	<div id="content">
+		
+		<div class="demo-container">
+			<div id="placeholder-gender" class="demo-placeholder"></div>	
+		</div>			
+		<div class="demo-container">
+			<div id="placeholder-age" class="demo-placeholder"></div>
+		</div>
+		<div class="demo-container">
+			<div id="placeholder-arousal" class="demo-placeholder"></div>
+		</div>
+		<div class="demo-container">
+			<div id="placeholder-valence" class="demo-placeholder"></div>
+		</div>
+		<div class="demo-container">
+			<div id="placeholder-interest" class="demo-placeholder"></div>
+		</div>
+
+	</div>
+
+</body>
+
+</html>

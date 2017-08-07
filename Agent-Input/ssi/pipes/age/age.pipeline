@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>		
+		<load name="audio" />
+		<load name="graphic" />
+		<load name="browser" />
+		<load name="opensmilewrapper" />
+		<load name="libsvm"/>
+		<load name="model"/>
+		<load name="activemq"/>
+		<load name="camera"/>
+		<load name="ffmpeg"/>
+		<load name="control"/>
+		<load name="websocket"/>
+	</register>
+	
+	<!-- audio sensor initialization -->
+	<gate open="$(live)">
+		<sensor create="Audio" option="options/audio" sr="8000" scale="true">
+			<output channel="audio" pin="audio"/>		
+		</sensor>	
+	</gate>
+	<gate close="$(live)">
+		<sensor create="WavReader" path="$(file)" blockInSamples="512" scale="true" loop="true">
+			<output channel="audio" pin="audio"/>		
+		</sensor>	 
+	</gate>	
+	
+	<!-- activity detection -->
+	<transformer create="AudioActivity" method="0" threshold="0.05">
+		<input pin="audio" frame="0.03s" delta="0.015s"/>
+		<output pin="vad"/>
+	</transformer>
+	<consumer create="ZeroEventSender" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad@audio">
+		<input pin="vad" frame="0.1s"/>
+	</consumer>	
+	
+	<!-- feature extraction -->
+	<consumer create="TupleEventSender" address="feature@audio">
+		<input pin="audio" address="vad@audio" state="nonzerodur">
+			<transformer create="OSWrapper" configFile="$(config)"/>
+		</input>
+	</consumer>
+	
+	<!-- classifier -->
+	<object create="Classifier" trainer="$(model:gender)" address="gender@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier" trainer="$(model:age)" address="age@audio">
+		<listen address="feature@audio"/>
+	</object>	
+	<object create="Classifier:cl-arousal" trainer="$(model:arousal)" address="arousal@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier:cl-valence" trainer="$(model:valence)" address="valence@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="Classifier:cl-interest" trainer="$(model:interest)" address="interest@audio">
+		<listen address="feature@audio"/>
+	</object>	
+	
+	<!-- smoother -->
+	<object create="DecisionSmoother:genderSmoother" average="true" address="gender(avg)@audio">
+		<listen address="gender@audio"/>
+	</object>
+	<object create="DecisionSmoother:ageSmoother" average="true" address="age(avg)@audio">
+		<listen address="age@audio"/>
+	</object>		
+	<object create="DecisionSmoother:arousalSmoother" average="true" window="5.0" address="arousal(avg)@audio">
+		<listen address="arousal@audio"/>
+	</object>
+	<object create="DecisionSmoother:valenceSmoother" average="true" window="5.0" address="valence(avg)@audio">
+		<listen address="valence@audio"/>
+	</object>	
+	<object create="DecisionSmoother:interestSmoother" average="true" window="5.0" address="interest(avg)@audio">
+		<listen address="interest@audio"/>
+	</object>	
+	
+	<!-- event sender -->
+	<object create="XMLEventSender:monitor" address="emotion@xml" path="age.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
+		<listen address="@"/>
+	</object>
+	<gate open="$(activemq:use)">
+		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+			<listen address="emotion@xml"/>
+		</object>		
+	</gate>
+	
+	<!-- visualization -->	
+	<consumer create="SignalPainter:plot" title="AUDIO (RAW)" size="10" type="2" autoscale="false" fix="-1.0,1.0">
+		<input pin="audio" frame="0.02s"/>
+	</consumer>
+	<consumer create="SignalPainter:plot" title="AUDIO (ACTIVITY)" size="10" type="0">
+		<input pin="vad" frame="0.02s"/>
+	</consumer>		
+		
+	<!-- browser -->
+	<object create="EventPainter:ep-gender" title="GENDER" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="gender@audio"/>
+	</object>
+	<object create="EventPainter:ep-age" title="AGE" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="age@audio"/>
+	</object>		
+	<object create="EventPainter:ep-gender(avg)" title="GENDER (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="gender(avg)@audio"/>
+	</object>
+	<object create="EventPainter:ep-age(avg)" title="AGE (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="age(avg)@audio"/>
+	</object>	
+	<object create="EventPainter:ep-arousal" title="AROUSAL" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="arousal(avg)@audio"/>
+	</object>
+	<object create="EventPainter:ep-valence" title="VALENCE" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="valence(avg)@audio"/>
+	</object>
+	<object create="EventPainter:ep-interest" title="INTEREST" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
+		<listen address="interest(avg)@audio"/>
+	</object>	
+	
+	<!-- reset and enable button -->
+	<runnable create="ControlButton" id="genderSmoother,ageSmoother" label="RESET" message="RESET" pos="1240,40,200,75"/>
+
+	<!-- wav output -->
+	<gate close="$(live)">
+		<consumer create="AudioPlayer" option="options/aplayer">
+			<input pin="audio" frame="0.1s"/>
+		</consumer>
+	</gate>
+	
+	<!-- websocket -->
+	<gate open="$(websocket:use)">
+		<object create="websocket:websocket" http_root="$(websocket:site)" http_port="$(websocket:port)">
+			<listen address="gender(avg),age(avg),arousal(avg),valence(avg),interest(avg)@audio" />
+		</object>
+	</gate>
+	
+	<!-- capture user -->
+	<gate open="$(capture:use)">
+	
+		<!-- capture user -->
+		<gate open="$(capture:user)">
+		
+			<sensor create="Camera" option="options/camera" flip="true" >
+				<output channel="video" pin="camera" size="2.0"/>
+			</sensor>	
+			<consumer create="FFMPEGWriter" url="$(capture:dir)/$(date)_user.mp4">
+				<input pin="camera;audio" frame="1"/>				
+			</consumer>	
+			<consumer create="VideoPainter:vplot" name="CAMERA" flip="false" pos="20,620,320,240">
+				<input pin="camera" frame="1" delta="0"/>
+			</consumer>			
+			
+		</gate>
+		
+		<!-- capture screen -->
+		<gate open="$(capture:screen)">
+		
+			<sensor create="CameraScreen" full="false" region="0,0,1200,600" fps="25">
+				<output channel="video" pin="screen" size="2.0"/>
+			</sensor>			
+			<consumer create="FFMPEGWriter" url="$(capture:dir)/$(date)_screen.mp4">
+				<input pin="screen" frame="1"/>				
+			</consumer>				
+			<consumer create="VideoPainter:vplot" name="SCREEN" flip="false" pos="340,620,320,240">
+				<input pin="screen" frame="1" delta="0"/>
+			</consumer>			
+		
+		</gate>
+		
+	</gate>
+		
+	<!-- decoration -->
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,600">console</area>
+		<area pos="400,0,800,200" nv="1">ep-gender*</area>	
+		<area pos="400,200,800,200" nv="1">ep-age*</area>
+		<area pos="400,400,800,200" nv="1">ep-arousal,ep-valence,ep-interest</area>
+		<area pos="0,600,1200,200" nv="1">plot*,monitor</area>
+	</object>			
+		
+</pipeline>

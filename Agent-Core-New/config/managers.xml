@@ -87,9 +87,17 @@ Managers: A template can contain one or multiple managers, and for each managers
 	<manager id="008" name="PersonalityManager" interval="100">
 		<class classname="eu.aria.dialogue.managers.SocialManager">
 		</class>
+		<!-- <templates> -->
+			<!-- <template path="../templates/Personalities/Alice.xml"/> -->
+			<!-- <template path="../templates/emotion-agent.xml"/> -->
+		<!-- </templates> -->
+	</manager>
+
+	<manager id="009" name="InteractionStateManager" interval="100">
 		<templates>
-			<template path="../templates/Personalities/Alice.xml"/>
-			<template path="../templates/emotion-agent.xml"/>
+			<template path="../templates/interaction-state.xml"/>
+			<!-- <template path="../templates/floor-states.xml"/>  -->
+			<!-- <template path="../templates/talking-states.xml"/> -->
 		</templates>
 	</manager>
 </managers>

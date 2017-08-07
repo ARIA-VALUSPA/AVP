@@ -1,0 +1,16 @@
+# classification
+
+config = config/IS13_ComParE.conf					# name of openSMILE config file
+													# path to models
+model:arousal = ../../models/speech/arousal[IS13-scale-linear-c1e-3]	
+model:valence = ../../models/speech/valence[IS13-scale-linear-c1e-3]
+model:interest = ../../models/speech/interest[IS13-scale-linear-c1e-5]
+model:gender = ../../models/speech/gender[IS13-scale-linear-c1e-1]  
+model:age = ../../models/speech/age[IS13-scale-linear-c1e-1]	 	 
+
+# number of faces
+emax:faces:max    = 2  # number of faces to detect (0 = always nearest, otherwise 4 at max)
+emax:faces:values = 168 # number of values per face
+
+# models
+emax:model = ../../models/face/caffe.cfg               # emax model path

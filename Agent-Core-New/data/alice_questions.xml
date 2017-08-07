@@ -1,4 +1,5 @@
 ﻿<qa_root>
+
 <dialog id="0000">
 <answerlist>
 <answer type="uncertain">
@@ -21,11 +22,9 @@ Hey
 <question>
 Goodday
 </question>
-<question>
-Goodnight
-</question>
 </questionlist>
 </dialog>
+
 <dialog id="0001">
 <answerlist>
 <answer type="uncertain">
@@ -128,6 +127,9 @@ It all started when I was getting tired of sitting by my sister on the river ban
 <questionlist>
 <question>
 But I don't know the story.
+</question>
+<question>
+What is your story
 </question>
 <question>
 Tell me the story from the beginning please

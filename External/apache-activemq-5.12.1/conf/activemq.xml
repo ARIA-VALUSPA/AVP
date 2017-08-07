@@ -110,11 +110,11 @@
         -->
         <transportConnectors>
             <!-- DOS protection, limit concurrent connections to 1000 and frame size to 100MB -->
-            <transportConnector name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
-            <transportConnector name="amqp" uri="amqp://0.0.0.0:5672?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
-            <transportConnector name="stomp" uri="stomp://0.0.0.0:61613?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
-            <transportConnector name="mqtt" uri="mqtt://0.0.0.0:1883?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
-            <transportConnector name="ws" uri="ws://0.0.0.0:61614?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="openwire" uri="tcp://127.0.0.1:61616?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="amqp" uri="amqp://127.0.0.1:5672?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="stomp" uri="stomp://127.0.0.1:61613?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="mqtt" uri="mqtt://127.0.0.1:1883?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
+            <transportConnector name="ws" uri="ws://127.0.0.1:61614?maximumConnections=1000&amp;wireFormat.maxFrameSize=104857600"/>
         </transportConnectors>
 
         <!-- destroy the spring context on shutdown to stop jetty -->

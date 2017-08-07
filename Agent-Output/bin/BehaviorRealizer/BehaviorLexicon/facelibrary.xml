@@ -711,4 +711,8 @@
         <action intensity="0.5" name="AU4"/>
         <action intensity="0.5" name="AU55"/>
     </expression>
+	<expression class="faceexp" instance="negative_pout">
+        <action name="AU20"/>
+		<action name="AU24"/>
+    </expression>
 </facelibrary>

@@ -11,7 +11,7 @@ log:dir 	= log
 
 emax:faces:max    = 2     # number of faces to detect (0 = always nearest, otherwise 4 at max)
 emax:faces:values = 168   # number of values per face
-emax:async        = true  # run in async mode
+emax:async        =true
 
 # models
 

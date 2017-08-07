@@ -99,8 +99,8 @@ public class DialogueManager {
             return;
         }
         if (data != null && (!useAsrActive || data.isActive()) && data.getSpeech() != null) {
-            long t1 = System.currentTimeMillis();
-            System.out.println("Received speech(" + data.getSpeech() + ") which was generated " + (t1 - data.getStartTime() * 1000) + " ms ago.");
+            // long t1 = System.currentTimeMillis();
+            // System.out.println("Received speech(" + data.getSpeech() + ") which was generated " + (t1 - data.getStartTime() * 1000) + " ms ago.");
 
             manager.onASRText(data.getSpeech());
         }

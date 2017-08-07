@@ -15,6 +15,6 @@ activemq:id = SSI									# activemq id
 activemq:topic= EMAX								# activemq topic
 
 # websocket
-websocket:use = true
+websocket:use = false
 websocket:port = 80
 websocket:site = website
