@@ -3,187 +3,209 @@
 	
 	<register>		
 		<load name="audio" />
-		<load name="graphic" />
-		<load name="browser" />
+		<load name="graphic" />		
+		<load name="signal"/>
+		<load name="opensmile"/>
 		<load name="opensmilewrapper" />
 		<load name="libsvm"/>
+		<load name="liblinear"/>		
 		<load name="model"/>
 		<load name="camera"/>
 		<load name="ffmpeg"/>
 		<load name="control"/>
 		<load name="emax" />
+		<load name="python" />
 	</register>
 	
+	<framework waitid="button-wait"/>
+	<runnable create="WaitButton:button-wait" title="CONTROL" label="CLOSE"/>
 	
-	
-	
-	
-	<!-- camera sensor -->
-	<sensor create="Camera" option="options/camera" fps="25.0">
-		<output channel="video" pin="video" size="2.0s"/>
-	</sensor>	
-	
-	<!-- emax tracker -->
-	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
-		<input pin="video" frame="1" async="true"/>
-		<output pin="emax"/>
-	</transformer>
-	
-	<!-- select valence and arousal -->
-	<transformer create="EMaxValenceArousal:emax_va">
-		<input pin="emax" frame="1"/>
-		<output pin="emax_va"/>
-	</transformer>		
-	
-	<!-- select emotion scores and face region -->	
-	<transformer create="Selector" indices="6, 7, 8, 9, 10, 11, 12" multiples="$(emax:faces:values)">
-		<input pin="emax" frame="1"/>
-		<output pin="emax_emotion"/>
-	</transformer>
-	<transformer create="Selector" indices="2, 3, 4, 3, 4, 5, 2, 5" multiples="$(emax:faces:values)">
-		<input pin="emax" frame="1"/>
-		<output pin="emax_face"/>
-	</transformer>	
-	
-	<!-- create event with emotion scores -->
-	<consumer create="MapEventSender" keys="NEU,ANG,DIS,FEA,HAP,SAD,SUR" address="emotion@emax">
-		<input pin="emax_emotion" frame="1" />		
-	</consumer>	
-	
-	<!-- create event with valence/arousal scores -->
-	<consumer create="MapEventSender" keys="VALENCE,AROUSAL" address="va@emax">
-		<input pin="emax_va" frame="1" />		
-	</consumer>	
-	
-	<!-- show video -->
-	<consumer create="VideoPainter:vplot" flip="true" type="1" relative="true" swap="false" title="CAMERA">
-		<input pin="video;emax_face" frame="1"/>		
-	</consumer>	
+	<!-- sensors -->
 		
-	<!-- show emotion scores -->
-	<object create="EventPainter:eplot" type="1" autoscale="false" reset="false" fix="9.0f" title="EMAX - EMOTIONS">
-		<listen address="emotion@emax" />		
-	</object>	
+	<gate open="$(live)">
+		<sensor create="Camera" option="options/camera" fps="25.0">
+			<output channel="video" pin="video" size="2.0s"/>
+		</sensor>	
+		<sensor create="Audio" option="options/audio" sr="16000" scale="true">
+			<output channel="audio" pin="audio"/>		
+		</sensor>	
+	</gate>
+	<gate close="$(live)">	
+		<sensor create="CameraReader" path="$(file).mp4">
+			<output channel="video" pin="video" size="2.0s"/>
+		</sensor>
+		<sensor create="WavReader" path="$(file).wav" blockInSamples="512" scale="true" loop="true">
+			<output channel="audio" pin="audio"/>		
+		</sensor>	 		
+	</gate>		
+		
+		
+	<!-- audio processing -->
 	
-	<!-- show valence/arousal scores -->
-	<object create="EventPainter:eplot" type="1" global="true" autoscale="false" reset="false" fix="0.5f" title="EMAX - EMOTIONS">
-		<listen address="va@emax" />		
-	</object>	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	<!-- audio sensor initialization -->
-	<sensor create="Audio" option="options/audio" sr="8000" scale="true">
-		<output channel="audio" pin="audio"/>		
-	</sensor>	
->	
-	
-	<!-- activity detection -->
 	<transformer create="AudioActivity" method="0" threshold="0.05">
 		<input pin="audio" frame="0.03s" delta="0.015s"/>
 		<output pin="vad"/>
 	</transformer>
-	<consumer create="ZeroEventSender" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad@audio">
+	<consumer create="TriggerEventSender" triggerType="5" minDuration="0.5" maxDuration="5.0" incDuration="1.0" sendStartEvent="true" hangInSamples="3" hangOutSamples="10" address="vad@audio">
 		<input pin="vad" frame="0.1s"/>
 	</consumer>	
-	
-	<!-- feature extraction -->
 	<consumer create="TupleEventSender" address="feature@audio">
 		<input pin="audio" address="vad@audio" state="nonzerodur">
 			<transformer create="OSWrapper" configFile="$(config)"/>
 		</input>
 	</consumer>
+	<transformer create="OSMfccChain:mfccs" option="options\mfccdd">
+		<input pin="audio" frame="$(vad:feature_frame)s" delta="$(vad:feature_delta)s"/>
+		<output pin="vad_feature_lld"/>
+	</transformer>	
+	<transformer create="Mean:mean" >
+		<input pin="vad_feature_lld" frame="$(vad:feature_win)s"/>
+		<output pin="vad_feature_win"/>
+	</transformer>		
 	
-	<!-- classifier -->
-	<object create="Classifier" trainer="$(model:gender)" address="gender@audio">
-		<listen address="feature@audio"/>
-	</object>
-	<object create="Classifier" trainer="$(model:age)" address="age@audio">
-		<listen address="feature@audio"/>
-	</object>	
-	<object create="Classifier:cl-arousal" trainer="$(model:arousal)" address="arousal@audio">
-		<listen address="feature@audio"/>
-	</object>
-	<object create="Classifier:cl-valence" trainer="$(model:valence)" address="valence@audio">
-		<listen address="feature@audio"/>
-	</object>
-	<object create="Classifier:cl-interest" trainer="$(model:interest)" address="interest@audio">
-		<listen address="feature@audio"/>
-	</object>	
+	<!-- audio classification -->
 	
-	<!-- smoother -->
-	<object create="DecisionSmoother:genderSmoother" average="true" address="gender(avg)@audio">
+	<object create="Classifier:cl-gender" trainer="$(model:root)$(model:gender)" address="gender@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="DecisionSmoother:cl-gender(avg)" average="true" address="gender(avg)@audio">
 		<listen address="gender@audio"/>
 	</object>
-	<object create="DecisionSmoother:ageSmoother" average="true" address="age(avg)@audio">
+	<object create="Classifier:cl-age" trainer="$(model:root)$(model:age)" address="age@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="DecisionSmoother:cl-age(avg)" average="true" address="age(avg)@audio">
 		<listen address="age@audio"/>
 	</object>		
-	<object create="DecisionSmoother:arousalSmoother" average="true" window="5.0" address="arousal(avg)@audio">
+	<object create="Classifier:cl-arousal" trainer="$(model:root)$(model:arousal)" address="arousal@audio" select="1">
+		<listen address="feature@audio"/>
+	</object>	
+	<object create="DecisionSmoother:cl-arousal" average="true" window="$(avg:short)" address="arousal(avg-short)@audio">
 		<listen address="arousal@audio"/>
-	</object>
-	<object create="DecisionSmoother:valenceSmoother" average="true" window="5.0" address="valence(avg)@audio">
-		<listen address="valence@audio"/>
 	</object>	
-	<object create="DecisionSmoother:interestSmoother" average="true" window="5.0" address="interest(avg)@audio">
-		<listen address="interest@audio"/>
-	</object>	
+	<object create="DecisionSmoother:cl-arousal" average="true" window="$(avg:long)" address="arousal(avg-long)@audio">
+		<listen address="arousal@audio"/>
+	</object>		
+	<transformer create="ClassifierT:cl-vad" trainer="$(model:root)$(vad:modality).$(vad:feature)[-f $(vad:feature_frame) -d $(vad:feature_delta) -w $(vad:feature_win)].$(vad:scheme).$(vad:annotator)[-c $(vad:feature_context)].$(vad:model)[$(vad:model_params)].final" flat="true">
+		<input pin="vad_feature_win" frame="1" delta="$(vad:feature_context_2)"/>
+		<output pin="cl_vad"/>
+	</transformer>	
 	
-	<!-- visualization -->	
-	<consumer create="SignalPainter:plot" title="AUDIO (RAW)" size="10" type="2" autoscale="false" fix="-1.0,1.0">
+	<!-- video processing -->
+	
+	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
+		<input pin="video" frame="1" async="true"/>
+		<output pin="emax"/>
+	</transformer>
+	<transformer create="PythonFilter"  syspath=".;scripts" script="emax_feature" optsstr="n_missing=50">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_feature"/>
+	</transformer>
+	<transformer create="MvgAvgVar" win="$(avg:short)" format="1" method="1">
+		<input pin="emax_feature" frame="1"/>
+		<output pin="emax_feature(avg-short)"/>
+	</transformer>
+	<transformer create="MvgAvgVar" win="$(avg:long)" format="1" method="1">
+		<input pin="emax_feature" frame="1"/>
+		<output pin="emax_feature(avg-long)"/>
+	</transformer>
+	<transformer create="Selector" indices="152, 153, 154, 155, 154, 155, 156, 157, 156, 157, 158, 159, 152, 153, 158, 159, 156, 157, 160, 161, 154, 155, 162, 163, 152, 153, 164, 165, 158, 159, 166, 167, 164, 165, 162, 163, 162, 163, 160, 161, 160, 161, 166, 167, 166, 167, 164, 165" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_box"/>
+	</transformer>		
+	<transformer create="Selector" indices="6, 7, 8, 9, 10, 11, 12" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_emotion"/>
+	</transformer>
+	<transformer create="MvgAvgVar" win="$(avg:short)" format="1" method="1">
+		<input pin="emax_emotion" frame="1"/>
+		<output pin="emax_emotion(avg-short)"/>
+	</transformer>		
+	
+	<!-- visualization -->
+	
+	<consumer create="VideoPainter:paint-video" title="VIDEO" flip="true" type="1" relative="true" swap="false">
+		<input pin="video;emax_box" frame="1"/>		
+	</consumer>		
+	<consumer create="SignalPainter:paint-audio" title="AUDIO" size="10" type="2" autoscale="false" fix="-1.0,1.0">
 		<input pin="audio" frame="0.02s"/>
 	</consumer>
-	<consumer create="SignalPainter:plot" title="AUDIO (ACTIVITY)" size="10" type="0">
-		<input pin="vad" frame="0.02s"/>
+	<consumer create="SignalPainter:paint-vad" title="AUDIO ACTIVITY" type="5" barNames="VAD" autoscale="false" fix="0.35,0">
+		<input pin="vad" frame="1"/>
 	</consumer>		
-		
-	<!-- browser -->
-	<object create="EventPainter:ep-gender" title="GENDER" type="1" fix="1.0" global="true" autoscale="false">
-		<listen address="gender@audio"/>
-	</object>
-	<object create="EventPainter:ep-age" title="AGE" type="1" fix="1.0" global="true" autoscale="false">
-		<listen address="age@audio"/>
-	</object>		
-	<object create="EventPainter:ep-gender(avg)" title="GENDER (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+	<consumer create="SignalPainter:paint-vad" title="VOICE ACTIVITY" type="5" barNames="VOC,SIL,FIL,BRE" autoscale="false" fix="1.0,0">
+		<input pin="cl_vad" frame="1"/>
+	</consumer>		
+	
+	<object create="EventPainter:paint-gender" title="GENDER" barNames="FEMALE,MALE" type="1" fix="1.0" global="true" autoscale="false">
 		<listen address="gender(avg)@audio"/>
 	</object>
-	<object create="EventPainter:ep-age(avg)" title="AGE (AVG)" type="1" fix="1.0" global="true" autoscale="false">
+	<object create="EventPainter:paint-age" title="AGE" barNames="CHILD,YOUTH,ADULT,SENIOR" type="1" fix="1.0" global="true" autoscale="false">
 		<listen address="age(avg)@audio"/>
 	</object>	
-	<object create="EventPainter:ep-arousal" title="AROUSAL" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
-		<listen address="arousal(avg)@audio"/>
+	<runnable create="ControlButton:button-reset" id="cl-gender(avg),cl-age(avg)" title="CONTROL" label="RESET" message="RESET"/>
+	
+	<consumer create="SignalPainter:paint-head" title="HEAD" barNames="HOR,VER,ACT" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-short)" frame="1">		
+			<transformer create="Selector" indices="3,4,5"/>
+		</input>
+	</consumer>
+	<object create="EventPainter:paint-arousal" title="STATE" barNames="arousal" type="1" global="true" reset="false" autoscale="false" fix="1.0,0.0">
+		<listen address="arousal(avg-short)@audio"/>
 	</object>
-	<object create="EventPainter:ep-valence" title="VALENCE" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
-		<listen address="valence(avg)@audio"/>
-	</object>
-	<object create="EventPainter:ep-interest" title="INTEREST" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
-		<listen address="interest(avg)@audio"/>
+	<object create="EventPainter:paint-arousal" title="STATE" barNames="AROUSAL" type="1" global="true" reset="false" autoscale="false" fix="1.0,0.0">
+		<listen address="arousal(avg-long)@audio"/>
+	</object>	
+	<consumer create="SignalPainter:paint-valence" title="STATE" barNames="valence" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-short)" frame="1">		
+			<transformer create="Selector" indices="1"/>
+		</input>
+	</consumer>
+	<consumer create="SignalPainter:paint-valence" title="STATE" barNames="VALENCE" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-long)" frame="1">		
+			<transformer create="Selector" indices="1"/>
+		</input>
+	</consumer>	
+	<consumer create="SignalPainter:paint-interest" title="STATE" barNames="interest" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-short)" frame="1">		
+			<transformer create="Selector" indices="3"/>
+		</input>
+	</consumer>	
+	<consumer create="SignalPainter:paint-interest" title="STATE" barNames="INTEREST" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-long)" frame="1">		
+			<transformer create="Selector" indices="3"/>
+		</input>
+	</consumer>		
+	
+	<!-- json output -->
+	<consumer create="XMLEventSender:monitor" address="result@xml" path="age+emax.xml" monitor="false" mname="RESULT" console="false" update="500" coldelim=" " strbuf="4096">
+		<input pin="emax;emax_feature(avg-short);emax_feature(avg-long);emax_emotion(avg-short)" frame="1"/>
+		<listen address="@"/>
+	</consumer>		
+	<object create="PythonObject" syspath=".;scripts" script="xmltojson" optsstr="address=result@json;convert=True">	
+		<listen address="result@xml"/>		
 	</object>	
 	
-	<!-- reset and enable button -->
-	<runnable create="ControlButton" id="genderSmoother,ageSmoother" label="RESET" message="RESET" pos="0,810,200,75"/>
-
-	
+	<!-- wav output -->
+	<gate close="$(live)">
+		<consumer create="AudioPlayer" option="options/aplayer">
+			<input pin="audio" frame="0.1s"/>
+		</consumer>
+	</gate>	
 		
 	<!-- decoration -->
 	<object create="Decorator" icon="true" title="Pipeline">
 	
-		<area pos="0,0,400,600">console</area>
+		<area pos="0,0,400,500">console</area>
+		<area pos="0,500,400,100" nv="1">button-wait,button-reset</area>
 		
-		<area pos="400,0,800,200" nv="1">ep-gender*</area>	
-		<area pos="400,200,800,200" nv="1">ep-age*</area>
-		<area pos="400,400,800,200" nv="1">ep-arousal,ep-valence,ep-interest</area>
+		<area pos="400,0,400,300">paint-video</area>
+		<area pos="800,0,400,150">paint-audio</area>
+		<area pos="800,150,400,150" nv="1">paint-vad*</area>
+		
+		<area pos="400,300,800,150" nv="1">paint-gender,paint-age,paint-head</area>	
+		<area pos="400,450,800,150" nv="1">paint-arousal*,paint-valence*,paint-interest*</area>		
 
-		<area pos="1200,0,400,300">vplot*</area>
-		<area pos="1200,300,400,600">eplot*</area>		
-		
-		<area pos="0,600,1200,200" nv="1">plot*,monitor</area>
 	</object>			
 		
 </pipeline>

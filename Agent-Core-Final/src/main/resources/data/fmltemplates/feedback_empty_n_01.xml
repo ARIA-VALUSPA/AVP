@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="feedback-empty" />
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc"/>
+	</bml>
+	
+	<fml>
+		<backchannel id="bc1" type="none" start="0" end="1" importance="1" />
+		<emotion id="em1" type="neutral" regulation="felt" start="bc1:start" end="bc1:end" intensity="1" importance="1.0"/>
+	</fml>
+	
+</fml-apml>

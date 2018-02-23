@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>		
+		<load name="audio" />
+		<load name="camera"/>
+		<load name="control"/>
+		<load name="graphic" />		
+		<load name="signal"/>
+		<load name="ioput" />					
+		<load name="opensmile"/>
+		<load name="opensmilewrapper" />
+		<load name="libsvm"/>
+		<load name="liblinear"/>		
+		<load name="model"/>		
+		<load name="ffmpeg"/>		
+		<load name="emax" />
+		<load name="python" />				
+		<load name="asrkaldi" />			
+		<load name="activemq" />			
+		<load name="bayesnet"/>		
+		<load name="image"/>	
+		<load name="microsoftkinect2"/>	
+		<load name="skeleton"/>	
+	</register>
+	
+	<!--framework waitid="button-wait"/-->
+	<!--runnable create="WaitButton:button-wait" title="CONTROL" label="CLOSE"/-->
+	
+	<!-- control -->
+	
+	<runnable create="ControlButton:button-reset" id="cl-gender(avg),cl-age(avg),sender-xml" title="CONTROL" label="RESET" message="RESET"/>	
+	<runnable create="ControlCheckBox:button-toggle" id="sender*,writer*" title="CONTROL" default="false" label="SEND / RECORD"/>		
+	
+	<!-- sensors -->
+		
+	<gate open="$(live)">
+		
+	<sensor create="MicrosoftKinect2" sr="25.0" trackNearestPersons="1" showFaceTracking="false" showBodyTracking="false">
+		<output channel="rgb" pin="rgb" size="2.0s"/>
+		<output channel="au" pin="au" size="5.0s"/>
+		<output channel="head" pin="head" size="5.0s"/>
+		<output channel="skeleton" pin="skelms" size="5.0s"/>
+		<output channel="face3d" pin="face3d" size="5.0s"/>
+	</sensor>
+	
+	<!-- Skeleton conversion transformer -->
+	<transformer create="SkeletonConverter" numskel="1">
+		<input pin="skelms;head;face3d" frame="1"/> 
+		<output pin="skel"/>
+	</transformer>	
+
+		
+		<sensor create="Audio" option="options/audio" sr="16000" scale="true">
+			<output channel="audio" pin="audio"/>		
+		</sensor>	
+	</gate>
+	
+	<transformer create="CVCrop:cropvideo" scaled="false" region="$(crop:x),$(crop:y),640,480">
+			<input pin="rgb" frame="1" delta="0"/>
+			<output pin="resize"/>
+	</transformer>	
+	
+	
+	<transformer create="CVFlip">
+		<input pin="resize" frame="1" delta="0"/>
+		<output pin="rgbflip"/>
+	</transformer>
+	
+	
+	<transformer create="CVColor" code="1">
+		<input pin="rgbflip" frame="1" delta="0"/>
+		<output pin="video"/>
+	</transformer>
+	
+	
+	<gate close="$(live)">	
+	<!-- todo -->
+		<sensor create="CameraReader" path="$(file).mp4">
+			<output channel="video" pin="video" size="2.0s"/>
+		</sensor>
+		<sensor create="WavReader" path="$(file).wav" blockInSamples="512" scale="true" loop="true">
+			<output channel="audio" pin="audio"/>		
+		</sensor>	 		
+	</gate>		
+
+	<!-- vad -->
+	
+	<transformer create="AudioActivity" method="0" threshold="0.05">
+		<input pin="audio" frame="0.01s" delta="0.02s"/>
+		<output pin="vad"/>
+	</transformer>	
+	<consumer create="TriggerEventSender" triggerType="5" minDuration="0.5" maxDuration="5.0" incDuration="1.0" sendStartEvent="true" hangInSamples="3" hangOutSamples="10" address="vad@audio">
+		<input pin="vad" frame="0.1s"/>
+	</consumer>		
+		
+	<!-- processing -->
+	
+	<include path="audio-processing"/>
+	
+	<include path="video-processing"/>		
+	
+	<include path="interest-processing"/>		
+	
+	<include path="asrkaldi"/>	
+	
+	<!-- result -->
+	
+	<consumer create="XMLEventSender:sender-xml" address="result@xml" path="$(sender:template).xml" monitor="false" mname="RESULT (XML)" console="false" update="500" coldelim=" " strbuf="4096">
+		<input pin="emax;emax_feature(avg-short);emax_feature(avg-long);emax_feature(avg-diff);emax_emotion(avg-short);audio_arousal(avg-short);audio_arousal(avg-long);audio_arousal(avg-diff);vad;interest(avg-short);interest(avg-long);interest(avg-diff)" frame="1"/>
+		<listen address="@"/>
+	</consumer>		
+	
+	<gate open="$(sender:xmltojson)">
+		<object create="PythonObject:tojson" syspath=".;scripts" script="kaldi_xmltojson" optsstr="address=result@json;debug=False">	
+			<listen address="result@xml"/>		
+		</object>		
+		<object create="EventMonitor:result" title="RESULT (JSON)" list="false" fontSize="12">
+			<listen address="result@json"/>
+		</object>					
+		<gate open="$(activemq:use)">
+			<object create="ActiveMQEventSender:sender-amq" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+				<listen address="result@json"/>
+			</object>						
+		</gate>		
+	</gate>
+	<gate close="$(sender:xmltojson)">		
+		<object create="EventMonitor:result" title="RESULT (XML)" list="false" fontSize="12">
+			<listen address="result@xml"/>
+		</object>					
+		<gate open="$(activemq:use)">
+			<object create="ActiveMQEventSender:sender-amq" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+				<listen address="result@xml"/>
+			</object>						
+		</gate>		
+	</gate>
+	
+	
+	<!-- logging -->
+	
+	<gate open="$(log:use)">
+		<include path="recording-kinect"/>
+	</gate>	
+	
+	<!-- audio player -->
+	
+	<gate close="$(live)">
+		<consumer create="AudioPlayer" option="options/aplayer">
+			<input pin="audio" frame="0.1s"/>
+		</consumer>
+	</gate>
+
+	<!-- control -->
+	
+	<runnable create="ControlButton:button-reset" id="cl-gender(avg),cl-age(avg),sender-xml" title="CONTROL" label="RESET" message="RESET"/>	
+	<runnable create="ControlCheckBox:button-toggle" id="sender*" title="CONTROL" default="false" label="SENDING"/>	
+		
+	<!-- visualization -->
+	
+	<include path="visualization"/>	
+	
+	<object create="Decorator" icon="true" title="Pipeline">
+	
+		<area pos="0,0,400,500">console</area>
+		<area pos="0,500,400,100" nv="1">button-toggle,button-reset</area>
+		
+		<area pos="400,0,400,300">paint-video</area>
+		<area pos="800,0,400,150">paint-audio</area>
+		<area pos="800,150,400,150" nv="1">paint-vad*</area>
+		
+		<area pos="400,300,800,150" nv="1">paint-gender,paint-age,paint-head</area>	
+		<area pos="400,450,800,150" nv="1">paint-arousal*,paint-valence*,paint-interest*</area>		
+
+		<area pos="1200,0,400,600">result</area>
+		
+	</object>			
+		
+</pipeline>

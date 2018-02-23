@@ -1,0 +1,11 @@
+# sync
+
+sync:pipe:port = 1111								# port used to synchronize pipelines
+sync:notify:url = udp://255.255.255.255:2222		# url to receive notifications
+
+# logging
+
+log:use  	=true
+log:dir 	= log
+log:role:user = user
+log:role:agent = agent

@@ -39,7 +39,7 @@
 <!ELEMENT emphasis EMPTY>
 <!ELEMENT backchannel EMPTY>
 
-<!ATTLIST fml-apml id ID #IMPLIED composition (blend|replace|append) "replace" reaction_type (none|halt|overlap|replan) "none" reaction_duration (none|extra_short|short|medium|long) "none">
+<!ATTLIST fml-apml id ID #IMPLIED composition (blend|replace|append) "replace" reaction_type (none|halt|overlap|replan) "none" reaction_duration (none|extra_short|short|medium|long) "none" social_attitude (neutral|submissive|dominant|hostile|friendly) "neutral">
 
 <!ATTLIST speech id ID #REQUIRED start CDATA "0" type CDATA #IMPLIED text CDATA #IMPLIED speed_num CDATA #IMPLIED speed_sym (fast|medium|slow) "medium" language CDATA #REQUIRED voice (openmary|realspeech|cereproc) #REQUIRED>
 
@@ -65,7 +65,7 @@
 
 <!ATTLIST certainty id ID #REQUIRED type (none|certain|uncertain) #IMPLIED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5" intensity CDATA "1">
 
-<!ATTLIST performative id ID #REQUIRED type (accept|advice|agree|announce|approve|beg|confirm|criticize|deny|disagree|greet|implore|incite|inform|none|order|paraphrase|praise|propose|question|recognize|refuse|request|restpose|suggest|warn|restposeakimbo) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
+<!ATTLIST performative id ID #REQUIRED type (accept|advice|agree|announce|approve|beg|confirm|criticize|deny|disagree|greet|implore|incite|inform|none|order|paraphrase|praise|propose|question|recognize|refuse|request|restpose|suggest|warn|restposeakimbo|informIGA|informIGA2|informIGA3) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
 
 <!ATTLIST iconic id ID #REQUIRED type (chop|byebye) #REQUIRED start CDATA #REQUIRED end CDATA #IMPLIED importance CDATA "0.5">
 

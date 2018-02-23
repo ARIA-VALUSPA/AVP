@@ -1,0 +1,66 @@
+<?xml version="1.0"?>
+<pipeline>
+
+	<register>
+		<load name="audio"/>
+		<load name="camera"/>
+		<load name="python"/>
+		<load name="graphic"/>
+		<load name="emax"/>
+		<load name="opensmilewrapper"/>
+		<load name="opensmilewrapperexe"/>
+		<load name="signal"/>
+		<load name="image"/>
+	</register>
+
+	<!-- camera -->
+	<sensor create="Camera:camera" option="options\camera" fps="$(camera:fps)">
+		<output channel="video" pin="video" size="2.0s"/>
+	</sensor>
+
+	<!-- microphone -->
+	<sensor create="Audio:audio" option="options\audio" scale="true" blockInSamples="512" sr="$(audio:sr)">
+		<output channel="audio" pin="audio"/>
+	</sensor>
+
+	<!-- video processing -->
+	<transformer create="EMaxFeatures" modelPath="model\caffe.cfg">
+		<input pin="video" frame="1" async="true"/>
+		<output pin="video_feature"/>
+	</transformer>
+
+
+	<!-- audio processing -->
+	<gate close="$(opensmile:exe:use)">
+		<transformer create="OSWrapper" configFile="$(opensmile:config)">
+			<input pin="audio" frame="$(audio:frame)" delta="$(audio:delta)" async="true"/>
+			<output pin="audio_feature"/>
+		</transformer>
+	</gate>
+	<gate open="$(opensmile:exe:use)">
+		<transformer create="OSWrapperExe" configpath="$(opensmile:exe:config)" dimensions="$(opensmile:exe:dim)"  samples="1" inpath="~.wav" outpath="~.bin" exepath="$(opensmile:exe:path)">
+			<input pin="audio" frame="$(audio:frame)" delta="$(audio:delta)" async="true"/>
+			<output pin="audio_feature"/>
+		</transformer>
+	</gate>
+
+	<!-- <!-- python wrapper --> -->
+	<consumer create="PythonImageConsumer:python" syspath="scripts" script="avemotionf2e">
+		<input pin="video_feature;audio_feature" frame="1" delta="200"/>
+	</consumer>
+
+	<!-- visualization -->
+	<consumer create="VideoPainter:plot" title="VIDEO" flip="true" type="1" relative="true" swap="false">
+		<input pin="video" frame="1"/>
+	</consumer>
+	<consumer create="SignalPainter:plot" title="VOICE" size="10" type="2">
+		<input pin="audio" frame="0.02s"/>
+	</consumer>
+
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,600">console</area>
+		<area pos="400,0,400,600">plot*</area>
+		<area pos="800,0,400,600">monitor*</area>
+	</object>
+
+</pipeline>

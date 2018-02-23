@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+
+	<!-- Valence -->
+	
+	<consumer create="ThresTupleEventSender" address="valence@bayes" classes="REST, SMILE" thres="0.0, 0.8, 1.0">
+		<input pin="emax_feature(avg-short)" frame="1">
+			<transformer create="Selector" indices="1"/>
+		</input>
+	</consumer>
+	
+	<!-- Headactivity -->
+	
+	<consumer create="ThresTupleEventSender" address="headactivity@bayes" classes="s1_below_0, s2_0_0, s3_0_up" thres="0.0, 0.33, 0.66, 1.0">
+		<input pin="emax_feature(avg-short)" frame="1">
+			<transformer create="Selector" indices="5"/>
+		</input>
+	</consumer>
+	
+	<!-- Gazehorizonal -->
+	
+	<consumer create="ThresTupleEventSender" address="gazehorizontal@bayes" classes="s1_below_0, s2_0_0, s3_0_up" thres="0.0, 0.33, 0.66, 1.0">
+		<input pin="emax_feature(avg-short)" frame="1">
+			<transformer create="Selector" indices="3"/>
+		</input>
+	</consumer>
+	
+	<!-- Speechfillerbreath -->
+	
+	<consumer create="Classifier:cl-vad" trainer="$(model:root)$(vad:modality).$(vad:feature)[-f $(vad:feature_frame) -d $(vad:feature_delta) -w $(vad:feature_win)].$(vad:scheme).$(vad:annotator)[-c $(vad:feature_context)].$(vad:model)[$(vad:model_params)].final" flat="true" address="speechfillerbreath@bayes">
+		<input pin="vad_feature_win" frame="1" delta="$(vad:feature_context_2)"/>		
+	</consumer>	
+	
+	<!-- Bayesnet -->
+
+	<object create="BayesnetSmile" 
+		 sname="bnet" 
+		 path="$(model:interest)" 
+		 monitored_nodes="interest" 
+		 init_nodes="">
+	<listen address="@bayes"/>
+	</object> 
+
+	<!-- interest -->
+	
+	<sensor create="EventToStream:interestserializer" sr="25" eventValue="interest">
+		<listen address="@bnet"/>
+		<output channel="event output" pin="interest"/>
+	</sensor>				
+	<transformer create="MvgAvgVar:cl-interest(avg)" win="$(avg:short)" format="1" method="1">
+		<input pin="interest" frame="1"/>
+		<output pin="interest(avg-short)"/>
+	</transformer>		
+	<transformer create="MvgAvgVar:cl-interest(avg)" win="$(avg:long)" format="1" method="1">
+		<input pin="interest" frame="1"/>
+		<output pin="interest(avg-long)"/>
+	</transformer>
+	<transformer create="MvgConDiv" wins="$(avg:short)" winl="$(avg:long)" method="1">
+		<input pin="interest" frame="1"/>
+		<output pin="interest(avg-diff)"/>
+	</transformer>		
+		
+</pipeline>

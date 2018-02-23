@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+
+	<!-- audio processing -->
+	
+	<consumer create="TupleEventSender" address="feature@audio">
+		<input pin="audio" address="vad@audio" state="nonzerodur">
+			<transformer create="OSWrapper" configFile="$(config)"/>
+		</input>
+	</consumer>
+	<transformer create="OSMfccChain:mfccs" option="options\mfccdd">
+		<input pin="audio" frame="$(vad:feature_frame)s" delta="$(vad:feature_delta)s"/>
+		<output pin="vad_feature_lld"/>
+	</transformer>	
+	<transformer create="Mean:mean" >
+		<input pin="vad_feature_lld" frame="$(vad:feature_win)s"/>
+		<output pin="vad_feature_win"/>
+	</transformer>		
+	
+	<!-- audio classification -->
+	
+	<object create="Classifier:cl-gender" trainer="$(model:root)$(model:gender)" address="gender@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="DecisionSmoother:cl-gender(avg)" average="true" address="gender(avg)@audio">
+		<listen address="gender@audio"/>
+	</object>
+	<object create="Classifier:cl-age" trainer="$(model:root)$(model:age)" address="age@audio">
+		<listen address="feature@audio"/>
+	</object>
+	<object create="DecisionSmoother:cl-age(avg)" average="true" address="age(avg)@audio">
+		<listen address="age@audio"/>
+	</object>		
+	
+	<object create="Classifier:cl-arousal" trainer="$(model:root)$(model:arousal)" address="arousal@audio" select="1">
+		<listen address="feature@audio"/>
+	</object>	
+	<sensor create="EventToStream:arousalserializer" sr="25" eventValue="arousal_pos">
+		<listen address="arousal@audio"/>
+		<output channel="event output" pin="audio_arousal"/>
+	</sensor>		
+	<transformer create="MvgAvgVar:cl-arousal(avg)" win="$(avg:short)" format="1" method="1">
+		<input pin="audio_arousal" frame="1"/>
+		<output pin="audio_arousal(avg-short)"/>
+	</transformer>
+	<transformer create="MvgAvgVar:cl-arousal(avg)" win="$(avg:long)" format="1" method="1">
+		<input pin="audio_arousal" frame="1"/>
+		<output pin="audio_arousal(avg-long)"/>
+	</transformer>	
+	<transformer create="MvgConDiv" wins="$(avg:short)" winl="$(avg:long)" method="1">
+		<input pin="audio_arousal" frame="1"/>
+		<output pin="audio_arousal(avg-diff)"/>
+	</transformer>		
+	
+	
+</pipeline>

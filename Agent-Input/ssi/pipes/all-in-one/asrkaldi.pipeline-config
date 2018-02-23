@@ -1,31 +1,32 @@
 # visualization
-
 show:plot = true
 show:gui = true
 
-# voice activity detection
-
-vad:use		= true
-vad:threshold = 0.005
-
 # logging
-
 log:use  	= false
 log:dir 	= log
 
-# ASR HOST
+#ASR server options
+asr:nbest =5
+asr:mode  = utt
+asr:language = en
 
+# VAD options
+# activity threshold
+vad:threshold =0.001
+
+output:asjson = false
+
+# ASR HOST
 # asr:host	=  127.0.0.1 # localhost
-asr:host	=  34.252.96.222 # amazon server
+# asr:host	= 34.253.87.8 # amazon server
+asr:host	=construct.cs.nott.ac.uk
 
 # ASR PORT
 # Below you can find the option for the ASR server running from Amazon
-
 # asr:port = 8888   # EN, 1-best ("utt")
 # asr:port = 8887 # EN, 5-best ("utt")
-asr:port = 8886 # EN, 1-best ("inc")
 # asr:port = 9999 # DE, 1-best ("utt")
 # asr:port = 9998 # DE, 5-best ("utt")
 # asr:port = 9997 # DE, 1-best ("inc")
-asr:nbest = 1
-asr:mode  = inc
+asr:port =8888

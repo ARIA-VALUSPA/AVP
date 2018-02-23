@@ -1,0 +1,2 @@
+model_checkpoint_path: "./models/audiovideo_val_delay60_std_addn1_l5_h100_r20_ss10_lm0.01/lstm.ckpt-330"
+all_model_checkpoint_paths: "./models/audiovideo_val_delay60_std_addn1_l5_h100_r20_ss10_lm0.01/lstm.ckpt-330"

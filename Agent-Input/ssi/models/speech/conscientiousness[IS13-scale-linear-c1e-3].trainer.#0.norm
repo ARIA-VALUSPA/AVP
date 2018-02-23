@@ -1,7 +1,0 @@
-<?xml version="1.0" ?>
-<norm>
-    <method>Scale</method>
-    <limits>-1.000000 1.000000</limits>
-    <dim>6373</dim>
-    <type>BINARY</type>
-</norm>

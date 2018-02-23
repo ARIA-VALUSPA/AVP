@@ -1,0 +1,971 @@
+<behaviourtemplates>
+
+	<is name="dialogue">
+		{
+			"greeted" : {
+				"user" : false,
+				"agent" : false
+			}, 
+			"introducedtopic": false,
+			"fml" :{
+				"initialized" : false
+			},
+			"threshold" : 0.25,
+			"qa" :{
+			},
+			"timeLast": 0,
+			"qa":{
+				"cake2": true,
+				"bottle2": true,
+				"mouse2" : true
+			},
+			"socialmeta":{
+				"whattodo": false
+			},
+			"waitingfor":{
+				"yesno": false,
+				"refersto": ""
+			},
+			"suggest" : false,
+			"wellbeingasked" : false,
+			"suggestAfterWellbeing" : false,
+			"behaviourToProcess" : false,
+			"silence" : 0,
+			"metaSilence" : true
+		}
+	</is>
+
+	<javascript>
+		<![CDATA[
+		
+		function search(nameKey, myArray){
+			var element;
+			for(var i=0; i < myArray.length; i++){
+				
+				if(myArray[i].id === nameKey){
+					element = myArray[i];
+				}
+			}
+			return element;
+		}
+
+		function compareScore(id, myArray){
+			var score = 0.0;
+			score = search(id,myArray).relevance;
+			helpPrint(score);
+			return score;
+		}
+
+		function updateScore(id, myArray){
+			var score = 0.0;
+			score = search(id,myArray).relevance + score;
+			return score;
+		}
+		
+		function compareStrings(str1, str2) {
+			if(str1 === str2){
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function exists(state, property){
+			var temp = state;
+			if(temp.hasOwnProperty(property)){
+				return true;
+			}
+			return false;
+		}
+		
+		function getTime() {
+			var d = new Date();
+			var n = d.getTime();
+			return n;
+		}
+		
+		function compareTime(oldTime, wait) {
+			var d = new Date();
+			var t = d.getTime();
+			var waitTime = oldTime + wait;
+			if (t > waitTime){
+				print("wait time "+wait+" passed");
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		]]>
+	</javascript>
+	<!-- helpPrint(myArray[i].id + ":" + myArray[i].relevance);-->
+
+	<template id="003" name="initializeFMLManager"> 
+	    <preconditions>
+	    	<condition><![CDATA[!is.dialogue.fml.initialized]]></condition>
+	    	<!-- <condition><![CDATA[helpPrint(is.dialogue.fml.initialized)]]></condition> -->
+	    </preconditions>
+	    <effects>
+	      <method name="isConnected" is="is.dialogue.fml.initialized">
+	        <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator">  
+	          <constructors/>       
+	        </object>  
+	      </method>
+	      <assign is="is.dialogue.silence">getTime()</assign>
+	    </effects>
+  	</template>
+
+  	<!--
+
+	var o = JSON.parse("{\"parameters\" : {\"var.var1\" : \"human\", \"em1.emotion\" : \"anger\"}}");
+
+	o.parameters["emotion"] = "happy";
+	o.parameters["e"] = 2;
+
+
+	console.log(o.parameters);
+	console.log(o.parameters.hasOwnProperty("var.var1"));
+	console.log(o.parameters["e"]);
+
+
+  	-->
+	
+	<!-- test move -->
+	<!-- <template id="AMtest" name="var set test" conditional="true"> -->
+  		<!-- <preconditions> -->
+			<!-- <condition><![CDATA[is.states.agent.movesQAMScores.length > 0]]></condition>		 -->
+			<!-- <condition><![CDATA[compareScore("var_test", is.states.agent.movesQAMScores) > is.dialogue.threshold ]]></condition>	 -->
+			<!-- <condition><![CDATA[helpPrint("SELECT MOVE: var_test")]]></condition> -->
+  		<!-- </preconditions> -->
+  		<!-- <effects> -->
+  			<!-- <assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>  -->
+  			<!-- <assign is="is.states.agent.fml.parameters">[]</assign> -->
+			<!-- <assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[Hello human how nice to see you, <tm id=\"DMImpBegin\"/> you may call me Alice <tm id=\"DMImpEnd\"/>]]>"</assign> -->
+			<!-- <assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joybody"</assign> -->
+			<!-- <assign is="is.dialogue.greeted.agent">true</assign> -->
+  		<!-- </effects> -->
+  	<!-- </template> -->
+
+  	<template id="social_salutation_initialGreeting" name="Initial Greeting">
+  		<preconditions>
+  			<condition><![CDATA[is.states.agent.fml.template === ""]]></condition>
+  			<condition><![CDATA[is.states.user.faceActivity === 1]]></condition>
+  			<condition><![CDATA[(!is.dialogue.greeted.agent && !is.dialogue.greeted.user) || compareTime(is.dialogue.timeLast, 390000)]]></condition>
+  			<condition><![CDATA[helpPrint("SELECT MOVE: Initial Greeting")]]></condition>
+  		</preconditions>
+  		<effects>
+			<assign is="is.dialogue.timeLast"><![CDATA[getTime()]]></assign>
+			<assign is="is.states.agent.bestMove">{ "id" : "social_salutation_initialGreeting","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"socialobligations_salutation_initial_y_01"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"human"</assign>
+			<assign is="is.dialogue.greeted.agent">true</assign>
+			<assign is="is.dialogue.socialmeta.goodbye">false</assign>
+  		</effects>
+  	</template>
+	
+
+	<template id="social_salutation_returngreeting" name="Return Greeting" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[!is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: Return Greeting")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.dialogue.timeLast"><![CDATA[getTime()]]></assign>
+			<assign is="is.states.agent.fml.template">"socialobligations_salutation_return_y_01"</assign>			
+			<assign is="is.states.agent.fml.parameters['var.var1']">"human"</assign>	
+			<assign is="is.dialogue.greeted.agent">true</assign>
+		</effects>
+	</template>
+	
+	<template id="social_salutation_returngreeting" name="return Return Greeting" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: return Return Greeting")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.dialogue.timeLast"><![CDATA[getTime()]]></assign>
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[<tm id=\"DMImpBegin\"/>Hello,<tm id=\"DMImpEnd\"/> to you too]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"suprise"</assign>
+			<assign is="is.dialogue.greeted.agent">true</assign>
+		</effects>
+	</template>
+
+	<template id="meta_userinterruption_return" name="meta user interruption" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: meta user interruption")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"interaction_interruption_reaction_n_01"</assign> 			
+			<assign is="is.states.agent.fml.parameters['fml-apml.reaction_type']">is.interruption.reactionType</assign>
+      		<assign is="is.states.agent.fml.parameters['fml-apml.reaction_duration']">is.interruption.reactionDuration</assign>
+		</effects>
+	</template>
+	
+	<!-- this template ends the conversation on agent initiative after 2 min -->
+	<template id="socialmeta_valediction_goodbye" name="socialmeta valediction goodbye">
+		<preconditions>
+	    	<condition>!is.dialogue.socialmeta.goodbye</condition>
+			<condition>is.dialogue.greeted.agent</condition>
+			<condition><![CDATA[compareTime(is.dialogue.timeLast, 360000)]]></condition>
+			<!-- <condition>is.dialogue.timeLast > (is.dialogue.timeLast+1000) </condition> -->
+			<condition><![CDATA[helpPrint("SELECT MOVE: socialmeta_goodbye")]]></condition>			
+		 </preconditions>
+		<effects>
+
+			<assign is="is.states.agent.bestMove">{ "id" : "socialmeta_valediction_goodbye","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[Right, look at the time! <tm id=\"DMImpBegin\"/>I'm afraid I must go at once!<tm id=\"DMImpEnd\"/> Tea time with my cat, goodbye!]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"surprise"</assign>
+			<assign is="is.dialogue.socialmeta.goodbye">true</assign>
+			
+		</effects>
+	</template>
+	
+	<!-- this template makes the agent take initiative, explaining what to do to the user if the user remains quiet after the greeting -->
+	<!-- <template id="socialmeta_whattodo" name="socialmeta_whattodo">
+		<preconditions>
+	    	<condition>is.dialogue.greeted.agent</condition>
+			<condition>!is.dialogue.socialmeta.whattodo</condition>
+			<condition><![CDATA[!is.states.dialogue.suggest]]></condition>
+			<condition><![CDATA[compareTime(is.dialogue.timeLast, 15000)]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: socialmeta_whattodo")]]></condition>			
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.bestMove">{ "id" : "socialmeta_whattodo","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[So, welcome! I can tell you about the book Alice in Wonderland. <tm id=\"DMImpBegin\"/>Do you want to hear the story?<tm id=\"DMImpEnd\"/>]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joy"</assign>
+			<assign is="is.states.agent.fml.parameters">addJsonToJsonArray(is.states.agent.fml,"fml-apml.composition","append"</assign>
+			<assign is="is.dialogue.socialmeta.whattodo">true</assign> -->
+			<!-- set referal to this template (the template that holds the agent response to this should also refer to this template  -->
+<!-- 			<assign is="is.dialogue.waitingfor.yesno">true</assign>
+			<assign is="is.dialogue.waitingfor.refersto">"socialmeta_whattodo"</assign>
+		</effects>
+	</template> -->
+	
+	<!-- respond to user yes/no in response to previous template: "socialmeta_whattodo" -->
+	<template id="socialmeta_whattodo_yes" name="socialmeta_whattodo_yes">
+		<preconditions>
+	    	<condition>is.dialogue.greeted.agent</condition>
+			<condition>is.dialogue.socialmeta.whattodo</condition>
+			<condition>is.dialogue.waitingfor.yesno</condition>
+			<condition>is.dialogue.waitingfor.refersto === "socialmeta_whattodo"</condition>
+			<condition><![CDATA["ASR_output" in is.states.amq.user.speech]]></condition>
+			<condition>is.states.amq.user.speech.ASR_output.transcriptions.text === "YES" || 
+			is.states.amq.user.speech.ASR_output.transcriptions.text === "YES PLEASE" || 
+			is.states.amq.user.speech.ASR_output.transcriptions.text === "O K"</condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: socialmeta_whattodo_yes")]]></condition>			
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.bestMove">{ "id" : "socialmeta_whattodo_yes","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"qa_chapter1_beginning"</assign>
+			<assign is="is.dialogue.socialmeta.socialmeta_whattodo_yes">true</assign>
+			<assign is="is.dialogue.waitingfor.yesno">false</assign>
+			<assign is="is.dialogue.waitingfor.refersto">""</assign>
+		</effects>
+	</template>
+	
+	<!-- respond to user yes/no in response to previous template: "socialmeta_whattodo" -->
+	<template id="socialmeta_whattodo_no" name="socialmeta_whattodo_no">
+		<preconditions>
+	    	<condition>is.dialogue.greeted.agent</condition>
+			<condition>is.dialogue.socialmeta.whattodo</condition>
+			<condition>!is.states.agent.isTalking</condition>		
+			<condition>is.dialogue.waitingfor.yesno</condition>
+			<condition>is.dialogue.waitingfor.refersto === "socialmeta_whattodo"</condition>
+			<condition><![CDATA["ASR_output" in is.states.amq.user.speech]]></condition>
+			<condition>is.states.amq.user.speech.ASR_output.transcriptions.text === "NO" || 
+			is.states.amq.user.speech.ASR_output.transcriptions.text === "NOT REALLY" || 
+			is.states.amq.user.speech.ASR_output.transcriptions.text === "NAY"</condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: socialmeta_whattodo_no")]]></condition>			
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.bestMove">{ "id" : "socialmeta_whattodo_no","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[<tm id=\"DMImpBegin\"/>No? <tm id=\"DMImpEnd\"/> Well, this is awkward! Then you better ask me a question about the book!]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"fear"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"surprise"</assign>
+			<assign is="is.dialogue.socialmeta.socialmeta_whattodo_no">true</assign>
+			<assign is="is.dialogue.waitingfor.yesno">false</assign>
+			<assign is="is.dialogue.waitingfor.refersto">""</assign>
+		</effects>
+	</template>
+	
+	
+	<!-- move templates for evaluation quest 1 -->
+	<template id="social_introduction_returnname" name="Return Name trust" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[is.states.agent.affective.emotion.trust > 0.8]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: Return Name trust")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"socialobligations_selfintroduction_retun_q1"</assign>			
+			<assign is="is.states.agent.fml.parameters['alt.givename']">"trust"</assign>	
+		</effects>
+	</template>
+	
+	<template id="social_introduction_returnname" name="Return Name distrust" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[is.states.agent.affective.emotion.trust < 0.8]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: Return Name distrust")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"socialobligations_selfintroduction_retun_q1"</assign>			
+			<assign is="is.states.agent.fml.parameters['alt.givename']">"distrust"</assign>		
+		</effects>
+	</template>
+	
+	<!-- move templates for evaluation quest 2, siblings -->
+	<template id="qa_personal_siblings" name="qa_personal_siblings trust" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[is.states.agent.affective.emotion.trust >= 0.8]]></condition>	
+			<condition><![CDATA[is.states.dialogue.agentmovecount >= 10]]></condition>		
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_personal_siblings trust")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"qa_personal_siblings_q2"</assign>
+			<assign is="is.states.agent.fml.parameters['alt.givename']">"trust"</assign>	
+		</effects>
+	</template>
+	
+	<template id="qa_personal_siblings" name="qa_personal_siblings distrust" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[is.states.agent.affective.emotion.trust < 0.8 || is.states.dialogue.agentmovecount < 10 ]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_personal_siblings distrust")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"qa_personal_siblings_q2"</assign>
+			<assign is="is.states.agent.fml.parameters['alt.givename']">"distrust"</assign>		
+		</effects>
+	</template>
+	
+	<!-- move templates for evaluation quest 3, oxfordshire -->
+	<template id="qa_personal_oxfordshire" name="qa_personal_oxfordshire trust" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[is.states.agent.affective.emotion.trust >= 0.8]]></condition>		
+			<condition><![CDATA[is.states.dialogue.agentmovecount >= 15]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_personal_siblings trust")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"qa_personal_oxfordshire_q3"</assign>
+			<assign is="is.states.agent.fml.parameters['alt.givename']">"distrust"</assign>		
+		</effects>
+	</template>
+	
+	<template id="qa_personal_oxfordshire" name="qa_personal_siblings distrust" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+	    	<condition><![CDATA[is.states.dialogue.agentmovecount < 15 || is.states.agent.affective.emotion.trust < 0.8]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_personal_oxfordshire distrust")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"qa_personal_oxfordshire_q3"</assign>
+			<assign is="is.states.agent.fml.parameters['alt.givename']">"distrust"</assign>		
+		</effects>
+	</template>	
+	
+	<!-- deal with user (verbal) confusion about agent action -->
+	<template id="inform_disagreement_correction" name="Inform Disagree Correction" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+	    	<condition><![CDATA[is.states.user.history.speech.length > 1]]></condition>
+			<condition><![CDATA["ASR_output" in is.states.user.history.speech[1]]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: Inform Disagree Correction")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_disagreement_correction"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">String(is.states.user.history.speech[1].ASR_output.transcriptions.text).toLowerCase()</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"worried"</assign>	
+		</effects>
+	</template>
+	
+	<!-- (REQUIRES ASR KNOWS CURSES. currently not the case. Would do, interrupt user when they curse, template: actiondiscussion_directives_request_cursewords_01 -->
+	<template id="actiondiscussion_directives_requestCursewords" name="Actiondiscussion Directives Request Cursewords" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: Actiondiscussion Directives Request Cursewords")]]></condition>
+	    	<!-- <condition><![CDATA[!is.states.agent.canInterruptOther]]></condition> -->
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"actiondiscussion_directives_request_cursewords_01"</assign>
+			<assign is="is.states.agent.canInterruptOther">true</assign>
+			<!-- <assign is="is.states.agent.fml.parameters">addJsonToJsonArray(is.states.agent.fml,"var.var1", is.states.user.history.speech[is.states.user.history.speech.length-2].ASR_output.transcriptions.text.toLowerCase())</assign>	 -->
+		</effects>
+	</template>
+	
+	<template id="social_gratitude_downplay" name="Socialobligations gratitude downplay" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: socialobligations gratitude downplay")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"socialobligations_gratitude_downplay_n_01"</assign>
+		</effects>
+	</template>
+	
+	<template id="social_apology_downplay" name="Socialobligations Apology Downplay" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: Social.Apology.Downplay")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"socialobligations_apologizing_apology_downplay_n_01"</assign>
+		</effects>
+	</template>
+	
+	<template id="actiondiscussion_directives_suggestion" name="actiondiscussion_directives_suggestion_01" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: actiondiscussion_directives_suggestion_01")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"actiondiscussion_directives_suggestion_01"</assign>
+			<assign is="is.dialogue.suggest">true</assign>
+		</effects>
+	</template>
+
+	<!-- <template id="actiondiscussion_directives_suggestion_02" name="actiondiscussion_directives_suggestion_02">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+	    	<condition><![CDATA[!is.states.agent.isTalking]]></condition>					
+	    	<condition><![CDATA[is.dialogue.suggestAfterWellbeing]]></condition>
+	    	<condition><![CDATA[is.states.agent.fml.template === ""]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: actiondiscussion_directives_suggestion_01")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"actiondiscussion_directives_suggestion_01"</assign>
+			<assign is="is.states.agent.fml.parameters">[]</assign>
+			<assign is="is.dialogue.suggestAfterWellbeing">false</assign>
+			<assign is="is.dialogue.suggest">true</assign>
+		</effects>
+	</template>
+	 -->
+	<!--
+	here de do the moves that were previously the qa template. 
+	they utilise the same (where possible) fml template, were you put the agent utterance.
+	agent utterance should incluse the tags <tm id=\"DMImpBegin\"/>  <tm id=\"DMImpEnd\"/> around the part of the utterance that is important
+	additionally, it is possible to set the emotion of the agent for these parts using, for example, <assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joybody"</assign>
+	-->
+	
+	<template id="qa_chapter1_beginning" name="qa_chapter1_beginning" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_beginning")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"qa_chapter1_beginning"</assign>
+			<assign is="is.dialogue.qa.begin">true</assign>
+		</effects>
+	</template>
+
+	<template id="qa_chapter1_sister" name="qa_chapter1_sister" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_sister")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[My sister is older than me and <tm id=\"DMImpBegin\"/>likes to read books <tm id=\"DMImpEnd\"/>. Without pictures.]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"envy"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"disappointment"</assign>
+			<assign is="is.dialogue.qa.sister">true</assign>
+		</effects>
+	</template>
+	
+	
+	<template id="qa_chapter1_rabbit" name="qa_chapter1_rabbit" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_rabbit")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>   			
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[So this rabbit took a watch <tm id=\"DMImpBegin\"/> out of its waistcoat-pocket! <tm id=\"DMImpEnd\"/> It said 'Oh dear! Oh dear! I shall be late!'. <tm id=\"DMImpBegin\"/> I got curious <tm id=\"DMImpEnd\"/> and followed the rabbit into <tm id=\"DMImpBegin\"/> a rabbit-hole under the hedge. <tm id=\"DMImpEnd\"/>]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joybody"</assign>
+			<assign is="is.dialogue.qa.rabbit">true</assign>
+		</effects>
+	</template>
+	
+	<template id="qa_chapter1_rabbithole" name="qa_chapter1_rabbithole" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_rabbithole")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I followed the rabbit into a hole and then <tm id=\"DMImpBegin\"/> fell down a very deep well! <tm id=\"DMImpEnd\"/> I came down upon a heap of sticks and dry leaves and found myself in a long, low hall. There, on a stool, was a tiny golden key!]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"anxiety"</assign>
+			<assign is="is.dialogue.qa.rabbithole">true</assign>
+		</effects>
+	</template>
+	
+	<template id="qa_chapter1_goldenkey" name="qa_chapter1_goldenkey" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_goldenkey")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I looked around and I found a little door. The tiny golden key fitted in the lock, but <tm id=\"DMImpBegin\"/>  the door was too small for me to pass! <tm id=\"DMImpEnd\"/>  I looked around again and found a bottle with \"drink me\" written on it.]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"anxiety"</assign>
+			<assign is="is.dialogue.qa.goldenkey">true</assign>
+		</effects>
+	</template>
+	
+	<!-- this is the first part of a two part move -->
+	<template id="qa_chapter1_bottle" name="qa_chapter1_bottle1" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_bottle1")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[The \"drink me\" bottle <tm id=\"DMImpBegin\"/> did not have poison written on it, so I drank it! <tm id=\"DMImpEnd\"/> Then I felt myself shrinking, until I was only 10 inches high.]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"relief"</assign>
+			<assign is="is.dialogue.qa.bottle1">true</assign>
+			<assign is="is.dialogue.qa.bottle2">false</assign>
+			<!-- <assign is="is.dialogue.timeLast"><![CDATA[getTime()]]></assign> -->
+		</effects>
+	</template>
+	
+	<!-- this is the second part of the two part move  -->
+	<template id="qa_chapter1_bottle1" name="qa_chapter1_bottle2">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA["bottle1" in is.dialogue.qa]]></condition>
+			<condition>is.dialogue.qa.bottle1</condition>
+			<condition>!is.dialogue.qa.bottle2</condition>
+			<!-- <condition>is.dialogue.timeLast > is.dialogue.timeLast+10 </condition> -->
+			<condition><![CDATA[is.behaviour.previousMoves.length > 0]]></condition>	
+			<condition><![CDATA[is.behaviour.previousMoves[0] === "qa_chapter1_bottle"]]></condition>	
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_bottle2")]]></condition>			
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.bestMove">{ "id" : "qa_chapter1_bottle2","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I went to the little door, <tm id=\"DMImpBegin\"/> but I had left the golden key on the table, which was now too high for me. <tm id=\"DMImpEnd\"/> Then I found a cake, which said \"eat me\" .]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"anger"</assign>
+			<assign is="is.dialogue.qa.bottle2">true</assign>
+		</effects>
+	</template>
+	
+	<template id="qa_chapter1_cake" name="qa_chapter1_cake1" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter1_cake1")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I ate the cake and  <tm id=\"DMImpBegin\"/> I grew into 9 feet high, so I could easily get the golden key again  <tm id=\"DMImpEnd\"/>  that was on the table. But now I was too big for the tiny door. ]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joy"</assign>
+			<assign is="is.dialogue.qa.cake1">true</assign>
+			<assign is="is.dialogue.qa.cake2">false</assign>
+		</effects>
+	</template>
+	
+	<template id="qa_chapter2_cake1" name="qa_chapter2_cake2">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA["cake1" in is.dialogue.qa]]></condition>
+			<condition>is.dialogue.qa.cake1</condition>	
+			<condition>!is.dialogue.qa.cake2</condition>
+			<condition><![CDATA[is.behaviour.previousMoves.length > 0]]></condition>	
+			<!-- <condition><![CDATA[exists(is.states.fml,"template")]]></condition> -->
+			<condition><![CDATA[is.behaviour.previousMoves[0] === "qa_chapter1_cake"]]></condition>	
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_cake2")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.bestMove">{ "id" : "qa_chapter1_cake2","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[ <tm id=\"DMImpBegin\"/> I cried and cried again, until there was a large pool all round me.  <tm id=\"DMImpEnd\"/>  Then the rabbit suddenly showed up and ran away again, dropping some white kid gloves and a fan!]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"despair"</assign>			
+			<assign is="is.dialogue.qa.cake2">true</assign>
+		</effects>
+	</template>
+
+	<template id="qa_chapter2_glovesandfan" name="qa_chapter2_glovesandfan" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_glovesandfan")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I picked up the tiny gloves and the tiny fan. I could put on one of the Rabbit's little white kid gloves. I must be growing small again...  <tm id=\"DMImpBegin\"/> Then my foot slipped, and splash!  <tm id=\"DMImpEnd\"/> I was up to my chin in salt water! ]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"tension"</assign>
+			<assign is="is.dialogue.qa.cake1">true</assign>
+		</effects>
+	</template>
+
+	<template id="qa_chapter2_mouse" name="qa_chapter2_mouse" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_mouse")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign> 
+  			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I heard something splashing! I thought it was a walrus or a hippo, but alas, <tm id=\"DMImpBegin\"/>it was a mouse<tm id=\"DMImpEnd\"/>.]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"fear"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"relief"</assign>	
+			<assign is="is.dialogue.qa.mouse1">true</assign>
+			<assign is="is.dialogue.qa.mouse2">false</assign>		
+		</effects>
+	</template>
+
+	<template id="qa_chapter2_mouse2" name="qa_chapter2_mouse2">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+	    	<condition><![CDATA["mouse1" in is.dialogue.qa]]></condition>
+			<condition>is.dialogue.qa.mouse1</condition>
+			<condition>!is.dialogue.qa.mouse2</condition>				
+	    	<condition><![CDATA[is.behaviour.previousMoves.length > 0]]></condition>	
+			<condition><![CDATA[is.behaviour.previousMoves[0] === "qa_chapter2_mouse"]]></condition>	
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_mouse2")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.bestMove">{ "id" : "qa_chapter2_mouse2","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I swam towards the mouse and tried to talk to the mouse, <tm id=\"DMImpBegin\"/>even in French.<tm id=\"DMImpEnd\"/>.]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"worried"</assign>		
+			<assign is="is.dialogue.qa.mouse2">true</assign>	
+		</effects>
+	</template>
+
+	<template id="qa_chapter2_angry" name="qa_chapter2_angry" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_angry")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[The mouse was agitated and <tm id=\"DMImpBegin\"/>didn't want to talk to me<tm id=\"DMImpEnd\"/>.]]>"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"sadness"</assign>		
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"worried"</assign>		
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"sad"</assign>		
+		</effects>
+	</template>
+
+	<template id="qa_chapter2_catsdogs" name="qa_chapter2_catsdogs" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>				    	
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_catsdogs")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[I realized what I was talking about was scaring the mouse, namely <tm id=\"DMImpBegin\"/>cats and dogs<tm id=\"DMImpEnd\"/>. I promised the mouse I would not talk about them anymore.]]>"</assign>			
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"embarrassment"</assign>	
+		</effects>
+	</template>
+
+	<template id="qa_chapter2_exitpool" name="qa_chapter2_exitpool">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>	
+	    	<condition><![CDATA[is.behaviour.previousMoves.length > 0]]></condition>	
+			<condition><![CDATA[is.behaviour.previousMoves[0] === "qa_chapter2_catsdogs"]]></condition>
+			<condition><![CDATA[is.behaviour.plannedMoves[0] !== "qa_chapter2_exitpool"]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_exitpool")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.bestMove">{ "id" : "qa_chapter2_exitpool","relevance" : 1}</assign>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[<tm id=\"DMImpBegin\"/>Luckily the mouse forgave me<tm id=\"DMImpEnd\"/>, and we quickly went to the shore. He would then tell me why he was scared of cats and dogs.]]>"</assign>						
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"relief"</assign>	
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"calm"</assign>		
+		</effects>
+	</template>
+
+	<template id="qa_chapter2_animals" name="qa_chapter2_animals" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>	
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: qa_chapter2_exitpool")]]></condition>
+		 </preconditions>
+		<effects>
+  			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[When we went to shore, we <tm id=\"DMImpBegin\"/>saw many other animals in the pool<tm id=\"DMImpEnd\"/>. Unfortunately, this is the end of the chapter story for now.]]>"</assign>						
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"tension"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"surprise"</assign>		
+		</effects>
+	</template>
+	
+	<template id="util_simple_yes" name="simple_yes" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: simple_yes")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_confirm_n_01"</assign>
+			<!-- <assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[Yes?]]>"</assign> -->
+		</effects>
+	</template>
+
+	<template id="util_simple_no" name="simple_no" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: simple_no")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_disconfirm_n_01"</assign>
+			<!-- <assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[Yes?]]>"</assign> -->
+		</effects>
+	</template>
+
+	<template id="socialobligations_valediction_return" name="socialobligations_valediction_return" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[helpPrint("SELECT MOVE: socialobligations_valediction_return")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"socialobligations_valediction_return_n_01"</assign>
+		</effects>
+	</template>
+
+
+	<template id="socialobligations_greeting_wellbeing" name="Return wellbeing" conditional="true">
+		<preconditions>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: Return wellbeing question")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_statement_y_01"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[<tm id=\"DMImpBegin\"/> I'm good<tm id=\"DMImpEnd\"/>. How are you?]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"joy"</assign>
+			<assign is="is.dialogue.wellbeingasked">true</assign>
+		</effects>
+	</template>
+
+	<template id="socialobligations_wellbeing_bad" name="Return wellbeing bad" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.wellbeingasked]]></condition>
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+	    	<!-- <condition><![CDATA[parseFloat(is.states.amq.user.emotions.sadness) > 0.4]]></condition> -->
+			<condition><![CDATA[helpPrint("SELECT MOVE: Return wellbeing bad")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[<tm id=\"DMImpBegin\"/> That's not good... <tm id=\"DMImpEnd\"/>. What's up?]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"sad"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"worried"</assign>
+			
+		</effects>
+	</template>
+
+	<template id="socialobligations_wellbeing_good" name="Return wellbeing good" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.wellbeingasked]]></condition>
+			<!-- <condition><![CDATA[parseFloat(is.states.amq.user.emotions.sadness) <= 0.4]]></condition> -->
+	    	<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: Return wellbeing good")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[<tm id=\"DMImpBegin\"/>I'm happy to hear so. <tm id=\"DMImpEnd\"/>]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joy"</assign>
+			<assign is="is.dialogue.suggestAfterWellbeing">true</assign>
+		</effects>
+	</template>
+
+	<template id="qa_meta_trust" name="Request trust trust" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[is.states.agent.affective.emotion.trust > 0.7]]></condition>
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: Return trust (trust)")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[Yes, <tm id=\"DMImpBegin\"/> I trust you. <tm id=\"DMImpEnd\"/>]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joy"</assign>
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"happy"</assign>
+		</effects>
+	</template>
+
+	<template id="qa_meta_trust" name="Request trust distrust" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>
+			<condition><![CDATA[is.states.agent.affective.emotion.trust <= 0.7]]></condition>
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: Return trust (distrust)")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[No, <tm id=\"DMImpBegin\"/> I do not trust <tm id=\"DMImpEnd\"/> you yet! ]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"hate"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em1.intensity']">"0.01"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"anger"</assign>
+			<assign is="is.states.agent.fml.parameters['emotion.em2.intensity']">"0.05"</assign>
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"cross"</assign>
+		</effects>
+	</template>
+
+	<template id="qa_char_madhatter" name="inform about mad hatter" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: inform about hatter")]]></condition>
+		 </preconditions>
+		<effects>
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[The mad hatter wears a <tm id=\"DMImpBegin\"/>top hat and loves to host tea parties.<tm id=\"DMImpEnd\"/>]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joy"</assign>
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"calm"</assign>
+		</effects>
+	</template>
+
+	<template id="qa_char_cheshirecat" name="inform about cheshire cat" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: inform about cheshire")]]></condition>
+		 </preconditions>
+		<effects>			
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[The Cheshire Cat constantly grins and <tm id=\"DMImpBegin\"/>appears and disappears.<tm id=\"DMImpEnd\"/>]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"worried"</assign>		
+		</effects>
+	</template>
+
+	<template id="qa_char_qoh" name="inform about queen of hearts" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: inform about queen of hearts")]]></condition>
+		 </preconditions>
+		<effects>			
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[The Queen of Hearts is a frightening tyrant ruling Wonderland, always shouting <tm id=\"DMImpBegin\"/>`off with their heads'!<tm id=\"DMImpEnd\"/>]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"panic_fear"</assign>	
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"cross"</assign>		
+		</effects>
+	</template>
+
+	<template id="qa_char_caterpillar" name="inform about caterpillar" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: inform about caterpillar")]]></condition>
+		 </preconditions>
+		<effects>			
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[Who are YOU?, the caterpillar said, while he <tm id=\"DMImpBegin\"/> was smoking a hookah on a mushroom.<tm id=\"DMImpEnd\"/>]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"anxiety"</assign>	
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"cross"</assign>		
+		</effects>
+	</template>
+
+	<template id="qa_char_wr" name="inform about white rabbit" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: inform about white rabbit")]]></condition>
+		 </preconditions>
+		<effects>			
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[The White Rabbit is a <tm id=\"DMImpBegin\"/>herald of the queen<tm id=\"DMImpEnd\"/> and seems always nervous and in a hurry.]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"tension"</assign>	
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"calm"</assign>		
+		</effects>
+	</template>
+
+	<template id="qa_char_dinah" name="inform about dinah" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: inform about dinah")]]></condition>
+		 </preconditions>
+		<effects>			
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[My best friend, <tm id=\"DMImpBegin\"/>my cat!<tm id=\"DMImpEnd\"/> She's good at hunting and I love her very much.]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"joy"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"pride"</assign>	
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"happy"</assign>		
+		</effects>
+	</template>
+	
+	<template id="qa_meta_joke" name="tell a joke" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+	    	<condition><![CDATA[helpPrint("SELECT MOVE: tell a joke")]]></condition>
+		 </preconditions>
+		<effects>			
+			<assign is="is.states.agent.fml.template">"inform_statement_y_02"</assign>
+			<assign is="is.states.agent.fml.parameters['var.var1']">"<![CDATA[OK, a joke. Can a kangaroo jump higher than a house? <tm id=\"DMImpBegin\"/>Yes! <tm id=\"DMImpEnd\"/> A house doesn't jump at all. ]]>"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em1.type']">"joy"</assign>	
+			<assign is="is.states.agent.fml.parameters['emotion.em2.type']">"joybody"</assign>	
+			<assign is="is.states.agent.fml.parameters['voice.emotion']">"happy"</assign>		
+		</effects>
+	</template>
+
+	<!-- Whenever the user is silent and the agent isn't intending to say something, we want to talk as an agent, and choose one of the below options-->
+	<template id="meta_silence_react" name="React to user silence">
+		<preconditions>
+			<!-- <condition><![CDATA[is.dialogue.silence]]></condition> -->
+			<!-- <condition>!is.dialogue.metaSilence</condition> -->  			
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[is.states.agent.moves.length > 0]]></condition>
+			<condition><![CDATA[is.states.agent.interactionstate.phase === "ENGAGED"]]></condition>			
+			<condition><![CDATA[is.states.user.voiceActivity === 0 && !is.states.agent.isPlanning && !is.states.agent.isTalking]]></condition>
+			<condition><![CDATA[is.dialogue.silence + 20000 < getTime()]]></condition>
+			<condition><![CDATA[helpPrint('hi3')]]></condition>
+			<!-- <condition><![CDATA[helpPrint("responding to user silence")]]></condition> -->
+		</preconditions>
+		<effects mode="weighted">
+			<checktemplates weight="1" regexpr="meta_topic_introduction"></checktemplates>					
+			<checktemplates weight="0" regexpr="meta_topic_reflect"></checktemplates>					
+			<checktemplates weight="0" regexpr="meta_topic_continuation"></checktemplates>			
+			<!--  -->
+		</effects>
+		<effects>
+			<assign is="is.dialogue.silence">getTime()</assign>
+		</effects>
+	</template>
+
+	<!-- <template id="meta_silence_react2" name="React to user silence">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.greeted.agent]]></condition>			
+			<condition><![CDATA[is.states.agent.moves.length > 0]]></condition>
+			<condition><![CDATA[is.states.user.voiceActivity === 0 && !is.states.agent.isPlanning && !is.states.agent.isTalking]]></condition>
+			<condition><![CDATA[is.dialogue.silence + 5000 < getTime()]]></condition>
+			<condition><![CDATA[helpPrint("responding to user silence")]]></condition>
+		</preconditions>
+		<effects>
+			<assign is="is.dialogue.metaSilence">true</assign>
+		</effects>
+	</template> -->
+
+
+	<!-- Meta move that introduces a topic. Is now done by telling a random move not mentioned before. Arguments are the possible agent moves and its previous moves. 
+	-->
+	<template id="meta_topic_introduction" name="Meta topic introduction" conditional="true">
+		<preconditions>						
+			<condition><![CDATA[helpPrint("SELECT MOVE: introduce topic")]]></condition>
+		</preconditions>
+		<effects>			
+			<method name="introduceNewTopic" is="is.states.agent.bestMove" is_type="JSONString">
+      			<object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator"></object>
+          		<arguments>
+              		<value is_type="JSONString" is="is.states.agent.moves"/>            
+              		<value is_type="JSONString" is="is.behaviour.previousMoves"/>            
+          		</arguments> 
+    		</method>
+    		<checktemplates isregexpr="is.states.agent.bestMove.id"></checktemplates>	
+		</effects>
+	</template>
+
+	<!-- Repeat the previous topic and ask the user what she thinks about it -->
+	<template id="meta_topic_reflect" name="Meta topic reflection" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.silence]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: reflect on previous topic")]]></condition>
+		</preconditions>		
+		<effects>
+		</effects>
+	</template>
+
+	<!-- Continue the next move within the topic -->
+	<template id="meta_topic_continuation" name="Meta topic continuation" conditional="true">
+		<preconditions>
+			<condition><![CDATA[is.dialogue.silence]]></condition>
+			<condition><![CDATA[helpPrint("SELECT MOVE: continue talking about topic")]]></condition>
+		</preconditions>
+		<effects>			
+		</effects>
+	</template>
+
+</behaviourtemplates>

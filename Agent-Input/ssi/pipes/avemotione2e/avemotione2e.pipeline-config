@@ -1,0 +1,7 @@
+camera:fps = 25
+audio:sr = 16000
+face:width = 96
+face:height = 96
+emax:model = ../../models/face/caffe.cfg
+face:smooth = true
+REC_LENGTH = 3

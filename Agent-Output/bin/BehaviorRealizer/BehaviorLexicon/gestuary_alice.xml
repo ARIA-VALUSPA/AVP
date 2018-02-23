@@ -727,7 +727,7 @@
                     <verticalLocation fixed="false" overridable="false" value="YLowerC"/>
                     <frontalLocation fixed="false" overridable="false" value="ZMiddle"/>
                 </symbolicPosition>
-                <handShape overridable="false" value="THUMB_AWAY"/>
+                <handShape overridable="false" value="THUMB_DEFAULT"/>
                 <wristOrientation global="false" overridable="false"
                     w="0.9685831665992737" x="0.0"
                     y="0.24868988990783691" z="0.0"/>

@@ -1,0 +1,252 @@
+<qa_root>
+    <dialog id="0000">
+        <answerlist>
+            <answer type="uncertain">social_salutation_returnGreeting</answer>
+            <answer type="certain">social_salutation_returnGreeting</answer>
+        </answerlist>
+        <questionlist>
+            <question>hello</question>
+			<question>hallo</question>
+			<question>hullo</question>
+			<question>hello there</question>
+            <question>hi</question>
+            <question>hey</question>
+            <question>good day</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0001">
+        <answerlist>
+            <answer type="certain">social_introduction_returnName</answer>
+        </answerlist>
+        <questionlist>
+            <question>my name is peter</question>
+            <question>what is your name</question>
+            <question>my name is</question>
+            <question>do you have a name</question>
+            <question>what are you called</question>
+            <question>how are you called</question>
+            <question>who are you</question>
+            <question>what are you</question>
+            <question>what's your name</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0002">
+        <answerlist>
+            <answer type="certain">social_gratitude_downplay</answer>
+        </answerlist>
+        <questionlist>
+            <question>thank</question>
+			<question>thank you</question>
+            <question>thanks</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0003">
+        <answerlist>
+            <answer type="certain">social_apology_downplay</answer>
+        </answerlist>
+        <questionlist>
+            <question>sorry</question>
+            <question>excuse</question>            
+        </questionlist>
+    </dialog>
+	<dialog id="0009">
+        <answerlist>
+            <answer type="certain">socialobligations_valediction_return</answer>
+        </answerlist>
+        <questionlist>
+            <question>good bye</question>
+            <question>goodbye</question>
+            <question>bye bye</question>            
+            <question>by by</question>            
+            <question>see you</question>            
+        </questionlist>
+    </dialog>
+	<dialog id="0011">
+        <answerlist>
+            <answer type="certain">inform_disagreement_correction</answer>
+        </answerlist>
+        <questionlist>
+            <question>that is not what i said</question>
+			<question>that's not what i meant</question>
+            <question>you did not answer my question</question>
+            <question>that does not make sense</question>
+            <question>you did not understand me</question>
+            <question>i did not ask for that</question>
+        </questionlist>
+    </dialog>
+	<dialog id="0013">
+        <answerlist>
+            <answer type="certain">actiondiscussion_directives_request_cursewords_01</answer>
+        </answerlist>
+        <questionlist>
+            <question>crap</question>
+            <question>damn</question>
+            <question>bloody hell</question>
+            <question>fuck</question>
+            <question>shit</question>
+            <question>fucking</question>
+            <question>fucking hell</question>
+            <question>goddamnit</question>
+        </questionlist>
+    </dialog> 
+	<dialog id="0014">
+        <answerlist>
+            <answer type="certain">actiondiscussion_directives_suggestion_01</answer>
+        </answerlist>
+        <questionlist>
+            <question>what can you do</question>
+			<question>what do you do</question>
+			<question>what else can you do</question>
+			<question>what can we do</question>
+			<question>what should i do</question>
+			<question>tell me what you can do</question>
+            <question>what are we supposed to do now</question>
+            <question>what do i have to do now</question>
+			<question>what are your capabilities</question>
+			<question>what is your purpose</question>
+        </questionlist>
+    </dialog>
+	<dialog id="0015">
+        <answerlist>
+            <answer type="certain">simple_yes</answer>
+        </answerlist>
+        <questionlist>
+            <question>are you in book</question>
+			<question>are you a character</question>
+			<question>alice</question>
+			<question>you are alice from alice in wonderland</question>
+        </questionlist>
+    </dialog>	
+    <dialog id="0018">
+        <answerlist>
+            <answer type="certain">socialobligations_greeting_wellbeing</answer>
+        </answerlist>
+        <questionlist>
+            <question>how are you doing</question>
+            <question>how are you</question>
+            <question>what's up</question>
+            <question>how are you today</question>
+            <question>how do you feel</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0019">
+        <answerlist>
+            <answer type="certain">meta_userinterruption_return</answer>
+        </answerlist>
+        <questionlist>
+            <question>never mind</question>
+            <question>stop talking</question>
+            <question>no no no</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0020">
+        <answerlist>
+            <answer type="certain">socialobligations_wellbeing_bad</answer>
+        </answerlist>
+        <questionlist>
+            <question>not great</question>
+            <question>not so good</question>
+            <question>not good</question>
+            <question>bad</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0021">
+        <answerlist>
+            <answer type="certain">socialobligations_wellbeing_good</answer>
+        </answerlist>
+        <questionlist>
+            <question>good</question>
+            <question>fine</question>
+            <question>great</question>
+            <question>all right</question>
+            <question>okay</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0022">
+        <answerlist>
+            <answer type="certain">qa_meta_trust</answer>
+        </answerlist>
+        <questionlist>
+            <question>do you trust me</question>
+            <question>do i believe you</question>
+            <question>is that truth</question>
+            <question>are you lying</question>
+        </questionlist>
+    </dialog>
+	
+	
+	<!-- <dialog id="0155"> -->
+        <!-- <answerlist> -->
+            <!-- <answer type="certain">var_test</answer> -->
+        <!-- </answerlist> -->
+        <!-- <questionlist> -->
+            <!-- <question>test</question> -->
+            <!-- <question>do test</question> -->
+			<!-- <question>testing</question> -->
+        <!-- </questionlist> -->
+    <!-- </dialog>  -->
+	
+	<dialog id="0101">
+        <answerlist>
+            <answer type="certain">stainremoval_task_sorrynosolution</answer>
+        </answerlist>
+        <questionlist>
+            <question>beer acetate colour</question>
+            <question>beer acetate white</question>
+            <!-- <question>the fabric is acetate and the stain is beer</question>
+            <question>acetate with a beer stain</question>
+			<question>acetate with beer spilled on it</question>
+			<question>it is an acetate with beer stains</question> -->
+        </questionlist>
+    </dialog>
+	<dialog id="0102">
+        <answerlist>
+            <answer type="certain">stainremoval_task_toughonecallexpert</answer>
+        </answerlist>
+        <questionlist>
+            <question>beer on white acrylic</question>
+			<!-- <question>it is a beer stain on a white acrylic fabric</question>
+			<question>I spilled beer on some white acrylic</question> -->
+            <question>beer on white cotton</question>
+			<!-- <question>it is a beer stain on a white cotton fabric</question> -->
+            <question>beer on white nylon</question>
+            <question>beer on white polyamide</question>
+			<question>beer on white polyester</question>
+			<question>beer on white synthetic</question>
+			<question>beer on white viscose</question>
+        </questionlist>
+    </dialog>
+	<dialog id="0103">
+        <answerlist>
+            <answer type="certain">stainremoval_task_vinegarwarmwaterwarning</answer>
+        </answerlist>
+        <questionlist>
+            <question>beer on colour acrylic</question>
+            <question>beer on colour cotton</question>
+            <question>beer on colour nylon</question>
+            <question>beer on colour polyamide</question>
+			<question>beer on colour polyester</question>
+			<question>beer on colour synthetic</question>
+			<question>beer on colour viscose</question>
+        </questionlist>
+    </dialog>
+	<dialog id="0104">
+        <answerlist>
+            <answer type="certain">stainremoval_task_vinegarwarmwatersilk</answer>
+        </answerlist>
+        <questionlist>
+            <question>beer on white silk</question>
+            <question>beer on colour silk</question>
+        </questionlist>
+    </dialog>
+	<dialog id="0105">
+        <answerlist>
+            <answer type="certain">stainremoval_task_vinegarwarmwaterwool</answer>
+        </answerlist>
+        <questionlist>
+            <question>beer on white wool</question>
+            <question>beer on colour wool</question>
+        </questionlist>
+    </dialog>
+	
+</qa_root>

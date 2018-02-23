@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="feedback-allo-giving-positive" />
+	
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<tm id="DMBegin"/>
+			<voice emotion='none'>
+			<aria-alternative id="alt1" type="static">
+				<alternative>Correct!</alternative>
+				<alternative>Exactly!</alternative>
+			</aria-alternative>
+			</voice>
+			<tm id="DMEnd"/>
+						
+		</speech>
+	</bml>
+	
+	<fml>
+		<emotion id="em1" type="neutral" regulation="felt" start="s1:DMBegin" end="s1:DMEnd" intensity="1" importance="1.0"/>
+		<certainty id="cr1" type="none" start="s1:DMBegin" end="s1:DMEnd" intensity="0.5" importance="1.0"/>
+		<performative id="p1" type="agree" start="s1:DMBegin" end="s1:DMEnd" importance="1" />
+		<backchannel id="bc1" type="agreement" start="s1:DMBegin" end="s1:DMEnd" importance="1" />
+	</fml>
+	
+</fml-apml>

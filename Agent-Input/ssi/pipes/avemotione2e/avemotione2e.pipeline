@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<pipeline>
+
+	<register>
+		<load name="audio"/>
+		<load name="camera"/>
+		<load name="python"/>
+		<load name="graphic"/>
+		<load name="emax"/>
+		<load name="signal"/>
+		<load name="image"/>
+	</register>
+
+	<!-- camera -->
+	<sensor create="Camera:camera" option="options\camera" fps="$(camera:fps)">
+		<output channel="video" pin="video" size="2.0s"/>
+	</sensor>
+
+	<!-- microphone -->
+	<sensor create="Audio:audio" option="options\audio" scale="true" blockInSamples="512" sr="$(audio:sr)">
+		<output channel="audio" pin="audio"/>
+	</sensor>
+
+	<!-- face detection -->
+	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
+		<input pin="video" frame="1" async="true"/>
+		<output pin="emax"/>
+	</transformer>
+	<transformer create="Selector" indices="2, 3, 4, 5">
+		<input pin="emax" frame="1"/>
+		<output pin="face"/>
+	</transformer>
+	<gate close="$(face:smooth)">
+		<transformer create="CVCrop:crop" scaled="true" flip="true" format="1" width="$(face:width)" height="$(face:height)">
+			<input pin="video;face" frame="1" delta="0"/>
+			<output pin="video_face"/>
+		</transformer>
+	</gate>
+	<gate open="$(face:smooth)">
+		<transformer create="Butfilt:filter" type="0" order="3" norm="true" low="0.25" zero="true">
+			<input pin="face" frame="1"/>
+			<output pin="face_low"/>
+		</transformer>
+		<transformer create="CVCrop:crop" scaled="true" flip="true" format="1" width="$(face:width)" height="$(face:height)">
+			<input pin="video;face_low" frame="1" delta="0"/>
+			<output pin="video_face"/>
+		</transformer>
+	</gate>
+
+	<!-- python wrapper -->
+	<consumer create="PythonImageConsumer:python" syspath="scripts" script="avemotione2e" optsstr="rec_length=$(REC_LENGTH)">
+		<input pin="video_face;audio" frame="1"/>
+	</consumer>
+
+	<!-- visualization -->
+	<consumer create="VideoPainter:plot" title="FACE">
+		<input pin="video_face" frame="1"/>
+	</consumer>
+	<consumer create="SignalPainter:plot" title="VOICE" size="10" type="2">
+		<input pin="audio" frame="0.02s"/>
+	</consumer>
+
+	<object create="Decorator" icon="true" title="Pipeline">
+		<area pos="0,0,400,600">console</area>
+		<area pos="400,0,400,600">plot*</area>
+		<area pos="800,0,400,600">monitor*</area>
+	</object>
+
+</pipeline>

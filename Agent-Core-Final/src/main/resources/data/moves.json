@@ -1,0 +1,271 @@
+{
+  "KnowledgeBase": {
+    "Goal": "AliceInWonderland",
+    "Episode": [
+      {
+		    "Goal": "AliceInWonderland.Social",
+        "Relevance": "null",
+        "Exchange": [
+          {
+			      "Goal": "AliceInWonderland.Social.Salutation",
+            "Relevance": "null",
+            "Move": [
+              {
+				        "Goal": "AliceInWonderland.Social.Salutation.initialGreeting",
+                "Type": "INTERACTION",
+                "Language": "English",
+                "Rules": [
+					        "InteractionState.Engaged",
+					        "!initialGreeting"
+				          ],
+                "Utterances": [
+                  "Hello",
+                  "Hi",
+                  "Good day"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.Social.Salutation.returnGreeting",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["initialGreeting"],
+                "Utterances": [
+                  "Hello",
+                  "Hello to you too"
+                ]
+              }
+            ]
+          },
+          {
+            "Goal": "AliceInWonderland.Social.SelfIntroduction",
+            "Relevance": "null",
+            "Move": [
+              {
+                "Goal": "AliceInWonderland.Social.SelfIntroduction.initialIntroduction",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["userGreeted"],
+                "Utterances": [
+                  "My name is X",
+                  "I'm X"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.Social.SelfIntroduction.returnIntroduction",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["userGreeted, userKnown"],
+                "Utterances": [
+                  "Nice to meet you. My name is X",
+                  "I'm X"
+                ]
+              }
+            ]
+          },
+          {
+            "Goal": "AliceInWonderland.Social.Valediction",
+            "Move": [
+              {
+                "Goal": "AliceInWonderland.Social.Valediction.initialGoodbye",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["endConversation"],
+                "Utterances": [
+                  "Goodbye",
+                  "see you"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.Social.Valediction.returnGoodbye",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["userEndsConversation"],
+                "Utterances": [
+                  "Goodbye",
+                  "see you"
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "Goal": "AliceInWonderland.InformationTransfer",
+        "Relevance": "null",
+        "Exchange": [
+          {
+            "Goal": "AliceInWonderland.InformationTransfer.InformationSeekTopic",
+            "Relevance": "null",
+            "Move": [
+              {
+                "Goal": "AliceInWonderland.InformationTransfer.InformationSeekTopic.setQuestionTopic",
+                "Type": "CONTENT",
+                "Relevance": "null",
+                "Rules": ["keyword, WH-key, single topic"],
+                "Utterances": [
+                  "(WH) did (topic) happen?"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.InformationTransfer.InformationSeekTopic.propQuestionTopic",
+                "Type": "CONTENT",
+                "Relevance": "null",
+                "Rules": ["keyword, single topic"],
+                "Utterances": [
+                  "Do you know about (topic)?"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.InformationTransfer.InformationSeekTopic.choiceQuestionTopic",
+                "Type": "CONTENT",
+                "Relevance": "null",
+                "Rules": ["keyword, multiple topics"],
+                "Utterances": [
+                  "Do you know about (topic1",
+                  "topic2",
+                  "topic3)?"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.InformationTransfer.InformationSeekTopic.informTopic",
+                "Type": "CONTENT",
+                "Relevance": "null",
+                "Rules": ["isQuestion"],
+                "Utterances": [
+                  "QAMatcher's match"
+                ]
+              }
+            ]
+          }         
+        ]
+      },
+      {
+        "Goal": "AliceInWonderland.InteractionManagement",
+        "Relevance": "null",
+        "Exchange": [
+          {
+            "Goal": "AliceInWonderland.InteractionManagement.Turn",
+            "Relevance": "null",
+            "Move": [
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Turn.acceptTurn",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["turnAssigned"],
+                "Utterances": [
+                  "Thanks"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Turn.grabTurn",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["needToSpeak, floorClosed"],
+                "Utterances": [
+                  "Sorry",
+                  "I want to say something"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Turn.takeTurn",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["floorOpen, assignedTurn"],
+                "Utterances": [
+                  "So", 
+                  "Anyway"
+                ]
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Turn.assignTurn",
+                "Type": "INTERACTION",
+                "Relevance": "null",
+                "Rules": ["assignTurn"],
+                "Utterances": []
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Turn.keepTurn",
+                "Type": "INTERACTION",
+                "Rules": [],
+                "Relevance": "null"
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Turn.releaseTurn",
+                "Type": "INTERACTION",
+                "Rules": [],
+                "Relevance": "null"
+              }
+            ]
+          },
+          {
+            "Goal": "AliceInWonderland.InteractionManagement.Structure",
+            "Move": [
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Structure.opening",
+                "Type": "INTERACTION",
+                "Relevance": "null"
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Structure.preclosing",
+                "Type": "INTERACTION",
+                "Relevance": "null"
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Structure.topicIntroduction",
+                "Type": "INTERACTION",
+                "Relevance": "null"
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Structure.topicShiftAnnouncement",
+                "Type": "INTERACTION",
+                "Relevance": "null"
+              }
+            ]
+          },
+          {
+            "Goal": "AliceInWonderland.InteractionManagement.Contact",
+            "Move": [
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Contact.Check",
+                "Type": "INTERACTION"
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Contact.Indication",
+                "Type": "INTERACTION"
+              }
+            ]
+          },
+          {
+            "Goal": "AliceInWonderland.InteractionManagement.AutoFeedback",
+            "Relevance": "null",
+            "Move": [
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Structure.AutoFeedback.Positive",
+                "Type": "INTERACTION"
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.Structure.AutoFeedback.Negative",
+                "Type": "INTERACTION"
+              }
+            ]
+          },
+          {
+            "Goal": "AliceInWonderland.InteractionManagement.AlloFeedback",
+            "Type": "INTERACTION",
+            "Relevance": "null",
+            "Move":[
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.AlloFeedback.Giving",
+                "Type": "INTERACTION"
+              },
+              {
+                "Goal": "AliceInWonderland.InteractionManagement.AlloFeedback.Elicitation",
+                "Type": "INTERACTION"
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

@@ -1,0 +1,171 @@
+<behaviourtemplates>
+  <is name="behaviour">
+    {
+      "answer" : "",
+      "previousMoves" : [],
+      "plannedMoves" : [],
+      "alignment" :{
+        "initialized" : false
+      },
+      "align" : true,
+      "execute" : true,
+      "modifySentence" : false
+    }
+  </is>
+
+  <javascript>
+    <![CDATA[
+    
+    function returnMostConvergent(ms){
+      for(i =0; i <ms.length; i++){
+        if(ms[i].type === 'best_convergent'){
+          return ms[i];
+        }
+      }
+    }
+
+
+    function getConvergent(modifications){
+      helpPrint("check aligned");
+      var a = modifications;
+      helpPrint("create array: " +a );
+      var convergent = returnMostConvergent(a);
+      helpPrint("Hello!" + convergent);
+      return convergent.modifiedSentence;
+    }
+  ]]>
+  </javascript>
+
+  <template id="AlignmentModule" name="AlignmentModule"> 
+    <preconditions>
+      <condition>!is.behaviour.alignment.initialized</condition>
+    </preconditions>
+    <effects>
+      <method name="active" is="is.behaviour.alignment.initialized">
+        <object persistent="AlignmentModule" class="eu.aria.dm.behaviours.AlignmentGeneration">  
+          <constructors/>                 
+        </object> 
+        <arguments>
+            <value class="String" is="is.states.dialogue.conversationID"/>
+        </arguments>
+      </method>
+    </effects>
+  </template>
+
+  <template id="retrieveModifiedSentences" name="retrieve modified sentences">
+    <preconditions>
+      <condition>is.behaviour.alignment.initialized</condition>
+      <condition><![CDATA[!is.behaviour.modifySentence]]></condition>
+      <condition><![CDATA[is.behaviour.hasOwnProperty("modifications") !== 'undefined' || is.behaviour.modifications === []]]></condition>      
+      <condition><![CDATA[is.behaviour.align]]></condition>
+      <condition><![CDATA[is.states.agent.fml.parameters.hasOwnProperty("var.var1")]]></condition>
+      <condition><![CDATA[helpPrint("Retrieving modifications..")]]></condition>
+    </preconditions>
+    <effects>
+      <method name="getAllModificationsString" is="is.behaviour.modificationString">
+        <object class="eu.aria.dm.behaviours.AlignmentGeneration" persistent="AlignmentModule">
+         </object>
+        <arguments>
+          <value class="String" is="is.states.dialogue.conversationID"/>
+          <value class="String" is="is.states.agent.fml.parameters['var.var1']"/>
+        </arguments>
+      </method>
+      <assign is="is.behaviour.modifySentence">true</assign>
+      <assign is="is.behaviour.modifications">JSON.parse(is.behaviour.modificationString)</assign>
+    </effects>
+  </template>
+
+  <template id="modifySentence" name="align the sentence">
+    <preconditions>      
+      <condition><![CDATA[is.behaviour.modifySentence]]></condition>
+      <condition><![CDATA["modifications" in is.behaviour]]></condition>
+      <condition><![CDATA[is.behaviour.modifications.length > 0]]></condition>
+      <condition><![CDATA[is.behaviour.modifications !== "undefined"]]></condition>
+    </preconditions>
+    <effects>      
+      <assign is="is.states.agent.fml.parameters['var.var1']">getConvergent(is.behaviour.modifications)</assign>
+      <assign is="is.behaviour.execute">true</assign>      
+      <assign is="is.behaviour.modifySentence">false</assign>
+      <assign is="is.behaviour.modifications">[]</assign>
+    </effects>
+  </template>
+
+  <template id="noModificationsFound" name="wanted to modify, but couldn't retrieve">
+    <preconditions>
+      <condition><![CDATA[is.behaviour.modifySentence]]></condition>
+      <condition><![CDATA["modifications" in is.behaviour]]></condition>
+      <condition><![CDATA[is.behaviour.modifications.length === 0]]></condition>
+      <condition><![CDATA[helpPrint("No modifications found..")]]></condition>      
+    </preconditions>
+    <effects>
+      <assign is="is.behaviour.execute">true</assign>      
+      <assign is="is.behaviour.modifySentence">false</assign>
+      <assign is="is.behaviour.modifications">[]</assign>
+    </effects>
+  </template>
+
+  <template id="withoutModifiedSentences" name="no modifications">
+    <preconditions>
+      <condition><![CDATA[!is.behaviour.modifySentence]]></condition>
+      <condition><![CDATA[is.states.agent.fml.hasOwnProperty("template")]]></condition>
+      <condition><![CDATA[is.states.agent.fml.template !== "inform_statement_y_02" && is.states.agent.fml.template !== ""]]></condition>
+      <condition><![CDATA[helpPrint("No modifications. Template: " + is.states.agent.fml.template)]]></condition>
+    </preconditions>
+    <effects>
+      <assign is="is.behaviour.execute">true</assign>      
+    </effects>
+  </template>
+
+  <!-- Template that executes the Agent Move and adds it to the history -->
+  <template id="executeMove" name="executeMove">
+    <preconditions>
+      <condition>is.behaviour.execute</condition>
+      <!-- <condition><![CDATA[helpPrint("behaviour executed")]]></condition> -->
+      <condition><![CDATA[is.states.agent.fml.template !== ""]]></condition>
+      <!-- <condition><![CDATA[helpPrint("help0")]]></condition> -->
+      <!-- <condition><![CDATA[is.states.dialogue.floor === "agent"]]></condition> -->
+	    <condition><![CDATA[is.states.agent.interactionstate.phase === "ENGAGED" || is.states.agent.interactionstate.phase === "ENGAGING"]]></condition>
+      <!-- <condition><![CDATA[helpPrint("help1")]]></condition> -->
+      <!-- The agent may talk in five situations: when she's not already talking, when the user is not talking or, if she can interrupt herself or interrupt the user -->
+      <condition><![CDATA[!is.states.agent.isTalking && !is.states.agent.isPlanning|| is.states.agent.canInterruptOther || is.states.agent.canInterruptSelf || is.states.user.voiceActivity === 0 || is.states.agent.interrupted]]></condition>
+      <!-- <condition><![CDATA[helpPrint("help2")]]></condition> -->
+      <condition><![CDATA["bestMove" in is.states.agent]]></condition>
+      <!-- <condition><![CDATA[helpPrint("help3")]]></condition> -->
+      <!-- <condition><![CDATA[helpPrint("bestMove: " + is.states.agent.bestMove)]]></condition> -->
+      <condition><![CDATA[typeof(is.states.agent.bestMove) !== "undefined"]]></condition>
+      <!-- <condition><![CDATA[helpPrint("help4")]]></condition> -->
+      <condition><![CDATA[is.states.agent.bestMove !== "undefined"]]></condition>
+      <condition><![CDATA[helpPrint("execute move: " +  is.states.agent.bestMove.id)]]></condition>
+      <condition><![CDATA[helpPrint("trust level: " + is.states.agent.affective.emotion.trust)]]></condition>
+      <!-- <condition><![CDATA[helpPrint("pastmoves: " +  is.behaviour.previousMoves)]]></condition> -->
+    </preconditions>
+    <effects>
+      <assign is="is.behaviour.plannedMoves">addJsonToBeginArray(is.behaviour.plannedMoves,is.states.agent.bestMove.id)</assign>
+      <assign is="is.states.agent.interrupted">false</assign>
+      <!-- <assign is="is.states.agent.isTalking">true</assign> -->
+      <behaviour name="executeTemplate">
+        <object class="eu.aria.dm.behaviours.FMLGenerator" persistent="FMLGenerator"> </object>
+        <arguments>
+          <value class="String" is="is.states.agent.fml" is_type="JSONString"/>
+        </arguments>
+      </behaviour>
+	  <!-- somthing like this... it needs to add the template-name (ie. the value) to the history  -->
+	  <!-- and then clear the template for new behaviours -->
+	  <method name="setPlanning">
+      <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator"></object>
+          <arguments>
+              <value class="Boolean" constant="true"/>            
+          </arguments> 
+    </method>
+	   <assign is="is.states.agent.fml.template">""</assign>
+      <assign is="is.states.agent.fml.parameters">{}</assign>
+      <!-- <assign is="is.behaviour.previousMoves">addJsonToArray(removeElement(is.behaviour.previousMoves,0),is.states.agent.bestMove.id)</assign> -->
+	   <assign is="is.states.dialogue.agentmovecount">is.states.dialogue.agentmovecount+1</assign>
+      <assign is="is.dialogue.behaviourToProcess">true</assign>
+      <assign is="is.behaviour.execute">false</assign>
+    </effects>
+  </template>
+
+
+
+</behaviourtemplates>

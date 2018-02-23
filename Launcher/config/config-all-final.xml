@@ -1,0 +1,68 @@
+<xml>
+	<!-- Launches the ASR server -->
+		<process language="C" class="docker" name="ASR Container">
+			<parameter>run</parameter>
+
+			<!-- set the hostname -->
+			<parameter>-h</parameter>
+			<parameter>avp3-ariaasr</parameter>
+			
+			<!-- map port 8888 into the container-->
+			<parameter>-p</parameter>
+			<parameter>8888:8888</parameter>
+
+			<!-- name the container -->
+			<parameter>-name</parameter>
+			<parameter>avp3-ariaasr</parameter>
+
+			<!-- use the image we made above -->
+			<parameter>ariaasr</parameter>
+		</process>
+
+	
+	<!-- Launch ActiveMQ -->
+		<process language="java" class="..\..\External\apache-activemq-5.12.1\activemq-all-5.12.1.jar" cwd="..\..\External\apache-activemq-5.12.1" name="ActiveMQ">
+			<parameter>start</parameter>
+		</process>
+
+	<!-- Launches the Agent-Output / Greta -->
+		<process language="java" class="..\..\Agent-Output\bin\Agent-Output.jar" cwd="..\..\Agent-Output\bin" name="Agent-Output / Greta">
+			<parameter>./environment-ARIADemo2.xml</parameter>
+			<parameter>false</parameter>
+			<parameter>GRETA</parameter>
+		</process>
+
+	<!-- Launches the Agent-Input / SSI pipeline -->
+		<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\all-in-one-final" name="Agent-Input / SSI Pipeline">
+			<parameter>-config</parameter>
+			<parameter>all-in-one-final</parameter> 
+			<parameter>-debug</parameter>
+			<parameter>ssi.log</parameter>
+			<parameter>all-in-one-final</parameter>
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final.pipeline-config" key="log:use" separator="=" info="Record AUDIO">
+				<option default="True">true</option>
+				<option>false</option>
+			</config>
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final.pipeline-config" key="log:screen" separator="=" info="Record VIDEO">
+				<option default="True">true</option>
+				<option>false</option>
+			</config>		
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final.pipeline-config" key="log:screen:region" separator="=" info="VIDEO region to record (top,lef,width,height)" />
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final.pipeline-config" key="sender:template" separator="=" info="Sender template">
+				<option default="True">all-in-one-final</option>
+				<option>all-in-one-final_noemo</option>
+			</config>				
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:host" separator="=" info="ASR: IP of the machine"/>     
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:port" separator="=" info="ASR: Connection port" />
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:nbest" separator="=" info="ASR: Number of n-best list" />
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:mode" separator="=" info="ASR: Mode (inc=incremental, utt=utterance)">
+				<option default="True">utt</option>
+				<option>inc</option>
+			</config>		
+			<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final.pipeline-config" key="vad:threshold" separator="=" info="ASR: Threshold for voice activity detection" />
+			<config file="..\..\Agent-Input\ssi\models\face\caffe.cfg" key="mode" separator=" " info="Emax: Switch between CPU and GPU classification">
+				<option default="True">GPU</option>
+				<option>CPU</option>
+			</config>
+		</process>
+</xml>

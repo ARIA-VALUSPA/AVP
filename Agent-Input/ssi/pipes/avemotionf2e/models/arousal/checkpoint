@@ -1,0 +1,2 @@
+model_checkpoint_path: "lstm.ckpt-230"
+all_model_checkpoint_paths: "lstm.ckpt-230"

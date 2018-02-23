@@ -1,0 +1,5 @@
+
+.dockerignore
+Dockerfile
+standalone-client/
+readme.md

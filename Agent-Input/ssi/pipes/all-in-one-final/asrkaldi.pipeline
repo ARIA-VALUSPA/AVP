@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<!-- send asr string -->
+	<consumer create="AsrKaldiSender:monitor" 
+		host="$(asr:host)" 
+		port="$(asr:port)" 
+		addSilenceMs="$(asr:silence)"
+		type="1" 
+		address="asr(raw)@audio" 
+		monitor="$(asr:monitor)" 
+		mcaption="KALDI" 
+		mnum="10" 
+		mfontsize="24"
+		showOnConsole="$(asr:console)">
+		<input pin="audio;vad" frame="0.01s">
+			<transformer create="AudioConvert"/>
+		</input>		
+	</consumer>	
+
+	<object create="PythonObject" syspath=".;scripts" script="kaldi_parser" optsstr="address=asr@audio;nbest=$(asr:nbest);mode=$(asr:mode);language=$(asr:language)">
+		<listen address="asr(raw)@audio"/>
+	</object>
+	
+</pipeline>

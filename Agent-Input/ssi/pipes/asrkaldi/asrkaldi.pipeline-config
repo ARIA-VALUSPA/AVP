@@ -3,38 +3,37 @@ file 		= media/audio.wav 			   				# if not live input read in from this file
 
 # LOGGING
 
-log:use  	= false
+log:use  	=false
 log:dir 	= log
 log:name	= asr
 log:role	= user
 
-# ASR HOST
+#ASR server options
+asr:nbest =5
+asr:mode  =utt
+asr:language =en
 
+# VAD options
+# activity threshold
+vad:threshold =0.05
+
+# ASR HOST
 # asr:host	=  127.0.0.1 # localhost
-asr:host	=  34.252.96.222 # amazon server
+# asr:host	= 34.253.87.8 # amazon server
+asr:host	=137.250.171.134
 
 # ASR PORT
 # Below you can find the option for the ASR server running from Amazon
-
 # asr:port = 8888   # EN, 1-best ("utt")
 # asr:port = 8887 # EN, 5-best ("utt")
-asr:port = 8886 # EN, 1-best ("inc")
 # asr:port = 9999 # DE, 1-best ("utt")
 # asr:port = 9998 # DE, 5-best ("utt")
 # asr:port = 9997 # DE, 1-best ("inc")
-asr:nbest = 1
-asr:mode  = inc
+asr:port =8888
 
 # ASR EXTRA OPTIONS
-
 asr:console = true
 asr:silence = 30	# amount of silence (in ms) board is added to beginning of each segment (only if vad is turned on)
-
-# VOICE ACTIVITY DETECTION OPTIONS
-
-vad:use		    = false # set to false if using ASR server in 'inc' mode. True otherwise
-vad:threshold = 0.01								# voice activity threshold
-
 
 # ACTIVEMQ OPTIONS
 

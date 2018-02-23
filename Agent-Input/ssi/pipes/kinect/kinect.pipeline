@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>		
+		<load name="audio" />
+		<load name="camera"/>		
+		<load name="graphic" />				
+		<load name="ioput" />					
+		<load name="microsoftkinect2"/>	
+		<load name="skeleton"/>	
+	</register>
+	
+	<framework sync="true" slisten="true" sport="$(sync:pipe:port)"/>	
+	
+	<!-- notifications -->
+		
+	<runnable create="NotifyReceiver:notify-receiver" id="writer*" url="$(sync:notify:url)"/>		
+	
+	<!-- capture kinect 2 -->
+		
+	<sensor create="MicrosoftKinect2" sr="25.0" trackNearestPersons="1" showFaceTracking="false" showBodyTracking="false">
+		<output channel="rgb" pin="video" size="2.0s"/>
+		<output channel="au" pin="au" size="5.0s"/>
+		<output channel="head" pin="head" size="5.0s"/>
+		<output channel="skeleton" pin="skelms" size="5.0s"/>
+		<output channel="face3d" pin="face3d" size="5.0s"/>
+		<output channel="audio" pin="audio"/>
+	</sensor>
+	
+	<!-- convert skeleton to ssi -->
+
+	<transformer create="SkeletonConverter" numskel="1">
+		<input pin="skelms;head;face3d" frame="1"/> 
+		<output pin="skel"/>
+	</transformer>	
+	
+	<!-- logging -->
+	
+	<gate open="$(log:use)">
+		<include path="recording"/>
+	</gate>		
+		
+	<!-- visualization -->
+	
+	<include path="visualization"/>	
+	
+	<object create="Decorator" icon="true" title="Pipeline">
+	
+		<area pos="0,0,400,500">console</area>
+		
+		<area pos="400,0,800,300" nv="1">paint-video*</area>		
+		<area pos="400,300,800,300">paint-audio</area>		
+		
+	</object>			
+		
+</pipeline>

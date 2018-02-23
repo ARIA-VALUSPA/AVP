@@ -68,26 +68,45 @@
 	</gate>
 	
 	<!-- prepare xml event -->
-	<consumer create="XMLEventSender:monitor" address="result@xml" path="all-in-one.xml" monitor="$(show:plot)" mname="RESULT" console="false" update="500" coldelim=" ">
+	<consumer create="XMLEventSender:monitor" address="result@xml" path="all-in-one.xml" monitor="$(show:plot)" mname="RESULT" console="false" update="500" coldelim=" " strbuf="10240">
 		<input pin="emax" frame="1"/>
 		<listen address="@"/>
 	</consumer>
 	
-	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="all-in-one_extra.xml" monitor="$(show:plot)" mname="RESULT - EXTRA" console="false" update="500" coldelim=" " strbuf="4096">
+	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="all-in-one_extra.xml" monitor="$(show:plot)" mname="RESULT - EXTRA" console="false" update="500" coldelim=" " strbuf="10000">
 		<input pin="emax_points;emax_pose;emax_box" frame="1"/>
 		<listen address="@"/>
 	</consumer>	
 	
+	<gate open="$(output:asjson)">
+		<object create="PythonObject" syspath=".;scripts" script="xmltojson" optsstr="address=result@json;convert=False">	
+			<listen address="result@xml"/>		
+		</object>
+		<object create="PythonObject" syspath=".;scripts" script="xmltojson" optsstr="address=result-extra@json;convert=False">	
+			<listen address="result-extra@xml"/>		
+		</object>
+	</gate>
+	
 	<!-- event sender -->
 	<gate open="$(activemq:use)">
 	
-		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
-			<listen address="result@xml"/>
-		</object>		
-		
-		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)-EXTRA">
-			<listen address="result-extra@xml"/>
-		</object>			
+		<gate close="$(output:asjson)">
+			<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+				<listen address="result@xml"/>
+			</object>				
+			<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)-EXTRA">
+				<listen address="result-extra@xml"/>
+			</object>			
+		</gate>	
+	
+		<gate open="$(output:asjson)">
+			<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
+				<listen address="result@json"/>
+			</object>				
+			<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)-EXTRA">
+				<listen address="result-extra@json"/>
+			</object>			
+		</gate>
 
 	</gate>
 	
@@ -164,13 +183,13 @@
 	<gate open="$(show:gui)">
 		
 		<!-- grid to change option at run-time -->
-		<runnable create="ControlGrid" title="CONTROL" pos="0,600,400,200" id="kaldi,sm-*"/>
+		<!--runnable create="ControlGrid" title="CONTROL" pos="0,600,400,200" id="kaldi,sm-*"/-->
 		
 		<!-- button to reset models -->	
-		<runnable create="ControlCheckBox" title="GRAPHS" label="SHOW" pos="0,800,200,100" id="vi-*" default="true"/>
+		<runnable create="ControlCheckBox" title="GRAPHS" label="SHOW" pos="0,600,200,100" id="vi-*" default="true"/>
 		
 		<!-- check box to turn off visualization -->	
-		<runnable create="ControlButton" title="AGE/GENDER" label="RESET" pos="200,800,200,100" id="sm-gender,sm-age,vi-age,vi-gender" message="RESET"/>	
+		<runnable create="ControlButton" title="AGE/GENDER" label="RESET" pos="200,600,200,100" id="sm-gender,sm-age,vi-age,vi-gender" message="RESET"/>	
 	
 	</gate>
 	
@@ -180,7 +199,7 @@
 		<area pos="0,0,400,300">vi-video</area>
 		<area pos="400,0,800,150">vi-audio</area>
 		<area pos="400,150,800,150">vi-vad</area>
-		<area pos="0,900,400,100">vi-activity</area>
+		<area pos="0,700,400,100">vi-activity</area>
 		<area pos="800,600,400,300">kaldi</area>		
 		<area pos="800,300,400,300" nv="1">vi-age,vi-gender</area>
 		<area pos="0,300,800,300" nv="1">vi-emax,vi-arousal,vi-valence,vi-interest</area>

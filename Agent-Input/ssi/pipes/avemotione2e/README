@@ -1,0 +1,13 @@
+-------------------------------------------------
+Johannes Wagner, <wagner@hcm-lab.de>, 25.09.2017
+-------------------------------------------------
+
+SSI pipeline for avemotione2e.
+
+Uses emax to crop the face and sends it along with audio to a python script (scripts/avemotione2e.py), which will convert the input to numpy arrays.
+
+To configure the pipeline open 'avemotione2e.pipeline-config' in a text editor.
+
+To run the pipeline run AVEMOTIONE2E.bat.
+
+-------------------------------------------------

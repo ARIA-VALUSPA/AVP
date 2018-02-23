@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="Player">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/bin/Player/Lib/Internal/playerOgre.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

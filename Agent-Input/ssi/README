@@ -19,17 +19,3 @@ From the pipeline/ folder the following projects are available:
 For information how to run the pipeline please see README in individual folders
 
 -------------------------------------------------
-Before you start ...
--------------------------------------------------
-
-please download speech model files from:
-
-https://hcm-lab.de/cloud/index.php/s/I5Kbp1XCylYFAlk 
-
-and unzip to:
-
-./models/speech/
-
-Password: Wonderland2016
-
--------------------------------------------------

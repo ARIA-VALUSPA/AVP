@@ -5,7 +5,6 @@
 *.pydevproject
 .project
 .metadata
-bin/
 tmp/
 *.tmp
 *.bak
@@ -28,6 +27,8 @@ local.properties
 # PDT-specific
 .buildpath
 
+.vagrant
+
 
 #################
 ## Visual Studio
@@ -47,7 +48,6 @@ local.properties
 [Rr]elease/
 x64/
 build/
-[Bb]in/
 [Oo]bj/
 
 # MSTest test Results
@@ -263,8 +263,25 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
-Agent-Output/out/
-Agent-Output/nbproject/private/
-Agent-Core/nbproject/private/
-Agent-Core/out/
-RunMeFirst/temp
+System/Agent-Output/out/
+/System/Agent-Output/nbproject/private/
+System/External/apache-activemq-5.12.1/data/kahadb/lock
+System/External/apache-activemq-5.12.1/data/kahadb/lock
+System/Agent-Output/bin/Player/Lib/External/Win64/Plugins_OpenGL.cfg
+System/External/apache-activemq-5.12.1/data/kahadb/db.data
+System/External/apache-activemq-5.12.1/data/kahadb/lock
+System/Agent-Output/bin/Player/Lib/External/Win64/Plugins_OpenGL.cfg
+System/External/apache-activemq-5.12.1/data/kahadb/lock
+*.bk
+System/Agent-Input/ssi/pipes/asrkaldi/log/
+System/Agent-Input/ssi/pipes/all-in-one/log/2017-04-11_14-54-10/video.avi
+System/Agent-Input/ssi/pipes/all-in-one/log/
+System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-9789.data-00000-of-00001
+System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-9789.index
+System/Agent-Output/bin/Common/Data/Cereproc/en-gb-sarah/cerevoice_sarah_3.2.0_48k.voice
+System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-4129.data-00000-of-00001
+System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-4129.index
+
+\.gradle/
+
+System/luanch/out/

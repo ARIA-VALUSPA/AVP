@@ -2,7 +2,6 @@
 <pipeline>
 
 	<register>
-		<load name="browser" />		
 		<load name="ioput" />	
 		<load name="audio" />	
 		<load name="graphic" />	
@@ -27,14 +26,13 @@
 	</gate>
 	
 	<!-- activity detection -->
-	<transformer create="AudioActivity" method="1" threshold="$(vad:threshold)">
-		<input pin="audio" frame="0.01s"/>
+	<transformer create="AudioActivity" method="0" threshold="$(vad:threshold)">
+		<input pin="audio" frame="0.01s" delta="0.02s"/>
 		<output pin="vad"/>
 	</transformer>
 	
 	<!-- send asr string -->
-	<gate open="$(vad:use)">
-		<consumer create="AsrKaldiSender:monitor" 
+	<consumer create="AsrKaldiSender:monitor" 
 		host="$(asr:host)" 
 		port="$(asr:port)" 
 		addSilenceMs="$(asr:silence)"
@@ -45,42 +43,40 @@
 		mnum="10" 
 		mfontsize="24"
 		showOnConsole="$(asr:console)">
-			<input pin="audio;vad" frame="0.01s">
-				<transformer create="AudioConvert"/>
-			</input>		
-		</consumer>	
-	</gate>
-	<gate close="$(vad:use)">
-		<consumer create="AsrKaldiSender:monitor" host="$(asr:host)" port="$(asr:port)" type="1" address="raw@kaldi" monitor="true" mcaption="KALDI" mnum="10" mfontsize="24" showOnConsole="$(asr:console)">
-			<input pin="audio" frame="0.01s">
-				<transformer create="AudioConvert"/>
-			</input>		
-		</consumer>	
-	</gate>
-	
-	<object create="PythonObject" syspath=".;scripts" script="kaldi_parser" optsstr="address=asr@audio;nbest=$(asr:nbest);mode=$(asr:mode)">
+		<input pin="audio;vad" frame="0.01s">
+			<transformer create="AudioConvert"/>
+		</input>		
+	</consumer>	
+
+	<object create="PythonObject" syspath=".;scripts" script="kaldi_parser" optsstr="address=asr@audio;nbest=$(asr:nbest);mode=$(asr:mode);language=$(asr:language)">
 		<listen address="raw@kaldi"/>
 	</object>
 	
-	<consumer create="XMLEventSender:monitor" address="asr@xml" path="asrkaldi.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
+	<consumer create="XMLEventSender:monitor" address="asr@xml" path="asrkaldi.xml" monitor="false" mname="RESULT" console="false" update="100" coldelim=" ">
 		<input pin="vad" frame="1"/>
 		<listen address="asr@audio"/>
 	</consumer>
+	<object create="PythonObject" syspath=".;scripts" script="kaldi_xmltojson" optsstr="address=asr@json;debug=False">	
+		<listen address="asr@xml"/>		
+	</object>		
+	<object create="EventMonitor:monitor" title="RESULT (JSON)" list="false" fontSize="12">
+		<listen address="asr@json"/>
+	</object>			
+	
 	<gate open="$(activemq:use)">
 		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)" useTopics="$(activemq:useTopics)">			
-			<listen address="asr@xml"/>
+			<listen address="asr@json"/>
 		</object>
 	</gate>
 	
 	<!-- diplay audio -->
 	<consumer create="SignalPainter:plot" title="audio" size="10" type="2">
 		<input pin="audio" frame="0.01s"/>
-	</consumer>
-	<gate open="$(vad:use)">
-		<consumer create="SignalPainter:plot" title="vad" size="10">
-			<input pin="vad" frame="1"/>
-		</consumer>
-	</gate>	
+	</consumer>	
+	<consumer create="SignalPainter:plot" title="AUDIO ACTIVITY" type="5" barNames="VAD" autoscale="false" fix="0.35,0">
+		<input pin="vad" frame="1"/>
+	</consumer>	
+	
 	
 	<!-- wav output -->
 	<gate close="$(live)">
@@ -98,9 +94,7 @@
 		</consumer>
 	</gate>
 	
-	<runnable create="ControlGrid" pos="0,600,300,300"/>
-	
-		<!-- decoration -->
+	<!-- decoration -->
 	<object create="Decorator" icon="true" title="Pipeline">
 		<area pos="0,0,400,600">console</area>		
 		<area pos="400,0,400,600">plot*</area>

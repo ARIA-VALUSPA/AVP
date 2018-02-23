@@ -2,7 +2,7 @@ live = true 										# $(bool) use live input from a camera
 file = media/camera.avi 							# if not live input read in from this file
 
 # number of faces
-emax:faces:max    = 2  # number of faces to detect (0 = always nearest, otherwise 4 at max)
+emax:faces:max    = 1  # number of faces to detect (0 = always nearest, otherwise 4 at max)
 emax:faces:values = 168 # number of values per face
 
 # models

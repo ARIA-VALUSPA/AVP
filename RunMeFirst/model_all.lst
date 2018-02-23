@@ -1,7 +1,9 @@
-/System/Agent-Input/ssi/models/speech/age[IS13-scale-linear-c1e-1].trainer.LibSVM.model https://noxi.aria-agent.eu/models/age.model
-/System/Agent-Input/ssi/models/speech/agreeableness[IS13-scale-linear-c1e-1].trainer.LibSVM.model https://noxi.aria-agent.eu/models/agreeableness.model
-/System/Agent-Input/ssi/models/speech/conscientiousness[IS13-scale-linear-c1e-3].trainer.LibSVM.model https://noxi.aria-agent.eu/models/conscientiousness.model
-/System/Agent-Input/ssi/models/speech/interest[IS13-scale-linear-c1e-5].trainer.LibSVM.model https://noxi.aria-agent.eu/models/interest.model
-/System/Agent-Input/ssi/models/speech/language[IS13-scale-linear-c1e-5].trainer.LibSVM.model https://noxi.aria-agent.eu/models/language.model
-/System/Agent-Input/ssi/models/speech/valence[IS13-scale-linear-c1e-3].trainer.LibSVM.model https://noxi.aria-agent.eu/models/valence.model
-/System/Agent-Output/bin/Common/Data/Cereproc/en-gb-sarah/cerevoice_sarah_3.2.0_48k.voice https://aria-agent.s3.amazonaws.com/cerevoice_sarah_3.2.0_48k.voice?Signature=e95XZ7TbOwJHREIMvkihj3cxEZo%3D&Expires=1535085964&AWSAccessKeyId=AKIAI3ZAQHKEMUJ73IVQ
+/Agent-Input/ssi/models/speech/age[IS13-scale-linear-c1e-1].trainer.LibSVM.model https://noxi.aria-agent.eu/models/age.model
+/Agent-Input/ssi/models/speech/agreeableness[IS13-scale-linear-c1e-1].trainer.LibSVM.model https://noxi.aria-agent.eu/models/agreeableness.model
+/Agent-Input/ssi/models/speech/conscientiousness[IS13-scale-linear-c1e-3].trainer.LibSVM.model https://noxi.aria-agent.eu/models/conscientiousness.model
+/Agent-Input/ssi/models/speech/interest[IS13-scale-linear-c1e-5].trainer.LibSVM.model https://noxi.aria-agent.eu/models/interest.model
+/Agent-Input/ssi/models/speech/language[IS13-scale-linear-c1e-5].trainer.LibSVM.model https://noxi.aria-agent.eu/models/language.model
+/Agent-Input/ssi/models/speech/valence[IS13-scale-linear-c1e-3].trainer.LibSVM.model https://noxi.aria-agent.eu/models/valence.model
+/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-4129.data-00000-of-00001 https://noxi.aria-agent.eu/models/avemotione2e/2017-12-13/model.ckpt-4129.data-00000-of-00001
+/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-4129.index https://noxi.aria-agent.eu/models/avemotione2e/2017-12-13/model.ckpt-4129.index
+/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-4129.meta https://noxi.aria-agent.eu/models/avemotione2e/2017-12-13/model.ckpt-4129.meta

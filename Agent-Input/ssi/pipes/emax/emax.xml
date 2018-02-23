@@ -1,18 +1,23 @@
 <?xml version="1.0" ?>
 
 <ssi>
-	<face id="$(0{select*168=1;precision=0}">
+	<face id="$(0{select*168=1;precision=0})">
 		<emotion>
-			<neutral>$(emotion@emax{select*7=0;precision=2})</neutral>		
-			<anger>$(emotion@emax{select*7=1;precision=2})</anger>		
-			<disgust>$(emotion@emax{select*7=2;precision=2})</disgust>
-			<fear>$(emotion@emax{select*7=3;precision=2})</fear>
-			<happiness>$(emotion@emax{select*7=4;precision=2})</happiness>
-			<sadness>$(emotion@emax{select*7=5;precision=2})</sadness>		
-			<surprise>$(emotion@emax{select*7=6;precision=2})</surprise>
+			<neutral>$(2{select*7=0;precision=2})</neutral>		
+			<anger>$(2{select*7=1;precision=2})</anger>		
+			<disgust>$(2{select*7=2;precision=2})</disgust>
+			<fear>$(2{select*7=3;precision=2})</fear>
+			<happiness>$(2{select*7=4;precision=2})</happiness>
+			<sadness>$(2{select*7=5;precision=2})</sadness>		
+			<surprise>$(2{select*7=6;precision=2})</surprise>
 		</emotion>
-		<valence>$(va@emax{select*2=0;precision=2}</valence>		
-		<arousal>$(va@emax{select*2=1;precision=2}</arousal>	
+		<feature>
+			<valence>$(1{select*6=1;precision=2})</valence>		
+			<arousal>$(1{select*6=2;precision=2})</arousal>	
+			<gazehorizonal>$(1{select*6=3;precision=2})</gazehorizonal>	
+			<gazevertical>$(1{select*6=4;precision=2})</gazevertical>	
+			<headactivity>$(1{select*6=5;precision=2})</headactivity>	
+		</feature>
 	</face>		
 </ssi>
 

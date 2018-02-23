@@ -1,26 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <TorsoGestures xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../Common/Data/xml/TorsoGestures.xsd">
 <!--
-	VerticalTurn is a left/right rotation around the vertical axis (around y axis)
-	SagittalLean is a forward/backward leaning mouvement in the sagittal plan (around x axis)
-	LateralLean is a lateral flexion to the left/right in the lateral plan (around z axis)
+	SagittalTilt is a forward/backward leaning mouvement in the sagittal plan (around x axis)
+	VerticalTorsion is a leftward/rightward rotation around the vertical axis (around y axis)
+	LateralRoll is a lateral flexion to the leftward/rightward in the lateral plan (around z axis)
 	Collapse
 -->
 
 <!--
 	min="0.0" and max="1.0" of the rotation value means that the real value of rotation must be between the value of min and max in degree (specified in the file TorsoIntervals.xml)
-	In the vertical Turn,   the  rotation in the left direction correspond to a left rotation
-							the  rotation in the right direction correspond to a right rotation
+	In the SagittalTilt, the rotation in the forward direction correspond to a forward rotation
+						 the rotation in the backward direction correspond to a backward rotation
 
-	In the lateral Lean,    the  rotation in the right direction correspond to a right rotation
-							the  rotation in the left direction correspond to a left rotation
+	In the VerticalTorsion, the rotation in the leftward direction correspond to a leftward rotation
+							the rotation in the rightward direction correspond to a rightward rotation
 
-	In the Sagittal Lean,   the	 rotation in the forward direction correspond to a forward rotation
-							the  rotation in the backward direction correspond to a backward rotation
+	In the LateralRoll, the rotation in the rightward direction correspond to a rightward rotation
+						the rotation in the leftward direction correspond to a leftward rotation
 
 
 	***for the torso gestures (<torso>)
-	the symbolic value of rotation for vertical turn, sagittal tilt or lateral tilt is defined by : amount*max
+	the symbolic value of rotation for SagittalTilt, VerticalTorsion or LateralRoll is defined by : amount*max
 		where
 				max is the maximum symbolic value of the correspondant direction
 				amount means how intense is the torso movement, 0 means immeasurable small; 0.5 means"moderate"; 1 means maximally large
@@ -28,7 +28,7 @@
 	To obtain the real value of rotation, the symbolic value must be multiplied by |max_degree| which is defined in the TorsoIntervals.xml file (with respect to the human anatomy)
 
 	***for the torso postures (<torsoDirectionShift>)
-	the symbolic value of rotation for sagittalLean, lateralLean or verticalTurn are equal to the corresponding amount
+	the symbolic value of rotation for SagittalTilt, VerticalTorsion or LateralRoll are equal to the corresponding amount
 	To obtain the real value of rotation, the symbolic value must be multiplied by |max_degree| which is defined in the TorsoIntervals.xml file (with respect to the human anatomy)
 -->
 
@@ -58,49 +58,49 @@
 
 	<torso id="LinearNeutralFrontalSwing" lexeme="FrontalSwing" repetition="2" amount="0.5">
 		<KeyPoint type="strokeEnd">
-			<SagittalLean direction="Forward" min="0.0" max="1.0"><!-- amount*max--></SagittalLean>
+			<SagittalTilt direction="Forward" min="0.0" max="1.0"><!-- amount*max--></SagittalTilt>
 		</KeyPoint>
 	</torso>
 
 	<torso id="LinearForwardBackwardSwing" lexeme="ForwardBackwardSwing" repetition="2" amount="0.5">
 		<KeyPoint type="strokeStart">
-			<SagittalLean direction="Forward" min="0.0" max="1.0"><!-- amount*max--></SagittalLean>
+			<SagittalTilt direction="Forward" min="0.0" max="1.0"><!-- amount*max--></SagittalTilt>
 		</KeyPoint>
 		<KeyPoint type="strokeEnd">
-			<SagittalLean direction="Backward" min="0.0" max="1.0"><!--amount*max--></SagittalLean>
+			<SagittalTilt direction="Backward" min="0.0" max="1.0"><!--amount*max--></SagittalTilt>
 		</KeyPoint>
 	</torso>
 
 	<torso id="CurvedNeutralFrontalSwing" lexeme="CurvedFrontalSwing" repetition="2" amount="0.5">
 		<KeyPoint type="strokeEnd">
-			<SagittalLean direction="Forward" min="0.0" max="1.0"></SagittalLean>
+			<SagittalTilt direction="Forward" min="0.0" max="1.0"></SagittalTilt>
 		</KeyPoint>
 	</torso>
 
 	<torso id="LinearRLLateralSwing" lexeme="LateralSwing" repetition="2" amount="0.5">
 		<KeyPoint type="strokeStart">
-			<LateralLean direction="Right" min="0.0" max="1.0"><!--amount*max--></LateralLean>
+			<LateralRoll direction="Rightward" min="0.0" max="1.0"><!--amount*max--></LateralRoll>
 		</KeyPoint>
 		<KeyPoint type="strokeEnd">
-			<LateralLean direction="Left" min="0.0" max="1.0"><!--amount*max--></LateralLean>
+			<LateralRoll direction="Leftward" min="0.0" max="1.0"><!--amount*max--></LateralRoll>
 		</KeyPoint>
 	</torso>
 
 	<torso id="CurvedRLLateralSwing" lexeme="CurvedLateralSwing" repetition="2" amount="0.5">
 		<KeyPoint type="strokeStart">
-			<LateralLean direction="Right" min="0.0" max="1.0"></LateralLean>
+			<LateralRoll direction="Rightward" min="0.0" max="1.0"></LateralRoll>
 		</KeyPoint>
 		<KeyPoint type="strokeEnd">
-			<LateralLean direction="Left" min="0.0" max="1.0"></LateralLean>
+			<LateralRoll direction="Leftward" min="0.0" max="1.0"></LateralRoll>
 		</KeyPoint>
 	</torso>
 
 	<torso id="LinearRLVerticalSwing" lexeme="VerticalSwing" repetition="2" amount="0.5">
 		<KeyPoint type="strokeStart">
-			<VerticalTurn direction="Right" min="0.0" max="1.0"><!--amount*max--></VerticalTurn>
+			<VerticalTorsion direction="Rightward" min="0.0" max="1.0"><!--amount*max--></VerticalTorsion>
 		</KeyPoint>
 		<KeyPoint type="strokeEnd">
-			<VerticalTurn direction="Left" min="0.0" max="1.0"><!--amount*max--></VerticalTurn>
+			<VerticalTorsion direction="Leftward" min="0.0" max="1.0"><!--amount*max--></VerticalTorsion>
 		</KeyPoint>
 	</torso>
 
@@ -458,39 +458,39 @@
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="collapse">
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 		<!-- shoulders are involved-->
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="left_turn">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"><!--vertical_amount--></VerticalTurn>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"><!--vertical_amount--></VerticalTorsion>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="right_turn">
-		<VerticalTurn direction="Right" amount="0.5" min="0.0" max="1.0"><!--vertical_amount--></VerticalTurn>
+		<VerticalTorsion direction="Rightward" amount="0.5" min="0.0" max="1.0"><!--vertical_amount--></VerticalTorsion>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="left_lean">
-		<LateralLean direction="Left" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<LateralRoll direction="Leftward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="right_lean">
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="forward_lean">
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="backward_lean">
-		<SagittalLean direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
+		<SagittalTilt direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
 	</torsoDirectionShift>
 
-	<!-- 	<torsoDirectionShift id="chest_upward">
-		<VerticalTurn direction=""></VerticalTurn>
-		<SagittalLean direction=""></SagittalLean>
-		<LateralLean direction=""></LateralLean>
-		<Collapse direction="upward"></Collapse>
+	<!-- 	<torsoDirectionShift id="chest_backward">
+		<VerticalTorsion direction=""></VerticalTorsion>
+		<SagittalTilt direction=""></SagittalTilt>
+		<LateralRoll direction=""></LateralRoll>
+		<Collapse direction="backward"></Collapse>
 	</torsoDirectionShift> -->
 
 	<!--************************************************************************************************-->
@@ -498,118 +498,118 @@
 
 	<!--VerticalSagittal-->
 	<torsoDirectionShift id="RightVerticalForward">
-		<VerticalTurn direction="Right" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
+		<VerticalTorsion direction="Rightward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="LeftVerticalForward">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="RightVerticalBackward">
-		<VerticalTurn direction="Right" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<SagittalLean direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
+		<VerticalTorsion direction="Rightward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<SagittalTilt direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="LeftVerticalBackward">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<SagittalLean direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<SagittalTilt direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
 	</torsoDirectionShift>
 
 	<!--VerticalLateral-->
 	<torsoDirectionShift id="LeftVerticalLeftLateral">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<LateralLean direction="Left" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<LateralRoll direction="Leftward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="LeftVerticalRightLateral">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="RightVerticalLeftLateral">
-		<VerticalTurn direction="Right" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<LateralLean direction="Left" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<VerticalTorsion direction="Rightward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<LateralRoll direction="Leftward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="RightVerticalRightLateral">
-		<VerticalTurn direction="Right" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<VerticalTorsion direction="Rightward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<!--VerticalCollapse-->
 	<torsoDirectionShift id="RightVerticalCollapse">
-		<VerticalTurn direction="Right" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<VerticalTorsion direction="Rightward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="LeftVerticalCollapse">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<!--SagittalLateral-->
 	<torsoDirectionShift id="ForwardSagittalLeftLateral">
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<LateralLean direction="Left" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<LateralRoll direction="Leftward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="ForwardSagittalRightLateral">
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="BackwardSagittalLeftLateral">
-		<SagittalLean direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<LateralLean direction="Left" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<SagittalTilt direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<LateralRoll direction="Leftward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="BackwardSagittalRightLateral">
-		<SagittalLean direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<SagittalTilt direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<!--SagittalCollapse-->
 	<torsoDirectionShift id="ForwardSagittalDownward">
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="BackwardSagittalDownward">
-		<SagittalLean direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<SagittalTilt direction="Backward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<!--LateralCollapse-->
 	<torsoDirectionShift id="LeftLateralDownward">
-		<LateralLean direction="Left" amount="0.5" min="0.0" max="1.0"></LateralLean>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<LateralRoll direction="Leftward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="RightLateralDownward">
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<!-- multiple torso postures -->
 	<torsoDirectionShift id="ForwardRightLateralDownward">
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="LeftVRightLForward">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
 	</torsoDirectionShift>
 
 	<torsoDirectionShift id="LeftVRightLDownwardForward">
-		<VerticalTurn direction="Left" amount="0.5" min="0.0" max="1.0"></VerticalTurn>
-		<SagittalLean direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalLean>
-		<LateralLean direction="Right" amount="0.5" min="0.0" max="1.0"></LateralLean>
-		<Collapse direction="Downward" amount="0.5" min="0.0" max="1.0"></Collapse>
+		<VerticalTorsion direction="Leftward" amount="0.5" min="0.0" max="1.0"></VerticalTorsion>
+		<SagittalTilt direction="Forward" amount="0.5" min="0.0" max="1.0"></SagittalTilt>
+		<LateralRoll direction="Rightward" amount="0.5" min="0.0" max="1.0"></LateralRoll>
+		<Collapse direction="Forward" amount="0.5" min="0.0" max="1.0"></Collapse>
 	</torsoDirectionShift>
 
 	<!-- to be continued -->

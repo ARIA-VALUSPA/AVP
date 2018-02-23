@@ -1,0 +1,11 @@
+camera:fps = 25
+
+audio:sr = 16000
+audio:frame = 500ms    # should be set to 1/camera:fps
+audio:delta = 1500ms  # audio processing window = audio:frame + audio:delta
+opensmile:config = ./config/compare16_lld_func_Ws=5s_Wst=500ms.conf # will extract features on a 5s windows and output one feature vector for each 0.5s
+
+opensmile:exe:use = True    # use opensmile exe
+opensmile:exe:config = ./config/compare16_lld_func_Ws=5s_Wst=500ms.exe.conf
+opensmile:exe:dim = 260		# number of extracted features
+opensmile:exe:path = ../../bin/openSMILE_230/SMILExtract_Release.exe

@@ -1,0 +1,158 @@
+﻿<qa_root>
+    <dialog id="0000">
+        <answerlist>
+            <answer type="uncertain">Social.Salutation.ReturnGreeting</answer>
+            <answer type="certain">Social.Salutation.ReturnGreeting</answer>
+        </answerlist>
+        <questionlist>
+            <question>Hello</question>
+            <question>Hi</question>
+            <question>Hey</question>
+            <question>Goodday</question>
+			<question>Hallo</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0001">
+        <answerlist>
+            <answer type="uncertain">Social.Introduction.ReturnName</answer>
+            <answer type="certain">Social.Introduction.ReturnName</answer>
+        </answerlist>
+        <questionlist>
+            <question>My name is peter, what is your name</question>
+            <question>What is your name</question>
+            <question>My name is</question>
+            <question>Do you have a name</question>
+            <question>What are you called</question>
+            <question>Who are you?</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0002">
+        <answerlist>
+            <answer type="certain">socialobligations_gratitude_downplay</answer>
+        </answerlist>
+        <questionlist>
+            <question>You are very kind.</question>
+            <question>I think you are nice.</question>
+            <question>I like you!</question>
+            <question>Wow you are great</question>
+            <question>You know a lot about Alice in Wonderland</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0003">
+        <answerlist>
+            <answer type="certain">socialobligations_apologizing_downplay</answer>
+        </answerlist>
+        <questionlist>
+            <question>I'm sorry.</question>
+            <question>Excuse me.</question>            
+        </questionlist>
+    </dialog>
+    <dialog id="0010">
+        <answerlist>
+            <answer type="certain">socialobligations_valediction_return</answer>
+        </answerlist>
+        <questionlist>
+            <question>Goodbye</question>
+            <question>Bye bye</question>            
+            <question>See you</question>            
+        </questionlist>
+    </dialog>
+    <dialog id="0005">
+        <answerlist>
+            <answer type="certain">qa_chapter1_beginning</answer>
+        </answerlist>
+        <questionlist>
+            <question>But I don't know the story.</question>
+            <question>What is your story</question>
+            <question>Tell me the story from the beginning please</question>
+            <question>What is the beginning?</question>
+            <question>How does the story begin?</question>
+            <question>Read me the story from the beginning?</question>
+            <question>So how does the story start?</question>
+            <question>Read me the story of Alice in Wonderland!</question>
+            <question>Can you tell me a story?</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0006">
+        <answerlist>
+            <answer type="certain">qa_chapter1_rabbit</answer>
+        </answerlist>
+        <questionlist>
+            <question>Tell me more about the rabbit!</question>
+            <question>Why is the rabbit strange?</question>
+            <question>What happens after she saw the strange rabbit?</question>
+            <question>I want to know more about the Strange Rabbit</question>
+            <question>What happens with the rabbit?</question>
+            <question>Tell me about the strange rabbit</question>
+            <question>What can you tell me about the white rabbit?</question>
+            <question>Tell me about the white rabbit</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0007">
+        <answerlist>
+            <answer type="certain">qa_chapter1_rabbithole</answer>
+        </answerlist>
+        <questionlist>
+            <question>How did Alice follow the rabbit into the hole?</question>
+            <question>Tell me how Alice followed the rabbit</question>
+            <question>Tell me about Alice following the rabbit into the hole</question>
+            <question>I want to know how Alice followed the rabbit into the hole</question>
+            <question>I want to know how Alice followed the rabbit</question>
+            <question>How did you follow the rabbit into the hole?</question>
+            <question>Can you tell me how you followed the rabbit</question>
+            <question>Tell me about you following the rabbit into the hole</question>
+            <question>I want to know how you followed the rabbit into the hole</question>
+            <question>I want to know how you followed the rabbit</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0008">
+        <answerlist>
+            <answer type="certain">qa_chapter1_goldenkey</answer>
+        </answerlist>
+        <questionlist>
+            <question>What is the key for?</question>
+            <question>What is the tiny golden key for then?</question>
+            <question>I want to know more about the golden key</question>
+            <question>Tell me about the golden key please</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0009">
+        <answerlist>
+            <answer type="certain">qa_chapter1_bottle</answer>
+        </answerlist>
+        <questionlist>
+            <question>What does that bottle do?</question>
+            <question>Tell me about that drink me bottle</question>
+            <question>what can you tell me about the bottle?</question>
+            <question>What is in the bottle?</question>
+            <question>I want to know more about the bottle</question>
+            <question>Did you drink the bottle?</question>
+            <question>Tell me about this bottle with DRINK ME written on it</question>
+            <question>What was in the bottle you found?</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0010">
+        <answerlist>
+            <answer type="certain">qa_chapter1_cake</answer>
+        </answerlist>
+        <questionlist>
+            <question>What does that cake do?</question>
+            <question>Tell me about that eat me cake</question>
+            <question>I want to know more about the cake</question>
+            <question>So what happened when you ate the cake</question>
+            <question>Did you eat the cake?</question>
+        </questionlist>
+    </dialog>
+    <dialog id="0011">
+        <answerlist>
+            <answer type="certain">qa_chapter1_glovesandfan</answer>
+        </answerlist>
+        <questionlist>
+            <question>I want to know more about the gloves and the fan</question>
+            <question>Tell me about the gloves and the fan!</question>
+            <question>What do those gloves and the fan do?</question>
+            <question>What happened with the white kid gloves and the fan</question>
+            <question>Tell me about the white kid gloves and the fan</question>
+        </questionlist>
+    </dialog>   
+</qa_root>

@@ -7,7 +7,9 @@
 		<load name="camera" />
 		<load name="ioput" />
 		<load name="activemq" />
-		<load name="websocket" />
+		<!--load name="websocket" /-->
+		<load name="python"/>
+		<load name="signal"/>
 	</register>
 	
 	<!-- camera sensor -->
@@ -15,6 +17,9 @@
 		<sensor create="Camera" option="options/camera" fps="25.0">
 			<output channel="video" pin="video" size="2.0s"/>
 		</sensor>	
+		<consumer create="CameraWriter:camerawriter" flip="true" option="options\camerawriter" path="media\record.avi">
+			<input pin="video" frame="1" delta="0"/>
+		</consumer>		
 	</gate>
 	<gate close="$(live)">	
 		<sensor create="CameraReader" path="$(file)">
@@ -28,17 +33,25 @@
 		<output pin="emax"/>
 	</transformer>
 	
-	<!-- select valence and arousal -->
-	<transformer create="EMaxValenceArousal:emax_va">
+	<!-- emax feature -->
+	<transformer create="PythonFilter"  syspath=".;scripts" script="emax_feature" optsstr="n_missing=50">
 		<input pin="emax" frame="1"/>
-		<output pin="emax_va"/>
-	</transformer>		
+		<output pin="emax_feature"/>
+	</transformer>
+	<transformer create="MvgAvgVar" win="5.0" format="1" method="1">
+		<input pin="emax_feature" frame="1"/>
+		<output pin="emax_feature(avg)"/>
+	</transformer>
 	
 	<!-- select emotion scores and face region -->	
 	<transformer create="Selector" indices="6, 7, 8, 9, 10, 11, 12" multiples="$(emax:faces:values)">
 		<input pin="emax" frame="1"/>
 		<output pin="emax_emotion"/>
 	</transformer>
+	<transformer create="MvgAvgVar" win="5.0" format="1" method="1">
+		<input pin="emax_emotion" frame="1"/>
+		<output pin="emax_emotion(avg)"/>
+	</transformer>	
 	<transformer create="Selector" indices="2, 3, 4, 3, 4, 5, 2, 5" multiples="$(emax:faces:values)">
 		<input pin="emax" frame="1"/>
 		<output pin="emax_face"/>
@@ -56,65 +69,79 @@
 		<output pin="emax_box"/>
 	</transformer>		
 	
-	<!-- create event with emotion scores -->
-	<consumer create="MapEventSender" keys="NEU,ANG,DIS,FEA,HAP,SAD,SUR" address="emotion@emax">
-		<input pin="emax_emotion" frame="1" />		
-	</consumer>	
-	
-	<!-- create event with valence/arousal scores -->
-	<consumer create="MapEventSender" keys="VALENCE,AROUSAL" address="va@emax">
-		<input pin="emax_va" frame="1" />		
-	</consumer>	
-	
 	<!-- prepare xml event -->
 	<consumer create="XMLEventSender:monitor" address="result@xml" path="emax.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
-		<input pin="emax" frame="1"/>
-		<listen address="va,emotion@emax"/>
+		<input pin="emax;emax_feature(avg);emax_emotion(avg)" frame="1"/>		
 	</consumer>
-	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="emax-extra.xml" monitor="true" mname="RESULT - EXTRA" console="false" update="100" coldelim=" " strbuf="6000">
+	<consumer create="XMLEventSender:monitor" address="result-extra@xml" path="emax-extra.xml" monitor="true" mname="RESULT - EXTRA" console="false" update="100" coldelim=" " strbuf="8192">
 		<input pin="emax_points;emax_pose;emax_box" frame="1"/>
 	</consumer>	
 
 	<!-- publish on active mq -->
-	<gate open="$(activemq:use)">
-			
+	<gate open="$(activemq:use)">			
 		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)">
 			<listen address="result@xml"/>
 		</object>
-
 		<object create="ActiveMQEventSender" brokerURI="$(activemq:uri)" id="$(activemq:id)" topic="$(activemq:topic)-EXTRA">
 			<listen address="result-extra@xml"/>
 		</object>		
-
 	</gate>
 	
-	<!-- show video -->
+	<!-- visualize -->
 	<consumer create="VideoPainter:vplot" flip="true" type="1" relative="true" swap="false" title="CAMERA">
 		<input pin="video;emax_box" frame="1"/>		
 	</consumer>	
-		
-	<!-- show emotion scores -->
-	<object create="EventPainter:eplot" type="1" autoscale="false" reset="false" fix="9.0f" title="EMAX - EMOTIONS">
-		<listen address="emotion@emax" />		
-	</object>	
+	<consumer create="SignalPainter:eplot" type="5" title="EMOTIONS" barNames="NEU,ANG,DIS,FEA,HAP,SAD,SUR" autoscale="false" fix="1.0,0.0">
+		<input pin="emax_emotion" frame="1"/>		
+	</consumer>
+	<consumer create="SignalPainter:eplot" type="5" title="EMOTIONS (AVG)" barNames="NEU,ANG,DIS,FEA,HAP,SAD,SUR" autoscale="false" fix="1.0,0.0">
+		<input pin="emax_emotion(avg)" frame="1" />		
+	</consumer>	
+	<consumer create="SignalPainter:eplot" type="5" title="FEATURE" barNames="FAC,VAL,ARO,MGH,MGV,ACT" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature" frame="1"/>		
+	</consumer>
+	<consumer create="SignalPainter:eplot" type="5" title="FEATURE (AVG)" barNames="FAC,VAL,ARO,MGH,MGV,ACT" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg)" frame="1"/>		
+	</consumer>
 	
-	<!-- show valence/arousal scores -->
-	<object create="EventPainter:eplot" type="1" global="true" autoscale="false" reset="false" fix="0.5f" title="EMAX - EMOTIONS">
-		<listen address="va@emax" />		
-	</object>	
-	
+	<!-- storage -->
+	<consumer create="FileWriter" path="emax_feature" overwrite="true">
+		<input pin="emax_feature" frame="10"/>
+	</consumer>	
+	<consumer create="FileWriter" path="emax_feature(avg)" overwrite="true">
+		<input pin="emax_feature(avg)" frame="10"/>
+	</consumer>	
+	<consumer create="FileWriter" path="emax" overwrite="true">
+		<input pin="emax" frame="1"/>
+	</consumer>	
+	<consumer create="FileWriter" path="emax_emotion" overwrite="true">
+		<input pin="emax_emotion" frame="10"/>
+	</consumer>	
+	<consumer create="FileWriter" path="emax_emotion(avg)" overwrite="true">
+		<input pin="emax_emotion(avg)" frame="10"/>
+	</consumer>	
+	<consumer create="FileWriter" path="emax_pose" overwrite="true">
+		<input pin="emax_pose" frame="10"/>
+	</consumer>	
+	<consumer create="FileWriter" path="emax_box" overwrite="true">
+		<input pin="emax_box" frame="10"/>
+	</consumer>	
+	<consumer create="FileWriter" path="emax_points" overwrite="true">
+		<input pin="emax_points" frame="10"/>
+	</consumer>	
+
 	<!-- websocket -->
-	<gate open="$(websocket:use)">
+	<!--gate open="$(websocket:use)">
 		<object create="websocket:websocket" http_root="$(websocket:site)" http_port="$(websocket:port)">
 			<listen address="va,emotion@emax" />
 		</object>
-	</gate>
+	</gate-->
 	
 	<!-- decoration -->
 	<object create="Decorator" icon="true" title="Pipeline">
 		<area pos="0,0,400,600">console</area>
 		<area pos="800,0,400,300">vplot*</area>
-		<area pos="400,0,400,600">eplot*</area>
+		<area pos="400,0,400,600" nh="1">eplot*</area>
 		<area pos="800,300,400,300">monitor*</area>
 	</object>	
 	

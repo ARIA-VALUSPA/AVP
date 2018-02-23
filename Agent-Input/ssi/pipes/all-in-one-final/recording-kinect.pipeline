@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+
+	<job path="mkdir.bat" args="$(log:dir)" when="post" wait="-1"/>
+
+	<consumer create="CameraWriter:writer-video" flip="false" option="options\camerawriter" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).video.avi" overwrite="false">
+		<input pin="rgb" frame="1" delta="0"/>
+	</consumer>	
+
+	<consumer create="WavWriter::writer-audio" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).close.wav" overwrite="false">
+		<input pin="audio" frame="0.1s"/>
+	</consumer>
+	
+	<consumer create="FileWriter::writer-emax" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).video.emax" type="1" overwrite="false">
+		<input pin="emax" frame="1"/>
+	</consumer>		
+	
+	<consumer create="FileAnnotationWriter::writer-arousal" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).arousal"  overwrite="false" schemePath="schemes\arousal" defaultConfidence="1" meta="annotator=system;role=$(log:role:user)">
+		<input pin="audio_arousal(avg-short)" frame="1"/>
+	</consumer>
+
+	<consumer create="FileAnnotationWriter::writer-valence" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).valence"  overwrite="false" schemePath="schemes\valence" defaultConfidence="1" meta="annotator=system;role=$(log:role:user)">
+		<input pin="emax_feature(avg-short)" frame="1">		
+			<transformer create="Selector" indices="1"/>
+		</input>
+	</consumer>
+	
+	<consumer create="FileAnnotationWriter::writer-interest" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).interest"  overwrite="false" schemePath="schemes\interest" defaultConfidence="1" meta="annotator=system;role=$(log:role:user)">
+		<input pin="interest(avg-short)" frame="1"/>
+	</consumer>		
+	
+	<object create="FileAnnotationWriter::writer-vad" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).voiceactivity"  overwrite="false" schemePath="schemes\voiceactivity" defaultConfidence="1" defaultLabel="VOICE" forceDefaultLabel="true" meta="annotator=system;role=$(log:role:user)">
+		<listen address="vad@audio"/>
+	</object>
+
+	<consumer create="FileWriter:writer-skel" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.skel_ssi" overwrite="false" type="0">
+		<input pin="skel" frame="1"/>
+	</consumer>	
+
+	<consumer create="FileWriter:writer-skel" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.skel" overwrite="false" type="0">
+		<input pin="skelms" frame="1"/>
+	</consumer>	
+	
+	<consumer create="FileWriter:writer-au" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.au" overwrite="false" type="0">
+		<input pin="au" frame="1"/>
+	</consumer>	
+	
+	<consumer create="FileWriter:writer-head" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.head" overwrite="false" type="0">
+		<input pin="head" frame="1"/>
+	</consumer>	
+	
+	<consumer create="FileWriter:writer-face3d" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.face" overwrite="false" type="0">
+		<input pin="face3d" frame="1"/>
+	</consumer>	
+
+	<!--object create="FileAnnotationWriter::writer-asr" annotationPath="$(log:dir)\$(date)_$(num,3)\$(log:role:user).transcription" overwrite="false" schemePath="schemes\transcription" defaultConfidence="1" meta="annotator=system;role=$(log:role:user)">
+		<listen address="asr@audio"/>
+	</object-->			
+	
+	<gate open="$(activemq:use)">
+	
+		<runnable create="ActiveMQEventReceiver:receiver-agentfml" address="message@agent-fml" brokerURI="$(activemq:uri)" topic="$(activemq:topic:agent:fml)" defaultDuration="1000" />
+		<object create="FileAnnotationWriter:writer-agentfml" path="$(log:dir)\$(date)_$(num,3)\$(log:role:agent).fml" overwrite="false" schemePath="schemes\agent-fml" defaultConfidence="1" meta="annotator=system;role=$(log:role:agent)">
+			<listen address="message@agent-fml"/>
+		</object>		
+		<runnable create="ActiveMQEventReceiver:receiver-agenbml" address="message@agent-bml" brokerURI="$(activemq:uri)" topic="$(activemq:topic:agent:bml)" defaultDuration="1000" />
+		<object create="FileAnnotationWriter:writer-agentbml" path="$(log:dir)\$(date)_$(num,3)\$(log:role:agent).bml" overwrite="false" schemePath="schemes\agent-bml" defaultConfidence="1" meta="annotator=system;role=$(log:role:agent)">
+			<listen address="message@agent-bml"/>
+		</object>	
+		<!--object create="FileAnnotationWriter:writer-agentbml" annotationPath="$(log:dir)\$(date)_$(num,3)\$(log:role:agent).bml" schemePath="schemes\agent-bml" defaultConfidence="1" meta="annotator=system;role=$(log:role:agent);trigger=ActiveMQSender{topic=vib.input.BML,uri=tcp://localhost:61616}">
+			<listen address="message@agent-bml"/>
+		</object-->	
+		<runnable create="ActiveMQEventReceiver:receiver-dialog" address="message@dialog" brokerURI="$(activemq:uri)" topic="$(activemq:topic:dialog)" defaultDuration="1000" />
+		<object create="FileAnnotationWriter:writer-dialog" path="$(log:dir)\$(date)_$(num,3)\$(log:role:agent).dm" overwrite="false" schemePath="schemes\agent-dm" defaultConfidence="1" meta="annotator=system;role=$(log:role:agent)">
+			<listen address="message@dialog"/>
+		</object>
+		
+	</gate>
+		
+</pipeline>

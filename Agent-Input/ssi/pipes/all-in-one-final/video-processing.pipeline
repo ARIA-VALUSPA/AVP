@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+
+	<!-- video processing -->
+	
+	<transformer create="EMaxTransformer" modelPath="$(emax:model)">
+		<input pin="video" frame="1" async="true"/>
+		<output pin="emax"/>
+	</transformer>
+	<transformer create="PythonFilter"  syspath=".;scripts" script="emax_feature" optsstr="n_missing=50">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_feature"/>
+	</transformer>
+	<transformer create="MvgAvgVar:cl-emax(avg)" win="$(avg:short)" format="1" method="1">
+		<input pin="emax_feature" frame="1"/>
+		<output pin="emax_feature(avg-short)"/>
+	</transformer>
+	<transformer create="MvgAvgVar:cl-emax(avg)" win="$(avg:long)" format="1" method="1">
+		<input pin="emax_feature" frame="1"/>
+		<output pin="emax_feature(avg-long)"/>
+	</transformer>
+	<transformer create="MvgConDiv" wins="$(avg:short)" winl="$(avg:long)" method="1">
+		<input pin="emax_feature" frame="1"/>
+		<output pin="emax_feature(avg-diff)"/>
+	</transformer>		
+	
+	<transformer create="Selector" indices="152, 153, 154, 155, 154, 155, 156, 157, 156, 157, 158, 159, 152, 153, 158, 159, 156, 157, 160, 161, 154, 155, 162, 163, 152, 153, 164, 165, 158, 159, 166, 167, 164, 165, 162, 163, 162, 163, 160, 161, 160, 161, 166, 167, 166, 167, 164, 165" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_box"/>
+	</transformer>		
+	<transformer create="Selector" indices="6, 7, 8, 9, 10, 11, 12" multiples="$(emax:faces:values)">
+		<input pin="emax" frame="1"/>
+		<output pin="emax_emotion"/>
+	</transformer>
+	<transformer create="MvgAvgVar" win="$(avg:short)" format="1" method="1">
+		<input pin="emax_emotion" frame="1"/>
+		<output pin="emax_emotion(avg-short)"/>
+	</transformer>
+	
+</pipeline>	

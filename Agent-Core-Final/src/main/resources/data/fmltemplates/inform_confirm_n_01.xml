@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="inform-confirm" />
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<tm id="DMBegin"/>
+			<usel pitch='1.3'>Yes</usel>, that's right.
+			<tm id="DMEnd"/>
+			<boundary id="b1" start="s1:DMEnd" type="LL"/>
+			
+		</speech>
+	</bml>
+	
+	<fml>
+		<emotion id="em1" type="neutral" regulation="felt" start="s1:DMBegin" end="s1:DMEnd" intensity="1" importance="1.0"/>
+		<certainty id="cr1" type="none" start="s1:tm1" end="s1:DMEnd" intensity="0.5" importance="1.0"/>
+		<performative id="p1" type="confirm" start="s1:DMBegin" end="s1:tm1" importance="1" />
+		<deictic id="p2" type="selftouch" start="s1:tm1" end="s1:DMEnd" importance="1" />
+	</fml>
+	
+</fml-apml>

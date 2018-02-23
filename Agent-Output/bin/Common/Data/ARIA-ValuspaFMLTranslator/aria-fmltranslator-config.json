@@ -200,7 +200,8 @@
 		  "relief",
 		  "embarrassment",
 		  "surprise",
-		  "bored"
+		  "bored",
+		  "joybody"
         ]
       },
 	  {
@@ -217,7 +218,7 @@
       }
     ]
   },
-  {
+    {
     "type": "tag",
     "tag": "backchannel",
     "replaceAll": false,
@@ -284,6 +285,17 @@
 		  "short",
 		  "medium",
 		  "long"
+        ]
+      },
+	  {
+        "name": "social_attitude",
+        "replaceWith": "option",
+        "options": [
+          "neutral",
+		  "submissive",
+		  "dominant",
+		  "hostile",
+		  "friendly"
         ]
       }
     ]

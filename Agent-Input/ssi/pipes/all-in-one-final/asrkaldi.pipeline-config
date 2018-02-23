@@ -1,0 +1,24 @@
+#ASR server options
+asr:nbest =5
+asr:mode  =utt
+asr:language =en
+
+# ASR HOST
+# asr:host	=  127.0.0.1 # localhost
+# asr:host	= 34.253.87.8 # amazon server
+# asr:host	=137.250.171.134 # ssi server
+asr:host =localhost
+
+# ASR PORT
+# Below you can find the option for the ASR server running from Amazon
+# asr:port = 8888   # EN, 1-best ("utt")
+# asr:port = 8887 # EN, 5-best ("utt")
+# asr:port = 9999 # DE, 1-best ("utt")
+# asr:port = 9998 # DE, 5-best ("utt")
+# asr:port = 9997 # DE, 1-best ("inc")
+asr:port =8888
+
+# ASR EXTRA OPTIONS
+asr:console = false
+asr:silence = 30	# amount of silence (in ms) board is added to beginning of each segment (only if vad is turned on)
+asr:monitor = false

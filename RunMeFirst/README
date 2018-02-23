@@ -1,3 +1,6 @@
+Visual C++ Redistributable for Visual Studio 2015 
+ - Install 'vc_redist.x64.exe'
+
 Run the get_models script in this directory to get external files:
  - TTS voices
  - SSI models
@@ -12,3 +15,8 @@ To get the ASR server, you have the choice of downloading a pre-built setup for 
  - German ASR runs on port 9999
 
 The second option requires much less download, is much easier to maintain, occupies less space, only uses free and open source products, but it will take more time to setup (about 1/2 hour on a fast machine).
+
+Python dependencies:
+
+- Install Python 3.5.1 64-bit (install for all users)
+- Install 'xmltodict' using pip.

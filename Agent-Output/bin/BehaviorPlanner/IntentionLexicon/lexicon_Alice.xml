@@ -731,6 +731,42 @@
 		</constraints>
 	</behaviorset>
 	
+	<behaviorset name="performative-informIGA">
+		<signals>
+			<signal id="1" name="gaze=look_at" modality="gaze"/>
+			<signal id="2" name="beat=Beat_Ges_L_Hand_Front" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="2"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-informIGA2">
+		<signals>
+			<signal id="1" name="gaze=look_at" modality="gaze"/>
+			<signal id="2" name="beat=Beat_Ges_L_Open" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="2"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-informIGA3">
+		<signals>
+			<signal id="1" name="gaze=look_at" modality="gaze"/>
+			<signal id="2" name="beat=Beat_Ges_L_Hand" modality="gesture"/>
+		</signals>
+		<constraints>
+			<core>
+				<item id="2"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
 	<behaviorset name="performative-inform">
 		<signals>
 			<signal id="1" name="gaze=look_at" modality="gaze"/>
@@ -744,6 +780,18 @@
 				<alternative name="performative=inform_Ges_B_Drop" probability="0.1"/>
 				<alternative name="performative=inform_Ges_B_Up" probability="0.1"/>
 			</signal>
+		</signals>
+		<constraints>
+			<core>
+				<item id="2"/>
+			</core>
+		</constraints>
+	</behaviorset>
+	
+	<behaviorset name="performative-inform2">
+		<signals>
+			<signal id="1" name="gaze=look_at" modality="gaze"/>
+			<signal id="2" name="beat=Beat_Ges_R_Open" modality="gesture"/>
 		</signals>
 		<constraints>
 			<core>

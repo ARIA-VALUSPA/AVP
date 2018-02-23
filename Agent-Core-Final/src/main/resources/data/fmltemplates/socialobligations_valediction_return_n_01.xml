@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="socialobligations-valediction-return" />
+
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<tm id="DMBegin"/>
+			<aria-alternative id="alt1" type="static">
+				<alternative><usel variant='3'>see you</usel></alternative>
+				<alternative>Bye bye</alternative>
+				<alternative>Goodbye</alternative>
+				<alternative><usel variant='3'>Goodbye</usel></alternative>
+			</aria-alternative>
+			<break time="0.25"/>.
+			<tm id="DMEnd"/>
+		</speech>
+	</bml>
+	
+	<fml>
+		<emotion id="em1" type="neutral" regulation="felt" start="s1:DMBegin" end="s1:DMEnd" intensity="1" importance="1.0"/>
+		<performative id="p1" type="greet" start="s1:DMBegin" end="s1:DMEnd" importance="1" />
+	</fml>
+	
+</fml-apml>

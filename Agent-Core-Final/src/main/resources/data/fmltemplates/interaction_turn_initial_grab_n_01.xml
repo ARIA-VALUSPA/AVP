@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="interaction-turn-initial-grab" />
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<tm id="DMBegin"/>
+			<voice emotion='none'>
+			<aria-alternative id="alt1" type="static">
+				<alternative>Hold <tm id="tm1"/>on.</alternative>
+				<alternative>Wait <tm id="tm1"/>wait.</alternative>
+				<alternative>One <tm id="tm1"/>second.</alternative>
+			</aria-alternative>
+			</voice>
+			<tm id="DMEnd"/>
+			
+			<pitchaccent id="pa1" start="s1:DMBegin" level="moderate" end="s1:DMEnd" type="Hstar" importance="1"/>
+		</speech>
+	</bml>
+	
+	<fml>
+		<emotion id="em1" type="neutral" regulation="felt" start="s1:DMBegin" end="s1:DMEnd" intensity="1" importance="1.0"/>
+		<performative id="p1" type="warn" start="s1:tm1" end="s1:DMEnd" importance="0.6" />
+	</fml>
+	
+</fml-apml>

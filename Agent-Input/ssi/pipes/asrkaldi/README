@@ -8,6 +8,8 @@ This pipeline uses KALDI for speech recognition.
 2. Open 'asrkaldi.pipeline-config' and set the ip and port of your linux machine
 3. Launch ASRKALDI.bat to run from a microphone or ASRKALDI_OFFLINE.bat to run from a file
 
+Note that you need Python 3.5.x and install 'xmltodict' using pip.
+
 see also remarks below
 
 -------------------------------------------------------------

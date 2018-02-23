@@ -1,0 +1,4 @@
+sender:template = all-in-one-final_noemo
+
+#live = false 										# $(bool) use live input from a microphone
+#file = media/female	     							# if not live input read in from this file

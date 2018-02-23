@@ -1,0 +1,375 @@
+<behaviourtemplates>
+  <is name="states">{
+	"amq":{
+		"lastUpdate":0,
+		"user": {
+			"arousal": {
+				"short": "",
+				"long": "",
+				"diff": ""
+			},
+			"valence": {
+				"short": "0.000000",
+				"long": "0.000000",
+				"diff": "0"
+			},
+			"interest": {
+				"short": "0.000000",
+				"long": "0.000000",
+				"diff": "0"
+			},
+			"gender": {
+				"male": "",
+				"female": ""
+			},
+			"age": {
+				"child": "",
+				"youth": "",
+				"adult": "",
+				"senior": ""
+			},
+			"head": {
+				"horizontal": "0.000000",
+				"vertical": "0.000000",
+				"activity": "0.000000"
+			},
+			"voice": {
+				"active": "0.0"
+			},
+			"speech": {
+				"time" : "0",
+				"dur" : "0"
+			},
+			"face": {
+				"id": "-1"
+			},
+			"emotions": {
+				"neutral": "0.00",
+				"anger": "0.00",
+				"disgust": "0.00",
+				"fear": "0.00",
+				"happiness": "0.00",
+				"sadness": "0.00",
+				"surprise": "0.00"
+			}	
+		}
+	},
+	"user":{
+		"move": {
+      "text" : "",
+      "previousText" : ""
+		},
+		"history":{
+			"factor" : 21,
+			"voice" : [0],
+			"face" : [0],
+			"user" : [],
+			"speech" : []
+		},
+		"voiceActivity" : 0,
+		"faceActivity" : 0,
+		"floor" : ""          
+	},
+	"agent":{
+		"affective":{
+			"emotion":{
+				"trust": 0.5,
+				"agentmovecounttrust": 0
+			},
+			"personality":{
+
+			},
+			"sr" :{
+
+			}
+		},
+		"interactionstate":{
+			"phase": "",
+			"state": ""
+		},
+		"fml":{
+			"template" : "",
+			"parameters" : {}
+		},
+    "move" : {
+      "text" : ""
+    },
+		"moves": [],
+		"isTalking" : false,
+		"isPlanning" : false,
+		"interrupted" : false,
+		"canInterruptSelf" : false,
+		"canInterruptOther" : false,
+		"floor" : "",
+		"bestMove" : {
+		}
+	},
+	"dialogue":{
+    "id" : "default",
+		"floor" : "none",
+		"interval" : 100,
+		"agentmovecount": 0,
+		"agentmovehistory": {
+		},
+    "conversationID" : "default"
+
+	}
+}
+    </is>
+    <javascript>
+    	<![CDATA[
+      
+      function helpPrint(str) {
+        print(str);
+        return true;
+      }
+
+      function currentDate(){
+        return new Date();
+        }
+
+      function constructJson(jsonKey, jsonValue){
+        var jsonObj = {};
+        jsonObj[jsonKey] = jsonValue;
+        return jsonObj;
+      }
+
+      function addJsonToJsonArray(array, pname, pvalue){
+        var parameter = constructJson(pname,pvalue);
+        array.parameters.push(parameter);
+        return array.parameters;
+      }
+
+      function median(values){
+        temp = values.slice().sort();
+        return temp[(is.states.user.history.factor-1)/2];
+      }
+
+      function shiftArray(array){
+        array.shift();
+        return array;
+      }
+
+      function addJsonToBeginArray(array, value){
+        array.unshift(value);
+        return array;
+      }
+
+      function addJsonToArray(array, value){
+        array.push(value);
+        return array;
+      }
+      function voiceActive(vad){
+		    if(vad > 0)
+			    return 1;
+		    return 0;
+	    }
+	    function removeElement(arrayName,arrayElement)
+ 		  {
+    		for(var i=0; i<arrayName.length;i++ )
+     		{ 
+        		if(arrayName[i]==arrayElement)
+            		arrayName.splice(i,1); 
+      		}		 
+      		return arrayName;
+  		}
+
+      ]]>
+    </javascript>
+  
+ <!--    <template id="00" name="outputIS">
+      <preconditions>
+        <condition>is.states.amq.lastUpdate + is.states.dialogue.interval &lt; new Date().getTime() </condition>
+		<condition><![CDATA[is.states.user.history.user.length > 2]]></condition>
+        <condition><![CDATA[ helpPrint("Print IS") ]]></condition>
+      </preconditions>
+      <effects>
+        <function class="eu.aria.dm.util.Feedback" name="printIS">
+          <arguments>
+            <value is_type="JSONString" is="is.states.user.history.voice"/>
+          </arguments>
+        </function>        
+      </effects>      
+    </template> -->
+
+    <template id="90" name="AgentFeedback">
+      <preconditions>
+        <condition>is.dialogue.fml.initialized</condition>
+        <method name="isConnected">
+          <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator">
+          </object>
+        </method>
+      </preconditions>
+      <effects>
+        <method name="isTalking" is="is.states.agent.isTalking">
+          <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator">
+          </object>
+        </method>
+        <method name="isTalking" is="is.states.agent.isPlanning">
+          <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator">
+          </object>
+        </method>
+        <method name="setLogfile">
+          <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator">            
+          </object>
+          <arguments>
+              <value class="String" is="is.nlu.fileName"/>            
+          </arguments> 
+        </method>
+      </effects>
+    </template>
+
+    <template id="behaviourFinished" name="behaviour is finished">
+      <preconditions>
+        <condition><![CDATA[is.dialogue.behaviourToProcess]]></condition>
+        <method name="stoppedTalking">
+          <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator">
+          </object>
+        </method>
+        <!-- <condition><![CDATA[helpPrint("we reset the behaviour: " + is.states.agent.bestMove.id)]]></condition> -->
+        <condition><![CDATA[helpPrint("Previous moves: " + is.behaviour.previousMoves)]]></condition>
+        <condition><![CDATA[helpPrint("Number of moves: " + is.states.dialogue.agentmovecount)]]></condition>
+      </preconditions>
+      <effects>
+        <method name="getLastText" is="is.states.agent.move.text">
+          <object persistent="FMLGenerator" class="eu.aria.dm.behaviours.FMLGenerator">
+          </object>
+        </method>
+        <method name="appendToHistory">
+          <object persistent="AlignmentModule" class="eu.aria.dm.behaviours.AlignmentGeneration">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.dialogue.id"/>
+            <value class="String" is="is.states.agent.move.text"/>
+            <value class="String" constant="agent"/>
+          </arguments>
+        </method>
+        <assign is="is.behaviour.previousMoves">addJsonToBeginArray(is.behaviour.previousMoves,is.states.agent.bestMove.id)</assign>
+        <assign is="is.dialogue.behaviourToProcess">false</assign>        
+        <assign is="is.dialogue.metaSilence">false</assign>        
+        <assign is="is.dialogue.timeLast">getTime()</assign>
+      </effects>
+    </template>
+    
+
+    <template id="20" name="UserInput">
+      <initeffects>
+         <method name="isConnected">
+          <object persistent="updateAMQ" class="eu.aria.dm.managers.InputManager">
+            <constructors></constructors>            
+          </object>
+        </method>
+        <method name="hasMessage">
+          <object persistent="updateAMQ" class="eu.aria.dm.managers.InputManager">
+          </object>
+        </method>
+      </initeffects>
+
+      <preconditions mode="and">   
+        <condition>is.nlu.initialized</condition>     
+        <method name="isConnected">
+          <object persistent="updateAMQ" class="eu.aria.dm.managers.InputManager">
+          </object>
+        </method>
+        <method name="hasMessage">
+          <object persistent="updateAMQ" class="eu.aria.dm.managers.InputManager">
+          </object>
+        </method>
+         <!--  <condition><![CDATA[ helpPrint("userinput captured") ]]></condition> -->
+      </preconditions>
+      <effects>
+        <method is="is.states.amq" is_type="JSONString" name="updateIS">
+          <object persistent="updateAMQ" class="eu.aria.dm.managers.InputManager">
+          </object>
+        </method>
+        <assign is="is.states.user.history.user">addJsonToBeginArray(is.states.user.history.user,is.states.amq)</assign>        
+        <assign is="is.states.amq.lastUpdate">new Date().getTime()</assign>
+        <!-- <assign is="is.states.user.history.utterances">addJsonToArray(is.states.user.history.utterances,is.states.amq.ssi.voice.asr.words.content.transcriptions.text</assign> -->
+        <!-- Conditional to call whenever there's an update !-->        
+        <method name="getLastText" is="is.states.user.move.text">
+          <object persistent="NLUManager" class="eu.aria.dm.managers.NLUManager">
+          </object>
+        </method>
+      </effects>
+    </template>
+
+    <template id="updateHistory" name="send user speech">
+      <preconditions>
+        <condition>is.nlu.initialized</condition>       
+        <condition>is.states.user.move.previousText !== is.states.user.move.text</condition>
+      </preconditions>
+      <effects>        
+        <method name="appendToHistory">
+          <object persistent="AlignmentModule" class="eu.aria.dm.behaviours.AlignmentGeneration">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.dialogue.id"/>
+            <value class="String" is="is.states.user.move.text"/>
+            <value class="String" constant="user"/>
+          </arguments>
+        </method> 
+        <assign is="is.states.user.move.previousText">is.states.user.move.text</assign>
+      </effects>
+    </template>
+
+    <template id="updateSpeechHistory" name="Update the speech history">
+      <preconditions>
+        <condition>is.nlu.initialized</condition>
+        <condition><![CDATA[is.states.user.history.speech.length < 1 || is.states.user.history.speech[0].time !== is.states.amq.user.speech.time]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.user.history.speech">addJsonToBeginArray(is.states.user.history.speech,is.states.amq.user.speech)</assign>        
+      </effects>
+    </template>
+
+    <template id="updateSilence" name="update silence">
+      <preconditions>
+        <condition><![CDATA[is.states.user.voiceActivity === 1 || is.states.agent.isTalking]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.dialogue.silence">getTime()</assign>
+      </effects>
+    </template>
+
+    <!-- Templates for recording long term voice activity and face activity -->
+    <template id="21" name="RecordVA">
+      <preconditions>
+        <condition>is.states.user.history.voice.length &lt;=is.states.user.history.factor</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.user.history.voice">addJsonToArray(is.states.user.history.voice,voiceActive(is.states.amq.user.voice.active))</assign>
+        <assign is="is.states.user.voiceActivity">median(is.states.user.history.voice)</assign>
+      </effects>
+    </template>
+ 
+    <template id="22" name="RemoveOldVA">
+      <preconditions>
+        <condition>is.states.user.history.voice.length &gt;is.states.user.history.factor</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.user.history.voice">shiftArray(is.states.user.history.voice)</assign>
+      </effects>
+    </template>
+
+    <template id="23" name="RecordFA">
+      <preconditions>
+        <condition>is.states.user.history.face.length &lt;=is.states.user.history.factor</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.user.history.face">addJsonToArray(is.states.user.history.face,((is.states.amq.user.face.id &gt; 0)? 1:0))</assign>
+        <assign is="is.states.user.faceActivity">median(is.states.user.history.face)</assign>
+      </effects>
+    </template>
+
+    <template id="24" name="RemoveOldFA">
+      <preconditions>
+        <condition>is.states.user.history.face.length &gt;is.states.user.history.factor</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.user.history.face">shiftArray(is.states.user.history.face)</assign>
+      </effects>
+    </template>
+
+
+       
+</behaviourtemplates>

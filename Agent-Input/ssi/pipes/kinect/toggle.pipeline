@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<register>		
+		<load name="control"/>	
+		<load name="ioput" />							
+	</register>
+	
+	<framework sync="true" slisten="false" sport="$(sync:pipe:port)"/>	
+	
+	<!-- control -->
+		
+	<runnable create="NotifySender:sender-notify" url="$(sync:notify:url)"/>		
+	<runnable create="ControlCheckBox:button-toggle" id="sender*,writer*" title="CONTROL" default="false" label="SEND / RECORD"/>			
+	
+	<object create="Decorator" icon="true" title="Pipeline">
+	
+		<area pos="0,0,400,500">console</area>
+		<area pos="0,500,400,100" nv="1">button-toggle,button-reset</area>	
+		
+	</object>			
+		
+</pipeline>

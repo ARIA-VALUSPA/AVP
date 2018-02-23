@@ -1,0 +1,35 @@
+<behaviourtemplates>
+	<is name="social">
+		{
+		}
+	</is>
+	
+	<!-- Increase the trust when the interest is high-->
+	<template id="updateTrust1" name="increaseTrust">
+		<preconditions>
+			<condition><![CDATA[parseFloat(is.states.amq.user.interest.long) > 0.6]]></condition>
+			<!-- <condition><![CDATA[is.states.dialogue.agentmovecount >= 0]]></condition> -->
+			<!-- <condition><![CDATA[is.states.agent.affective.emotion.trust.agentmovecounttrust >= 0]]></condition> -->
+		</preconditions>
+		<effects>
+			<assign is="is.states.agent.affective.emotion.trust"> Math.min(Math.max(is.states.agent.affective.emotion.trust + 0.01, 0), 1)</assign>
+			<!-- <assign is="is.states.agent.affective.emotion.trust"> Math.min(Math.max(is.states.agent.affective.emotion.trust + parseFloat(is.states.amq.user.interest.diff) + moveTrust(is.states.dialogue.agentmovecount, is.states.agent.affective.emotion.trust.agentmovecounttrust), 0), 1)</assign> -->
+			<!-- is.states.dialogue.agentmovecount -->
+		</effects>
+	</template>
+
+	<!-- Decreases the trust when the interest is low-->
+	<template id="updateTrust2" name="decreaseTrust">
+		<preconditions>
+			<condition><![CDATA[parseFloat(is.states.amq.user.interest.long) < 0.3]]></condition>
+			<!-- <condition><![CDATA[is.states.dialogue.agentmovecount >= 0]]></condition> -->
+			<!-- <condition><![CDATA[is.states.agent.affective.emotion.trust.agentmovecounttrust >= 0]]></condition> -->
+		</preconditions>
+		<effects>
+			<assign is="is.states.agent.affective.emotion.trust">Math.min(Math.max(is.states.agent.affective.emotion.trust - 0.01, 0), 1)</assign>
+			<!-- <assign is="is.states.agent.affective.emotion.trust">Math.min(Math.max(is.states.agent.affective.emotion.trust - parseFloat(is.states.amq.user.interest.diff) + moveTrust(is.states.dialogue.agentmovecount, is.states.agent.affective.emotion.trust.agentmovecounttrust), 0), 1)</assign> -->
+		</effects>
+	</template>
+
+
+</behaviourtemplates>

@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- This network was created in GeNIe Academic, which can be used for educational and research purposes only -->
+<smile version="1.0" id="Unnamed" numsamples="10000" discsamples="10000">
+	<nodes>
+		<cpt id="speechfillerbreath">
+			<state id="BREATH" />
+			<state id="FILLER" />
+			<state id="REST" />
+			<state id="SPEECH" />
+			<probabilities>0.1737965343756258 0.09556754416661425 0.3176165912938191 0.4130193301639407</probabilities>
+		</cpt>
+		<cpt id="role">
+			<state id="EXPERT" />
+			<state id="NOVICE" />
+			<probabilities>0.6133581008458339 0.3866418991541661</probabilities>
+		</cpt>
+		<cpt id="engagement">
+			<state id="VERYLOW" />
+			<state id="LOW" />
+			<state id="MEDIUM" />
+			<state id="HIGH" />
+			<state id="VERYHIGH" />
+			<parents>role speechfillerbreath</parents>
+			<probabilities>0.1945854485001774 0.4648900116553854 0.1693457422900667 0.112098140495067 0.05908065705930369 0.03065983613328303 0.1530638502416156 0.2066555581581486 0.2686948172911116 0.3409259381758412 0.1896069872391783 0.40425428244761 0.1591306446643498 0.1286440380152373 0.1183640476336244 0.001886674316606026 0.07450769610138634 0.1982259687455663 0.2713996046190946 0.4539800562173467 0.5429333885737612 0.0579792970249374 0.3093394910163223 0.08966130712662446 8.651625835460699e-05 0.08608271383088212 0.2080283580277565 0.3793796189253305 0.1800892258525291 0.1464200833635018 0.01005992992603752 0.3272042393879597 0.5389272504898983 0.1094886392643828 0.01431994093172178 0.01697361250266082 0.03376879706580213 0.09866652698541484 0.4151587964082601 0.4354322670378622</probabilities>
+		</cpt>
+		<cpt id="gazehorizontal">
+			<state id="s1_below_0" />
+			<state id="s2_0_0" />
+			<state id="s3_0_up" />
+			<parents>engagement</parents>
+			<probabilities>0.92 0.05 0.02999999999999996 0.6000000000000001 0.1 0.3 0.25 0.15 0.6 0.05000000000000004 0.25 0.7 0.01 0.19 0.8</probabilities>
+		</cpt>
+		<cpt id="headactivity">
+			<state id="s1_below_0" />
+			<state id="s2_0_0" />
+			<state id="s3_0_up" />
+			<parents>engagement</parents>
+			<probabilities>0.9284608546185081 0.05297761342966108 0.01856153195183096 0.8688751789755202 0.109203375652302 0.02192144537217786 0.7280363117565009 0.2317264112609918 0.04023727698250738 0.4136570141632995 0.4520481416478517 0.1342948441888487 0.2475795270409889 0.5563959235273988 0.1960245494316123</probabilities>
+		</cpt>
+		<cpt id="energyhands">
+			<state id="s1_below_0" />
+			<state id="s2_0_0" />
+			<state id="s3_0_up" />
+			<parents>engagement</parents>
+			<probabilities>0.8078112206737552 0.1732405498297191 0.01894822949652567 0.7696737425766124 0.1960803229296105 0.03424593449377716 0.7895415552126046 0.1380654685385569 0.07239297624883845 0.5673867254293652 0.2558660638825103 0.1767472106881245 0.307207836073107 0.3935616991751364 0.2992304647517565</probabilities>
+		</cpt>
+		<cpt id="armscrossed">
+			<state id="s1_below_0" />
+			<state id="s2_0_0" />
+			<state id="s3_0_up" />
+			<parents>engagement</parents>
+			<probabilities>0.7815157876345142 0.2018561681371284 0.01662804422835735 0.5349028244854053 0.1310232500940909 0.3340739254205038 0.8575110272745419 0.05418834406395407 0.08830062866150404 0.9146346105632447 0.04418642096340456 0.04117896847335081 0.9725590958101555 0.01957182023030452 0.007869083959540115</probabilities>
+		</cpt>
+		<cpt id="armopenness">
+			<state id="s1_below_0" />
+			<state id="s2_0_0" />
+			<state id="s3_0_up" />
+			<parents>engagement</parents>
+			<probabilities>0.9999999003870313 4.980648437592996e-08 4.980648437592996e-08 0.7878568276922682 0.2085064404159327 0.00363673189179912 0.425680480815826 0.5671738020091104 0.007145717175063483 0.5310475877209557 0.4521799908460675 0.01677242143297656 0.5039284264820305 0.3866094933141659 0.1094620802038036</probabilities>
+		</cpt>
+		<cpt id="valence">
+			<state id="REST" />
+			<state id="SMILE" />
+			<parents>engagement</parents>
+			<probabilities>0.9996132277455787 0.0003867722544212842 0.9502980385837099 0.04970196141629014 0.8993645044877532 0.1006354955122469 0.8943921436849593 0.1056078563150406 0.65107045 0.34892955</probabilities>
+		</cpt>
+		<utility id="interest">
+			<parents>engagement</parents>
+			<utilities>0 0.01 0.5 0.99 1</utilities>
+		</utility>
+		<cpt id="continuousmovement">
+			<state id="s1_below_0" />
+			<state id="s2_0_0" />
+			<state id="s3_0_up" />
+			<parents>engagement</parents>
+			<probabilities>0.9176333233670558 0.0726991882090918 0.009667488423852384 0.8292757935904634 0.1486007712417506 0.02212343516778596 0.7971125905171105 0.1638411767864265 0.03904623269646307 0.5732868579347774 0.3191388763114543 0.1075742657537684 0.3091275916243351 0.4974733969497517 0.1933990114259131</probabilities>
+		</cpt>
+	</nodes>
+	<extensions>
+		<genie version="1.0" app="GeNIe 2.2.2106.0 ACADEMIC" name="aria_french" faultnameformat="nodestate">
+			<node id="gazehorizontal">
+				<name>gazehorizontal</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1342 103 1414 151</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="headactivity">
+				<name>headactivity</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1080 420 1152 468</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="speechfillerbreath">
+				<name>speechfillerbreath</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>484 839 556 887</position>
+				<barchart active="true" width="128" height="90" />
+			</node>
+			<node id="engagement">
+				<name>engagement</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1165 859 1237 907</position>
+				<barchart active="true" width="128" height="108" />
+			</node>
+			<node id="role">
+				<name>role</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>981 1000 1053 1048</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+			<textbox>
+				<caption>Input file: aria_french.txt\nData rows: 612806\n\nLearning algorithm: Bayesian Search\nElapsed time: 32.578 seconds\nBest score in iteration 1: -4.84855e+06\n\nAlgorithm parameters:\nMax parent count: 8\nIterations: 20\nSample size: 50\nSeed: 0\nLink probability: 0.1\nPrior link probability: 0.001\nMax search time: 0\nUse accuracy as score: no\nBackground knowledge was provided:\n  forced arcs: 8</caption>
+				<font color="000000" name="Arial" size="8" />
+				<position>30 98 217 350</position>
+			</textbox>
+			<node id="armscrossed">
+				<name>armscrossed</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>538 333 586 363</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="energyhands">
+				<name>energyhands</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>542 452 590 482</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="armopenness">
+				<name>armopenness</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>652 237 700 267</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="continuousmovement">
+				<name>continuousmovement</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>525 565 573 595</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="valence">
+				<name>valence</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1360 451 1432 499</position>
+				<barchart active="true" width="128" height="72" />
+			</node>
+			<node id="interest">
+				<name>interest</name>
+				<interior color="e5f6f7" />
+				<outline color="000080" />
+				<font color="000000" name="Arial" size="8" />
+				<position>1441 803 1492 835</position>
+				<barchart active="true" width="128" height="64" />
+			</node>
+		</genie>
+	</extensions>
+</smile>

@@ -1,0 +1,1 @@
+..\..\bin\xmlpipe -debug ssi.log -config age+emax_offline age+emax

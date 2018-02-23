@@ -1,0 +1,110 @@
+<behaviourtemplates>
+	<is name="nlu">
+		{
+      "initialized" : false,
+			"receivedQuestion" : true,
+      "set" : false,
+      "canInterrupt" : false,
+      "fileName" : ""
+      }
+	</is>
+
+  <!-- Initialization of the NLU Manager -->
+	<template id="002" name="initializeNLUManager"> 
+    <preconditions>
+     	<condition>!is.nlu.initialized</condition>
+    </preconditions>
+    <effects>
+      <method name="active" is="is.nlu.initialized">
+        <object persistent="NLUManager" class="eu.aria.dm.managers.NLUManager">  
+          <constructors/>       
+        </object> 
+      </method>
+      <method name="createFile" is="is.nlu.fileName">
+        <object persistent="NLUManager" class="eu.aria.dm.managers.NLUManager">
+        </object>
+      </method>
+    </effects>
+  	</template>
+
+    <!-- Set the settings for the ASR -->
+    <template id="002a" name="settingsNLUManager">
+      <preconditions>
+        <condition>!is.nlu.set</condition>
+        <condition>"ASR_output" in is.states.amq.user.speech</condition>
+      </preconditions>
+      <effects>
+        <method name="active" is="is.nlu.set">
+          <object persistent="NLUManager" class="eu.aria.dm.managers.NLUManager">  
+          </object>
+          <arguments>
+            <value class="String" is="is.states.amq.user.speech.ASR_output.language" />
+            <value class="String" is="is.states.amq.user.speech.ASR_output.mode" />
+            <value class="String" is="is.states.amq.user.speech.ASR_output.nbest" />
+          </arguments>   
+        </method>
+        <method name="initializeMoves" is="is.states.agent.moves" is_type="JSONString">
+          <object persistent="NLUManager" class="eu.aria.dm.managers.NLUManager">
+          </object>
+        </method>
+      </effects>      
+    </template>
+
+    <!-- Checks if there is new non-partial speech and calculatec the corresponding QAM scores) -->
+    <template id="ComputeQAMScores" name="calculateMovesQAMScores">
+      <preconditions>
+        <condition>is.nlu.set</condition>
+        <condition><![CDATA[is.dialogue.fml.initialized]]></condition>
+        <condition><![CDATA[is.states.amq.user.speech.isnew === "1"]]></condition>	
+        <condition>"ASR_output" in is.states.amq.user.speech</condition>
+        <!-- <condition>"partial" in is.states.amq.user.speech.ASR_output</condition> -->
+        <condition>is.states.amq.user.speech.ASR_output.partial === "False"</condition>
+      </preconditions>
+      <effects>
+        <method name="calculateMovesQAMScores" is="is.states.agent.movesQAMScores" is_type="JSONString">
+          <object persistent="NLUManager" class="eu.aria.dm.managers.NLUManager">
+          </object>
+          <arguments>
+            <value is_type="JSONString" is="is.states.amq.user.speech.ASR_output"/>            
+          </arguments>
+        </method>
+        <checktemplates regexpr="MoveSelecter"></checktemplates>
+      </effects>
+    </template>
+
+    <!-- Takes the head of the QAM scoring list and checks that template 
+    Note: Can only take a SINGLE template for the checktemplates
+    -->
+    <template id="MoveSelecter" name="selectTemplate" conditional="true">
+      <preconditions>
+        <condition><![CDATA[is.states.agent.movesQAMScores.length > 0]]></condition>        
+        <condition><![CDATA[is.states.agent.movesQAMScores[0].relevance > is.dialogue.threshold]]></condition>        
+        <condition><![CDATA[helpPrint("Move selecting: " + is.states.agent.movesQAMScores[0].id + ": " + is.states.agent.movesQAMScores[0].relevance)]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.bestMove">is.states.agent.movesQAMScores[0]</assign>
+        <checktemplates isregexpr="is.states.agent.bestMove.id"></checktemplates>
+      </effects>
+    </template>
+	
+    <!-- Checks if there is new partial speech to comment on -->
+  <!--   <template id="ComputeQAMScoresRA" name="readingAlongRemarks">
+      <preconditions>
+        <condition>is.nlu.set</condition>
+        <condition><![CDATA[is.dialogue.fml.initialized]]></condition>
+        <condition><![CDATA[is.states.amq.user.speech.isnew === "1"]]></condition>
+        <condition>"ASR_output" in is.states.amq.user.speech</condition>
+        <condition>is.states.amq.user.speech.ASR_output.partial === "True"</condition>
+      </preconditions>
+      <effects>
+        <method name="calculateMovesQAMScores" is="is.states.agent.movesQAMScores" is_type="JSONString">
+          <object persistent="NLUManager" class="eu.aria.dm.managers.NLUManager">
+          </object>
+          <arguments>
+            <value is_type="JSONString" is="is.states.amq.user.speech.ASR_output"/>
+          </arguments>
+        </method>
+        <checktemplates regexpr="MoveSelecter"></checktemplates>
+      </effects>
+    </template> -->
+</behaviourtemplates>

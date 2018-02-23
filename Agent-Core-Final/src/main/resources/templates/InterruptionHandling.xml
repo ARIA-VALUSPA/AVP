@@ -1,0 +1,26 @@
+<behaviourtemplates>
+  <is name="interruption">
+    {
+      "dominance" : 0,
+      "friendliness" : 1,
+      "reactionType" : "halt",
+      "reactionDuration" : "medium"
+    } 
+  </is>
+ 
+ <template id="social_interruption_haltoverlap" name="halt/overlap after user is interrupting">
+    <preconditions>
+      <condition><![CDATA[is.states.agent.isTalking && is.states.user.voiceActivity === 1 && !is.states.agent.isPlanning]]></condition>
+      <condition><![CDATA[helpPrint("SELECT MOVE: halt after interruption")]]></condition>
+     </preconditions>
+    <effects>
+      <assign is="is.states.agent.bestMove">{ "id" : "social_interruption_haltoverlap","relevance" : 1}</assign>
+      <assign is="is.states.agent.interrupted">true</assign>
+      <assign is="is.states.agent.fml.template">"interaction_interruption_reaction_n_01"</assign> 
+      <assign is="is.states.agent.fml.parameters">[]</assign>
+      <assign is="is.states.agent.fml.parameters">addJsonToJsonArray(is.states.agent.fml,"fml-apml.reaction_type",is.interruption.reactionType)</assign>
+      <assign is="is.states.agent.fml.parameters">addJsonToJsonArray(is.states.agent.fml,"fml-apml.reaction_duration",is.interruption.reactionDuration)</assign>
+    </effects>
+  </template>
+
+</behaviourtemplates>

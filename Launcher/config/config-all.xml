@@ -7,6 +7,7 @@
 		<parameter>all-in-one</parameter>
 		<config file="..\..\Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config" key="asr:host" separator="=" info="IP of the ASR machine" />
 		<config file="..\..\Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config" key="asr:port" separator="=" info="Port used by the ASR" />
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config" key="asr:language" separator="=" info="ASR: Language model (en, fr or de)" />
 		<config file="..\..\Agent-Input\ssi\pipes\all-in-one\asrkaldi.pipeline-config" key="vad:threshold" separator="=" info="Threshold for voice activity detection" />
 		<config file="..\..\Agent-Input\ssi\models\face\caffe.cfg" key="mode" separator=" " info="Switch between CPU and GPU classification">
 			<option default="True">GPU</option>
@@ -18,7 +19,7 @@
 		<parameter>-ssiWindows</parameter>
 		<parameter>-agentWindows</parameter>
 	</process>
-	
+
 	<process language="java" class="Agent-Output.jar" cwd="..\..\Agent-Output\bin" name="Agent Window">
 		<config file="..\..\Agent-Output\bin\Agent-Output.ini" key="Environment" separator=" = " info="Select Greta environment">
 			<option>./empty.xml</option>

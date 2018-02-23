@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="socialobligations-selfintroduction-initial" />
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<tm id="DMBegin"/>
+			<voice emotion='none'>I don't <tm id="tm1"/>think <tm id="tm2"/>I know <tm id="tm3"/>you yet, <tm id="tm4"/>I'm  <tm id="tm5"/>
+			<aria-var id="var1" type="agent"/>!</voice>
+			<tm id="DMEnd"/>
+			
+			
+			<pitchaccent id="pa1" start="s1:DMBegin" level="moderate" end="s1:tm2" type="Hstar" importance="1"/>
+			<pitchaccent id="pa2" start="s1:tm5" level="strong" end="s1:DMEnd" type="Hstar" importance="1"/>
+			<boundary id="b2" start="s1:DMEnd" type="HL"/>
+		</speech>
+	</bml>
+	
+	<fml>
+		<emotion id="em1" type="neutral" regulation="felt" start="s1:DMBegin" end="s1:DMEnd" intensity="1" importance="1.0"/>
+		<deictic id="d1" type="selftouch" start="s1:DMBegin" end="s1:tm3" importance="1.0"/>
+		<performative id="p1" type="announce" start="s1:tm4" end="s1:DMEnd" importance="1" />
+	</fml>
+	
+</fml-apml>

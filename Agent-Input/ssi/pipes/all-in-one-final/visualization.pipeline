@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+	
+	<consumer create="VideoPainter:paint-video" title="VIDEO" flip="true" type="1" relative="true" swap="false">
+		<input pin="video;emax_box" frame="1"/>		
+	</consumer>		
+	<consumer create="SignalPainter:paint-audio" title="AUDIO" size="10" type="2" autoscale="false" fix="-1.0,1.0">
+		<input pin="audio" frame="0.02s"/>
+	</consumer>
+	<consumer create="SignalPainter:paint-vad" title="AUDIO ACTIVITY" type="5" barNames="VAD" autoscale="false" fix="0.35,0">
+		<input pin="vad" frame="1"/>
+	</consumer>			
+	<object create="EventPainter:paint-vad" title="VOICE ACTIVITY" barNames="VOC,SIL,FIL,BRE" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="speechfillerbreath@bayes"/>
+	</object>		
+	
+	<object create="EventPainter:paint-gender" title="GENDER" barNames="FEMALE,MALE" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="gender(avg)@audio"/>
+	</object>
+	<object create="EventPainter:paint-age" title="AGE" barNames="CHILD,YOUTH,ADULT,SENIOR" type="1" fix="1.0" global="true" autoscale="false">
+		<listen address="age(avg)@audio"/>
+	</object>	
+	
+	<consumer create="SignalPainter:paint-head" title="HEAD" barNames="YAW,PIT,ACT" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-short)" frame="1">		
+			<transformer create="Selector" indices="3,4,5"/>
+		</input>
+	</consumer>
+	<consumer create="SignalPainter:paint-valence" title="STATE" barNames="arousal" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="audio_arousal(avg-short)" frame="1"/>
+	</consumer>
+	<consumer create="SignalPainter:paint-valence" title="STATE" barNames="AROUSAL" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="audio_arousal(avg-long)" frame="1"/>
+	</consumer>	
+	<consumer create="SignalPainter:paint-valence" title="STATE" barNames="valence" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-short)" frame="1">		
+			<transformer create="Selector" indices="1"/>
+		</input>
+	</consumer>
+	<consumer create="SignalPainter:paint-valence" title="STATE" barNames="VALENCE" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="emax_feature(avg-long)" frame="1">		
+			<transformer create="Selector" indices="1"/>
+		</input>
+	</consumer>	
+	<consumer create="SignalPainter:paint-interest" title="STATE" barNames="interest" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="interest(avg-short)" frame="1"/>
+	</consumer>	
+	<consumer create="SignalPainter:paint-interest" title="STATE" barNames="INTEREST" type="5" autoscale="false" fix="1.0,0.0" >
+		<input pin="interest(avg-long)" frame="1"/>
+	</consumer>			
+	
+</pipeline>		

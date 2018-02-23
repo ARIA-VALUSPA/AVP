@@ -1,0 +1,5 @@
+
+*.sh test eol=lf
+*.bat      text eol=crlf
+*.dockerignore  text  eol=lf
+Dockerfile  text  eol=lf

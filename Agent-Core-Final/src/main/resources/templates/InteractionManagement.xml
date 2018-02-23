@@ -1,0 +1,355 @@
+<behaviourtemplates>
+  <is name="interaction">
+    {
+      "initialized" : false
+    }
+  </is>
+ 
+  <template id="001" name="initializeInteractionManager">
+    <preconditions>
+      <condition>!is.interaction.initialized</condition>
+    </preconditions>
+     <initeffects>
+      <assign is="is.interaction.initialized">true</assign>
+      <assign is="is.states.agent.interactionstate.phase">"IDLE"</assign>
+      <assign is="is.states.agent.interactionstate.state">"INITIAL"</assign>
+      <method name="startAMQProducer">
+        <object persistent="is.modules.persistent-interactionStateManager" class="eu.aria.dm.managers.InteractionStateManager">
+          <constructors/>
+        </object>
+      </method>      
+    </initeffects>
+  </template>
+
+	<template id="100" name="IdleToEngaging" >  
+      <preconditions>
+        <condition>is.states.agent.interactionstate.phase == "IDLE" </condition>
+        <condition><![CDATA[is.states.user.faceActivity == 1 || is.states.amq.user.interest.long > 0.15]]> </condition>
+        <condition>helpPrint("ENGAGING")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.phase">"ENGAGING" </assign>
+        <method name="sendInteractionState" >
+          <object persistent="is.modules.persistent-interactionStateManager" class="eu.aria.dm.managers.InteractionStateManager">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.agent.interactionstate.phase"/>
+          </arguments>          
+        </method>
+      </effects>    
+    </template>
+
+	<template id="101" name="EngagingToEngaged" >  
+      <preconditions>
+        <condition>is.states.agent.interactionstate.phase == "ENGAGING" </condition>
+        <condition><![CDATA[is.states.user.voiceActivity == 1 || is.states.amq.user.interest.long > 0.3]]></condition>
+        <condition>helpPrint("ENGAGED")</condition>
+      </preconditions>
+      <effects>
+      	<assign is="is.states.agent.interactionstate.phase">"ENGAGED" </assign>
+        <method name="sendInteractionState">
+          <object persistent="is.modules.persistent-interactionStateManager" class="eu.aria.dm.managers.InteractionStateManager">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.agent.interactionstate.phase"/>
+          </arguments>          
+        </method>
+      </effects>    
+    </template>
+
+    <template id="102" name="EngagingToDisengaging" >  
+      <preconditions>
+        <condition>is.states.agent.interactionstate.phase == "ENGAGING" </condition>
+        <condition><![CDATA[is.states.user.faceActivity == 0 && is.states.amq.user.interest.long < 0.15]]></condition>
+        <condition>helpPrint("DISENGAGING")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.phase">"DISENGAGING"</assign>
+        <method name="sendInteractionState">
+          <object persistent="is.modules.persistent-interactionStateManager" class="eu.aria.dm.managers.InteractionStateManager">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.agent.interactionstate.phase"/>
+          </arguments>          
+        </method>
+      </effects>    
+    </template>
+
+    <template id="103" name="EngagedToDisengaging" >  
+      <preconditions>
+        <condition>is.states.agent.interactionstate.phase == "ENGAGED" </condition>
+        <condition><![CDATA[is.states.user.faceActivity == 0 && is.states.amq.user.interest.long < 0.15]]></condition>
+        <condition>helpPrint("DISENGAGING")</condition>
+      </preconditions>
+      <effects>
+      	<assign is="is.states.agent.interactionstate.phase">"DISENGAGING"</assign>
+        <method name="sendInteractionState">
+          <object persistent="is.modules.persistent-interactionStateManager" class="eu.aria.dm.managers.InteractionStateManager">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.agent.interactionstate.phase"/>
+          </arguments>          
+        </method>
+      </effects>    
+    </template>
+
+    <template id="104" name="DisengagingToIdle" >  
+      <preconditions>
+        <condition>is.states.agent.interactionstate.phase == "DISENGAGING" </condition>
+        <condition><![CDATA[is.states.user.faceActivity == 0 && is.states.amq.user.interest.long < 0.15]]></condition>
+        <condition>helpPrint("IDLE")</condition>
+      </preconditions>
+      <effects>
+      	<assign is="is.dialogue.greeted.agent">false</assign>
+        <assign is="is.states.agent.interactionstate.phase">"IDLE"</assign>
+        <method name="sendInteractionState">
+          <object persistent="is.modules.persistent-interactionStateManager" class="eu.aria.dm.managers.InteractionStateManager">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.agent.interactionstate.phase"/>
+          </arguments>          
+        </method>
+      </effects>    
+    </template>
+
+     <template id="105" name="DisengagingToEngaging" >  
+      <preconditions>
+        <condition>is.states.agent.interactionstate.phase == "DISENGAGING" </condition>
+        <condition>is.states.user.faceActivity == 1</condition>
+        <condition>helpPrint("ENGAGING")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.phase">"ENGAGING"</assign>
+        <method name="sendInteractionState">
+          <object persistent="is.modules.persistent-interactionStateManager" class="eu.aria.dm.managers.InteractionStateManager">
+          </object>
+          <arguments>
+            <value class="String" is="is.states.agent.interactionstate.phase"/>
+          </arguments>          
+        </method>
+      </effects>    
+    </template>
+
+    <!-- For internal talking state 
+      TODO: Find out how to handle is.states.user.floor and is.states.agent.floor and is.states.dialogue.floor
+    -->
+    <template id="110" name="InitialToTalking">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "INITIAL"</condition>
+        <condition>is.states.agent.isTalking</condition>
+        <condition>helpPrint("IS: INIT - TALK")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"TALK"</assign>
+      </effects>
+    </template>
+
+    <template id="111" name="InitialToListen">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "INITIAL"</condition>
+        <condition><![CDATA[is.states.user.voiceActivity === 1 ]]></condition>
+        <condition>helpPrint("IS: INIT - LISTEN")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"LISTEN"</assign>
+      </effects>
+    </template>
+
+    <template id="112" name="WaitToTalk">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "WAIT"</condition>
+        <condition>is.states.agent.isTalking</condition>
+        <condition>is.states.user.floor === "ASSIGN"</condition>
+        <condition>helpPrint("IS: WAIT - TALK")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"TALK"</assign>
+      </effects>
+    </template>
+
+    <template id="113" name="WaitToListen">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state == "WAIT"</condition>
+        <condition><![CDATA[is.states.user.voiceActivity === 1 ]]></condition>
+        <condition>is.states.agent.floor === "ASSIGN"</condition>
+        <condition>helpPrint("IS: WAIT - LISTEN")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"LISTEN"</assign>
+      </effects>
+    </template>
+
+    <template id="114" name="WaitToInitial">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state == "WAIT"</condition>
+        <condition>is.states.agent.interactionstate.phase == "IDLE"</condition>
+        <condition>helpPrint("IS: WAIT - INITIAL")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"INITIAL"</assign>
+      </effects>
+    </template>
+
+    <template id="115" name="YieldToTalk">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "YIELD"</condition>
+        <condition>is.states.agent.isTalking</condition>
+        <condition>is.states.agent.floor === "TAKE"</condition>
+        <condition>helpPrint("IS: YIELD - TALK")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"TALK"</assign>
+      </effects>
+    </template>
+
+    <template id="116" name="YieldToListen">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "YIELD"</condition>
+        <condition><![CDATA[is.states.user.voiceActivity === 1 ]]></condition>
+        <condition>is.states.user.floor === "TAKE"</condition>
+        <condition>helpPrint("IS: YIELD - LISTEN")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"LISTEN"</assign>
+      </effects>
+    </template>
+
+    <template id="117" name="YieldToInitial">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "YIELD"</condition>
+        <condition>is.states.agent.interactionstate.phase === "IDLE"</condition>
+        <condition>helpPrint("IS: YIELD - INITIAL")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"INITIAL"</assign>
+      </effects>
+    </template>
+
+    <template id="118" name="TalkToWait">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "TALK"</condition>
+        <condition>!is.states.agent.isTalking</condition>
+        <condition>is.states.agent.floor === "ASSIGN"</condition>
+        <condition>helpPrint("IS: TALK - WAIT")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"WAIT"</assign>
+      </effects>
+    </template>
+
+    <template id="119" name="TalkToInterrupt">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "TALK"</condition>
+        <condition><![CDATA[is.states.user.voiceActivity === 1 ]]></condition>
+        <condition>helpPrint("IS: TALK - INTERRUPT")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"INTERRUPT"</assign>
+        <assign is="is.states.agent.interrupted">true</assign>
+      </effects>
+    </template>
+
+    <template id="120" name="TalkToYield">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "TALK"</condition>
+        <condition>!is.states.agent.isTalking</condition>
+        <condition>is.states.agent.floor == "YIELD"</condition>
+        <condition>helpPrint("IS: TALK - YIELD")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"YIELD"</assign>
+      </effects>
+    </template>
+
+    <template id="121" name="ListenToWait">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state === "LISTEN"</condition>
+        <condition><![CDATA[is.states.user.voiceActivity === 0 ]]></condition>
+        <condition>is.states.user.floor == "ASSIGN"</condition>
+        <condition>helpPrint("IS: LISTEN - WAIT")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"WAIT"</assign>
+      </effects>
+    </template>
+
+    <template id="122" name="ListenToInterrupt">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state == "LISTEN"</condition>
+        <condition>is.states.agent.isTalking</condition>
+        <condition>helpPrint("IS: LISTEN - INTERRUPT")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"INTERRUPT"</assign>
+      </effects>
+    </template>
+
+    <template id="123" name="ListenToYield">
+      <preconditions>
+        <condition>is.states.agent.interactionstate.state == "LISTEN"</condition>
+        <condition><![CDATA[is.states.user.voiceActivity === 0 ]]></condition>
+        <condition>is.states.user.floor == "YIELD"</condition>
+        <condition>helpPrint("IS: LISTEN - YIELD")</condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"YIELD"</assign>
+      </effects>
+    </template>
+
+    <template id="124" name="InterruptToTalk">
+      <preconditions mode="or">
+        <condition><![CDATA[ is.states.agent.interactionstate.state === "INTERRUPT" && is.states.user.voiceActivity === 0 && is.states.user.floor === "ASSIGN" && helpPrint("IS: INTERRUPT - TALK")]]></condition>
+        <condition><![CDATA[ is.states.agent.interactionstate.state === "INTERRUPT" && is.states.dialogue.floor === "self" && helpPrint("IS: INTERRUPT - TALK")]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"TALK"</assign>
+        <assign is="is.states.agent.interrupted">false</assign>
+      </effects>
+    </template>
+
+    <template id="125" name="InterruptToListen">
+      <preconditions mode="or">
+        <condition><![CDATA[is.states.agent.interactionstate.state === "INTERRUPT" && !is.states.agent.IsTalking && is.states.agent.floor === "ASSIGN" && helpPrint("IS: INTERRUPT - LISTEN")]]></condition>
+        <condition><![CDATA[is.states.agent.interactionstate.state === "INTERRUPT" && is.states.dialogue.floor === "other" && helpPrint("IS: INTERRUPT - LISTEN")]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.agent.interactionstate.state">"LISTEN"</assign>
+        <assign is="is.states.agent.interrupted">false</assign>
+      </effects>
+    </template>
+
+    <template id="126" name="setDialogueFloorToSelf">
+      <preconditions>
+        <condition><![CDATA[is.states.agent.floor === "TAKE"]]></condition>
+        <condition><![CDATA[is.states.user.floor === "ASSIGN"]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.dialogue.floor">"self"</assign>
+      </effects>
+    </template>
+
+    <template id="127" name="setDialogueFloorToOther">
+      <preconditions>
+        <condition><![CDATA[is.states.user.floor === "TAKE"]]></condition>
+        <condition><![CDATA[is.states.agent.floor === "ASSIGN"]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.dialogue.floor">"other"</assign>
+      </effects>
+    </template>
+
+    <template id="128" name="setDialogueFloorToNone">
+      <preconditions>
+        <condition><![CDATA[is.states.agent.floor === "YIELD"]]></condition>
+        <condition><![CDATA[is.states.user.floor === "YIELD"]]></condition>
+      </preconditions>
+      <effects>
+        <assign is="is.states.dialogue.floor">"none"</assign>
+      </effects>
+    </template>
+
+
+
+
+
+</behaviourtemplates>

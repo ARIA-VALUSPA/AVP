@@ -1,1 +1,0 @@
-Launcher\bin\launcher.exe

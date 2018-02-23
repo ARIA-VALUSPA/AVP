@@ -1,0 +1,76 @@
+live = true 										# $(bool) use live input from a microphone
+file = media/female	     							# if not live input read in from this file
+
+# sync
+
+sync:pipe:port = 1111								# port used to synchronize pipelines
+sync:notify:url = udp://255.255.255.255:2222		# url to send notifications
+
+# logging
+
+log:use  	=false
+log:dir 	= log
+log:role:user = user
+log:role:agent = agent
+log:screen  =false
+log:screen:region=-1080,0,1080,1920
+log:screen:width=540
+log:screen:height=960
+log:screen:rate=5
+
+# sender
+
+sender:template =all-in-one-final
+sender:xmltojson = false							# send as json instead of xml						
+
+# activemq
+
+activemq:use = true									# share results through activemq
+activemq:uri = failover:(tcp://localhost:61616)		# activemq uri
+activemq:id = SSI									# activemq id
+activemq:topic = SSI								# topic of ssi events
+activemq:topic:agent:fml = vib.input.FML		    # topic of agent fml events
+activemq:topic:agent:bml = vib.outputfeedback.BML	# topic of agent bml events
+activemq:topic:dialog = dialog						# topic if dialog events
+
+# voice activity threshold
+
+vad:threshold =0.01
+
+# average windows in seconds
+
+avg:short=5.0
+avg:long=30.0
+
+# classification
+
+config = config/IS13_ComParE.conf					# name of openSMILE config file
+													# path to models
+model:root = 	../../models/speech/
+model:arousal = arousal[IS13-scale-linear-c1e-3]	
+model:valence = valence[IS13-scale-linear-c1e-3]
+model:interest = ../../models/bayes/interest.xdsl
+model:gender = chunks.audio.compare.gender.gold.linsvm 
+model:age = chunks.audio.compare.age.gold.linsvm	 
+
+# vad detection
+
+vad:scheme = filler
+vad:annotator = gold
+vad:modality = close
+vad:feature = mfccdd
+vad:feature_frame = 0.01
+vad:feature_delta = 0.015
+vad:feature_win = 0.04
+vad:feature_context = 5
+vad:feature_context_2 = 10
+vad:model = lin
+vad:model_params = -s 0 -e 0.01 -B 0.1	 
+
+# emax
+
+emax:model = ../../models/face/caffe.cfg            # emax model path
+emax:faces:max    = 1  								# number of faces to detect (0 = always nearest, otherwise 4 at max)
+emax:faces:values = 168 							# number of values per face
+
+

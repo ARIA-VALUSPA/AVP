@@ -1,0 +1,29 @@
+<xml>
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\asrkaldi" name="SSI Pipeline">
+		<parameter>-config</parameter>
+		<parameter>asrkaldi</parameter>
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>asrkaldi</parameter>
+
+		<config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="log:use" separator="=" info="Turn recording on/off">
+			<option default="True">true</option>
+			<option>false</option>
+		</config>
+
+		<config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="asr:host" separator="=" info="IP of the ASR machine" />
+		<config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="asr:port" separator="=" info="Port used by the ASR" />
+		<config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="asr:language" separator="=" info="ASR: Language model (en, fr or de)" />
+		<config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="asr:nbest" separator="=" info="ASR: Number of n-best list" />
+		<config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="asr:mode" separator="=" info="ASR: Mode (inc=incremental, utt=utterance)">
+			<option default="True">utt</option>
+			<option>inc</option>
+		</config>
+		<!--config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="vad:use" separator="=" info="ASR: Turn voice activity detection on/off">
+			<option default="True">true</option>
+			<option>false</option>
+		</config-->
+		<config file="..\..\Agent-Input\ssi\pipes\asrkaldi\asrkaldi.pipeline-config" key="vad:threshold" separator="=" info="ASR: Threshold for voice activity detection" />
+	</process>
+
+</xml>

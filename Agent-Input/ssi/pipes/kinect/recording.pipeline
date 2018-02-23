@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-16" standalone="yes"?>
+<pipeline>
+
+	<job path="mkdir.bat" args="$(log:dir)" when="post" wait="-1"/>
+
+	<consumer create="CameraWriter:writer-video" flip="false" option="options\camerawriter" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.video" overwrite="false">
+		<input pin="video" frame="1" delta="0"/>
+	</consumer>	
+
+	<consumer create="WavWriter::writer-audio" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.audio" overwrite="false">
+		<input pin="audio" frame="0.1s"/>
+	</consumer>
+
+	<consumer create="FileWriter:writer-skel" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.skel_ssi" overwrite="false" type="0">
+		<input pin="skel" frame="1"/>
+	</consumer>	
+
+	<consumer create="FileWriter:writer-skel" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.skel" overwrite="false" type="0">
+		<input pin="skelms" frame="1"/>
+	</consumer>	
+	
+	<consumer create="FileWriter:writer-au" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.au" overwrite="false" type="0">
+		<input pin="au" frame="1"/>
+	</consumer>	
+	
+	<consumer create="FileWriter:writer-head" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.head" overwrite="false" type="0">
+		<input pin="head" frame="1"/>
+	</consumer>	
+	
+	<consumer create="FileWriter:writer-face3d" path="$(log:dir)\$(date)_$(num,3)\$(log:role:user).kinect.face" overwrite="false" type="0">
+		<input pin="face3d" frame="1"/>
+	</consumer>	
+		
+</pipeline>

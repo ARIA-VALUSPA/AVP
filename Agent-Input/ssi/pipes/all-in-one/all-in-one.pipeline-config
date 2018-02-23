@@ -10,8 +10,12 @@ camera:fps = 25
 
 # logging
 
-log:use  	= true
+log:use  	=false
 log:dir 	= log
+
+# output
+
+output:asjson  = false
 
 # active mq
 

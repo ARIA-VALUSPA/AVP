@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="socialobligations-salutation-return" />
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<tm id="DMBegin"/>
+			<voice emotion='none'>Hello, <tm id="tm1"/>I'm <tm id="tm2"/><aria-var id="var1" type="agent"/><break time="0.5"/>.</voice>
+			<tm id="DMEnd"/>
+			
+			<pitchaccent id="pa1" start="s1:tm2" level="moderate" end="s1:DMEnd" type="Hstar" importance="1"/>
+			<boundary id="b1" start="s1:DMEnd-0.4" type="HL"/>
+		</speech>
+	</bml>
+	
+	<fml>
+		<emotion id="em1" type="neutral" regulation="felt" start="s1:DMBegin" end="s1:DMEnd" intensity="1" importance="1.0"/>
+		<performative id="p1" type="greet" start="s1:DMBegin" end="s1:DMEnd" importance="1" />
+	</fml>
+	
+</fml-apml>

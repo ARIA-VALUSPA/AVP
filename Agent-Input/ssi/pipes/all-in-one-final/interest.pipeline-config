@@ -1,0 +1,48 @@
+live = true 										# $(bool) use live input from a microphone
+file = media/female	     							# if not live input read in from this file
+
+path:session = W:\nova\data\aria-noxi\001_2016-03-17_Paris
+role = expert
+
+
+# classification
+
+config = conf/IS13_ComParE.conf					# name of openSMILE config file
+													# path to models
+model:root = 	./models/speech/
+model:arousal = arousal[IS13-scale-linear-c1e-3]	
+model:valence = valence[IS13-scale-linear-c1e-3]
+model:interest = interest[IS13-scale-linear-c1e-5]
+model:gender = chunks.audio.compare.gender.gold.linsvm 
+model:age = chunks.audio.compare.age.gold.linsvm	 
+
+
+
+
+
+
+
+# vad detection
+
+vad:scheme = filler
+vad:annotator = gold
+vad:modality = close
+vad:feature = mfccdd
+vad:feature_frame = 0.01
+vad:feature_delta = 0.015
+vad:feature_win = 0.04
+vad:feature_context = 5
+vad:feature_context_2 = 10
+vad:model = lin
+vad:model_params = -s 0 -e 0.01 -B 0.1	 
+
+
+
+
+# emax
+
+emax:model = ../../models/face/caffe.cfg            # emax model path
+emax:faces:max    = 1  								# number of faces to detect (0 = always nearest, otherwise 4 at max)
+emax:faces:values = 168 							# number of values per face
+
+

@@ -1,0 +1,13 @@
+-------------------------------------------------
+Johannes Wagner, <wagner@hcm-lab.de>, 30.11.2017
+-------------------------------------------------
+
+SSI pipeline for avemotionf2e.
+
+Extracts emax and opensmeil features and sends it to a python script (scripts/avemotionf2e.py), which will convert the input to numpy arrays.
+
+To configure the pipeline open 'avemotionf2e.pipeline-config' in a text editor.
+
+To run the pipeline run AVEMOTIONF2E.bat.
+
+-------------------------------------------------

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fml-apml composition="replace" reaction_type="none" reaction_duration="none" social_attitude="neutral">
+	<aria-header purpose="question-set" />
+
+	<bml>
+		<speech id="s1" start="0.0" language="english" text="" voice="cereproc">
+			<description level="1" type="gretabml">
+				<reference>tmp/from-fml-apml.pho</reference>
+			</description>
+			
+			<tm id="DMBegin"/>
+			<voice emotion='none'>What do you <tm id="tm1"/>know <tm id="tm2"/>about <tm id="tm3"/><aria-var id="var1" type="topic"/><tm id="tm4"/>?</voice>
+			<tm id="DMEnd"/>
+			
+			<pitchaccent id="pa1" start="s1:tm3" level="moderate" end="s1:tm4" type="Hstar" importance="1"/>
+			
+			<boundary id="b1" start="s1:tm4" type="HH"/>
+			
+		</speech>
+	</bml>
+	
+	<fml>
+	
+		<emotion id="em1" type="neutral" regulation="felt" start="s1:DMBegin" end="s1:DMEnd" intensity="0.5" importance="1.0"/>
+		
+		<performative id="p1" type="question" start="s1:tm1" end="s1:tm4" importance="1" />
+		
+	</fml>
+	
+</fml-apml>

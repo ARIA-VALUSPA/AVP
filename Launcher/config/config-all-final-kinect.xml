@@ -1,0 +1,62 @@
+<xml>
+	<process language="C" class="..\..\Agent-Input\ssi\bin\xmlpipe.exe" cwd="..\..\Agent-Input\ssi\pipes\all-in-one-final" name="SSI Pipeline">
+		<parameter>-config</parameter>
+		<parameter>all-in-one-final-kinect</parameter> 
+		<parameter>-debug</parameter>
+		<parameter>ssi.log</parameter>
+		<parameter>all-in-one-final-kinect</parameter>
+		
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final-kinect.pipeline-config" key="log:use" separator="=" info="Turn recording on/off">
+			<option default="True">true</option>
+			<option>false</option>
+		</config>
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final-kinect.pipeline-config" key="sender:template" separator="=" info="Sender template">
+			<option default="True">all-in-one-final</option>
+			<option>all-in-one-final_noemo</option>
+		</config>	
+		
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:host" separator="=" info="ASR: IP of the machine"/>		
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:port" separator="=" info="ASR: Connection port" />
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:nbest" separator="=" info="ASR: Number of n-best list" />
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\asrkaldi.pipeline-config" key="asr:mode" separator="=" info="ASR: Mode (inc=incremental, utt=utterance)">
+			<option default="True">utt</option>
+			<option>inc</option>
+		</config>		
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final-kinect.pipeline-config" key="vad:threshold" separator="=" info="ASR: Threshold for voice activity detection" />		
+		
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final-kinect.pipeline-config" key="avg:short" separator="=" info="Smoothing: short-term window in seconds" />		
+		<config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final-kinect.pipeline-config" key="avg:long" separator="=" info="Smoothing: long-term window in seconds" />		
+		
+		<!--config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final.pipeline-config" key="camera:fps" separator="=" info="Emax: Camera frame rate" /-->
+		<config file="..\..\Agent-Input\ssi\models\face\caffe.cfg" key="mode" separator=" " info="Emax: Switch between CPU and GPU classification">
+			<option default="True">GPU</option>
+			<option>CPU</option>
+		</config>
+		<!--config file="..\..\Agent-Input\ssi\pipes\all-in-one-final\all-in-one-final.pipeline-config" key="emax:async" separator="=" info="Emax: Switch greedy processing on/off">
+			<option default="True">true</option>
+			<option>false</option>
+		</config-->		
+	
+	</process>
+
+	<process language="javacp" class="" cwd="..\..\Agent-Core-New" name="Agent Core">
+		<parameter>lib/*;modules/*;modules/lib/*</parameter>
+		<parameter>hmi.winger.Main</parameter>
+	</process>
+	
+	<process language="java" class="Agent-Output.jar" cwd="..\..\Agent-Output\bin" name="Agent Window">
+		<config file="..\..\Agent-Output\bin\Agent-Output.ini" key="Environment" separator=" = " info="Select Greta environment">
+			<option>./empty.xml</option>
+			<option>./environment-ARIADemo1.xml</option>
+			<option default="True">./environment-ARIADemo2.xml</option>
+		</config>
+		<config file="..\..\Agent-Output\bin\Agent-Output.ini" key="WhiteBoard.visible" separator=" = " info="Show ActiveMQ windows for Greta">
+			<option>true</option>
+			<option default="True">false</option>
+		</config>
+		<config file="..\..\Agent-Output\bin\Agent-Output.ini" key="System.animEngine" separator=" = " info="Switch animation engine">
+			<option default="True">GRETA</option>
+			<option>LIVING-ACTOR</option>
+		</config>
+	</process>
+</xml>

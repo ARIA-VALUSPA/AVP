@@ -1,5 +1,6 @@
 package eu.aria.output;
 
+import aria.vibtolivingactor.main.ThriftClient;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -11,6 +12,7 @@ import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import javax.swing.WindowConstants;
+import vib.application.ariavaluspa.attitudes.ARIASocialAttitudesPlanner;
 import vib.application.ariavaluspa.core.ARIAInformationStatesManager;
 import vib.application.ariavaluspa.tools.ARIAInformationStatesSelectorForm;
 import vib.auxiliary.activemq.gui.WhitboardFrame;
@@ -32,18 +34,67 @@ import vib.core.keyframes.face.SimpleAUPerformer;
 import vib.core.util.IniManager;
 import vib.core.util.environment.Environment;
 import vib.core.util.math.Quaternion;
+import vib.core.utilx.gui.DocOutput;
+import vib.core.utilx.gui.DocOutputFrame;
+import vib.core.utilx.gui.LogsController;
 import vib.core.utilx.gui.TTSController;
-
-
+import vib.auxiliary.activemq.semaine.BMLSender;
+import vib.auxiliary.activemq.semaine.BMLCallbacksReceiver;
+import vib.auxiliary.activemq.semaine.BMLReceiver;
+import vib.auxiliary.activemq.aria.ARIAInformationStateReceiver;
+import vib.auxiliary.player.ogre.capture.Capturecontroller;
+import vib.auxiliary.thrift.gui.ThriftFrame;
+import vib.core.intentions.FMLFileReader;
+import vib.core.utilx.gui.OpenAndLoad;
+import vib.tools.ogre.capture.video.CodecSelector;
+import vib.tools.ogre.capture.video.XuggleVideoCapture;
 
 /**
  * Created by adg on 17/08/2016.
- * Modified by Angelo Cafaro on 19/06/2017
+ * Modified by Angelo Cafaro
  *
  */
 public class Greta {
 
     private static java.awt.Image icon = null;
+    private static Planner behaviorPlanner;
+    private static TTSController tTS;
+    private static CereprocTTS cereproc_TTS;
+    private static InterruptionManager interruptionManager;
+    private static FMLReceiver amqFMLReceiver;
+    private static WhitboardFrame amqFMLReceiverModuleFrame;
+    private static BMLSender amqBMLSender;
+    private static WhitboardFrame amqBMLSenderModuleFrame;
+    private static BMLCallbacksReceiver amqBMLCallbacksReceiver;
+    private static WhitboardFrame amqBMLCallbacksReceiverModuleFrame;
+    private static DocOutput logFrame;
+    private static DocOutputFrame logFrame_ModuleFrame;
+    private static LogsController logs;
+    private static Realizer behaviorRealizer;
+    private static FaceKeyframePerformer faceKeyframePerformer;
+    private static LipModel lipModel;
+    private static SimpleAUPerformer simpleAUPerformer;
+    private static LipBlender lipBlender;
+    private static AudioKeyFramePerformer audioKeyframePerformer;
+    private static Environment environment;
+    private static OgreFrame playerOgre;
+    private static MPEG4Animatable mPEG4Animatable;
+    private static AnimationKeyframePerformer animationKeyframePerformer;
+    private static ARIAInformationStatesManager ariaInfoStateManager;
+    private static ARIAInformationStatesSelectorForm ariaInfoStateManagerForm;
+    private static BMLCallbacksSender amqBMLCallbacksSender;
+    private static WhitboardFrame amqBMLCallbacksSenderModuleFrame;
+    private static BMLReceiver amqBMLReceiver;
+    private static WhitboardFrame amqBMLReceiverModuleFrame;
+    private static ARIAInformationStateReceiver amqARIAInfoStateReceiver;
+    private static WhitboardFrame amqARIAInfoStateReceiverModuleFrame;
+    private static BodyAnimationNoiseGenerator bodyNoiseGenerator;
+    private static Capturecontroller captureController;
+    private static XuggleVideoCapture xuggleVideoCapture;
+    private static CodecSelector CodecSelectorFrame;
+    private static ARIASocialAttitudesPlanner ariaSocialAttitudesPlanner;
+    private static vib.auxiliary.thrift.BMLSender bmlSenderThrift;
+    private static ThriftFrame bmlSenderThrift_ModuleFrame;            
 
     public void init(IniManager initManager) {
         try {
@@ -61,28 +112,25 @@ public class Greta {
     
     private void initLivingActor(IniManager initManager) {
         // Init the Intention Planner
-        Planner behaviorPlanner = new Planner();
+        behaviorPlanner = new Planner();
         
          // Init the TTS
-        TTSController tTS = new TTSController();
+        tTS = new TTSController();
         tTS.setDoTemporize(true);
         tTS.setDoAudio(true);
         tTS.setDoPhonemes(true);
         tTS.dispose();
         
         // Instantiate the specific TTS (Cereproc)
-        CereprocTTS cereproc_TTS = new CereprocTTS();
-        
-        // Creates the Interruption Manager
-        //InterruptionManager interruptionManager = new InterruptionManager();
+        cereproc_TTS = new CereprocTTS();
         
         // Create the ActiveMQ FML Receiver
-        FMLReceiver amqFMLReceiver = new FMLReceiver();
+        amqFMLReceiver = new FMLReceiver();
         amqFMLReceiver.setHost(initManager.getValueString("FMLReceiver.host"));
         amqFMLReceiver.setPort(initManager.getValueString("FMLReceiver.port"));
         amqFMLReceiver.setTopic(initManager.getValueString("FMLReceiver.topic"));
         amqFMLReceiver.setIsQueue(initManager.getValueBoolean("FMLReceiver.isQueue"));
-        WhitboardFrame amqFMLReceiverModuleFrame = new WhitboardFrame();
+        amqFMLReceiverModuleFrame = new WhitboardFrame();
         amqFMLReceiverModuleFrame.setWhitboard(amqFMLReceiver);
         if(icon!=null){amqFMLReceiverModuleFrame.setIconImage(icon);}
         amqFMLReceiverModuleFrame.setTitle("FML Receiver");
@@ -92,12 +140,12 @@ public class Greta {
         amqFMLReceiverModuleFrame.setVisible(true);
         
         // Create the ActiveMQ BML Sender
-        vib.auxiliary.activemq.semaine.BMLSender amqBMLSender = new vib.auxiliary.activemq.semaine.BMLSender();
+        amqBMLSender = new vib.auxiliary.activemq.semaine.BMLSender();
         amqBMLSender.setHost(initManager.getValueString("BMLSender.host"));
         amqBMLSender.setPort(initManager.getValueString("BMLSender.port"));
         amqBMLSender.setTopic(initManager.getValueString("BMLSender.topic"));
         amqBMLSender.setIsQueue(initManager.getValueBoolean("BMLSender.isQueue"));
-        WhitboardFrame amqBMLSenderModuleFrame = new WhitboardFrame();
+        amqBMLSenderModuleFrame = new WhitboardFrame();
         amqBMLSenderModuleFrame.setWhitboard(amqBMLSender);
         if(icon!=null){amqBMLSenderModuleFrame.setIconImage(icon);}
         amqBMLSenderModuleFrame.setTitle("BML Sender");
@@ -107,12 +155,12 @@ public class Greta {
         amqBMLSenderModuleFrame.setVisible(true);
         
         // Create the ActiveMQ BML Feedback Receiver
-        vib.auxiliary.activemq.semaine.BMLCallbacksReceiver amqBMLCallbacksReceiver = new vib.auxiliary.activemq.semaine.BMLCallbacksReceiver();
+        amqBMLCallbacksReceiver = new vib.auxiliary.activemq.semaine.BMLCallbacksReceiver();
         amqBMLCallbacksReceiver.setHost(initManager.getValueString("BMLFeedbackReceiver.host"));
         amqBMLCallbacksReceiver.setPort(initManager.getValueString("BMLFeedbackReceiver.port"));
         amqBMLCallbacksReceiver.setTopic(initManager.getValueString("BMLFeedbackReceiver.topic"));
         amqBMLCallbacksReceiver.setIsQueue(initManager.getValueBoolean("BMLFeedbackReceiver.isQueue"));
-        WhitboardFrame amqBMLCallbacksReceiverModuleFrame = new WhitboardFrame();
+        amqBMLCallbacksReceiverModuleFrame = new WhitboardFrame();
         amqBMLCallbacksReceiverModuleFrame.setWhitboard(amqBMLCallbacksReceiver);
         if(icon!=null){amqBMLCallbacksReceiverModuleFrame.setIconImage(icon);}
         amqBMLCallbacksReceiverModuleFrame.setTitle("BML Feedback Receiver");
@@ -123,41 +171,82 @@ public class Greta {
         
         // Connect the modules
         tTS.setTTS(cereproc_TTS);
-        //behaviorPlanner.addSignalPerformer(bmlSenderThrift);
-        behaviorPlanner.addSignalPerformer(amqBMLSender);
-        //interruptionManager.addIntentionPerformer(behaviorPlanner);
-        //amqFMLReceiver.addIntentionPerformer(interruptionManager);
-        //amqBMLCallbacksReceiver.addCallbackPerformer(interruptionManager);
+        behaviorPlanner.addSignalPerformer(amqBMLSender);       
+        
+        if (!initManager.getValueBoolean("System.livingactor.useActiveMQ")) {
+            // Creates the Thrift BML Sender
+            bmlSenderThrift = new vib.auxiliary.thrift.BMLSender(initManager.getValueString("ThriftBMLSender.host"), initManager.getValueInt("ThriftBMLSender.port"));
+            bmlSenderThrift_ModuleFrame = new ThriftFrame();
+            bmlSenderThrift_ModuleFrame.setConnector(bmlSenderThrift);
+            if(icon!=null){bmlSenderThrift_ModuleFrame.setIconImage(icon);}
+            bmlSenderThrift_ModuleFrame.setTitle("BMLSenderThrift");
+            bmlSenderThrift_ModuleFrame.setLocation(400, 120);
+            bmlSenderThrift_ModuleFrame.setSize(357, 166);
+            bmlSenderThrift_ModuleFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+            bmlSenderThrift_ModuleFrame.setVisible(true);
+
+            behaviorPlanner.addSignalPerformer(bmlSenderThrift);
+
+            // Lunching the VIBLivingActorConnector
+            ThriftClient.lunchVIBLivingActorConnector();
+            
+        }
     }
 
     private void initGreta(IniManager iniManager) {
+        
+        // Instantiate the modules
+        logFrame = new DocOutput();
+        logFrame_ModuleFrame = new DocOutputFrame();
+        logFrame_ModuleFrame.setDocOutput(logFrame);
+        logFrame_ModuleFrame.setBlack(true);
+        if(icon!=null){logFrame_ModuleFrame.setIconImage(icon);}
+        logFrame_ModuleFrame.setTitle("LogFrame");
+        logFrame_ModuleFrame.setLocation(10, 560);
+        logFrame_ModuleFrame.setSize(626, 373);
+        logFrame_ModuleFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        logFrame_ModuleFrame.setVisible(iniManager.getValueBoolean("Greta.LogWindow.visible"));
+
+        // Init the Logs
+        logs = new LogsController();
+        logs.setDebug(iniManager.getValueBoolean("Greta.LogLevel.debug"));
+        logs.setInfo(iniManager.getValueBoolean("Greta.LogLevel.info"));
+        logs.setWarning(iniManager.getValueBoolean("Greta.LogLevel.warning"));
+        logs.setError(iniManager.getValueBoolean("Greta.LogLevel.error"));
+        
+        logs.setTitle("Logs");
+        logs.setLocation(900, 600);
+        logs.setSize(212, 173);
+        logs.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        logs.setVisible(iniManager.getValueBoolean("Greta.LogWindow.visible"));
+        
         // Init the Intention Planner
-        Planner behaviorPlanner = new Planner();
+        behaviorPlanner = new Planner();
 
         // Init the BML Realizer
-        Realizer behaviorRealizer = new Realizer();
+        behaviorRealizer = new Realizer();
 
         // Init the Face Key Frame Peformer
-        FaceKeyframePerformer faceKeyframePerformer = new FaceKeyframePerformer();
-        faceKeyframePerformer.setBlinking(false);
+        faceKeyframePerformer = new FaceKeyframePerformer();
+        faceKeyframePerformer.setBlinking(iniManager.getValueBoolean("Agent.eyesblinking.enabled"));
 
         // Init the Lip Model
-        LipModel lipModel = new LipModel();
+        lipModel = new LipModel();
 
         // Init the Simple AUs Peformer
-        SimpleAUPerformer simpleAUPerformer = new SimpleAUPerformer();
+        simpleAUPerformer = new SimpleAUPerformer();
 
         // Init the Lip Blender
-        LipBlender lipBlender = new LipBlender();
+        lipBlender = new LipBlender();
 
         // Init the Audio Key Frame Peformer
-        AudioKeyFramePerformer audioKeyframePerformer = new AudioKeyFramePerformer();
+        audioKeyframePerformer = new AudioKeyFramePerformer();
 
         // Init the Environment Manager
-        Environment environment = new Environment(iniManager.getValueString("Environment"));
+        environment = new Environment(iniManager.getValueString("Environment"));
 
         // Init the Ogre3D Player
-        OgreFrame playerOgre = new OgreFrame();
+        playerOgre = new OgreFrame();
         playerOgre.setCameraPositionX(iniManager.getValueDouble("Camera.posX"));
         playerOgre.setCameraPositionY(iniManager.getValueDouble("Camera.posY"));
         playerOgre.setCameraPositionZ(iniManager.getValueDouble("Camera.posZ"));
@@ -172,17 +261,17 @@ public class Greta {
         playerOgre.setVisible(true);
 
         // Init the TTS
-        TTSController tTS = new TTSController();
+        tTS = new TTSController();
         tTS.setDoTemporize(true);
         tTS.setDoAudio(true);
         tTS.setDoPhonemes(true);
         tTS.dispose();
 
         // Instantiate the specific TTS (Cereproc)
-        CereprocTTS cereproc_TTS = new CereprocTTS();
+        cereproc_TTS = new CereprocTTS();
 
         // Init the Mpeg4 Animation Table
-        MPEG4Animatable mPEG4Animatable = new MPEG4Animatable();     
+        mPEG4Animatable = new MPEG4Animatable();     
         mPEG4Animatable.setCoordinateX(iniManager.getValueDouble("Agent.posX"));
         mPEG4Animatable.setCoordinateY(iniManager.getValueDouble("Agent.posY"));
         mPEG4Animatable.setCoordinateZ(iniManager.getValueDouble("Agent.posZ"));
@@ -197,18 +286,18 @@ public class Greta {
         mPEG4Animatable.setScaleZ(iniManager.getValueDouble("Agent.scaleZ"));
 
         // Init the Animation Key Frame Perfomer
-        AnimationKeyframePerformer animationKeyframePerformer = new AnimationKeyframePerformer();
+        animationKeyframePerformer = new AnimationKeyframePerformer();
         animationKeyframePerformer.setUsePropagation(true);
         animationKeyframePerformer.setWeightPropagation(0.2);
 
         // Creates the Interruption Manager
-        InterruptionManager interruptionManager = new InterruptionManager();
+        interruptionManager = new InterruptionManager();
         
         // Creates the ARIA Information States Manager
         ARIAInformationStatesManager ariaInfoStateManager = new ARIAInformationStatesManager();
         
         // Creates the ARIA Information States Tester
-        ARIAInformationStatesSelectorForm ariaInfoStateManagerForm = new ARIAInformationStatesSelectorForm();
+        ariaInfoStateManagerForm = new ARIAInformationStatesSelectorForm();
         if(icon!=null){ariaInfoStateManagerForm.setIconImage(icon);}
         ariaInfoStateManagerForm.setTitle("ARIA Information State Changer");
         ariaInfoStateManagerForm.setLocation(400, 600);
@@ -217,12 +306,12 @@ public class Greta {
         ariaInfoStateManagerForm.setVisible(iniManager.getValueBoolean("ARIAInformationStateTester.visible"));
         
         // Create the ActiveMQ FML Receiver
-        FMLReceiver amqFMLReceiver = new FMLReceiver();
+        amqFMLReceiver = new FMLReceiver();
         amqFMLReceiver.setHost(iniManager.getValueString("FMLReceiver.host"));
         amqFMLReceiver.setPort(iniManager.getValueString("FMLReceiver.port"));
         amqFMLReceiver.setTopic(iniManager.getValueString("FMLReceiver.topic"));
         amqFMLReceiver.setIsQueue(iniManager.getValueBoolean("FMLReceiver.isQueue"));
-        WhitboardFrame amqFMLReceiverModuleFrame = new WhitboardFrame();
+        amqFMLReceiverModuleFrame = new WhitboardFrame();
         amqFMLReceiverModuleFrame.setWhitboard(amqFMLReceiver);
         if(icon!=null){amqFMLReceiverModuleFrame.setIconImage(icon);}
         amqFMLReceiverModuleFrame.setTitle("FML Receiver");
@@ -232,12 +321,12 @@ public class Greta {
         amqFMLReceiverModuleFrame.setVisible(iniManager.getValueBoolean("WhiteBoard.visible"));
 
         // Create the ActiveMQ BML Feedback Sender
-        BMLCallbacksSender amqBMLCallbacksSender = new BMLCallbacksSender();
+        amqBMLCallbacksSender = new BMLCallbacksSender();
         amqBMLCallbacksSender.setHost(iniManager.getValueString("BMLFeedbackSender.host"));
         amqBMLCallbacksSender.setPort(iniManager.getValueString("BMLFeedbackSender.port"));
         amqBMLCallbacksSender.setTopic(iniManager.getValueString("BMLFeedbackSender.topic"));
         amqBMLCallbacksSender.setIsQueue(iniManager.getValueBoolean("BMLFeedbackSender.isQueue"));
-        WhitboardFrame amqBMLCallbacksSenderModuleFrame = new WhitboardFrame();
+        amqBMLCallbacksSenderModuleFrame = new WhitboardFrame();
         amqBMLCallbacksSenderModuleFrame.setWhitboard(amqBMLCallbacksSender);
         if(icon!=null){amqBMLCallbacksSenderModuleFrame.setIconImage(icon);}
         amqBMLCallbacksSenderModuleFrame.setTitle("BML Feedback Sender");
@@ -247,12 +336,12 @@ public class Greta {
         amqBMLCallbacksSenderModuleFrame.setVisible(iniManager.getValueBoolean("WhiteBoard.visible"));
 
         // Create the ActiveMQ BML Sender
-        vib.auxiliary.activemq.semaine.BMLSender amqBMLSender = new vib.auxiliary.activemq.semaine.BMLSender();
+        amqBMLSender = new vib.auxiliary.activemq.semaine.BMLSender();
         amqBMLSender.setHost(iniManager.getValueString("BMLSender.host"));
         amqBMLSender.setPort(iniManager.getValueString("BMLSender.port"));
         amqBMLSender.setTopic(iniManager.getValueString("BMLSender.topic"));
         amqBMLSender.setIsQueue(iniManager.getValueBoolean("BMLSender.isQueue"));
-        WhitboardFrame amqBMLSenderModuleFrame = new WhitboardFrame();
+        amqBMLSenderModuleFrame = new WhitboardFrame();
         amqBMLSenderModuleFrame.setWhitboard(amqBMLSender);
         if(icon!=null){amqBMLSenderModuleFrame.setIconImage(icon);}
         amqBMLSenderModuleFrame.setTitle("BML Sender");
@@ -262,12 +351,12 @@ public class Greta {
         amqBMLSenderModuleFrame.setVisible(iniManager.getValueBoolean("WhiteBoard.visible"));
         
         // Create the ActiveMQ BML Receiver
-        vib.auxiliary.activemq.semaine.BMLReceiver amqBMLReceiver = new vib.auxiliary.activemq.semaine.BMLReceiver();
+        amqBMLReceiver = new vib.auxiliary.activemq.semaine.BMLReceiver();
         amqBMLReceiver.setHost(iniManager.getValueString("BMLReceiver.host"));
         amqBMLReceiver.setPort(iniManager.getValueString("BMLReceiver.port"));
         amqBMLReceiver.setTopic(iniManager.getValueString("BMLReceiver.topic"));
         amqBMLReceiver.setIsQueue(iniManager.getValueBoolean("BMLReceiver.isQueue"));
-        WhitboardFrame amqBMLReceiverModuleFrame = new WhitboardFrame();
+        amqBMLReceiverModuleFrame = new WhitboardFrame();
         amqBMLReceiverModuleFrame.setWhitboard(amqBMLReceiver);
         if(icon!=null){amqBMLReceiverModuleFrame.setIconImage(icon);}
         amqBMLReceiverModuleFrame.setTitle("BML Receiver");
@@ -277,12 +366,12 @@ public class Greta {
         amqBMLReceiverModuleFrame.setVisible(iniManager.getValueBoolean("WhiteBoard.visible"));
         
         // Create the ActiveMQ Information States Receiver
-        vib.auxiliary.activemq.aria.ARIAInformationStateReceiver amqARIAInfoStateReceiver = new vib.auxiliary.activemq.aria.ARIAInformationStateReceiver();
+        amqARIAInfoStateReceiver = new vib.auxiliary.activemq.aria.ARIAInformationStateReceiver();
         amqARIAInfoStateReceiver.setHost(iniManager.getValueString("ARIAInfoStateReceiver.host"));
         amqARIAInfoStateReceiver.setPort(iniManager.getValueString("ARIAInfoStateReceiver.port"));
         amqARIAInfoStateReceiver.setTopic(iniManager.getValueString("ARIAInfoStateReceiver.topic"));
         amqARIAInfoStateReceiver.setIsQueue(iniManager.getValueBoolean("ARIAInfoStateReceiver.isQueue"));
-        WhitboardFrame amqARIAInfoStateReceiverModuleFrame = new WhitboardFrame();
+        amqARIAInfoStateReceiverModuleFrame = new WhitboardFrame();
         amqARIAInfoStateReceiverModuleFrame.setWhitboard(amqARIAInfoStateReceiver);
         if(icon!=null){amqBMLReceiverModuleFrame.setIconImage(icon);}
         amqARIAInfoStateReceiverModuleFrame.setTitle("ARIA Information State Receiver");
@@ -292,12 +381,44 @@ public class Greta {
         amqARIAInfoStateReceiverModuleFrame.setVisible(false);
         
         // Create a body animation noise generator
-        BodyAnimationNoiseGenerator bodyNoiseGenerator = new BodyAnimationNoiseGenerator();
+        bodyNoiseGenerator = new BodyAnimationNoiseGenerator();
         bodyNoiseGenerator.setUseLowerBody(false);
         bodyNoiseGenerator.setUseTorso(true);
         bodyNoiseGenerator.setUseHead(true);
         bodyNoiseGenerator.setIntensityHead(0.7);
         bodyNoiseGenerator.setIntensityTorso(0.6);
+        
+        // Create the video capture controller
+        captureController = new Capturecontroller();
+        captureController.setRealTimeCapture(false);
+        captureController.setUseTexture(false); 
+        if(icon!=null){captureController.setIconImage(icon);}
+        captureController.setTitle("Capture Controller");
+        captureController.setLocation(500, 700);
+        captureController.setSize(500, 160);
+        captureController.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        captureController.setVisible(iniManager.getValueBoolean("Player.captureController.enabled"));
+        
+        // Creae the Xuggle Video Capture module
+        xuggleVideoCapture = new XuggleVideoCapture();
+        CodecSelectorFrame = new CodecSelector();
+        CodecSelectorFrame.setXuggleVideoCapture(xuggleVideoCapture);
+        if(icon!=null){CodecSelectorFrame.setIconImage(icon);}
+        CodecSelectorFrame.setTitle("Codec Selector");
+        CodecSelectorFrame.setLocation(0, 700);
+        CodecSelectorFrame.setSize(500, 160);
+        CodecSelectorFrame.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        CodecSelectorFrame.setVisible(iniManager.getValueBoolean("Player.captureController.enabled"));
+        
+        // Create the ARIA Social Attitude Planner
+        ariaSocialAttitudesPlanner = new ARIASocialAttitudesPlanner();
+        if(icon!=null){ariaSocialAttitudesPlanner.setIconImage(icon);}
+        ariaSocialAttitudesPlanner.setTitle("Social Attitudes Planner");
+        ariaSocialAttitudesPlanner.setLocation(800, 700);
+        ariaSocialAttitudesPlanner.setSize(400, 100);
+        ariaSocialAttitudesPlanner.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        ariaSocialAttitudesPlanner.setVisible(iniManager.getValueBoolean("SocialAttitudesPlanner.enabled"));
+        ariaSocialAttitudesPlanner.setComputeSocialAttitudeExpression(iniManager.getValueBoolean("SocialAttitudesPlanner.enabled"));
 
         // Connect the modules
         simpleAUPerformer.addFAPFramePerformer(lipBlender);
@@ -326,6 +447,10 @@ public class Greta {
         ariaInfoStateManager.addSignalPerformer(behaviorRealizer);
         ariaInfoStateManagerForm.setARIAInformationStateManager(ariaInfoStateManager);
         amqARIAInfoStateReceiver.addARIAInformationStatePerformer(ariaInfoStateManager);
+        captureController.setCapturable(playerOgre);
+        captureController.setCaptureOutput(xuggleVideoCapture);
+        behaviorPlanner.addSignalPerformer(ariaSocialAttitudesPlanner);
+        ariaSocialAttitudesPlanner.addSignalPerformer(behaviorRealizer);
     }
     
     private static boolean updatePluginsCfg() throws IOException {

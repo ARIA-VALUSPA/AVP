@@ -1,16 +1,40 @@
+live = true 										# $(bool) use live input from a microphone
+file = media/female	     							# if not live input read in from this file
+
+# average windows in seconds
+
+avg:short=5.0
+avg:long=60.0
+
 # classification
 
 config = config/IS13_ComParE.conf					# name of openSMILE config file
 													# path to models
-model:arousal = ../../models/speech/arousal[IS13-scale-linear-c1e-3]	
-model:valence = ../../models/speech/valence[IS13-scale-linear-c1e-3]
-model:interest = ../../models/speech/interest[IS13-scale-linear-c1e-5]
-model:gender = ../../models/speech/gender[IS13-scale-linear-c1e-1]  
-model:age = ../../models/speech/age[IS13-scale-linear-c1e-1]	 	 
+model:root = 	../../models/speech/
+model:arousal = arousal[IS13-scale-linear-c1e-3]	
+model:valence = valence[IS13-scale-linear-c1e-3]
+model:interest = interest[IS13-scale-linear-c1e-5]
+model:gender = chunks.audio.compare.gender.gold.linsvm 
+model:age = chunks.audio.compare.age.gold.linsvm	 
 
-# number of faces
-emax:faces:max    = 2  # number of faces to detect (0 = always nearest, otherwise 4 at max)
-emax:faces:values = 168 # number of values per face
+# vad detection
 
-# models
-emax:model = ../../models/face/caffe.cfg               # emax model path
+vad:scheme = filler
+vad:annotator = gold
+vad:modality = close
+vad:feature = mfccdd
+vad:feature_frame = 0.01
+vad:feature_delta = 0.015
+vad:feature_win = 0.04
+vad:feature_context = 5
+vad:feature_context_2 = 10
+vad:model = lin
+vad:model_params = -s 0 -e 0.01 -B 0.1	 
+
+# emax
+
+emax:model = ../../models/face/caffe.cfg            # emax model path
+emax:faces:max    = 1  								# number of faces to detect (0 = always nearest, otherwise 4 at max)
+emax:faces:values = 168 							# number of values per face
+
+

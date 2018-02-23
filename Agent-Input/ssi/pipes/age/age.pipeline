@@ -4,20 +4,22 @@
 	<register>		
 		<load name="audio" />
 		<load name="graphic" />
-		<load name="browser" />
+		<load name="signal" />		
 		<load name="opensmilewrapper" />
 		<load name="libsvm"/>
+		<load name="liblinear"/>
 		<load name="model"/>
 		<load name="activemq"/>
 		<load name="camera"/>
 		<load name="ffmpeg"/>
 		<load name="control"/>
-		<load name="websocket"/>
+		<load name="opensmile"/>		
+		<!--load name="websocket"/-->
 	</register>
 	
 	<!-- audio sensor initialization -->
 	<gate open="$(live)">
-		<sensor create="Audio" option="options/audio" sr="8000" scale="true">
+		<sensor create="Audio" option="options/audio" sr="44100" scale="true">
 			<output channel="audio" pin="audio"/>		
 		</sensor>	
 	</gate>
@@ -32,33 +34,45 @@
 		<input pin="audio" frame="0.03s" delta="0.015s"/>
 		<output pin="vad"/>
 	</transformer>
-	<consumer create="ZeroEventSender" mindur="0.5" maxdur="5.0" incdur="1.0" eager="true" hangin="3" hangout="10" address="vad@audio">
+	<consumer create="TriggerEventSender" triggerType="5" minDuration="0.5" maxDuration="5.0" incDuration="1.0" sendStartEvent="true" hangInSamples="3" hangOutSamples="10" address="vad@audio">
 		<input pin="vad" frame="0.1s"/>
 	</consumer>	
-	
+
 	<!-- feature extraction -->
 	<consumer create="TupleEventSender" address="feature@audio">
 		<input pin="audio" address="vad@audio" state="nonzerodur">
 			<transformer create="OSWrapper" configFile="$(config)"/>
 		</input>
 	</consumer>
+	<transformer create="OSMfccChain:mfccs" option="options\mfccdd">
+		<input pin="audio" frame="$(vad:feature_frame)s" delta="$(vad:feature_delta)s"/>
+		<output pin="vad_feature_lld"/>
+	</transformer>	
+	<transformer create="Mean:mean" >
+		<input pin="vad_feature_lld" frame="$(vad:feature_win)s"/>
+		<output pin="vad_feature_win"/>
+	</transformer>	
 	
 	<!-- classifier -->
-	<object create="Classifier" trainer="$(model:gender)" address="gender@audio">
+	<object create="Classifier" trainer="$(model:root)$(model:gender)" address="gender@audio">
 		<listen address="feature@audio"/>
 	</object>
-	<object create="Classifier" trainer="$(model:age)" address="age@audio">
+	<object create="Classifier" trainer="$(model:root)$(model:age)" address="age@audio">
 		<listen address="feature@audio"/>
 	</object>	
-	<object create="Classifier:cl-arousal" trainer="$(model:arousal)" address="arousal@audio">
+	<object create="Classifier:cl-arousal" trainer="$(model:root)$(model:arousal)" address="arousal@audio">
 		<listen address="feature@audio"/>
 	</object>
-	<object create="Classifier:cl-valence" trainer="$(model:valence)" address="valence@audio">
+	<object create="Classifier:cl-valence" trainer="$(model:root)$(model:valence)" address="valence@audio">
 		<listen address="feature@audio"/>
 	</object>
-	<object create="Classifier:cl-interest" trainer="$(model:interest)" address="interest@audio">
+	<object create="Classifier:cl-interest" trainer="$(model:root)$(model:interest)" address="interest@audio">
 		<listen address="feature@audio"/>
 	</object>	
+	<transformer create="ClassifierT:cl-vad" trainer="$(model:root)$(vad:modality).$(vad:feature)[-f $(vad:feature_frame) -d $(vad:feature_delta) -w $(vad:feature_win)].$(vad:scheme).$(vad:annotator)[-c $(vad:feature_context)].$(vad:model)[$(vad:model_params)].final" flat="true">
+		<input pin="vad_feature_win" frame="1" delta="$(vad:feature_context_2)"/>
+		<output pin="cl_vad"/>
+	</transformer>	
 	
 	<!-- smoother -->
 	<object create="DecisionSmoother:genderSmoother" average="true" address="gender(avg)@audio">
@@ -76,7 +90,7 @@
 	<object create="DecisionSmoother:interestSmoother" average="true" window="5.0" address="interest(avg)@audio">
 		<listen address="interest@audio"/>
 	</object>	
-	
+
 	<!-- event sender -->
 	<object create="XMLEventSender:monitor" address="emotion@xml" path="age.xml" monitor="true" mname="RESULT" console="false" update="100" coldelim=" ">
 		<listen address="@"/>
@@ -88,14 +102,15 @@
 	</gate>
 	
 	<!-- visualization -->	
-	<consumer create="SignalPainter:plot" title="AUDIO (RAW)" size="10" type="2" autoscale="false" fix="-1.0,1.0">
+	<consumer create="SignalPainter:plot" title="AUDIO RAW" size="10" type="2" autoscale="false" fix="-1.0,1.0">
 		<input pin="audio" frame="0.02s"/>
 	</consumer>
-	<consumer create="SignalPainter:plot" title="AUDIO (ACTIVITY)" size="10" type="0">
-		<input pin="vad" frame="0.02s"/>
+	<consumer create="SignalPainter:plot" title="AUDIO ACTIVITY" type="5" barNames="VAD" autoscale="false" fix="0.35,0">
+		<input pin="vad" frame="1"/>
 	</consumer>		
-		
-	<!-- browser -->
+	<consumer create="SignalPainter:plot" title="VOICE ACTIVITY" type="5" barNames="VOC,SIL,FIL,BRE" autoscale="false" fix="1.0,0">
+		<input pin="cl_vad" frame="1"/>
+	</consumer>		
 	<object create="EventPainter:ep-gender" title="GENDER" type="1" fix="1.0" global="true" autoscale="false">
 		<listen address="gender@audio"/>
 	</object>
@@ -116,7 +131,7 @@
 	</object>
 	<object create="EventPainter:ep-interest" title="INTEREST" barNames="-,+" type="1" global="true" reset="false" autoscale="false" fix="1.0">
 		<listen address="interest(avg)@audio"/>
-	</object>	
+	</object>		
 	
 	<!-- reset and enable button -->
 	<runnable create="ControlButton" id="genderSmoother,ageSmoother" label="RESET" message="RESET" pos="1240,40,200,75"/>
@@ -129,11 +144,11 @@
 	</gate>
 	
 	<!-- websocket -->
-	<gate open="$(websocket:use)">
+	<!--gate open="$(websocket:use)">
 		<object create="websocket:websocket" http_root="$(websocket:site)" http_port="$(websocket:port)">
 			<listen address="gender(avg),age(avg),arousal(avg),valence(avg),interest(avg)@audio" />
 		</object>
-	</gate>
+	</gate-->
 	
 	<!-- capture user -->
 	<gate open="$(capture:use)">

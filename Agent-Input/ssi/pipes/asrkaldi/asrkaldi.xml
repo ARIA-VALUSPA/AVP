@@ -2,6 +2,8 @@
 
 <ssi>
 	<asr active="$(0)">		
-		<words time="$(asr@audio{field=time_system})" dur="$(asr@audio{field=duration})">$(asr@audio{select=0})</words>				
+		<words time="$(asr@audio{field=time_system})" dur="$(asr@audio{field=duration})" isnew="$(asr@audio{field=isnew})">
+			$(asr@audio{select=0})
+		</words>				
 	</asr>
 </ssi>

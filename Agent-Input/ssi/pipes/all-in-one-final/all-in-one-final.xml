@@ -1,0 +1,66 @@
+<?xml version="1.0" ?>
+
+<user>
+
+	<arousal 
+		short="$(5)"
+		long="$(6)"
+		diff="$(7)"
+	/>
+	
+	<valence 
+		short="$(1{select=1})"
+		long="$(2{select=1})"
+		diff="$(3{select=1})"
+	/>
+	
+	<interest 
+		short="$(9)"
+		long="$(10)"
+		diff="$(11)"
+	/>
+
+	<gender 
+		male="$(gender(avg)@audio{select=1})" 
+		female="$(gender(avg)@audio{select=0})"
+	/>
+				  
+	<age 
+		child="$(age(avg)@audio{select=0})" 
+		youth="$(age(avg)@audio{select=1})"
+		adult="$(age(avg)@audio{select=2})"
+		senior="$(age(avg)@audio{select=3})"
+	/>	
+
+	<head
+		horizontal="$(1{select=3})"
+		vertical="$(1{select=4})"
+		activity="$(1{select=5})"
+	/>
+	
+	<voice 
+		active="$(8{functional=mean})"
+	/>				
+	
+	<speech
+		time="$(asr@audio{field=time})" 
+		dur="$(asr@audio{field=duration})"
+		isnew="$(asr@audio{field=isnew})">
+		$(asr@audio{select=0})
+	</speech>
+	
+	<face
+		id="$(0{select*168=1;precision=0})"
+	/>	
+	
+	<emotions 
+		neutral="$(4{select*7=0;precision=2})"
+		anger="$(4{select*7=1;precision=2})"
+		disgust="$(4{select*7=2;precision=2})"
+		fear="$(4{select*7=3;precision=2})"
+		happiness="$(4{select*7=4;precision=2})"
+		sadness="$(4{select*7=5;precision=2})"
+		surprise="$(4{select*7=6;precision=2})"
+	/>
+	
+</user>

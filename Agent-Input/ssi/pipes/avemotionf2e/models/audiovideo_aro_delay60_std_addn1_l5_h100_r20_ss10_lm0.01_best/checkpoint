@@ -1,0 +1,2 @@
+model_checkpoint_path: "/home/zzhang12/work/aria/recola_audio_edu/train//audiovideo_aro_delay60_std_addn1_l5_h100_r20_ss10_lm0.01/lstm.ckpt-230"
+all_model_checkpoint_paths: "/home/zzhang12/work/aria/recola_audio_edu/train//audiovideo_aro_delay60_std_addn1_l5_h100_r20_ss10_lm0.01/lstm.ckpt-230"
