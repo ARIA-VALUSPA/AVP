@@ -78,7 +78,7 @@ class send_live_audio(threading.Thread):
        sample_count = 0
        cur_state = 0
        old_state = 0
-       buffer = ""
+       buffer = bytes()
        state_counts = {0: 0, 1: 0}
        maxbuf = 10 * CHUNK
        while not self.event.isSet():
@@ -89,8 +89,8 @@ class send_live_audio(threading.Thread):
                   #print "empty"
                   if cur_state:
                      self.send_audio(buffer)
-                     self.send_audio("")
-                     buffer = ""
+                     self.send_audio(bytes())
+                     buffer = bytes()
                      cur_state = 0
                   continue
                if not vad_available or not self.vad_active:
@@ -129,12 +129,12 @@ class send_live_audio(threading.Thread):
                   if not old_state:
                      start_time = sample_count - len(buffer)
                   self.send_audio(buffer)
-                  buffer = ""
+                  buffer = bytes()
                if old_state and not cur_state:
                   end_time = sample_count
                   gsegments.append((start_time, end_time))
-                  self.send_audio("")
-                  buffer = ""
+                  self.send_audio(bytes())
+                  buffer = bytes()
 
 class reader(threading.Thread):
    def __init__(self, sock, event, asr_mode, asr_nbest, log):
@@ -270,7 +270,7 @@ def send_file_audio(queue, wav):
             queue.put(msg)
         #sock.send(struct.pack("<i", len(msg)) + msg)
     # End of stream pack
-    queue.put("")
+    queue.put(bytes())
     #sock.send(struct.pack("<i", 0))
     return float(size) / rate
 
