@@ -29,7 +29,6 @@ local.properties
 
 .vagrant
 
-
 #################
 ## Visual Studio
 #################
@@ -47,7 +46,7 @@ local.properties
 [Dd]ebug/
 [Rr]elease/
 x64/
-build/
+[Bb]uild/
 [Oo]bj/
 
 # MSTest test Results
@@ -188,13 +187,10 @@ $RECYCLE.BIN/
 ## Python
 #############
 
-*.py[cod]
-
 # Packages
 *.egg
 *.egg-info
 dist/
-build/
 eggs/
 parts/
 var/
@@ -214,7 +210,6 @@ pip-log.txt
 
 #Mr Developer
 .mr.developer.cfg
-/System/Agent-Core/nbproject/private/
 
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio
 
@@ -222,26 +217,6 @@ pip-log.txt
 
 ## Directory-based project format:
 .idea/
-# if you remove the above rule, at least ignore the following:
-
-# User-specific stuff:
-# .idea/workspace.xml
-# .idea/tasks.xml
-# .idea/dictionaries
-
-# Sensitive or high-churn files:
-# .idea/dataSources.ids
-# .idea/dataSources.xml
-# .idea/sqlDataSources.xml
-# .idea/dynamic.xml
-# .idea/uiDesigner.xml
-
-# Gradle:
-# .idea/gradle.xml
-# .idea/libraries
-
-# Mongo Explorer plugin:
-# .idea/mongoSettings.xml
 
 ## File-based project format:
 *.ipr
@@ -250,8 +225,7 @@ pip-log.txt
 ## Plugin-specific files:
 
 # IntelliJ
-/out/
-/System/Agent-Core/out/
+out/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -263,25 +237,14 @@ atlassian-ide-plugin.xml
 com_crashlytics_export_strings.xml
 crashlytics.properties
 crashlytics-build.properties
-System/Agent-Output/out/
-/System/Agent-Output/nbproject/private/
-System/External/apache-activemq-5.12.1/data/kahadb/lock
-System/External/apache-activemq-5.12.1/data/kahadb/lock
-System/Agent-Output/bin/Player/Lib/External/Win64/Plugins_OpenGL.cfg
-System/External/apache-activemq-5.12.1/data/kahadb/db.data
-System/External/apache-activemq-5.12.1/data/kahadb/lock
-System/Agent-Output/bin/Player/Lib/External/Win64/Plugins_OpenGL.cfg
-System/External/apache-activemq-5.12.1/data/kahadb/lock
+
+**/nbproject/private/
+**/Plugins_OpenGL.cfg
+
 *.bk
-System/Agent-Input/ssi/pipes/asrkaldi/log/
-System/Agent-Input/ssi/pipes/all-in-one/log/2017-04-11_14-54-10/video.avi
-System/Agent-Input/ssi/pipes/all-in-one/log/
-System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-9789.data-00000-of-00001
-System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-9789.index
-System/Agent-Output/bin/Common/Data/Cereproc/en-gb-sarah/cerevoice_sarah_3.2.0_48k.voice
-System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-4129.data-00000-of-00001
-System/Agent-Input/ssi/pipes/avemotione2e/models/model.ckpt-4129.index
+
+Agent-Input/ssi/pipes/asrkaldi/log/
+Agent-Input/ssi/pipes/all-in-one/log/
+Agent-Output/bin/Common/Data/Cereproc/en-gb-sarah/cerevoice_sarah_3.2.0_48k.voice
 
 \.gradle/
-
-System/luanch/out/

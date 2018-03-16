@@ -1,9 +1,18 @@
 
 Peter LaValle @ gmail.com
-2018-02-23
+2018-03-16
 
-This is the public AVP3.0 release.
+This will be the public AVP3.0.1 release.
+Currently; the downloaded models are not ignored
 
+
+## Update from 3.0 to 3.0.1
+
+If you installed the project by checking it out from GitHub, upgrading from 3.0 to 3.0.1 should be possible if you;
+
+1. commit any changes you've made (just to be safe)
+2. merge the 3.0.1 version into your working copy
+3. run `RunMeFirst/get_models.bat`
 
 ## Requirements (for the Windows computer)
 
@@ -105,7 +114,7 @@ linux $ ./install-aria-asr.sh
 ```
 
 Other packages (beyond [cuBLAS][cuBLAS]) may be required.
-The setup script
+The setup script uses `sudo` and `apt` so will benefit from some attention.
 
 ### Windows Launch of ASR
 
@@ -119,7 +128,6 @@ linux $ cd ~
 linux $ cd AVP/ASR/run/
 linux $ ./launch.sh
 ```
-
 
 [ssi]: https://www.informatik.uni-augsburg.de/lehrstuehle/hcm/projects/tools/ssi/
 [cuBLAS]: https://developer.nvidia.com/cublas

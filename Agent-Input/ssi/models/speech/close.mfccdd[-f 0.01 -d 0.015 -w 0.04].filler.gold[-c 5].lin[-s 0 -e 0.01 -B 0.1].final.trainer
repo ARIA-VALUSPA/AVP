@@ -1,0 +1,20 @@
+<?xml version="1.0" ?>
+<trainer ssi-v="5">
+    <info trained="true" />
+    <streams>
+        <item byte="4" dim="429" sr="25.000000" type="FLOAT" />
+    </streams>
+    <classes>
+        <item name="VOICE" />
+        <item name="REST" />
+        <item name="FILLER" />
+        <item name="BREATH" />
+    </classes>
+    <users>
+        <item name="NOBODY" />
+    </users>
+    <normalize>
+        <item method="Scale" stream="0" path="close.mfccdd[-f 0.01 -d 0.015 -w 0.04].filler.gold[-c 5].lin[-s 0 -e 0.01 -B 0.1].final.trainer.#0" />
+    </normalize>
+    <model create="LibLinear" stream="0" path="close.mfccdd[-f 0.01 -d 0.015 -w 0.04].filler.gold[-c 5].lin[-s 0 -e 0.01 -B 0.1].final.trainer.LibLinear" option="close.mfccdd[-f 0.01 -d 0.015 -w 0.04].filler.gold[-c 5].lin[-s 0 -e 0.01 -B 0.1].final.trainer.LibLinear" />
+</trainer>

@@ -1,7 +1,16 @@
-# ssi files
-*.option
-*.model
-*.trainer
-*.norm
-*.err
-*.info
+
+# ignore the models that we'll download
+ssi/models/speech/age\[IS13-scale-linear-c1e-1\]\.trainer\.LibSVM\.model 
+ssi/models/speech/agreeableness\[IS13-scale-linear-c1e-1\]\.trainer\.LibSVM\.model 
+ssi/models/speech/conscientiousness\[IS13-scale-linear-c1e-3\]\.trainer\.LibSVM\.model 
+ssi/models/speech/interest\[IS13-scale-linear-c1e-5\]\.trainer\.LibSVM\.model 
+ssi/models/speech/language\[IS13-scale-linear-c1e-5\]\.trainer\.LibSVM\.model 
+ssi/models/speech/valence\[IS13-scale-linear-c1e-3\]\.trainer\.LibSVM\.model 
+ssi/pipes/avemotione2e/models/model\.ckpt-4129\.data-00000-of-00001 
+ssi/pipes/avemotione2e/models/model\.ckpt-4129\.index 
+ssi/pipes/avemotione2e/models/model\.ckpt-4129\.meta
+
+# ignore files that are created locally
+ssi/pipes/all-in-one-final/options/audio\.option
+ssi/pipes/all-in-one-final/options/camera\.option
+ssi/pipes/all-in-one-final/scripts/__pycache__/

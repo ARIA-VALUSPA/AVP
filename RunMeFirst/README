@@ -1,3 +1,10 @@
+
+Run `vc_redist.x64.exe` and `get_models.bat`
+
+As of 2018-03-16; the rest of this is **OUT OF DATE**
+
+# Old Stuff Below
+
 Visual C++ Redistributable for Visual Studio 2015 
  - Install 'vc_redist.x64.exe'
 
