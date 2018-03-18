@@ -1,0 +1,7 @@
+
+age[IS13-scale-linear-c1e-1].trainer.LibSVM.model
+agreeableness[IS13-scale-linear-c1e-1].trainer.LibSVM.model
+conscientiousness[IS13-scale-linear-c1e-3].trainer.LibSVM.model
+interest[IS13-scale-linear-c1e-5].trainer.LibSVM.model
+language[IS13-scale-linear-c1e-5].trainer.LibSVM.model
+valence[IS13-scale-linear-c1e-3].trainer.LibSVM.model
