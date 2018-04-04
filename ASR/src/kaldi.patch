@@ -1,0 +1,24 @@
+diff --git a/src/online2/Makefile b/src/online2/Makefile
+index 7e72aec..2df3a28 100644
+--- a/src/online2/Makefile
++++ b/src/online2/Makefile
+@@ -6,6 +6,7 @@ include ../kaldi.mk
+ TESTFILES =
+ 
+ OBJFILES = online-gmm-decodable.o online-feature-pipeline.o online-ivector-feature.o \
++           online-tcp-source.o \
+            online-nnet2-feature-pipeline.o online-gmm-decoding.o online-timing.o \
+            online-endpoint.o onlinebin-util.o online-speex-wrapper.o \
+            online-nnet2-decoding.o online-nnet2-decoding-threaded.o \
+diff --git a/src/online2bin/Makefile b/src/online2bin/Makefile
+index ed5b6eb..577c5a3 100644
+--- a/src/online2bin/Makefile
++++ b/src/online2bin/Makefile
+@@ -7,6 +7,7 @@ LDFLAGS += $(CUDA_LDFLAGS)
+ LDLIBS += $(CUDA_LDLIBS)
+ 
+ BINFILES = online2-wav-gmm-latgen-faster apply-cmvn-online \
++     online2-audio-nnet2-latgen-faster online2-audio-nnet3-latgen-faster \
+      extend-wav-with-silence compress-uncompress-speex \
+      online2-wav-nnet2-latgen-faster ivector-extract-online2 \
+      online2-wav-dump-features ivector-randomize \
