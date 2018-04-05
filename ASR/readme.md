@@ -2,7 +2,7 @@
 
 ## Installation
 
-You can install the ASR on a physical Linux machine, on a Virtual Machine (VM) or on a Linux Subsystem under windows. Nonetheless, we recommend that you use a high-spec physical machine with a GPU running Linux in order to speed up the ARIA-ASR processing.
+You can install the ASR on a physical Linux machine, on a Virtual Machine (VM) or on a Linux Subsystem under windows. Nonetheless, we recommend that you use a high-spec physical machine with a GPU running Linux in order to speed up the ARIA-ASR processing. Alternatively, you can also build the ASR server on any platform where kaldi is supported, which is pretty much any Unix system - including OSX.
 
 To install the ARIA-ASR server simply copy the ASR folder from this repository to your target machine (virtual or physical), and run the command `./install-aria-asr.sh` inside the main folder. This will download the latest models for all languages and install the necessary libraries (you will be asked to enter your sudo password).
 
@@ -21,6 +21,11 @@ Open VirtualBox on your computer. The first time you open it, go to the 'File' m
 - If not already installed, follow [these instructions](https://msdn.microsoft.com/en-us/commandline/wsl/install_guide) to install  the Windows Subsystem for Linux on Windows 10.
 - Then, follow the instructions for installing the ARIA-ASR as shown above.
 - If you see error messages like this - `-bash: '\r': command not found` - you may need to run the command `dos2unix install-aria-asr.sh` to modify newline characters so they are Unix / Cygwin compatible.
+
+### Building from source
+
+1. Check that you have all the dependencies to build [kaldi](https://github.com/kaldi-asr/kaldi). 
+1. Follow the instructions in the `src` subfolder to create executables. 
 
 ## Updating the models
 
