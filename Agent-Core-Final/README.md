@@ -1,5 +1,5 @@
 -------------------------------------------------
-Jelte van Waterschoot, <j.b.vanwaterschoot@utwente.nl>, 20.11.2017
+Jelte van Waterschoot, <j.b.vanwaterschoot@utwente.nl>, 01.04.2018
 -------------------------------------------------
 
 # ARIA-DM
@@ -18,9 +18,7 @@ Installing:
 1. ActiveMQ
 	ActiveMQ is bundeled with the entire system, but could be installed separately. In order to make it run, the JAVA_HOME environment path has to point to the JDK install directory. It's also convenient to add the /bin folder to your PATH of System Environment.
 2. Maven
-	The DM is built with Maven, and can be run from a Java IDE supporting Maven or with Maven locally installed. Also include the /bin folder in the PATH of your Environment Variables.	
-3. Install Maven repositories
-	Flipper is the engine on which the DM runs. You have to run 'install_flipper.bat' to add it to your local Maven repository (this is still WIP) and update your local Maven repositories
+	The DM is built with an included Gradle wrapper.
 
 Set-up:
 

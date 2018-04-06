@@ -15,6 +15,7 @@ import javax.swing.WindowConstants;
 import vib.application.ariavaluspa.attitudes.ARIASocialAttitudesPlanner;
 import vib.application.ariavaluspa.core.ARIAInformationStatesManager;
 import vib.application.ariavaluspa.tools.ARIAInformationStatesSelectorForm;
+import vib.application.ariavaluspa.tools.AriaValuspaFMLTranslator;
 import vib.auxiliary.activemq.gui.WhitboardFrame;
 import vib.auxiliary.activemq.semaine.BMLCallbacksSender;
 import vib.auxiliary.activemq.semaine.FMLReceiver;
@@ -45,6 +46,8 @@ import vib.auxiliary.activemq.aria.ARIAInformationStateReceiver;
 import vib.auxiliary.player.ogre.capture.Capturecontroller;
 import vib.auxiliary.thrift.gui.ThriftFrame;
 import vib.core.intentions.FMLFileReader;
+import vib.core.interruptions.InterruptionTester;
+import vib.core.utilx.gui.CharacterIniManagerFrame;
 import vib.core.utilx.gui.OpenAndLoad;
 import vib.tools.ogre.capture.video.CodecSelector;
 import vib.tools.ogre.capture.video.XuggleVideoCapture;
@@ -61,6 +64,7 @@ public class Greta {
     private static TTSController tTS;
     private static CereprocTTS cereproc_TTS;
     private static InterruptionManager interruptionManager;
+    private static InterruptionTester interruptionTester;
     private static FMLReceiver amqFMLReceiver;
     private static WhitboardFrame amqFMLReceiverModuleFrame;
     private static BMLSender amqBMLSender;
@@ -95,6 +99,8 @@ public class Greta {
     private static ARIASocialAttitudesPlanner ariaSocialAttitudesPlanner;
     private static vib.auxiliary.thrift.BMLSender bmlSenderThrift;
     private static ThriftFrame bmlSenderThrift_ModuleFrame;            
+    private static AriaValuspaFMLTranslator ariaValuspaFMLTranslator;
+    private static CharacterIniManagerFrame characterManager;
 
     public void init(IniManager initManager) {
         try {
@@ -293,8 +299,18 @@ public class Greta {
         // Creates the Interruption Manager
         interruptionManager = new InterruptionManager();
         
+        // Creates the Interupption Tester
+        // Init the Interruptions Tester window
+        interruptionTester = new InterruptionTester();
+        if(icon!=null){interruptionTester.setIconImage(icon);}
+        interruptionTester.setTitle("Interruption Tester");
+        interruptionTester.setLocation(647, 100);
+        interruptionTester.setSize(423, 108);
+        interruptionTester.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        interruptionTester.setVisible(iniManager.getValueBoolean("InterruptionTester.visible"));
+        
         // Creates the ARIA Information States Manager
-        ARIAInformationStatesManager ariaInfoStateManager = new ARIAInformationStatesManager();
+        ariaInfoStateManager = new ARIAInformationStatesManager();
         
         // Creates the ARIA Information States Tester
         ariaInfoStateManagerForm = new ARIAInformationStatesSelectorForm();
@@ -304,6 +320,25 @@ public class Greta {
         ariaInfoStateManagerForm.setSize(400, 150);
         ariaInfoStateManagerForm.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
         ariaInfoStateManagerForm.setVisible(iniManager.getValueBoolean("ARIAInformationStateTester.visible"));
+        
+        // Create ARIA FML Translator
+        ariaValuspaFMLTranslator = new AriaValuspaFMLTranslator();
+        if(icon!=null){ariaValuspaFMLTranslator.setIconImage(icon);}
+        ariaValuspaFMLTranslator.setTitle("AriaValuspaFMLTranslator");
+        ariaValuspaFMLTranslator.setLocation(0, 0);
+        ariaValuspaFMLTranslator.setSize(640, 480);
+        ariaValuspaFMLTranslator.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        ariaValuspaFMLTranslator.setVisible(iniManager.getValueBoolean("ARIAFMLTranslator.visible"));
+        
+        // Character Manager
+        characterManager = new CharacterIniManagerFrame();
+        characterManager.setCurrentCaracter(iniManager.getValueString("Agent.appearence"));
+        if(icon!=null){characterManager.setIconImage(icon);}
+        characterManager.setTitle("CharacterManager");
+        characterManager.setLocation(16, 844);
+        characterManager.setSize(505, 532);
+        characterManager.setDefaultCloseOperation(javax.swing.JFrame.EXIT_ON_CLOSE);
+        characterManager.setVisible(iniManager.getValueBoolean("CharacterManager.visible"));
         
         // Create the ActiveMQ FML Receiver
         amqFMLReceiver = new FMLReceiver();

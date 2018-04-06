@@ -356,7 +356,7 @@
         <condition>is.states.user.history.face.length &lt;=is.states.user.history.factor</condition>
       </preconditions>
       <effects>
-        <assign is="is.states.user.history.face">addJsonToArray(is.states.user.history.face,((is.states.amq.user.face.id &gt; 0)? 1:0))</assign>
+        <assign is="is.states.user.history.face"><![CDATA[addJsonToArray(is.states.user.history.face,((is.states.amq.user.face.id >= 0)? 1:0))]]></assign>
         <assign is="is.states.user.faceActivity">median(is.states.user.history.face)</assign>
       </effects>
     </template>
