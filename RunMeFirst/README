@@ -1,29 +1,2 @@
 
 Run `vc_redist.x64.exe` and `get_models.bat`
-
-As of 2018-03-16; the rest of this is **OUT OF DATE**
-
-# Old Stuff Below
-
-Visual C++ Redistributable for Visual Studio 2015 
- - Install 'vc_redist.x64.exe'
-
-Run the get_models script in this directory to get external files:
- - TTS voices
- - SSI models
-
-To get the ASR server, you have the choice of downloading a pre-built setup for VMware at https://hcm-lab.de/cloud/index.php/s/r6x9ha8XD3YJNzn (password: Wonderland2016), or you can use Vagrant to build it for you:
- - Install vagrant (https://www.vagrantup.com/downloads.html)
- - Install virtualBox (https://www.virtualbox.org/wiki/Downloads) - or VMware Fusion if you really like it
- - Run "vagrant up" in this directory
- - To login use: vagrant / vagrant
- - The ip address is: 192.168.33.10
- - English ASR runs on port 8888
- - German ASR runs on port 9999
-
-The second option requires much less download, is much easier to maintain, occupies less space, only uses free and open source products, but it will take more time to setup (about 1/2 hour on a fast machine).
-
-Python dependencies:
-
-- Install Python 3.5.1 64-bit (install for all users)
-- Install 'xmltodict' using pip.
