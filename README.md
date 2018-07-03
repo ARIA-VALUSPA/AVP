@@ -46,8 +46,7 @@ Since pip ties packages to user accounts, you'll need to run this command for ea
 
 ### `start-1-amq.bat`
 
-This starts the ActiveMQ service that the components use to communicate.
-Simply minimise the window and forget about it once it's running.
+This starts the ActiveMQ service that the components use to communicate. Simply minimise the window and forget about it once it's running. If you're already running ActiveMQ, you do not need to launch this batch file.
 
 ### `start-2-asr.bat`
 
