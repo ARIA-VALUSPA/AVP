@@ -5,9 +5,10 @@
       "previousMoves" : [],
       "plannedMoves" : [],
       "alignment" :{
+	"align": false,
         "initialized" : false
       },
-      "align" : true,
+      "align" : false,
       "execute" : true,
       "modifySentence" : false
     }
@@ -38,7 +39,7 @@
 
   <template id="AlignmentModule" name="AlignmentModule"> 
     <preconditions>
-      <condition>!is.behaviour.alignment.initialized</condition>
+      <condition><![CDATA[!is.behaviour.alignment.initialized && is.behaviour.alignment.align]]></condition>
     </preconditions>
     <effects>
       <method name="active" is="is.behaviour.alignment.initialized">

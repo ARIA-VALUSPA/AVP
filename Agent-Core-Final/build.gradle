@@ -3,7 +3,10 @@ allprojects {
 	repositories {
 		maven { url "https://oss.sonatype.org/content/repositories/snapshots" }
 		maven { url rootProject.file('lib/') }
-		maven { url "http://repo.maven.apache.org/maven2" }
+		maven { url "https://repo.maven.apache.org/maven2" }
+		flatDir {
+        	dirs 'lib'
+    	}
 	}
 
 	group = 'eu.aria'
@@ -47,15 +50,17 @@ dependencies {
 	compile 'org.json:json:20160807'
 	compile 'javax.json:javax.json-api:1.0'
 	compile group: 'edu.stanford.nlp', name: 'stanford-corenlp', version:'3.7.0', classifier:'models'
-	compile(group: 'hmi.flipper', name: 'flipper2', version:'0.1') {
-		exclude(module: 'slf4j-log4j12')
-		exclude(module: 'log4j')
-	}
-	compile 'qamatcher:QAMatcher:1.0'
-	compile 'eu.aria.util:Input-Types:0.1'
-	compile(group: 'eu.aria.util', name: 'Translator', version:'0.1') {
-		exclude(module: 'slf4j-log4j12')
-	}
+	// compile(group: 'hmi.flipper', name: 'flipper2', version:'0.1') {
+	// 	exclude(module: 'slf4j-log4j12')
+	// 	exclude(module: 'log4j')
+	// }
+	compile name: 'flipper2-0.1'
+	compile name: 'QAMatcher-1.0'
+	compile name: 'Input-Types-0.1'
+	compile name: 'Translator-0.1'
+	// compile(group: 'eu.aria.util', name: 'Translator', version:'0.1') {
+	// 	exclude(module: 'slf4j-log4j12')
+	// }
 	compile 'edu.stanford.nlp:stanford-corenlp:3.7.0'
 	compile 'javax.jms:javax.jms-api:2.0.1'
 	compile 'org.glassfish:javax.json:1.0.4'
